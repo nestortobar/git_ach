@@ -2031,14 +2031,16 @@ function applyUserType() {
   setField('f-doctype',   reg ? PERSONA.doctype   : '', 'CC');
   setField('f-docnum',    reg ? PERSONA.docnum    : '', 'Número de documento');
   setField('f-nombre1',   reg ? PERSONA.nombre1   : '', 'Primer nombre');
-  setField('f-nombre2',   reg ? PERSONA.nombre2   : '', 'Segundo nombre');
+  setField('f-nombre2',   reg ? PERSONA.nombre2   : '', 'Segundo apellido');
   setField('f-apellido1', reg ? PERSONA.apellido1 : '', 'Primer apellido');
-  setField('f-apellido2', reg ? PERSONA.apellido2 : '', 'Segundo apellido');
+  setField('f-apellido2', reg ? PERSONA.apellido2 : '', 'Segundo nombre');
   // Screen 4 — datos de contacto
   setField('f-celular', reg ? PERSONA.celular : '', 'Número de celular');
   setField('f-email',   reg ? PERSONA.email   : '', 'correo@email.com');
-  setSelect('f-genero', PERSONA.genero);
-  setSelect('f-estado', PERSONA.estado);
+  // Género debe iniciar en "Seleccionar" para ambos tipos de usuario.
+  setSelect('f-genero', '');
+  // Estado civil también debe iniciar en "Seleccionar".
+  setSelect('f-estado', '');
   // Visual feedback: add pre-hi class when registered
   ['f-doctype','f-docnum','f-nombre1','f-apellido1','f-celular','f-email'].forEach(function(id) {
     var el = document.getElementById(id);
