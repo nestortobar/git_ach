@@ -148,6 +148,68 @@ body{
 .s0-btn:hover{opacity:.9;}
 .s0-btn:active{opacity:.8;transform:scale(.99);}
 
+/* ══ SCREEN 1 – COMMERCE PAYMENT ══ */
+.enel-screen{min-height:100%;background:#fff;color:#1f1f1f;display:flex;flex-direction:column;}
+.enel-topbar{
+  background:#ff0a6c;color:#fff;padding:18px 18px 16px;
+  display:flex;align-items:flex-end;justify-content:space-between;min-height:98px;
+}
+.enel-brand{font-size:44px;line-height:.9;font-weight:300;letter-spacing:-2px;color:#fff;}
+.enel-menu{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;}
+.enel-menu span{display:block;width:28px;height:2px;border-radius:2px;background:rgba(255,255,255,.92);}
+.enel-body{padding:22px 18px 110px;}
+.enel-title{font-size:27px;line-height:1.16;font-weight:600;color:#2d2d2d;margin-bottom:22px;letter-spacing:-.8px;}
+.enel-fields{display:grid;grid-template-columns:1fr 104px;gap:12px;margin-bottom:24px;}
+.enel-field-lbl{font-size:12px;font-weight:500;color:#444;margin-bottom:6px;}
+.enel-field{
+  height:58px;border:2px solid #8f8f8f;background:#fff;
+  display:flex;align-items:center;padding:0 16px;font-size:18px;color:#404040;
+}
+.enel-subtitle{font-size:27px;line-height:1.2;font-weight:600;color:#2d2d2d;margin:0 0 12px;letter-spacing:-.7px;}
+.enel-alert{font-size:13px;font-weight:600;color:#ff0a6c;margin-bottom:14px;}
+.enel-table{
+  display:grid;grid-template-columns:88px 1fr 1fr 118px;
+  border:1px solid #e2e2e2;background:#fff;margin-bottom:28px;
+}
+.enel-th,.enel-td{padding:12px 10px;border-right:1px solid #e2e2e2;border-bottom:1px solid #e2e2e2;}
+.enel-th:last-child,.enel-td:last-child{border-right:none;}
+.enel-th{font-size:12px;font-weight:700;color:#222;background:#fff;}
+.enel-td{font-size:12px;color:#2f2f2f;min-height:78px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.enel-row-last{border-bottom:none;}
+.enel-check{
+  width:28px;height:28px;border:2px solid #ff0a6c;display:flex;align-items:center;justify-content:center;
+  color:#4a4a4a;font-size:20px;line-height:1;background:#fff;
+}
+.enel-pay-title{font-size:27px;line-height:1.2;font-weight:600;color:#2d2d2d;margin:0 0 16px;letter-spacing:-.7px;}
+.enel-methods{display:flex;gap:14px;margin-bottom:20px;}
+.enel-method{
+  flex:1;border:1.5px solid #dedede;background:#fff;min-height:100px;padding:12px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .1s;
+}
+.enel-method:active{transform:scale(.985);}
+.enel-method.selected{border-color:#ff0a6c;box-shadow:0 0 0 3px rgba(255,10,108,.08);}
+.enel-pse-badge{
+  width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #2f93d5 0%, #195a9d 58%, #123e72 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:27px;font-style:italic;letter-spacing:-1px;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.14);
+}
+.enel-bank-logo{display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#111;}
+.enel-bank-kicker{font-size:12px;font-weight:600;}
+.enel-bank-name{font-size:16px;font-weight:700;line-height:1.15;}
+.enel-consent{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#2d2d2d;line-height:1.45;margin-bottom:22px;cursor:pointer;}
+.enel-consent-box{
+  width:26px;height:26px;border:1.5px solid #d9d9d9;background:#fff;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:17px;color:#ff0a6c;margin-top:1px;
+}
+.enel-consent-box.checked{border-color:#ff0a6c;background:#fff4f8;}
+.enel-consent a{color:#2f5f9e;text-decoration:underline;}
+.enel-pay-btn{
+  width:100%;height:60px;border:none;border-radius:0;background:#d3d3d6;color:#fff;
+  font-size:18px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s, transform .1s;
+}
+.enel-pay-btn.enabled{background:#ff0a6c;}
+.enel-pay-btn:active{transform:scale(.99);}
+
 /* ══ SCREEN 1 – PSE SELECTOR ══ */
 .pse-hdr{
   background:var(--navy);
@@ -1019,8 +1081,64 @@ body{
           </div>
         </div>
 
-        <!-- ══ S1: PSE SELECTOR ══ -->
+        <!-- ══ S1: COMMERCE PAYMENT ══ -->
         <div class="scr" id="s1">
+          <div class="enel-screen">
+            <div class="enel-topbar">
+              <div class="enel-brand">enel</div>
+              <div class="enel-menu" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="enel-body">
+              <div class="enel-title">Paga tu factura en línea.</div>
+              <div class="enel-fields">
+                <div>
+                  <div class="enel-field-lbl">No. de cliente*</div>
+                  <div class="enel-field">1234567</div>
+                </div>
+                <div>
+                  <div class="enel-field-lbl">DV*</div>
+                  <div class="enel-field">8</div>
+                </div>
+              </div>
+              <div class="enel-subtitle">Documentos disponibles para pago.</div>
+              <div class="enel-alert">Por favor, seleccione el documento a pagar.</div>
+              <div class="enel-table">
+                <div class="enel-th">Seleccione</div>
+                <div class="enel-th">Número de documento</div>
+                <div class="enel-th">Tipo de documento</div>
+                <div class="enel-th">Valor de deuda</div>
+                <div class="enel-td enel-row-last"><div class="enel-check">✓</div></div>
+                <div class="enel-td enel-row-last">1029775890</div>
+                <div class="enel-td enel-row-last">CC</div>
+                <div class="enel-td enel-row-last">$240.000</div>
+              </div>
+              <div class="enel-pay-title">Selecciona el medio de pago.</div>
+              <div class="enel-methods">
+                <div class="enel-method selected" id="enelMethodPse" onclick="selectEnelMethod('pse')">
+                  <div class="enel-pse-badge">pse</div>
+                </div>
+                <div class="enel-method" id="enelMethodBank" onclick="selectEnelMethod('bank')">
+                  <div class="enel-bank-logo">
+                    <div class="enel-bank-kicker">Paga con</div>
+                    <div class="enel-bank-name">Bancolombia</div>
+                  </div>
+                </div>
+              </div>
+              <div class="enel-consent" onclick="toggleEnelConsent()">
+                <div class="enel-consent-box" id="enelConsentBox"></div>
+                <div>Autorizo el <a href="#" onclick="event.preventDefault()">tratamiento de datos personales</a>.</div>
+              </div>
+              <button class="enel-pay-btn" id="enelPayBtn" onclick="submitEnelPayment()">Pagar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ S2: PSE SELECTOR ══ -->
+        <div class="scr" id="s2">
           <div class="pse-hdr">
             <div class="pse-logo-row">
               <div class="pse-circle">
@@ -1053,7 +1171,7 @@ body{
               <div class="opt-arr">›</div>
             </div>
 
-            <div class="pay-opt highlight" onclick="go(2)">
+            <div class="pay-opt highlight" onclick="go(3)">
               <div class="new-pill">NUEVO</div>
               <div class="opt-icon i-pse">✨</div>
               <div class="opt-info">
@@ -1068,8 +1186,8 @@ body{
           </div>
         </div>
 
-        <!-- ══ S2: PRE-LOADER TRANSICIÓN PSE → ALIADO ══ -->
-        <div class="scr" id="s2">
+        <!-- ══ S3: PRE-LOADER TRANSICIÓN PSE → ALIADO ══ -->
+        <div class="scr" id="s3">
           <div class="preloader-wrap">
             <div class="pl-header">
               <div class="pl-logo-row">
@@ -1108,14 +1226,14 @@ body{
                 <div class="pl-contact-row">💬 <span>Contáctanos: pse.com.co/persona-centro-de-ayuda</span></div>
               </div>
             </div>
-            <div class="pl-tap" onclick="go(3)">Toca para continuar →</div>
+            <div class="pl-tap" onclick="go(4)">Toca para continuar →</div>
           </div>
         </div>
 
-        <!-- ══ S2: SUMAS DATOS 1 ══ -->
-        <div class="scr" id="s3">
+        <!-- ══ S4: SUMAS DATOS 1 ══ -->
+        <div class="scr" id="s4">
           <div class="sumas-hdr">
-            <div class="back-row" onclick="go(1)">‹ PSE</div>
+            <div class="back-row" onclick="go(2)">‹ PSE</div>
             <div class="sumas-nm">Aliado</div>
             <div class="sumas-sb">Solicitud de crédito</div>
             <div class="prog-lbl">Paso 1 de 3 — Datos personales</div>
@@ -1164,14 +1282,14 @@ body{
                 <input class="f-inp" id="f-nombre2" type="text" placeholder="Segundo nombre">
               </div>
             </div>
-            <button class="sumas-btn" onclick="go(4)">Continuar →</button>
+            <button class="sumas-btn" onclick="go(5)">Continuar →</button>
           </div>
         </div>
 
-        <!-- ══ S3: SUMAS DATOS 2 ══ -->
-        <div class="scr" id="s4">
+        <!-- ══ S5: SUMAS DATOS 2 ══ -->
+        <div class="scr" id="s5">
           <div class="sumas-hdr">
-            <div class="back-row" onclick="go(3)">‹ Atrás</div>
+            <div class="back-row" onclick="go(4)">‹ Atrás</div>
             <div class="sumas-nm">Aliado</div>
             <div class="sumas-sb">Datos de contacto y ubicación</div>
             <div class="prog-lbl">Paso 2 de 3 — Información de contacto</div>
@@ -1235,14 +1353,14 @@ body{
               </div>
             </div>
 
-            <button class="sumas-btn" onclick="go(5)">Solicitar crédito →</button>
+            <button class="sumas-btn" onclick="go(6)">Solicitar crédito →</button>
           </div>
         </div>
 
-        <!-- ══ S4: OTP ══ -->
-        <div class="scr" id="s5">
+        <!-- ══ S6: OTP ══ -->
+        <div class="scr" id="s6">
           <div class="sumas-hdr">
-            <div class="back-row" onclick="go(4)">‹ Atrás</div>
+            <div class="back-row" onclick="go(5)">‹ Atrás</div>
             <div class="sumas-nm">Aliado</div>
             <div class="sumas-sb">Verificación de identidad</div>
             <div class="prog-lbl">Paso 3 de 3 — Código de seguridad</div>
@@ -1260,13 +1378,13 @@ body{
               <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
             </div>
             <div class="otp-timer-txt">⏱ Tiempo restante: <b id="otpCountdown">1:55</b></div>
-            <button class="sumas-btn" onclick="go(6)">Verificar y continuar →</button>
+            <button class="sumas-btn" onclick="go(7)">Verificar y continuar →</button>
             <div class="otp-resend" onclick="toast('Código reenviado al XXXXXX5678')">¿No llegó? Reenviar código</div>
           </div>
         </div>
 
-        <!-- ══ S5: APPROVAL ══ -->
-        <div class="scr" id="s6">
+        <!-- ══ S7: APPROVAL ══ -->
+        <div class="scr" id="s7">
           <div class="appv-hdr">
             <div class="appv-lbl">¡Crédito aprobado por!</div>
             <div class="appv-amt">$ 240.000</div>
@@ -1282,13 +1400,13 @@ body{
               <div class="d-row"><span class="dk">Estado civil</span><span class="dv" id="rv-estado">Soltero/a</span></div>
               <div class="d-row"><span class="dk">Correo</span><span class="dv" id="rv-email" style="font-size:11px">pablo@email.com ✏️</span></div>
             </div>
-            <button class="appv-cta" onclick="go(7)">Acepto y finalizar compra</button>
+            <button class="appv-cta" onclick="go(8)">Acepto y finalizar compra</button>
 
           </div>
         </div>
 
-        <!-- ══ S7: PSE SUMMARY ══ -->
-        <div class="scr" id="s7">
+        <!-- ══ S8: PSE SUMMARY ══ -->
+        <div class="scr" id="s8">
           <div class="pse-sum-wrap">
 
             <!-- Header: logo PSE izquierda + tagline -->
@@ -1350,7 +1468,7 @@ body{
               </div>
 
               <!-- Botón outline -->
-              <button class="pse-sum-btn" onclick="go(8)">Regresar al comercio</button>
+              <button class="pse-sum-btn" onclick="go(9)">Regresar al comercio</button>
 
               <!-- Transacción procesada por -->
               <div class="pse-sum-procesado">
@@ -1386,8 +1504,8 @@ body{
           </div>
         </div>
 
-        <!-- ══ S8: DONE ══ -->
-        <div class="scr" id="s8">
+        <!-- ══ S9: DONE ══ -->
+        <div class="scr" id="s9">
           <div class="done-bg">
             <div class="done-icon">🎉</div>
             <div class="done-ttl">¡Prueba completada!</div>
@@ -1442,7 +1560,7 @@ body{
 <div class="btm-bar">
   <div class="bb-info">
     <div class="bb-name" id="bbName">Introducción</div>
-    <div class="bb-step" id="bbStep">Pantalla 1 de 8</div>
+    <div class="bb-step" id="bbStep">Pantalla 1 de 10</div>
   </div>
   <div class="bb-right">
     <button class="bb-btn" onclick="go(Math.max(0,cur-1))">‹ Atrás</button>
@@ -1475,7 +1593,7 @@ body{
       <div class="fac-s-lbl">Pantalla actual</div>
       <div class="fac-scr-card">
         <div class="fac-scr-name" id="facScrName">Introducción</div>
-        <div class="fac-scr-num" id="facScrNum">Pantalla 1 de 8</div>
+        <div class="fac-scr-num" id="facScrNum">Pantalla 1 de 10</div>
       </div>
     </div>
 
@@ -1485,7 +1603,7 @@ body{
       <div class="fac-nav">
         <button class="nav-b" onclick="go(Math.max(0,cur-1))">‹ Anterior</button>
         <button class="nav-b rst" onclick="resetAll()">↺ Reiniciar</button>
-        <button class="nav-b" onclick="go(Math.min(7,cur+1))">Siguiente ›</button>
+        <button class="nav-b" onclick="go(Math.min(9,cur+1))">Siguiente ›</button>
       </div>
     </div>
 
@@ -1494,13 +1612,14 @@ body{
       <div class="fac-s-lbl">Ir directo a pantalla</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
         <button class="nav-b" onclick="go(0)" style="font-size:10px;">Intro</button>
-        <button class="nav-b" onclick="go(1)" style="font-size:10px;">PSE</button>
-        <button class="nav-b" onclick="go(3)" style="font-size:10px;">Form 1</button>
-        <button class="nav-b" onclick="go(4)" style="font-size:10px;">Form 2</button>
-        <button class="nav-b" onclick="go(5)" style="font-size:10px;">OTP</button>
-        <button class="nav-b" onclick="go(6)" style="font-size:10px;">Cupo</button>
-        <button class="nav-b" onclick="go(7)" style="font-size:10px;">Confirm.</button>
-        <button class="nav-b" onclick="go(8)" style="font-size:10px;">Fin</button>
+        <button class="nav-b" onclick="go(1)" style="font-size:10px;">Comercio</button>
+        <button class="nav-b" onclick="go(2)" style="font-size:10px;">PSE</button>
+        <button class="nav-b" onclick="go(4)" style="font-size:10px;">Form 1</button>
+        <button class="nav-b" onclick="go(5)" style="font-size:10px;">Form 2</button>
+        <button class="nav-b" onclick="go(6)" style="font-size:10px;">OTP</button>
+        <button class="nav-b" onclick="go(7)" style="font-size:10px;">Cupo</button>
+        <button class="nav-b" onclick="go(8)" style="font-size:10px;">Confirm.</button>
+        <button class="nav-b" onclick="go(9)" style="font-size:10px;">Fin</button>
       </div>
     </div>
 
@@ -1582,13 +1701,14 @@ body{
       <div style="font-size:12px;font-weight:500;color:rgba(255,255,255,.55);margin-bottom:7px;" id="ptLabel">Introducción</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
         <button class="nav-b pt-btn pt-active" onclick="setParticipantScreen(0)">Intro</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(1)">PSE</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(2)">Form 1</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(3)">Form 2</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(4)">OTP</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(5)">Cupo</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(6)">Confirm.</button>
-        <button class="nav-b pt-btn" onclick="setParticipantScreen(7)">Fin</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(1)">Comercio</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(2)">PSE</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(3)">Form 1</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(4)">Form 2</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(5)">OTP</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(6)">Cupo</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(7)">Confirm.</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(8)">Fin</button>
       </div>
     </div>
 
@@ -1639,7 +1759,7 @@ body{
 <script>
 /* ─ STATE ─ */
 let cur = 0;
-const TOTAL = 9;
+const TOTAL = 10;
 let timerSec = 0;
 let timerRunning = false;
 let timerInterval = null;
@@ -1648,10 +1768,13 @@ let facOpen = false;
 let otpTimer = 115;
 let otpInterval = null;
 let participantCur = 0;
+let enelMethod = 'pse';
+let enelConsent = false;
 const STORAGE_KEY = 'pse_usability_session';
 
 const screenMeta = [
   { name:'Introducción', sub:'Escenario de prueba', shortName:'Intro' },
+  { name:'Comercio — Factura pendiente', sub:'Selección del medio de pago', shortName:'Comercio' },
   { name:'PSE — Elige cómo pagar', sub:'Selección de método', shortName:'PSE' },
   { name:'PSE — Redirigiéndote al aliado', sub:'Pantalla de transición', shortName:'Pre-load' },
   { name:'Aliado — Datos personales', sub:'Formulario 1 de 2', shortName:'Form 1' },
@@ -1673,11 +1796,11 @@ function go(n) {
     else if (i < cur) { el.className = 'scr past'; }
     else { el.className = 'scr'; }
   }
-  if (cur === 2) startPreloaderAnim(); else resetPreloaderAnim();
-  if (cur === 3) applyUserType();
+  if (cur === 3) startPreloaderAnim(); else resetPreloaderAnim();
+  if (cur === 4) applyUserType();
   updateDatosFloat();
-  if (cur === 5) startOtpTimer(); else stopOtpTimer();
-  if (cur === 7) {
+  if (cur === 6) startOtpTimer(); else stopOtpTimer();
+  if (cur === 8) {
     const d = new Date();
     const dt = d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'}) +
       ' · ' + d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
@@ -1767,6 +1890,57 @@ function shakeOpt(id) {
   el.classList.add('shake');
   setTimeout(() => el.classList.remove('shake'), 450);
   toast('Esta ruta no está disponible en el prototipo');
+}
+
+/* ─ COMMERCE SCREEN ─ */
+function selectEnelMethod(method) {
+  enelMethod = method;
+  const pse = document.getElementById('enelMethodPse');
+  const bank = document.getElementById('enelMethodBank');
+  if (pse) pse.classList.toggle('selected', method === 'pse');
+  if (bank) bank.classList.toggle('selected', method === 'bank');
+  updateEnelPayBtn();
+}
+
+function toggleEnelConsent() {
+  enelConsent = !enelConsent;
+  const box = document.getElementById('enelConsentBox');
+  if (box) {
+    box.classList.toggle('checked', enelConsent);
+    box.textContent = enelConsent ? '✓' : '';
+  }
+  updateEnelPayBtn();
+}
+
+function updateEnelPayBtn() {
+  const btn = document.getElementById('enelPayBtn');
+  if (!btn) return;
+  const enabled = enelMethod === 'pse' && enelConsent;
+  btn.classList.toggle('enabled', enabled);
+}
+
+function submitEnelPayment() {
+  if (enelMethod !== 'pse') {
+    toast('Solo la ruta PSE está habilitada en este prototipo');
+    return;
+  }
+  if (!enelConsent) {
+    toast('Autoriza el tratamiento de datos para continuar');
+    return;
+  }
+  go(2);
+}
+
+function resetEnelScreen() {
+  enelMethod = 'pse';
+  enelConsent = false;
+  selectEnelMethod('pse');
+  const box = document.getElementById('enelConsentBox');
+  if (box) {
+    box.classList.remove('checked');
+    box.textContent = '';
+  }
+  updateEnelPayBtn();
 }
 
 /* ─ PARTICIPANT SCREEN TRACKER ─ */
@@ -1899,6 +2073,7 @@ function newSession() {
 function resetAll() {
   resetTimer();
   stopOtpTimer();
+  resetEnelScreen();
   document.querySelectorAll('.otp-b').forEach(b => { b.value = ''; b.classList.remove('filled'); });
   go(0);
 }
@@ -1950,7 +2125,7 @@ setInterval(updateClock, 10000);
 /* ─ KEYBOARD SHORTCUTS ─ */
 document.addEventListener('keydown', e => {
   if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
-  if (e.key === 'ArrowRight' || e.key === 'Enter') go(Math.min(7, cur + 1));
+  if (e.key === 'ArrowRight' || e.key === 'Enter') go(Math.min(9, cur + 1));
   if (e.key === 'ArrowLeft') go(Math.max(0, cur - 1));
   if (e.key === 'f' || e.key === 'F') toggleFac();
   if (e.key === 'r' || e.key === 'R') resetAll();
@@ -1958,6 +2133,7 @@ document.addEventListener('keydown', e => {
 
 /* ─ INIT ─ */
 initOtp();
+resetEnelScreen();
 loadSession();
 updateUI();
 
@@ -1993,7 +2169,7 @@ function startPreloaderAnim() {
       preloaderRAF = requestAnimationFrame(step);
     } else {
       arc.style.strokeDashoffset = 0;
-      preloaderTimer = setTimeout(function() { go(3); }, 150);
+      preloaderTimer = setTimeout(function() { go(4); }, 150);
     }
   }
   preloaderRAF = requestAnimationFrame(step);
@@ -2096,7 +2272,7 @@ function toggleDatosFloat() {
 function updateDatosFloat() {
   var card = document.getElementById('datosFloat');
   if (!card) return;
-  var show = userType === 'unregistered' && (cur === 3 || cur === 4);
+  var show = userType === 'unregistered' && (cur === 4 || cur === 5);
   card.classList.toggle('visible', show);
   // Reset collapsed state each time it appears
   if (show) {
