@@ -151,52 +151,59 @@ body{
 /* ══ SCREEN 1 – COMMERCE PAYMENT ══ */
 .enel-screen{min-height:100%;background:#fff;color:#1f1f1f;display:flex;flex-direction:column;}
 .enel-topbar{
-  background:#ff0a6c;color:#fff;padding:18px 18px 16px;
-  display:flex;align-items:flex-end;justify-content:space-between;min-height:98px;
+  background:#ff0a6c;color:#fff;padding:14px 18px 12px;
+  display:flex;align-items:flex-end;justify-content:space-between;min-height:84px;
 }
-.enel-brand{font-size:44px;line-height:.9;font-weight:300;letter-spacing:-2px;color:#fff;}
+.enel-brand{font-size:40px;line-height:.9;font-weight:300;letter-spacing:-2px;color:#fff;}
 .enel-menu{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;}
 .enel-menu span{display:block;width:28px;height:2px;border-radius:2px;background:rgba(255,255,255,.92);}
-.enel-body{padding:22px 18px 110px;}
-.enel-title{font-size:27px;line-height:1.16;font-weight:600;color:#2d2d2d;margin-bottom:22px;letter-spacing:-.8px;}
-.enel-fields{display:grid;grid-template-columns:1fr 104px;gap:12px;margin-bottom:24px;}
+.enel-body{padding:18px 16px 92px;}
+.enel-title{font-size:25px;line-height:1.14;font-weight:600;color:#2d2d2d;margin-bottom:18px;letter-spacing:-.8px;}
+.enel-fields{display:grid;grid-template-columns:1fr 104px;gap:10px;margin-bottom:18px;}
 .enel-field-lbl{font-size:12px;font-weight:500;color:#444;margin-bottom:6px;}
 .enel-field{
-  height:58px;border:2px solid #8f8f8f;background:#fff;
-  display:flex;align-items:center;padding:0 16px;font-size:18px;color:#404040;
+  height:52px;border:2px solid #8f8f8f;background:#fff;
+  display:flex;align-items:center;padding:0 14px;font-size:16px;color:#404040;
 }
-.enel-subtitle{font-size:27px;line-height:1.2;font-weight:600;color:#2d2d2d;margin:0 0 12px;letter-spacing:-.7px;}
-.enel-alert{font-size:13px;font-weight:600;color:#ff0a6c;margin-bottom:14px;}
+.enel-subtitle{font-size:24px;line-height:1.16;font-weight:600;color:#2d2d2d;margin:0 0 10px;letter-spacing:-.7px;}
+.enel-alert{font-size:13px;font-weight:600;color:#ff0a6c;margin-bottom:12px;}
+.enel-table-scroll{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:0 -16px 18px;
+  padding:0 16px;
+}
 .enel-table{
-  display:grid;grid-template-columns:88px 1fr 1fr 118px;
-  border:1px solid #e2e2e2;background:#fff;margin-bottom:28px;
+  display:grid;grid-template-columns:76px minmax(92px,1fr) minmax(82px,.8fr) minmax(92px,.9fr);
+  min-width:404px;width:max-content;
+  border:1px solid #e2e2e2;background:#fff;
 }
-.enel-th,.enel-td{padding:12px 10px;border-right:1px solid #e2e2e2;border-bottom:1px solid #e2e2e2;}
+.enel-th,.enel-td{padding:10px 8px;border-right:1px solid #e2e2e2;border-bottom:1px solid #e2e2e2;min-width:0;overflow:hidden;}
 .enel-th:last-child,.enel-td:last-child{border-right:none;}
-.enel-th{font-size:12px;font-weight:700;color:#222;background:#fff;}
-.enel-td{font-size:12px;color:#2f2f2f;min-height:78px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.enel-th{font-size:11px;font-weight:700;color:#222;background:#fff;line-height:1.2;white-space:normal;word-break:break-word;}
+.enel-td{font-size:12px;color:#2f2f2f;min-height:64px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.35;word-break:break-word;}
 .enel-row-last{border-bottom:none;}
 .enel-check{
   width:28px;height:28px;border:2px solid #ff0a6c;display:flex;align-items:center;justify-content:center;
   color:#4a4a4a;font-size:20px;line-height:1;background:#fff;
 }
-.enel-pay-title{font-size:27px;line-height:1.2;font-weight:600;color:#2d2d2d;margin:0 0 16px;letter-spacing:-.7px;}
-.enel-methods{display:flex;gap:14px;margin-bottom:20px;}
+.enel-pay-title{font-size:24px;line-height:1.16;font-weight:600;color:#2d2d2d;margin:0 0 12px;letter-spacing:-.7px;}
+.enel-methods{display:flex;gap:10px;margin-bottom:16px;}
 .enel-method{
-  flex:1;border:1.5px solid #dedede;background:#fff;min-height:100px;padding:12px;
+  flex:1;border:1.5px solid #dedede;background:#fff;min-height:86px;padding:10px;
   display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .1s;
 }
 .enel-method:active{transform:scale(.985);}
 .enel-method.selected{border-color:#ff0a6c;box-shadow:0 0 0 3px rgba(255,10,108,.08);}
 .enel-pse-badge{
-  width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #2f93d5 0%, #195a9d 58%, #123e72 100%);
-  display:flex;align-items:center;justify-content:center;color:#fff;font-size:27px;font-style:italic;letter-spacing:-1px;
+  width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #2f93d5 0%, #195a9d 58%, #123e72 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-style:italic;letter-spacing:-1px;
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.14);
 }
 .enel-bank-logo{display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#111;}
-.enel-bank-kicker{font-size:12px;font-weight:600;}
-.enel-bank-name{font-size:16px;font-weight:700;line-height:1.15;}
-.enel-consent{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#2d2d2d;line-height:1.45;margin-bottom:22px;cursor:pointer;}
+.enel-bank-kicker{font-size:11px;font-weight:600;}
+.enel-bank-name{font-size:15px;font-weight:700;line-height:1.15;}
+.enel-consent{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#2d2d2d;line-height:1.45;margin-bottom:16px;cursor:pointer;}
 .enel-consent-box{
   width:26px;height:26px;border:1.5px solid #d9d9d9;background:#fff;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:17px;color:#ff0a6c;margin-top:1px;
@@ -204,8 +211,8 @@ body{
 .enel-consent-box.checked{border-color:#ff0a6c;background:#fff4f8;}
 .enel-consent a{color:#2f5f9e;text-decoration:underline;}
 .enel-pay-btn{
-  width:100%;height:60px;border:none;border-radius:0;background:#d3d3d6;color:#fff;
-  font-size:18px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s, transform .1s;
+  width:100%;height:52px;border:none;border-radius:0;background:#d3d3d6;color:#fff;
+  font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s, transform .1s;
 }
 .enel-pay-btn.enabled{background:#ff0a6c;}
 .enel-pay-btn:active{transform:scale(.99);}
@@ -291,7 +298,7 @@ body{
 .f-inp{
   width:100%;padding:11px 12px;border:1px solid var(--brd);border-radius:10px;
   font-size:13px;font-family:'DM Sans',sans-serif;color:var(--tp);background:#fff;
-  outline:none;transition:border-color .15s;-webkit-appearance:none;
+  outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none;
 }
 .f-inp:focus{border-color:var(--sa);box-shadow:0 0 0 3px rgba(255,78,106,.08);}
 .f-inp.pre{background:var(--surf);color:var(--ts);border-color:rgba(255,78,106,.25);cursor:not-allowed;}
@@ -317,7 +324,7 @@ body{
   width:46px;height:54px;border:1.5px solid var(--brd);border-radius:11px;
   font-size:22px;font-weight:600;font-family:'DM Mono',monospace;
   text-align:center;color:var(--tp);background:#fff;
-  outline:none;-webkit-appearance:none;caret-color:var(--sa);
+  outline:none;-webkit-appearance:none;appearance:none;caret-color:var(--sa);
   transition:border-color .15s,background .15s;
 }
 .otp-b:focus{border-color:var(--sa);box-shadow:0 0 0 3px rgba(255,78,106,.09);}
@@ -1106,15 +1113,17 @@ body{
               </div>
               <div class="enel-subtitle">Documentos disponibles para pago.</div>
               <div class="enel-alert">Por favor, seleccione el documento a pagar.</div>
-              <div class="enel-table">
-                <div class="enel-th">Seleccione</div>
-                <div class="enel-th">Número de documento</div>
-                <div class="enel-th">Tipo de documento</div>
-                <div class="enel-th">Valor de deuda</div>
-                <div class="enel-td enel-row-last"><div class="enel-check">✓</div></div>
-                <div class="enel-td enel-row-last">1029775890</div>
-                <div class="enel-td enel-row-last">CC</div>
-                <div class="enel-td enel-row-last">$240.000</div>
+              <div class="enel-table-scroll">
+                <div class="enel-table">
+                  <div class="enel-th">Seleccione</div>
+                  <div class="enel-th">Número de<br>documento</div>
+                  <div class="enel-th">Tipo de documento</div>
+                  <div class="enel-th">Valor de deuda</div>
+                  <div class="enel-td enel-row-last"><div class="enel-check">✓</div></div>
+                  <div class="enel-td enel-row-last">1029775890</div>
+                  <div class="enel-td enel-row-last">CC</div>
+                  <div class="enel-td enel-row-last">$240.000</div>
+                </div>
               </div>
               <div class="enel-pay-title">Selecciona el medio de pago.</div>
               <div class="enel-methods">
