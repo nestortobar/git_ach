@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSE Redirect — Reference</title>
+<title>Redirección PSE — Referencia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -63,9 +63,10 @@ body{
 .pl-header{
   background:linear-gradient(135deg,var(--navy),var(--blue));
   padding:50px 20px 18px;
-  display:flex;align-items:center;gap:12px;
+  display:flex;align-items:center;gap:7px;
 }
 .pl-logo-row{display:flex;align-items:center;gap:7px;}
+.pl-logo-brand{height:44px;width:auto;display:block;}
 .pl-logo-circle{
   width:38px;height:38px;border-radius:50%;
   background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.3);
@@ -99,23 +100,9 @@ body{
   position:relative;width:90px;height:90px;
   display:flex;align-items:center;justify-content:center;
 }
-.pl-spinner-svg{
-  position:absolute;top:-3px;left:-3px;
-  width:96px;height:96px;
-  transform:rotate(-90deg);pointer-events:none;
+.pl-big-gif{
+  width:96px;height:96px;display:block;object-fit:contain;
 }
-.pl-spinner-arc{
-  fill:none;stroke:var(--green);stroke-width:3.5;stroke-linecap:round;
-  stroke-dasharray:276.46;stroke-dashoffset:276.46;
-}
-.pl-big-circle{
-  width:90px;height:90px;border-radius:50%;
-  background:linear-gradient(135deg,var(--blue),var(--navy));
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;
-  box-shadow:0 8px 24px rgba(0,51,122,.3);
-}
-.pl-big-text{font-size:24px;font-weight:700;font-style:italic;color:#fff;letter-spacing:-1px;margin-top:2px;}
 
 .pl-contact{
   margin:auto 16px 0;
@@ -135,7 +122,7 @@ body{
 </head>
 <body>
 
-<div class="label">PSE Redirect — Reference screen</div>
+<div class="label">Redirección PSE — Pantalla de referencia</div>
 
 <div class="phone-frame">
   <div class="phone-notch"></div>
@@ -146,15 +133,9 @@ body{
       <!-- Header -->
       <div class="pl-header">
         <div class="pl-logo-row">
-          <div class="pl-logo-circle">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <circle cx="9" cy="9" r="7" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
-              <path d="M6 9h6M9 6v6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="pl-logo-text">pse</span>
+          <img class="pl-logo-brand" src="img/logo_pse.png" alt="PSE logo">
         </div>
-        <span class="pl-tagline">Easy, fast and secure!</span>
+        <span class="pl-tagline">¡Fácil, rápido y seguro!</span>
       </div>
 
       <!-- Step indicators -->
@@ -167,21 +148,12 @@ body{
       </div>
 
       <!-- Main text -->
-      <div class="pl-center-text">Redirecting you<br>to our partner.</div>
+      <div class="pl-center-text">Te estamos redirigiendo<br>a nuestro aliado.</div>
 
       <!-- Spinner + PSE logo -->
       <div class="pl-big-logo">
         <div class="pl-spinner-wrap">
-          <svg class="pl-spinner-svg" viewBox="0 0 96 96">
-            <circle class="pl-spinner-arc" id="plArc" cx="48" cy="48" r="44"/>
-          </svg>
-          <div class="pl-big-circle">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="14" r="11" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
-              <path d="M9 14h10M14 9v10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="pl-big-text">pse</span>
-          </div>
+          <img class="pl-big-gif" src="img/loader_psd.GIF" alt="PSE loading animation">
         </div>
       </div>
 
@@ -191,50 +163,18 @@ body{
       <div class="pl-contact">
         <div class="pl-contact-icon">📨</div>
         <div class="pl-contact-info">
-          <div class="pl-contact-title">For more information,<br>please contact us:</div>
-          <div class="pl-contact-row">📞 <span>Bogotá: +57 (601) 3808890 option 5</span></div>
-          <div class="pl-contact-row">💬 <span>Help: pse.com.co/persona-centro-de-ayuda</span></div>
+          <div class="pl-contact-title">Para mas informacion,<br>contactanos:</div>
+          <div class="pl-contact-row">📞 <span>Bogota: +57 (601) 3808890 opcion 5</span></div>
+          <div class="pl-contact-row">💬 <span>Ayuda: pse.com.co/persona-centro-de-ayuda</span></div>
         </div>
       </div>
 
-      <div class="pl-tap">Redirecting automatically…</div>
+      <div class="pl-tap">Redirigiendo automaticamente...</div>
 
     </div>
 
   </div>
 </div>
 
-<script>
-var CIRCUMFERENCE = 276.46;
-var DURATION = 3000;
-var PAUSE = 600;
-var raf = null;
-
-function runCycle() {
-  var arc = document.getElementById('plArc');
-  arc.style.strokeDashoffset = CIRCUMFERENCE;
-  var startTime = null;
-
-  function step(ts) {
-    if (!startTime) startTime = ts;
-    var elapsed = ts - startTime;
-    var progress = Math.min(elapsed / DURATION, 1);
-    var eased = progress < 0.5
-      ? 4 * progress * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-    arc.style.strokeDashoffset = CIRCUMFERENCE * (1 - eased);
-    if (progress < 1) {
-      raf = requestAnimationFrame(step);
-    } else {
-      arc.style.strokeDashoffset = 0;
-      setTimeout(function() { runCycle(); }, PAUSE);
-    }
-  }
-
-  raf = requestAnimationFrame(step);
-}
-
-runCycle();
-</script>
 </body>
 </html>
