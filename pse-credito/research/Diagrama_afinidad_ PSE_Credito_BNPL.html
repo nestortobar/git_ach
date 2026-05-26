@@ -4,679 +4,415 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diagrama de Afinidad — PSE Crédito (BNPL) · ACH Colombia</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../estilos.css">
+<!--
   :root {
-    --navy: #0D1B2A;
-    --ink: #1A2E42;
-    --slate: #2C4A66;
-    --steel: #4A6FA5;
-    --sky: #7AADCF;
-    --fog: #C9DCEC;
-    --paper: #F4F8FB;
-    --white: #FFFFFF;
-
-    --amber: #E8A020;
-    --amber-pale: #FDF3E0;
-    --red: #C94040;
-    --red-pale: #FAEAEA;
-    --green: #2E7D5A;
-    --green-pale: #E4F2EB;
-    --violet: #6B4FA0;
-    --violet-pale: #EEE8F6;
-    --teal: #1D7A74;
-    --teal-pale: #E2F2F1;
-    --rose: #B84870;
-    --rose-pale: #F8EAF0;
-
-    --font-head: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
+    --azul:       #5454e9;
+    --azul-dark:  #3a3acc;
+    --azul-light: #eeeeff;
+    --amarillo:   #e4eb60;
+    --naranja:    #e9683b;
+    --morado:     #865cf0;
+    --verde:      #4cb979;
+    --gris:       #88898c;
+    --gris-claro: #cecfd4;
+    --negro:      #1a1a1a;
+    --blanco:     #ffffff;
+    --papel:      #f5f5fa;
+    --font:       'Plus Jakarta Sans', sans-serif;
+    --rojo:       #d63b3b;
+    --amber:      #c98000;
+    --amber-pale: #fff8e6;
+    --rojo-pale:  #fdf0f0;
+    --verde-pale: #edfaf3;
+    --morado-pale:#f2eeff;
+    --teal:       #1a8a83;
+    --teal-pale:  #e6f7f6;
+    --rose:       #c04070;
+    --rose-pale:  #fdeef5;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font);
+    background:var(--papel);
+    color:var(--negro);
+    line-height:1.6;
+    font-size:15px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font-body);
-    background: var(--paper);
-    color: var(--ink);
-    line-height: 1.6;
+  /* ─── HEADER ─── */
+  .report-header{
+    background:linear-gradient(135deg,var(--azul-dark) 0%,var(--azul) 60%,#7c7cf5 100%);
+    padding:0;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .report-header::before{
+    content:'';position:absolute;
+    width:600px;height:600px;border-radius:50%;
+    background:radial-gradient(circle,rgba(228,235,96,0.12) 0%,transparent 70%);
+    top:-200px;right:-100px;
+  }
+  .report-header__top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:32px 72px 0;flex-wrap:wrap;gap:16px;
+    position:relative;z-index:1;
+  }
+  .report-header__logo img{height:40px;}
+  .report-header__badge{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.25);
+    color:rgba(255,255,255,0.85);
+    font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    font-weight:600;padding:6px 14px;border-radius:4px;
+  }
+  .report-header__title-block{
+    padding:36px 72px 32px;position:relative;z-index:1;
+  }
+  .report-header__eyebrow{
+    display:block;
+    font-size:11px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--amarillo);font-weight:600;margin-bottom:14px;
+  }
+  .report-header__title{
+    font-size:clamp(32px,4.5vw,58px);font-weight:800;
+    line-height:1.08;color:#fff;margin-bottom:16px;
+  }
+  .report-header__title span{color:var(--amarillo);}
+  .report-header__subtitle{
+    font-size:16px;color:rgba(255,255,255,0.8);
+    font-weight:300;max-width:580px;line-height:1.65;
+  }
+  .report-header__kpi-bar{
+    display:flex;flex-wrap:wrap;gap:0;
+    border-top:1px solid rgba(255,255,255,0.15);
+    position:relative;z-index:1;
+  }
+  .report-header__kpi-item{
+    flex:1;min-width:130px;
+    padding:22px 32px;
+    border-right:1px solid rgba(255,255,255,0.12);
+  }
+  .report-header__kpi-item:last-child{border-right:none;}
+  .report-header__kpi-value{
+    display:block;font-size:28px;font-weight:800;color:#fff;line-height:1;
+    margin-bottom:6px;
+  }
+  .report-header__kpi-label{
+    display:block;font-size:11px;color:rgba(255,255,255,0.6);
+    text-transform:uppercase;letter-spacing:1.2px;font-weight:500;
   }
-
-  /* ─── COVER ─── */
-  .cover {
-    background: var(--navy);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 10vw;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(74,111,165,0.25) 0%, transparent 70%);
-    top: -200px; right: -100px;
-  }
-  .cover::after {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(122,173,207,0.12) 0%, transparent 70%);
-    bottom: -100px; left: 5%;
-  }
-  .cover-tag {
-    font-family: var(--font-head);
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sky);
-    margin-bottom: 32px;
-  }
-  .cover h1 {
-    font-family: var(--font-head);
-    font-size: clamp(36px, 5.5vw, 72px);
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1.08;
-    margin-bottom: 24px;
-  }
-  .cover h1 span {
-    color: var(--sky);
-  }
-  .cover-sub {
-    font-size: 18px;
-    color: var(--fog);
-    font-weight: 300;
-    max-width: 560px;
-    margin-bottom: 48px;
-  }
-  .cover-meta {
-    display: flex;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-  .cover-meta-item {
-    color: var(--fog);
-  }
-  .cover-meta-item strong {
-    display: block;
-    font-family: var(--font-head);
-    font-size: 13px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--sky);
-    margin-bottom: 4px;
-  }
-  .cover-meta-item span { font-size: 15px; }
-  .cover-badge {
-    position: absolute;
-    top: 40px; right: 10vw;
-    background: rgba(122,173,207,0.12);
-    border: 1px solid rgba(122,173,207,0.3);
-    color: var(--sky);
-    font-family: var(--font-head);
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    border-radius: 4px;
-  }
-
-  /* ─── SECTION LAYOUT ─── */
-  .section {
-    padding: 80px 10vw;
-  }
-  .section-alt { background: var(--white); }
-  .section-dark {
-    background: var(--ink);
-    color: var(--fog);
-  }
-
-  .section-label {
-    font-family: var(--font-head);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--steel);
-    margin-bottom: 12px;
-  }
-  .section-dark .section-label { color: var(--sky); }
-
-  .section-title {
-    font-family: var(--font-head);
-    font-size: clamp(24px, 3vw, 38px);
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.15;
-    margin-bottom: 16px;
-  }
-  .section-dark .section-title { color: var(--white); }
-
-  .section-intro {
-    font-size: 16px;
-    color: #556879;
-    max-width: 680px;
-    margin-bottom: 48px;
-  }
-  .section-dark .section-intro { color: var(--fog); }
-
-  /* ─── EXECUTIVE SUMMARY ─── */
-  .exec-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-bottom: 48px;
-  }
-  .stat-card {
-    background: var(--white);
-    border: 1px solid var(--fog);
-    border-radius: 12px;
-    padding: 28px 24px;
-    border-top: 3px solid var(--steel);
-  }
-  .stat-card .num {
-    font-family: var(--font-head);
-    font-size: 38px;
-    font-weight: 800;
-    color: var(--navy);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .stat-card .lbl {
-    font-size: 13px;
-    color: #667;
-    line-height: 1.4;
-  }
-
-  .summary-box {
-    background: var(--ink);
-    color: var(--fog);
-    border-radius: 16px;
-    padding: 40px 48px;
-    border-left: 4px solid var(--sky);
-    font-size: 16px;
-    line-height: 1.8;
-  }
-  .summary-box strong { color: var(--white); }
-
-  /* ─── PARTICIPANT TABLE ─── */
-  .participants-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-  }
-  .participant-card {
-    background: var(--white);
-    border: 1px solid var(--fog);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    transition: box-shadow 0.2s;
-  }
-  .participant-card:hover { box-shadow: 0 6px 24px rgba(13,27,42,0.08); }
-  .p-avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--sky);
-    font-family: var(--font-head);
-    font-size: 16px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .p-avatar.synthetic { background: var(--slate); }
-  .p-info h4 {
-    font-family: var(--font-head);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 3px;
-  }
-  .p-info .p-meta { font-size: 12px; color: #667; line-height: 1.5; }
-  .p-tag {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 3px;
-    margin-top: 6px;
-    font-weight: 500;
-  }
-  .p-tag.real { background: var(--green-pale); color: var(--green); }
-  .p-tag.synthetic { background: var(--slate); color: var(--fog); }
-
-  /* ─── AFFINITY DIAGRAM ─── */
-  .affinity-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
-  }
-  .theme-card {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(13,27,42,0.06);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .theme-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(13,27,42,0.12);
-  }
-  .theme-header {
-    padding: 24px 28px 20px;
-    color: var(--white);
-  }
-  .theme-header .t-icon { font-size: 28px; margin-bottom: 10px; }
-  .theme-header h3 {
-    font-family: var(--font-head);
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .theme-header .t-insight {
-    font-size: 12px;
-    opacity: 0.85;
-    font-style: italic;
-    line-height: 1.5;
-  }
-  .theme-body {
-    background: var(--white);
-    padding: 20px 28px 24px;
-  }
-  .cluster {
-    margin-bottom: 20px;
-  }
-  .cluster:last-child { margin-bottom: 0; }
-  .cluster-title {
-    font-family: var(--font-head);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--slate);
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--fog);
-  }
-  .note {
-    display: inline-block;
-    font-size: 12px;
-    line-height: 1.45;
-    background: var(--paper);
-    border-left: 3px solid var(--fog);
-    padding: 6px 10px;
-    border-radius: 0 5px 5px 0;
-    margin: 3px 0;
-    color: var(--ink);
-    width: 100%;
-  }
-  .note.red { background: var(--red-pale); border-color: var(--red); }
-  .note.amber { background: var(--amber-pale); border-color: var(--amber); }
-  .note.green { background: var(--green-pale); border-color: var(--green); }
-  .note.violet { background: var(--violet-pale); border-color: var(--violet); }
-  .note.teal { background: var(--teal-pale); border-color: var(--teal); }
-  .note.rose { background: var(--rose-pale); border-color: var(--rose); }
-
-  .frequency {
-    font-size: 10px;
-    background: var(--navy);
-    color: var(--sky);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-left: 6px;
-    font-weight: 600;
-    vertical-align: middle;
-  }
-
-  /* Theme color themes */
-  .t-exclusion .theme-header { background: linear-gradient(135deg, #C94040, #9E2020); }
-  .t-crisis .theme-header { background: linear-gradient(135deg, #E8A020, #C07010); }
-  .t-ansiedad .theme-header { background: linear-gradient(135deg, #6B4FA0, #4A3070); }
-  .t-confianza .theme-header { background: linear-gradient(135deg, #1D7A74, #0E5550); }
-  .t-condiciones .theme-header { background: linear-gradient(135deg, #2E7D5A, #1A5040); }
-  .t-aversion .theme-header { background: linear-gradient(135deg, #4A6FA5, #2C4A66); }
-
-  /* ─── INSIGHT STATEMENTS ─── */
-  .insights-list {
-    counter-reset: insight;
-    list-style: none;
-  }
-  .insight-item {
-    counter-increment: insight;
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 20px;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--fog);
-    align-items: start;
-  }
-  .insight-item:last-child { border-bottom: none; }
-  .insight-num {
-    font-family: var(--font-head);
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--fog);
-    line-height: 1;
-  }
-  .insight-content h4 {
-    font-family: var(--font-head);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 8px;
-  }
-  .insight-content p { font-size: 14px; color: #5A6978; line-height: 1.6; }
-  .insight-evidence {
-    margin-top: 10px;
-    font-size: 12px;
-    color: var(--steel);
-    font-style: italic;
-  }
-
-  /* ─── QUOTES ─── */
-  .quotes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  .quote-card {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 28px;
-    border-top: 3px solid var(--steel);
-    box-shadow: 0 2px 12px rgba(13,27,42,0.05);
-    position: relative;
-  }
-  .quote-card::before {
-    content: '"';
-    font-family: Georgia, serif;
-    font-size: 72px;
-    color: var(--fog);
-    line-height: 0.6;
-    position: absolute;
-    top: 28px; left: 22px;
-  }
-  .quote-text {
-    font-size: 14px;
-    line-height: 1.65;
-    color: var(--ink);
-    padding-top: 32px;
-    font-style: italic;
-  }
-  .quote-author {
-    margin-top: 16px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--slate);
-    font-family: var(--font-head);
-    letter-spacing: 0.5px;
-  }
-  .quote-tag {
-    font-size: 10px;
-    background: var(--fog);
-    color: var(--slate);
-    border-radius: 3px;
-    padding: 2px 6px;
-    margin-left: 6px;
-  }
-
-  /* ─── DESIGN RECOMMENDATIONS ─── */
-  .recs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  .rec-card {
-    background: var(--white);
-    border: 1px solid var(--fog);
-    border-radius: 12px;
-    padding: 28px;
-    position: relative;
-  }
-  .rec-num {
-    font-family: var(--font-head);
-    font-size: 48px;
-    font-weight: 800;
-    color: var(--fog);
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-  .rec-card h4 {
-    font-family: var(--font-head);
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 10px;
-  }
-  .rec-card p { font-size: 13px; color: #5A6978; line-height: 1.65; }
-  .rec-priority {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 3px;
-    margin-top: 14px;
-  }
-  .priority-high { background: var(--red-pale); color: var(--red); }
-  .priority-med { background: var(--amber-pale); color: #A07010; }
-  .priority-low { background: var(--green-pale); color: var(--green); }
-
-  /* ─── ARCHETYPE TABLE ─── */
-  .archetype-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-  .archetype-table th {
-    background: var(--ink);
-    color: var(--sky);
-    font-family: var(--font-head);
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 14px 16px;
-    text-align: left;
-  }
-  .archetype-table td {
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--fog);
-    color: var(--ink);
-    vertical-align: top;
-  }
-  .archetype-table tr:last-child td { border-bottom: none; }
-  .archetype-table tr:nth-child(even) td { background: var(--paper); }
-  .arch-name {
-    font-family: var(--font-head);
-    font-weight: 700;
-    color: var(--navy);
-    font-size: 13px;
-  }
-  .match-dot {
-    display: inline-block;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--steel);
-    margin-right: 3px;
-    vertical-align: middle;
-  }
-  .match-dot.filled { background: var(--navy); }
-
-  /* ─── PRIORITY MAP ─── */
-  .priority-matrix {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 2px;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid var(--fog);
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .matrix-cell {
-    padding: 32px 28px;
-    background: var(--white);
-    min-height: 180px;
-  }
-  .matrix-cell.q1 { background: #FDF0F0; }
-  .matrix-cell.q2 { background: #FFFBF0; }
-  .matrix-cell.q3 { background: #F0F6F0; }
-  .matrix-cell.q4 { background: var(--paper); }
-  .matrix-cell h5 {
-    font-family: var(--font-head);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .matrix-cell.q1 h5 { color: var(--red); }
-  .matrix-cell.q2 h5 { color: #A07010; }
-  .matrix-cell.q3 h5 { color: var(--green); }
-  .matrix-cell.q4 h5 { color: var(--slate); }
-  .matrix-item {
-    font-size: 12px;
-    color: var(--ink);
-    padding: 4px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-  }
-  .matrix-item::before { content: '→'; color: #AAB; flex-shrink: 0; }
-  .matrix-labels {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    text-align: center;
-    font-family: var(--font-head);
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--slate);
-    margin-bottom: 4px;
-    gap: 2px;
-    max-width: 700px;
-    margin: 0 auto 4px;
-  }
-  .matrix-y-label {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    font-family: var(--font-head);
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--slate);
-  }
-
-  /* ─── FOOTER ─── */
-  .footer {
-    background: var(--navy);
-    color: var(--fog);
-    padding: 40px 10vw;
-    font-size: 13px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: gap;
-    gap: 16px;
-  }
-  .footer strong { color: var(--sky); }
 
   /* ─── NAV ─── */
-  .toc {
-    position: sticky;
-    top: 0;
-    background: var(--navy);
-    z-index: 99;
-    padding: 12px 10vw;
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    scrollbar-width: none;
+  .icesi-nav{
+    position:sticky;top:0;background:var(--negro);z-index:99;
+    padding:0 72px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;
   }
-  .toc::-webkit-scrollbar { display: none; }
-  .toc a {
-    text-decoration: none;
-    color: var(--fog);
-    font-family: var(--font-head);
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transition: color 0.2s;
-    padding: 4px 0;
-    border-bottom: 2px solid transparent;
+  .icesi-nav::-webkit-scrollbar{display:none;}
+  .icesi-nav a{
+    text-decoration:none;color:rgba(255,255,255,0.55);
+    font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    font-weight:600;white-space:nowrap;padding:16px 18px;
+    border-bottom:3px solid transparent;transition:all 0.2s;
   }
-  .toc a:hover { color: var(--sky); border-bottom-color: var(--sky); }
+  .icesi-nav a:hover{color:#fff;border-bottom-color:var(--amarillo);}
 
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .cover h1, .cover-sub, .cover-meta {
-    animation: fadeUp 0.7s ease forwards;
-  }
-  .cover-sub { animation-delay: 0.15s; }
-  .cover-meta { animation-delay: 0.3s; }
-
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--fog), transparent);
-    margin: 0 10vw;
+  /* ─── BODY WRAPPER ─── */
+  .reporte-body{
+    max-width:1100px;margin:0 auto;
+    display:flex;flex-direction:column;gap:0;
+    padding:0 72px;
   }
 
-  @media (max-width: 600px) {
-    .section { padding: 60px 6vw; }
-    .cover { padding: 60px 6vw; }
-    .toc { padding: 12px 6vw; }
-    .footer { flex-direction: column; }
+  /* ─── SECTIONS ─── */
+  .section{padding:64px 0;border-bottom:1px solid var(--gris-claro);}
+  .section:last-child{border-bottom:none;}
+  .section--tinted{background:var(--blanco);margin:0 -72px;padding:64px 72px;}
+  .section--dark{
+    background:var(--negro);color:rgba(255,255,255,0.85);
+    margin:0 -72px;padding:64px 72px;
   }
-</style>
+
+  .section-title__label{
+    display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--azul);font-weight:600;margin-bottom:10px;
+  }
+  .section--dark .section-title__label{color:var(--amarillo);}
+  .section-title__heading{
+    font-size:clamp(22px,3vw,34px);font-weight:800;
+    color:var(--negro);line-height:1.15;margin-bottom:10px;
+  }
+  .section--dark .section-title__heading{color:#fff;}
+  .section-title__desc{
+    font-size:15px;color:var(--gris);max-width:660px;
+    margin-bottom:40px;line-height:1.65;
+  }
+  .section--dark .section-title__desc{color:rgba(255,255,255,0.6);}
+
+  /* ─── KPI CARDS ─── */
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+  .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;}
+  .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+
+  .kpi-card{
+    background:var(--blanco);border-radius:10px;padding:24px;
+    border-left:4px solid var(--azul);
+    box-shadow:0 1px 6px rgba(0,0,0,0.05);
+  }
+  .kpi-card--blue{border-left-color:var(--azul);}
+  .kpi-card--green{border-left-color:var(--verde);}
+  .kpi-card--orange{border-left-color:var(--naranja);}
+  .kpi-card--purple{border-left-color:var(--morado);}
+  .kpi-card--yellow{border-left-color:var(--amarillo);background:#fdfde8;}
+  .kpi-card--tint-blue{background:var(--azul-light);border-left-color:var(--azul);}
+  .kpi-card--solid-blue{background:var(--azul);border-left-color:var(--azul-dark);}
+  .kpi-card--solid-blue .kpi-card__label,.kpi-card--solid-blue .kpi-card__value,.kpi-card--solid-blue .kpi-card__desc{color:#fff!important;}
+
+  .kpi-card__label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--gris);font-weight:600;margin-bottom:10px;}
+  .kpi-card__value{display:block;font-size:32px;font-weight:800;color:var(--negro);line-height:1;margin-bottom:8px;}
+  .kpi-card--solid-blue .kpi-card__value{color:#fff;}
+  .kpi-card__desc{display:block;font-size:13px;color:var(--gris);line-height:1.5;}
+
+  /* ─── HIGHLIGHT BOX ─── */
+  .highlight-box{
+    background:var(--azul);color:#fff;
+    border-radius:12px;padding:32px 40px;
+    line-height:1.75;font-size:15px;margin-top:8px;
+  }
+  .highlight-box strong{color:var(--amarillo);font-weight:700;}
+  .highlight-box--green{background:var(--verde);}
+  .highlight-box--orange{background:var(--naranja);}
+  .highlight-box--dark{background:var(--negro);}
+
+  /* ─── PARTICIPANTS ─── */
+  .participants-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .participant-card{
+    background:var(--blanco);border:1px solid var(--gris-claro);
+    border-radius:10px;padding:18px;display:flex;gap:14px;align-items:flex-start;
+    transition:box-shadow 0.2s;
+  }
+  .participant-card:hover{box-shadow:0 4px 20px rgba(84,84,233,0.1);}
+  .p-avatar{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--azul);color:#fff;
+    font-size:14px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .p-avatar.synthetic{background:var(--negro);}
+  .p-info h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+  .p-info .p-meta{font-size:12px;color:var(--gris);line-height:1.5;}
+  .p-tag{
+    display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+    padding:2px 8px;border-radius:3px;margin-top:6px;font-weight:600;
+  }
+  .p-tag.real{background:var(--verde-pale);color:var(--verde);}
+  .p-tag.synthetic{background:var(--azul-light);color:var(--azul);}
+
+  /* ─── AFFINITY CARDS ─── */
+  .affinity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+  .theme-card{border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);transition:transform 0.2s,box-shadow 0.2s;}
+  .theme-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.13);}
+  .theme-header{padding:22px 26px 18px;color:#fff;}
+  .theme-header .t-icon{font-size:26px;margin-bottom:8px;}
+  .theme-header h3{font-size:16px;font-weight:800;line-height:1.2;margin-bottom:5px;}
+  .theme-header .t-insight{font-size:12px;opacity:0.88;font-style:italic;line-height:1.5;}
+  .theme-body{background:var(--blanco);padding:18px 24px 22px;}
+  .cluster{margin-bottom:18px;}
+  .cluster:last-child{margin-bottom:0;}
+  .cluster-title{
+    font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    color:var(--negro);margin-bottom:8px;padding-bottom:5px;
+    border-bottom:1px solid var(--gris-claro);
+  }
+  .frequency{
+    font-size:9px;background:var(--azul);color:#fff;border-radius:3px;
+    padding:1px 5px;margin-left:4px;font-weight:600;vertical-align:middle;
+  }
+  .note{
+    display:block;font-size:12px;line-height:1.5;
+    background:var(--papel);border-left:3px solid var(--gris-claro);
+    padding:6px 10px;border-radius:0 5px 5px 0;margin:3px 0;color:var(--negro);
+  }
+  .note.red{background:var(--rojo-pale);border-color:var(--rojo);}
+  .note.amber{background:var(--amber-pale);border-color:var(--amber);}
+  .note.green{background:var(--verde-pale);border-color:var(--verde);}
+  .note.violet{background:var(--morado-pale);border-color:var(--morado);}
+  .note.teal{background:var(--teal-pale);border-color:var(--teal);}
+  .note.rose{background:var(--rose-pale);border-color:var(--rose);}
+
+  .t-exclusion .theme-header{background:linear-gradient(135deg,#d63b3b,#9e2020);}
+  .t-crisis .theme-header{background:linear-gradient(135deg,#c98000,#9a6000);}
+  .t-ansiedad .theme-header{background:linear-gradient(135deg,var(--morado),#5a3090);}
+  .t-confianza .theme-header{background:linear-gradient(135deg,var(--teal),#0e5550);}
+  .t-condiciones .theme-header{background:linear-gradient(135deg,var(--verde),#2a6040);}
+  .t-aversion .theme-header{background:linear-gradient(135deg,var(--azul),var(--azul-dark));}
+
+  /* ─── INSIGHTS ─── */
+  .insights-list{list-style:none;counter-reset:ins;}
+  .insight-item{
+    counter-increment:ins;
+    display:grid;grid-template-columns:56px 1fr;gap:24px;
+    padding:28px 0;border-bottom:1px solid var(--gris-claro);align-items:start;
+  }
+  .insight-item:last-child{border-bottom:none;}
+  .insight-num{
+    font-size:36px;font-weight:800;color:var(--gris-claro);line-height:1;
+  }
+  .insight-content h4{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--negro);}
+  .insight-content p{font-size:14px;color:var(--gris);line-height:1.65;}
+  .insight-evidence{margin-top:10px;font-size:12px;color:var(--azul);font-style:italic;}
+
+  /* ─── QUOTES ─── */
+  .quotes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+  .quote-card{
+    background:var(--blanco);border-radius:10px;padding:26px;
+    border-top:3px solid var(--azul);box-shadow:0 2px 10px rgba(0,0,0,0.05);
+    position:relative;
+  }
+  .quote-card::before{
+    content:'"';font-family:Georgia,serif;font-size:64px;
+    color:var(--azul-light);line-height:0.6;
+    position:absolute;top:24px;left:20px;
+  }
+  .quote-text{
+    font-size:14px;line-height:1.65;color:var(--negro);
+    padding-top:30px;font-style:italic;
+  }
+  .quote-author{
+    margin-top:14px;font-size:12px;font-weight:600;color:var(--azul);
+    letter-spacing:0.5px;
+  }
+  .quote-tag{
+    font-size:10px;background:var(--azul-light);color:var(--azul);
+    border-radius:3px;padding:2px 6px;margin-left:6px;font-weight:600;
+  }
+
+  /* ─── ARCHETYPE TABLE ─── */
+  .tabla-wrapper{overflow-x:auto;}
+  .tabla-datos{width:100%;border-collapse:collapse;font-size:13px;}
+  .tabla-datos th{
+    background:var(--negro);color:rgba(255,255,255,0.75);
+    font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:13px 15px;text-align:left;font-weight:600;
+  }
+  .tabla-datos td{padding:13px 15px;border-bottom:1px solid var(--gris-claro);vertical-align:top;color:var(--negro);}
+  .tabla-datos tr:last-child td{border-bottom:none;}
+  .tabla-datos tr:nth-child(even) td{background:var(--papel);}
+  .arch-name{font-weight:700;font-size:13px;}
+  .match-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gris-claro);margin-right:3px;vertical-align:middle;}
+  .match-dot.filled{background:var(--negro);}
+
+  /* ─── BADGES / PRIORITY ─── */
+  .badge{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:3px;}
+  .badge--red{background:var(--rojo-pale);color:var(--rojo);}
+  .badge--amber{background:var(--amber-pale);color:var(--amber);}
+  .badge--green{background:var(--verde-pale);color:var(--verde);}
+  .badge--blue{background:var(--azul-light);color:var(--azul);}
+
+  /* ─── RECS GRID ─── */
+  .recs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;}
+  .rec-card{
+    background:var(--blanco);border:1px solid var(--gris-claro);
+    border-radius:10px;padding:26px;position:relative;
+    transition:box-shadow 0.2s;
+  }
+  .rec-card:hover{box-shadow:0 4px 16px rgba(84,84,233,0.1);}
+  .rec-num{
+    font-size:42px;font-weight:800;color:var(--azul-light);line-height:1;
+    margin-bottom:10px;
+  }
+  .rec-card h4{font-size:14px;font-weight:700;color:var(--negro);margin-bottom:10px;}
+  .rec-card p{font-size:13px;color:var(--gris);line-height:1.65;}
+  .rec-priority{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:3px;margin-top:12px;}
+  .priority-high{background:var(--rojo-pale);color:var(--rojo);}
+  .priority-med{background:var(--amber-pale);color:var(--amber);}
+  .priority-low{background:var(--verde-pale);color:var(--verde);}
+
+  /* ─── OPEN QUESTIONS ─── */
+  .questions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+  .question-card{
+    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+    border-radius:10px;padding:22px;
+  }
+  .question-label{color:var(--amarillo);font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+  .question-text{font-size:13px;line-height:1.65;color:rgba(255,255,255,0.8);}
+
+  /* ─── FOOTER ─── */
+  .report-footer{
+    background:var(--negro);color:rgba(255,255,255,0.6);
+    padding:32px 72px;display:flex;justify-content:space-between;
+    align-items:center;flex-wrap:wrap;gap:16px;font-size:12px;
+  }
+  .report-footer img{height:28px;opacity:0.7;}
+  .report-footer__info{color:rgba(255,255,255,0.5);}
+  .report-footer__url{color:var(--amarillo);font-weight:600;letter-spacing:0.5px;}
+
+  /* ─── ALERTA ─── */
+  .alerta{border-radius:10px;padding:20px 24px;margin-bottom:0;}
+  .alerta--info{background:var(--azul-light);border-left:4px solid var(--azul);}
+  .alerta__titulo{font-weight:700;font-size:13px;color:var(--azul);display:block;margin-bottom:4px;}
+  .alerta__texto{font-size:13px;color:var(--negro);line-height:1.55;}
+
+  /* ─── DIVIDERS ─── */
+  hr.divider{border:none;border-top:1px solid var(--gris-claro);margin:0;}
+  hr.divider--thick{border:none;border-top:4px solid var(--azul);margin:0 0 0;}
+
+  @media(max-width:700px){
+    .reporte-body{padding:0 24px;}
+    .report-header__top,.report-header__title-block{padding-left:24px;padding-right:24px;}
+    .icesi-nav{padding:0 24px;}
+    .section--tinted,.section--dark{margin:0 -24px;padding:48px 24px;}
+    .report-footer{padding:24px;flex-direction:column;text-align:center;}
+  }
+-->
 </head>
 <body>
 
-<!-- COVER -->
-<section class="cover" id="inicio">
-  <div class="cover-badge">Confidencial · UX Research</div>
-  <div class="cover-tag">ACH Colombia · Laboratorio Digital · Abril 2026</div>
-  <h1>Diagrama de<br><span>Afinidad</span></h1>
-  <p class="cover-sub">Síntesis cualitativa de investigación de usuario para la iniciativa <strong style="color:white">PSE Crédito (BNPL)</strong> — validación de dolores, barreras y oportunidades de diseño.</p>
-  <div class="cover-meta">
-    <div class="cover-meta-item">
-      <strong>Entrevistas</strong>
-      <span>5 participantes (2 sintéticos + 3 reales)</span>
+<!-- HEADER -->
+<div class="report-header">
+  <div class="report-header__top">
+    <div class="report-header__logo">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NjAgMjg4Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjNTQ1NGU5OwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI4OCIvPgogIDxnPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3OS42LDcxLjFjMS43LDEuMiwzLjQsMi40LDUsMy42bC0xMy45LDE5LjJjLTEuNi0xLjMtMy4zLTIuNS01LTMuNmwxMy45LTE5LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTc5LjYsNzEuMWMxLjcsMS4yLDMuNCwyLjQsNSwzLjZsLTEzLjksMTkuMmMtMS42LTEuMy0zLjMtMi41LTUtMy42bDEzLjktMTkuMloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05Ni4xLDYzLjJsNy40LDIyLjZjNC43LTIuMiw5LjYtMy44LDE0LjgtNC44bC03LjQtMjIuNmMtNS4xLDEuMi0xMC4xLDIuOC0xNC44LDQuOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05Ni4xLDYzLjJsNy40LDIyLjZjNC43LTIuMiw5LjYtMy44LDE0LjgtNC44bC03LjQtMjIuNmMtNS4xLDEuMi0xMC4xLDIuOC0xNC44LDQuOFoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNDcuNyw4Mi4xYzEuOC41LDMuNiwxLjEsNS4zLDEuN2w3LjMtMjIuNWMtMS43LS42LTMuNS0xLjItNS4zLTEuN2wtNy4zLDIyLjVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTQ3LjcsODIuMWMxLjguNSwzLjYsMS4xLDUuMywxLjdsNy4zLTIyLjVjLTEuNy0uNi0zLjUtMS4yLTUuMy0xLjdsLTcuMywyMi41WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTc0LjgsMTEyLjJjMi4zLTQuMSw1LjEtNy45LDguMy0xMS40bC0xOS4yLTE0Yy0zLjEsMy42LTUuOCw3LjQtOC4zLDExLjRsMTkuMiwxNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik03NC44LDExMi4yYzIuMy00LjEsNS4xLTcuOSw4LjMtMTEuNGwtMTkuMi0xNGMtMy4xLDMuNi01LjgsNy40LTguMywxMS40bDE5LjIsMTRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNODcuMSw5Ni44YzMuNi0zLjMsNy43LTYuMywxMi04LjdsLTE0LTE5LjJjLTQuMiwyLjYtOC4zLDUuNS0xMiw4LjdsMTQsMTkuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Ny4xLDk2LjhjMy42LTMuMyw3LjctNi4zLDEyLTguN2wtMTQtMTkuMmMtNC4yLDIuNi04LjMsNS41LTEyLDguN2wxNCwxOS4yWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY2LjMsMTQ0YzAtMi4xLjEtNC4zLjMtNi40aC0yMy43Yy0uMiwyLjEtLjIsNC4yLS4yLDYuNHMwLDQuMy4yLDYuNGgyMy43Yy0uMi0yLjEtLjMtNC4yLS4zLTYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02Ni4zLDE0NGMwLTIuMS4xLTQuMy4zLTYuNGgtMjMuN2MtLjIsMi4xLS4yLDQuMi0uMiw2LjRzMCw0LjMuMiw2LjRoMjMuN2MtLjItMi4xLS4zLTQuMi0uMy02LjRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk0LjgsMTQ0YzAsMS4zLDAsMi43LS4xLDRoMjMuN2MwLTEuMywwLTIuNywwLTRzMC0yLjcsMC00aC0yMy43YzAsMS4zLjEsMi43LjEsNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTQuOCwxNDRjMCwxLjMsMCwyLjctLjEsNGgyMy43YzAtMS4zLDAtMi43LDAtNHMwLTIuNywwLTRoLTIzLjdjMCwxLjMuMSwyLjcuMSw0WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY3LjcsMTMwLjZjLjktNC40LDIuMy04LjcsNC4xLTEyLjdsLTIyLjYtNy4zYy0xLjcsNC4xLTMuMSw4LjMtNC4xLDEyLjdsMjIuNiw3LjNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNjcuNywxMzAuNmMuOS00LjQsMi4zLTguNyw0LjEtMTIuN2wtMjIuNi03LjNjLTEuNyw0LjEtMy4xLDguMy00LjEsMTIuN2wyMi42LDcuM1oiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODAuNCwxMDMuNmMxLjQsMS44LDIuOCwzLjYsNCw1LjZsMTkuMi0xMy45Yy0xLjMtMS45LTIuNi0zLjgtNC01LjZsLTE5LjIsMTMuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODAuNCwxMDMuNmMxLjQsMS44LDIuOCwzLjYsNCw1LjZsMTkuMi0xMy45Yy0xLjMtMS45LTIuNi0zLjgtNC01LjZsLTE5LjIsMTMuOVoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjIuMyw1Ni41djIzLjhzMCwwLDAsMGMxLjEtLjEsNC41LS41LDguMi0uNXM3LjEuNCw4LjIuNWMwLDAsMCwwLDAsMHYtMjMuOGMtMS4zLS4xLTQuNy0uNC04LjItLjRzLTYuOS4zLTguMi40WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTEyMi4zLDU2LjV2MjMuOHMwLDAsMCwwYzEuMS0uMSw0LjUtLjUsOC4yLS41czcuMS40LDguMi41YzAsMCwwLDAsMCwwdi0yMy44Yy0xLjMtLjEtNC43LS40LTguMi0uNHMtNi45LjMtOC4yLjRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTcyLjQsMTkyLjZjLTIuNCwyLTQuOSwzLjktNy41LDUuNmwxNCwxOS4yYzIuNi0xLjcsNS4xLTMuNiw3LjUtNS42bC0xNC0xOS4yWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3Mi40LDE5Mi42Yy0yLjQsMi00LjksMy45LTcuNSw1LjZsMTQsMTkuMmMyLjYtMS43LDUuMS0zLjYsNy41LTUuNmwtMTQtMTkuMloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik03MS42LDE2OS41Yy0xLjYtMy43LTIuOC03LjUtMy43LTExLjVsLTIyLjYsNy4zYzEsMy45LDIuMiw3LjgsMy43LDExLjVsMjIuNi03LjNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNzEuNiwxNjkuNWMtMS42LTMuNy0yLjgtNy41LTMuNy0xMS41bC0yMi42LDcuM2MxLDMuOSwyLjIsNy44LDMuNywxMS41bDIyLjYtNy4zWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE1NC44LDIwMy41Yy0yLjksMS4yLTUuOCwyLjEtOC45LDIuOWw3LjMsMjIuNmMzLS44LDYtMS44LDguOS0yLjlsLTcuMy0yMi42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE1NC44LDIwMy41Yy0yLjksMS4yLTUuOCwyLjEtOC45LDIuOWw3LjMsMjIuNmMzLS44LDYtMS44LDguOS0yLjlsLTcuMy0yMi42WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44LDE1OS44Yy0uNywyLjctMS42LDUuNC0yLjYsOGwyMi42LDcuM2MxLTIuNiwxLjktNS4zLDIuNi04bC0yMi41LTcuM1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTIuOCwxNTkuOGMtLjcsMi43LTEuNiw1LjQtMi42LDhsMjIuNiw3LjNjMS0yLjYsMS45LTUuMywyLjYtOGwtMjIuNS03LjNaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTg1LDE3OGMtMS42LDIuNS0zLjMsNC45LTUuMiw3LjJsMTkuMiwxMy45YzEuOS0yLjMsMy42LTQuNyw1LjItNy4ybC0xOS4yLTEzLjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTg1LDE3OGMtMS42LDIuNS0zLjMsNC45LTUuMiw3LjJsMTkuMiwxMy45YzEuOS0yLjMsMy42LTQuNyw1LjItNy4ybC0xOS4yLTEzLjlaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNODMuNCwyMTguMmwxMy45LTE5LjJjLTMuMS0xLjktNi4xLTQtOC44LTYuNGwtMTQsMTkuMmMyLjgsMi4zLDUuNyw0LjUsOC44LDYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04My40LDIxOC4ybDEzLjktMTkuMmMtMy4xLTEuOS02LjEtNC04LjgtNi40bC0xNCwxOS4yYzIuOCwyLjMsNS43LDQuNSw4LjgsNi40WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTgyLjIsMTg2LjJjLTIuNS0yLjktNC44LTYtNi44LTkuM2wtMTkuMiwxNGMyLDMuMiw0LjMsNi4zLDYuNyw5LjNsMTkuMi0xNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Mi4yLDE4Ni4yYy0yLjUtMi45LTQuOC02LTYuOC05LjNsLTE5LjIsMTRjMiwzLjIsNC4zLDYuMyw2LjcsOS4zbDE5LjItMTRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTE1LjcsMjA2LjVjLTMuNC0uOC02LjctMS45LTkuOS0zLjJsLTcuMywyMi42YzMuMiwxLjMsNi41LDIuMyw5LjgsMy4ybDcuMy0yMi42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTExNS43LDIwNi41Yy0zLjQtLjgtNi43LTEuOS05LjktMy4ybC03LjMsMjIuNmMzLjIsMS4zLDYuNSwyLjMsOS44LDMuMmw3LjMtMjIuNloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzUuNSwyMzEuN3YtMjMuN2MtMS42LjEtMy4zLjItNC45LjJzLTMuMywwLTQuOS0uMnYyMy43YzEuNiwwLDMuMy4xLDQuOS4xczMuMywwLDQuOS0uMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzUuNSwyMzEuN3YtMjMuN2MtMS42LjEtMy4zLjItNC45LjJzLTMuMywwLTQuOS0uMnYyMy43YzEuNiwwLDMuMy4xLDQuOS4xczMuMywwLDQuOS0uMVoiLz4KICAgICAgPC9nPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjAuMywxMDYuNWMtMS4yLjMtMi40LjctMy41LDEuMWwtNi42LTIwLjRjMS4yLS40LDIuMy0uOCwzLjUtMS4xbDYuNiwyMC40Wk0xMzAuNSw4My43Yy0xLjQsMC0yLjksMC00LjMuMnYyMS42YzEuNC0uMiwyLjgtLjIsNC4zLS4yLDEuNSwwLDIuOSwwLDQuMy4ydi0yMS42Yy0xLjQsMC0yLjgtLjItNC4zLS4yWk0xNTMuMSw4OGMtMi42LTEtNS4yLTEuOS03LjktMi42bC02LjcsMjAuNWMyLjguNiw1LjQsMS41LDcuOSwyLjZsNi43LTIwLjVaTTE2OS4yLDk3LjdjLTIuMS0xLjctNC4yLTMuMy02LjUtNC43bC0xMi43LDE3LjRjMi4zLDEuNCw0LjUsMi45LDYuNSw0LjdsMTIuNy0xNy40Wk05Ni43LDk0Yy0xLjEuNy0yLjEsMS41LTMuMiwyLjNsMTIuNiwxNy40YzEtLjgsMi4xLTEuNiwzLjItMi4zbC0xMi42LTE3LjRaTTE4MS41LDExMS44Yy0xLjQtMi4yLTIuOS00LjMtNC42LTYuM2wtMTcuNCwxMi43YzEuNywxLjksMy4zLDQuMSw0LjYsNi4zbDE3LjQtMTIuN1pNNzIuNSwxMjcuNWwyMC40LDYuNmMuNC0xLjQuOS0yLjksMS40LTQuMmwtMjAuNS02LjZjLS41LDEuNC0xLDIuOC0xLjQsNC4yWk0xNjkuMiwxNDcuNmgyMS41YzAtMS4yLjEtMi40LjEtMy42czAtMi40LS4xLTMuNmgtMjEuNWMuMSwxLjIuMiwyLjQuMiwzLjYsMCwxLjIsMCwyLjQtLjIsMy42Wk04MywxMDYuOGMtLjksMS4xLTEuNywyLjItMi41LDMuNGwxNy40LDEyLjZjLjgtMS4yLDEuNi0yLjMsMi41LTMuNGwtMTcuNC0xMi42Wk05MS44LDE0MS42aC0yMS41YzAsLjgsMCwxLjYsMCwyLjRzMCwxLjYsMCwyLjRoMjEuNWMwLS44LDAtMS42LDAtMi40czAtMS42LDAtMi40Wk05Mi45LDE5MS4xYzEuNCwxLjEsMi45LDIuMiw0LjQsMy4ybDEyLjYtMTcuNGMtMS42LTEtMy0yLjEtNC40LTMuMmwtMTIuNiwxNy40Wk0xMDkuMiwyMDAuNGMxLjguNywzLjYsMS4zLDUuNSwxLjhsNi43LTIwLjVjLTEuOS0uNS0zLjctMS4xLTUuNS0xLjhsLTYuNywyMC41Wk04MC4yLDE3Ny4zYzEsMS41LDIsMi45LDMuMSw0LjJsMTcuNC0xMi42Yy0xLjEtMS4zLTIuMS0yLjgtMy4xLTQuMmwtMTcuNCwxMi42Wk03Mi40LDE2MC4zYy40LDEuNiwxLDMuMiwxLjUsNC43bDIwLjUtNi42Yy0uNi0xLjUtMS4xLTMuMS0xLjUtNC43bC0yMC40LDYuNlpNMTMwLjUsMjA0LjNjMSwwLDIsMCwzLDB2LTIxLjVjLTEsMC0yLC4xLTMsLjFzLTIsMC0zLS4xdjIxLjVjMSwwLDIsMCwzLDBaTTE4OSwxMjljLS42LTIuNS0xLjQtNC45LTIuMy03LjJsLTIwLjUsNi43YzEsMi4zLDEuOCw0LjcsMi4zLDcuMmwyMC41LTYuN1pNMTQ2LjIsMjAyLjNjMi0uNSw0LTEuMiw2LTEuOWwtNi43LTIwLjVjLTEuOS44LTMuOSwxLjQtNiwxLjlsNi43LDIwLjVaTTE4Ni43LDE2NmMuOS0yLjIsMS42LTQuNCwyLjItNi43bC0yMC41LTYuN2MtLjUsMi4zLTEuMiw0LjYtMi4yLDYuN2wyMC41LDYuN1pNMTc3LjMsMTgyLjFjMS40LTEuNywyLjgtMy42LDQtNS41bC0xNy40LTEyLjdjLTEuMiwxLjktMi41LDMuOC00LDUuNWwxNy40LDEyLjdaTTE2My4zLDE5NC43YzEuOC0xLjIsMy42LTIuNSw1LjMtMy44bC0xMi43LTE3LjRjLTEuNiwxLjQtMy40LDIuNy01LjMsMy44bDEyLjYsMTcuNFoiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yNDguNywxMjhoMTIuMnY3MC43aC0xMi4ydi03MC43WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yNzUuMywxNjMuOGMwLTIxLjMsMTYuMS0zNy40LDM3LTM3LjRzMjMuNCw1LjMsMzAuMiwxNWwtOS43LDcuNGMtNS43LTcuNy0xMi44LTExLjMtMjAuNi0xMS4zLTEzLjUsMC0yNC4yLDEwLjctMjQuMiwyNS45czExLDI1LjksMjQuNCwyNS45LDE2LjQtNC4zLDIxLjktMTEuOGw5LjMsNi44Yy02LjgsMTAuMy0xOC4yLDE2LjEtMzEuMywxNi4xLTIxLjMsMC0zNi45LTE1LjUtMzYuOS0zNi42WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00MjIuNCwxNjYuMWgtNTljMSwxNC45LDEwLjksMjMuNCwyNS4xLDIzLjRzMTcuNC0zLjksMjMuNC0xMmw4LjgsNi43Yy02LjgsMTAuMi0xOC4yLDE2LjEtMzIuNCwxNi4xLTIyLjEsMC0zNy4zLTE0LjktMzcuMy0zNi41czE1LjktMzcuNiwzNy40LTM3LjYsMzQuNSwxMy44LDM0LjUsMzQuNS0uMSwzLjYtLjQsNS4zWk0zNjQuMSwxNTUuNWg0Ni4yYy0xLjgtMTIuMi05LjktMTguNy0yMi0xOC43cy0yMS40LDYuOC0yNC4yLDE4LjdaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTQzMi40LDE4OS4xbDcuOC05LjJjNi43LDYuMywxNS41LDkuNSwyMy43LDkuNXMxNS4yLTQuMywxNS4yLTEwLjItMy4xLTcuNS0xMi4xLTkuNmwtMTIuNC0yLjhjLTE0LjItMy4yLTIwLjItOS4zLTIwLjItMTguOXMxMC42LTIxLjYsMjcuMS0yMS42LDIyLDQsMjguNywxMS4zbC04LjIsOC41Yy01LjgtNS44LTEzLjEtOC44LTIxLjMtOC44cy0xNC4zLDMuOS0xNC4zLDkuNiwyLjYsNi44LDEyLjQsOWwxMi40LDIuOGMxNC4zLDMuMiwxOS45LDkuNywxOS45LDE5LjVzLTEwLjIsMjIuMS0yNy42LDIyLjEtMjMuOS00LjMtMzEtMTEuM1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNTA1LjEsMTI4aDEyLjJ2NzAuN2gtMTIuMnYtNzAuN1oiLz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjQ4LjcsMTAxLjF2LTEyLjNoMy43djEyYzAsMy43LDEuOCw1LjUsNC45LDUuNXM0LjktMS44LDQuOS01LjV2LTEyaDMuN3YxMi4zYzAsNS41LTMuMyw4LjYtOC42LDguNnMtOC42LTMuMS04LjYtOC42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTI4NC43LDEwMC4zdjloLTMuNXYtOC4zYzAtMi42LTEuMi0zLjktMy4yLTMuOXMtMi42LjUtMy43LDEuOHYxMC40aC0zLjV2LTE1aDMuNXYxLjNjMS4yLTEsMi45LTEuNiw0LjYtMS42LDMuNSwwLDUuOCwyLjMsNS44LDYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yODguOSw5MGMwLTEuMiwxLTIuMiwyLjMtMi4yczIuMiwxLDIuMiwyLjItMSwyLjMtMi4yLDIuMy0yLjMtMS0yLjMtMi4zWk0yODkuNCw5NC4zaDMuNXYxNWgtMy41di0xNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zMTIuMSw5NC4zbC02LjIsMTVoLTMuOGwtNi4yLTE1aDMuOWw0LjIsMTAuNyw0LjItMTAuN2gzLjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzI5LjIsMTAyLjdoLTExLjljLjMsMi42LDIsNCw0LjYsNHMzLjItLjYsNC40LTIuMWwyLjUsMS45Yy0xLjYsMi4xLTQsMy4zLTcsMy4zLTQuOSwwLTguMS0zLjItOC4xLTcuOHMzLjMtOCw4LTgsNy41LDIuOSw3LjUsNy40LDAsLjksMCwxLjNaTTMxNy41LDEwMGg4LjNjLS40LTIuMS0xLjgtMy4xLTMuOS0zLjFzLTMuOCwxLjEtNC4zLDMuMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNDIuNSw5NC4xbC0uMiwzLjNjLS41LDAtMS0uMS0xLjQtLjEtMS43LDAtMy4yLjgtNC4xLDIuM3Y5LjhoLTMuNXYtMTVoMy41djEuNmMxLTEuMywyLjYtMiw0LjItMnMxLDAsMS42LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzQ0LjksMTA3LjVsMS44LTIuNmMxLjYsMS4yLDMuMywxLjgsNSwxLjhzMi42LS43LDIuNi0xLjYtLjUtMS4yLTIuMS0xLjZsLTIuNi0uNmMtMy0uNy00LjMtMi00LjMtNC4xczIuMy00LjgsNi00LjgsNC43LjgsNi4yLDIuMmwtMS45LDIuNWMtMS40LTEuMS0yLjktMS43LTQuNS0xLjdzLTIuNC42LTIuNCwxLjUuNSwxLjEsMi4xLDEuNWwyLjYuNmMzLjEuNyw0LjMsMi4xLDQuMyw0LjJzLTIuMyw0LjktNi4yLDQuOS01LjEtLjktNi43LTIuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNjEsOTBjMC0xLjIsMS0yLjIsMi4zLTIuMnMyLjIsMSwyLjIsMi4yLTEsMi4zLTIuMiwyLjMtMi4zLTEtMi4zLTIuM1pNMzYxLjUsOTQuM2gzLjV2MTVoLTMuNXYtMTVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzg0LjMsODcuNnYyMS43aC0zLjV2LTEuMWMtMS4xLDEtMi43LDEuNS00LjMsMS41LTQuMSwwLTcuNS0zLjMtNy41LTcuOXMzLjQtNy45LDcuNS03LjksMy4yLjUsNC4zLDEuNXYtNy44aDMuNVpNMzgwLjgsMTA0Ljd2LTUuOGMtMS0xLjItMi40LTEuNy0zLjgtMS43LTIuNSwwLTQuNCwxLjgtNC40LDQuNnMxLjksNC42LDQuNCw0LjYsMi44LS42LDMuOC0xLjhaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDAzLjUsOTQuM3YxNWgtMy41di0xLjFjLTEuMSwxLTIuNywxLjUtNC4zLDEuNS00LjEsMC03LjUtMy4zLTcuNS03LjlzMy40LTcuOSw3LjUtNy45LDMuMi41LDQuMywxLjV2LTEuMWgzLjVaTTQwMCwxMDQuN3YtNS44Yy0xLTEuMi0yLjQtMS43LTMuOC0xLjctMi41LDAtNC40LDEuOC00LjQsNC42czEuOSw0LjYsNC40LDQuNiwyLjgtLjYsMy44LTEuOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00MjIuOCw4Ny42djIxLjdoLTMuNXYtMS4xYy0xLjEsMS0yLjcsMS41LTQuMywxLjUtNC4xLDAtNy41LTMuMy03LjUtNy45czMuNC03LjksNy41LTcuOSwzLjIuNSw0LjMsMS41di03LjhoMy41Wk00MTkuMywxMDQuN3YtNS44Yy0xLTEuMi0yLjQtMS43LTMuOC0xLjctMi41LDAtNC40LDEuOC00LjQsNC42czEuOSw0LjYsNC40LDQuNiwyLjgtLjYsMy44LTEuOFoiLz4KICAgICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+" alt="Universidad Icesi">
     </div>
-    <div class="cover-meta-item">
-      <strong>Método</strong>
-      <span>JTBD / Cuatro Fuerzas</span>
+    <div class="report-header__badge">Confidencial · UX Research</div>
+  </div>
+  <div class="report-header__title-block">
+    <span class="report-header__eyebrow">ACH Colombia · Laboratorio Digital · Abril 2026</span>
+    <h1 class="report-header__title">Diagrama de<br><span>Afinidad</span></h1>
+    <p class="report-header__subtitle">Síntesis cualitativa de investigación de usuario para la iniciativa <strong style="color:#e4eb60">PSE Crédito (BNPL)</strong> — validación de dolores, barreras y oportunidades de diseño.</p>
+  </div>
+  <div class="report-header__kpi-bar">
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">5</span>
+      <span class="report-header__kpi-label">Entrevistas</span>
     </div>
-    <div class="cover-meta-item">
-      <strong>Periodo</strong>
-      <span>Abril 21–22, 2026</span>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">6</span>
+      <span class="report-header__kpi-label">Macro-temas</span>
     </div>
-    <div class="cover-meta-item">
-      <strong>Para</strong>
-      <span>ACH Colombia</span>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">8</span>
+      <span class="report-header__kpi-label">Recomendaciones</span>
+    </div>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">JTBD</span>
+      <span class="report-header__kpi-label">Método</span>
+    </div>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">Abr 2026</span>
+      <span class="report-header__kpi-label">Período</span>
     </div>
   </div>
-</section>
+</div>
 
 <!-- NAV -->
-<nav class="toc">
-  <a href="#resumen">Resumen Ejecutivo</a>
+<nav class="icesi-nav">
+  <a href="#resumen">Resumen</a>
   <a href="#participantes">Participantes</a>
   <a href="#diagrama">Diagrama</a>
   <a href="#insights">Insights</a>
@@ -685,51 +421,59 @@
   <a href="#recomendaciones">Recomendaciones</a>
 </nav>
 
+<div class="reporte-body">
+
 <!-- RESUMEN EJECUTIVO -->
 <section class="section" id="resumen">
-  <div class="section-label">01 · Resumen Ejecutivo</div>
-  <h2 class="section-title">Lo que encontramos</h2>
-  <p class="section-intro">Cinco entrevistas — dos perfiles sintéticos profundos y tres transcripciones reales — revelan un mercado con alta demanda latente pero bloqueado por una capa de ansiedades financieras que el producto debe desactivar antes de generar conversión.</p>
+  <div class="section-title__label">01 · Resumen Ejecutivo</div>
+  <h2 class="section-title__heading">Lo que encontramos</h2>
+  <p class="section-title__desc">Cinco entrevistas — dos perfiles sintéticos profundos y tres transcripciones reales — revelan un mercado con alta demanda latente pero bloqueado por una capa de ansiedades financieras que el producto debe desactivar antes de generar conversión.</p>
 
-  <div class="exec-grid">
-    <div class="stat-card">
-      <div class="num">5/5</div>
-      <div class="lbl">Participantes conocen o usan PSE. La marca ya tiene autoridad instalada.</div>
+  <div class="grid-3" style="margin-bottom:28px;">
+    <div class="kpi-card kpi-card--blue">
+      <span class="kpi-card__label">Conocen PSE</span>
+      <span class="kpi-card__value">5/5</span>
+      <span class="kpi-card__desc">La marca ya tiene autoridad instalada.</span>
     </div>
-    <div class="stat-card">
-      <div class="num">4/5</div>
-      <div class="lbl">No tienen tarjeta de crédito o la tienen al tope. El dolor es estructural.</div>
+    <div class="kpi-card kpi-card--orange">
+      <span class="kpi-card__label">Sin tarjeta</span>
+      <span class="kpi-card__value">4/5</span>
+      <span class="kpi-card__desc">No tienen TC o la tienen al tope. El dolor es estructural.</span>
     </div>
-    <div class="stat-card">
-      <div class="num">4/5</div>
-      <div class="lbl">Prefieren PSE sobre Addi cuando se les pregunta por preferencia de marca.</div>
+    <div class="kpi-card kpi-card--green">
+      <span class="kpi-card__label">Prefieren PSE</span>
+      <span class="kpi-card__value">4/5</span>
+      <span class="kpi-card__desc">Prefieren PSE sobre Addi en preferencia de marca.</span>
     </div>
-    <div class="stat-card">
-      <div class="num">3/5</div>
-      <div class="lbl">Han abandonado una compra por falta de liquidez en el momento exacto.</div>
+    <div class="kpi-card kpi-card--purple">
+      <span class="kpi-card__label">Abandono compra</span>
+      <span class="kpi-card__value">3/5</span>
+      <span class="kpi-card__desc">Han abandonado una compra por falta de liquidez.</span>
     </div>
-    <div class="stat-card">
-      <div class="num">3/5</div>
-      <div class="lbl">"Pagar después" les genera carga emocional, no alivio. El framing importa.</div>
+    <div class="kpi-card kpi-card--yellow">
+      <span class="kpi-card__label">Carga emocional</span>
+      <span class="kpi-card__value">3/5</span>
+      <span class="kpi-card__desc">"Pagar después" les genera carga emocional, no alivio.</span>
     </div>
-    <div class="stat-card">
-      <div class="num">0/5</div>
-      <div class="lbl">Ninguno usa Addi o BNPL actualmente. Alta fricción de onboarding del competidor.</div>
+    <div class="kpi-card">
+      <span class="kpi-card__label">Usan Addi/BNPL</span>
+      <span class="kpi-card__value">0/5</span>
+      <span class="kpi-card__desc">Ninguno usa BNPL actualmente. Alta fricción del competidor.</span>
     </div>
   </div>
 
-  <div class="summary-box">
+  <div class="highlight-box">
     Existe un mercado real de colombianos que <strong>trabajan, ganan dinero y pagan sus cuentas</strong>, pero que el sistema crediticio trata como invisibles. Su mayor frustración no es la falta de dinero — es la incoherencia: tener trabajo, cuenta y ganas, y aun así no poder comprar una silla un sábado. <strong>PSE Crédito tiene una ventaja única</strong>: la marca ya inspira confianza. Pero esa confianza se perderá en el primer clic si el costo real no es visible de inmediato. La condición no negociable para el MVP es una sola: <strong>transparencia radical antes del "sí"</strong>.
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider">
 
 <!-- PARTICIPANTES -->
-<section class="section section-alt" id="participantes">
-  <div class="section-label">02 · Muestra</div>
-  <h2 class="section-title">Participantes del estudio</h2>
-  <p class="section-intro">Combinación de perfiles sintéticos (basados en arquetipos validados) y entrevistas reales realizadas por el equipo del Laboratorio Digital.</p>
+<section class="section section--tinted" id="participantes">
+  <div class="section-title__label">02 · Muestra</div>
+  <h2 class="section-title__heading">Participantes del estudio</h2>
+  <p class="section-title__desc">Combinación de perfiles sintéticos (basados en arquetipos validados) y entrevistas reales realizadas por el equipo del Laboratorio Digital.</p>
 
   <div class="participants-grid">
     <div class="participant-card">
@@ -768,24 +512,23 @@
       <div class="p-avatar">AL</div>
       <div class="p-info">
         <h4>Ana Sofía Luque</h4>
-        <div class="p-meta">19 años · Estudiante universitaria<br>Sin tarjeta de crédito · Compras frecuentes en línea<br>Se autodefine como impulsiva</div>
+        <div class="p-meta">19 años · Estudiante universitaria<br>Sin tarjeta de crédito · Compras frecuentes<br>Se autodefine como impulsiva</div>
         <span class="p-tag real">Entrevista Real</span>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider">
 
 <!-- DIAGRAMA DE AFINIDAD -->
 <section class="section" id="diagrama">
-  <div class="section-label">03 · Diagrama de Afinidad</div>
-  <h2 class="section-title">Seis macro-temas emergentes</h2>
-  <p class="section-intro">Construido de abajo hacia arriba a partir de observaciones, citas y comportamientos detectados en las 5 entrevistas. Cada tarjeta agrupa notas similares bajo un tema unificador.</p>
+  <div class="section-title__label">03 · Diagrama de Afinidad</div>
+  <h2 class="section-title__heading">Seis macro-temas emergentes</h2>
+  <p class="section-title__desc">Construido de abajo hacia arriba a partir de observaciones, citas y comportamientos detectados en las 5 entrevistas. Cada tarjeta agrupa notas similares bajo un tema unificador.</p>
 
   <div class="affinity-grid">
 
-    <!-- TEMA 1: EXCLUSIÓN -->
     <div class="theme-card t-exclusion">
       <div class="theme-header">
         <div class="t-icon">🚫</div>
@@ -813,7 +556,6 @@
       </div>
     </div>
 
-    <!-- TEMA 2: CRISIS EN CHECKOUT -->
     <div class="theme-card t-crisis">
       <div class="theme-header">
         <div class="t-icon">💥</div>
@@ -841,7 +583,6 @@
       </div>
     </div>
 
-    <!-- TEMA 3: ANSIEDADES -->
     <div class="theme-card t-ansiedad">
       <div class="theme-header">
         <div class="t-icon">😰</div>
@@ -876,7 +617,6 @@
       </div>
     </div>
 
-    <!-- TEMA 4: CONFIANZA PSE -->
     <div class="theme-card t-confianza">
       <div class="theme-header">
         <div class="t-icon">🔵</div>
@@ -887,14 +627,14 @@
         <div class="cluster">
           <div class="cluster-title">PSE = familiaridad y confiabilidad <span class="frequency">5/5</span></div>
           <div class="note teal">Mateo: "PSE, sin pensarlo mucho. Ya lo conozco. Pago el recibo de la luz con PSE. Sé que funciona."</div>
-          <div class="note teal">Valentina: "PSE lo uso para pagar el arriendo hace 3 años y nunca ha fallado. Le tengo más fe que a una fintech de Instagram."</div>
+          <div class="note teal">Valentina: "PSE lo uso para pagar el arriendo hace 3 años y nunca ha fallado."</div>
           <div class="note teal">Ana Sofía: "Usaría PSE porque sé usarlo, sé que es seguro."</div>
           <div class="note teal">Juan: "Con PSE, con más confianza. Ya tengo cuenta, lo he manejado bastante."</div>
         </div>
         <div class="cluster">
           <div class="cluster-title">Rechazo activo a Addi <span class="frequency">3/5</span></div>
           <div class="note amber">Valentina: Cerró el formulario de Addi cuando le pidió referencias personales. "Muy invasivo."</div>
-          <div class="note amber">Mateo: "Me da pereza descargar otra app, llenar cédula, selfie, datos del trabajo. ¿Qué trabajo pongo si soy independiente?"</div>
+          <div class="note amber">Mateo: "Me da pereza descargar otra app, llenar cédula, selfie, datos del trabajo."</div>
           <div class="note">Sofía y Ana Sofía: No conocen Addi. PSE es su única referencia de pago digital confiable.</div>
         </div>
         <div class="cluster">
@@ -905,7 +645,6 @@
       </div>
     </div>
 
-    <!-- TEMA 5: CONDICIONES MVP -->
     <div class="theme-card t-condiciones">
       <div class="theme-header">
         <div class="t-icon">✅</div>
@@ -922,13 +661,13 @@
         </div>
         <div class="cluster">
           <div class="cluster-title">Scoring sin certificación laboral <span class="frequency">2/5</span></div>
-          <div class="note">Mateo: Si PSE analiza su historial de pagos de servicios (luz, internet) como criterio, lo acepta. "Dímelo explícitamente."</div>
+          <div class="note">Mateo: Si PSE analiza su historial de pagos de servicios (luz, internet) como criterio, lo acepta.</div>
           <div class="note">Juan: Interesado si el proceso no requiere documentos que como empleado informal no puede conseguir.</div>
         </div>
         <div class="cluster">
           <div class="cluster-title">Política de mora humana y visible</div>
-          <div class="note">Mateo: Una garantía explícita de que los primeros días de atraso no generan reporte a centrales eliminaría su mayor bloqueador.</div>
-          <div class="note">Valentina: La política de reversas (si el comercio falla) debe estar visible antes de comprar, no en los T&C.</div>
+          <div class="note">Mateo: Una garantía explícita de que los primeros días de atraso no generan reporte eliminaría su mayor bloqueador.</div>
+          <div class="note">Valentina: La política de reversas debe estar visible antes de comprar, no en los T&C.</div>
         </div>
         <div class="cluster">
           <div class="cluster-title">Inicio de historial crediticio como gancho</div>
@@ -937,7 +676,6 @@
       </div>
     </div>
 
-    <!-- TEMA 6: AVERSIÓN AL CRÉDITO -->
     <div class="theme-card t-aversion">
       <div class="theme-header">
         <div class="t-icon">🧾</div>
@@ -957,7 +695,7 @@
         </div>
         <div class="cluster">
           <div class="cluster-title">Implicación de diseño</div>
-          <div class="note green">PSE Crédito no debe mostrarse como opción primaria o como presión. Debe aparecer como alternativa discreta para quien llegue al checkout sin saldo — no como propuesta universal.</div>
+          <div class="note green">PSE Crédito no debe mostrarse como opción primaria. Debe aparecer como alternativa discreta para quien llegue al checkout sin saldo — no como propuesta universal.</div>
         </div>
       </div>
     </div>
@@ -965,13 +703,13 @@
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider">
 
 <!-- INSIGHT STATEMENTS -->
-<section class="section section-alt" id="insights">
-  <div class="section-label">04 · Insight Statements</div>
-  <h2 class="section-title">El "so what?" de cada tema</h2>
-  <p class="section-intro">Cada insight captura la consecuencia de diseño más importante que emerge del cluster. Son las frases que deben guiar las decisiones del MVP.</p>
+<section class="section section--tinted" id="insights">
+  <div class="section-title__label">04 · Insight Statements</div>
+  <h2 class="section-title__heading">El "so what?" de cada tema</h2>
+  <p class="section-title__desc">Cada insight captura la consecuencia de diseño más importante que emerge del cluster. Son las frases que deben guiar las decisiones del MVP.</p>
 
   <ol class="insights-list">
     <li class="insight-item">
@@ -1013,233 +751,18 @@
         <p>Juan fue el único que dijo "claro que sí, de una" al concepto — y lo hizo al conectarlo con la posibilidad de construir historial. Para el segmento de 18-27 años que el sistema bancario ignora, PSE Crédito no es un servicio de pago diferido — es la puerta de entrada al sistema financiero. Ese mensaje no existe hoy en ningún competidor.</p>
         <div class="insight-evidence">Evidencia: Juan R. (24 años) — posible driver de adquisición para segmento joven</div>
       </div>
-    </li>
-    <li class="insight-item">
-      <div class="insight-num">06</div>
-      <div class="insight-content">
-        <h4>No todo usuario de PSE es target de BNPL. Forzarlo generará rechazo.</h4>
-        <p>Sofía y Ana Sofía representan un perfil válido de usuario PSE que paga de contado por identidad, no por falta de opciones. Mostrarles PSE Crédito como una opción intrusiva o permanente podría dañar la relación con el producto principal. La solución es una intervención contextual y discreta, activada solo cuando hay saldo insuficiente detectado.</p>
-        <div class="insight-evidence">Evidencia: Sofía M., Ana Sofía L. — 2/5 participantes con aversión estructural al crédito</div>
-      </div>
-    </li>
-  </ol>
-</section>
-
-<div class="divider"></div>
-
-<!-- CITAS CLAVE -->
-<section class="section" id="citas">
-  <div class="section-label">05 · Voz del Usuario</div>
-  <h2 class="section-title">Citas que no se pueden ignorar</h2>
-  <p class="section-intro">Fragmentos textuales que capturan la intensidad emocional detrás de los datos. Usar en presentaciones para hacer tangible el dolor del usuario.</p>
-
-  <div class="quotes-grid">
-    <div class="quote-card">
-      <div class="quote-text">Trabajo 12 horas y no puedo ni comprar un celular. El sistema me trata como si no existiera.</div>
-      <div class="quote-author">Mateo G., 27 <span class="quote-tag">Sintético · Gig Worker</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">La ansiedad financiera me cuesta más que los intereses mismos.</div>
-      <div class="quote-author">Valentina R., 34 <span class="quote-tag">Sintético · TC Saturada</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">Me preguntaron referencias personales. Eso me pareció muy invasivo. Lo cerré.</div>
-      <div class="quote-author">Valentina R., 34 <span class="quote-tag">Sobre Addi</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">Ningún banco me quiere. No te dicen por qué. Solo llegan con su trajecita: no es un adiós, sino un hasta pronto.</div>
-      <div class="quote-author">Juan Rodríguez, 24 <span class="quote-tag">Real · Entrevista Caicedo</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">Si eso me sirve para el historial crediticio, claro que sí, de una.</div>
-      <div class="quote-author">Juan Rodríguez, 24 <span class="quote-tag">Sobre PSE Crédito</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">Pagar después me genera una carga emocional. Es como un doble trabajo: hacer la compra y luego volver a pagar.</div>
-      <div class="quote-author">Sofía Martín <span class="quote-tag">Real · Entrevista Bonilla</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">Si no lo puedo pagar ahora, ¿quién me dice que puedo pagarlo después? Me destrozaría.</div>
-      <div class="quote-author">Ana Sofía Luque, 19 <span class="quote-tag">Real · Entrevista Plazas</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">Quiero meter el número en mi Excel y que se vuelva una decisión racional, no emocional.</div>
-      <div class="quote-author">Valentina R., 34 <span class="quote-tag">Condición de adopción</span></div>
-    </div>
-    <div class="quote-card">
-      <div class="quote-text">PSE lo uso para pagar el arriendo hace 3 años y nunca ha fallado. Le tengo más fe que a una fintech que apareció hace dos años.</div>
-      <div class="quote-author">Valentina R., 34 <span class="quote-tag">Ventaja de marca PSE</span></div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ARQUETIPOS -->
-<section class="section section-alt" id="arquetipos">
-  <div class="section-label">06 · Mapeo de Arquetipos</div>
-  <h2 class="section-title">Proto-arquetipos validados vs. muestra real</h2>
-  <p class="section-intro">Contraste entre los arquetipos definidos en la investigación desk y los patrones efectivamente observados en las entrevistas.</p>
-
-  <div style="overflow-x: auto;">
-    <table class="archetype-table">
-      <thead>
-        <tr>
-          <th>Arquetipo</th>
-          <th>Definición Original</th>
-          <th>Coincidencia en Muestra</th>
-          <th>Hallazgos Clave</th>
-          <th>Prioridad MVP</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><div class="arch-name">🏍️ Trabajador Independiente / Gig Worker</div></td>
-          <td>Sin certificación de ingresos, informal, usa Nequi.</td>
-          <td><span class="match-dot filled"></span><span class="match-dot filled"></span><span class="match-dot"></span> 2/5</td>
-          <td>Confirmado plenamente en Mateo (sintético). Juan es empleado formal pero tiene el mismo dolor de invisibilidad. El scoring alternativo es la funcionalidad clave para este segmento.</td>
-          <td><span class="rec-priority priority-high">Alta</span></td>
-        </tr>
-        <tr>
-          <td><div class="arch-name">💳 Capacidad Agotada</div></td>
-          <td>Bancarizado, TC al límite, dolor en checkout de e-commerce.</td>
-          <td><span class="match-dot filled"></span><span class="match-dot filled"></span><span class="match-dot"></span> 2/5</td>
-          <td>Valentina (sintético) es el caso más claro. El impacto emocional del abandono es más alto de lo estimado. La preocupación por el score hipotecario es un hallazgo no anticipado que puede bloquear la conversión.</td>
-          <td><span class="rec-priority priority-high">Alta</span></td>
-        </tr>
-        <tr>
-          <td><div class="arch-name">🌱 Joven sin Historial</div></td>
-          <td>Nativo digital, sin TC, quiere iniciar vida crediticia.</td>
-          <td><span class="match-dot filled"></span><span class="match-dot filled"></span><span class="match-dot"></span> 2/5</td>
-          <td>Juan (24) encaja perfectamente y mostró la mayor disposición. El framing del BNPL como "inicio de historial" resonó inmediatamente. Ana Sofía (19) también califica pero su aversión al crédito es una barrera real.</td>
-          <td><span class="rec-priority priority-med">Media</span></td>
-        </tr>
-        <tr>
-          <td><div class="arch-name">👻 Invisible para el Sector</div></td>
-          <td>Sin datos en bureaus, scoring alternativo como única opción.</td>
-          <td><span class="match-dot filled"></span><span class="match-dot"></span><span class="match-dot"></span> 1/5</td>
-          <td>Juan mencionó ser rechazado sin explicación, lo que sugiere invisibilidad en centrales. Mateo (sintético) ilustra este perfil. Necesita más validación con muestra más grande.</td>
-          <td><span class="rec-priority priority-med">Media</span></td>
-        </tr>
-        <tr>
-          <td><div class="arch-name">🧾 Aversivo al Crédito</div></td>
-          <td>No estaba en los proto-arquetipos originales.</td>
-          <td><span class="match-dot filled"></span><span class="match-dot filled"></span><span class="match-dot"></span> 2/5</td>
-          <td><strong>Arquetipo emergente.</strong> Sofía y Ana Sofía muestran aversión estructural al crédito como identidad. No son el target de BNPL pero sí son usuarios activos de PSE. Deben identificarse para no forzarles la oferta.</td>
-          <td><span class="rec-priority priority-low">Monitorear</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- RECOMENDACIONES -->
-<section class="section" id="recomendaciones">
-  <div class="section-label">07 · Recomendaciones de Producto</div>
-  <h2 class="section-title">Del insight a la acción</h2>
-  <p class="section-intro">Sugerencias concretas para el diseño del MVP, organizadas por prioridad de impacto en la conversión y la confianza.</p>
-
-  <div class="recs-grid">
-    <div class="rec-card">
-      <div class="rec-num">01</div>
-      <h4>Mostrar el costo total real ANTES del primer clic</h4>
-      <p>Cuota mensual exacta, número de cuotas, costo total incluidos IVA, seguro y aval — en la pantalla del checkout, no en los T&C. Si el usuario tiene que desplazarse para encontrar el precio real, ya perdiste la transacción.</p>
-      <span class="rec-priority priority-high">Prioridad Crítica</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">02</div>
-      <h4>Comunicar explícitamente el impacto en Datacrédito</h4>
-      <p>Valentina y Mateo mencionaron Datacrédito espontáneamente. Una línea de texto en la pantalla de aprobación que diga exactamente cómo y cuándo se reporta (o no se reporta) puede desbloquear a todo el segmento que construye perfil crediticio.</p>
-      <span class="rec-priority priority-high">Prioridad Crítica</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">03</div>
-      <h4>Activación contextual — no intrusiva ni permanente</h4>
-      <p>PSE Crédito debe aparecer solo cuando el sistema detecte saldo insuficiente, como un botón discreto tipo "¿Pagar en cuotas con PSE Crédito?" — nunca como opción primaria ni como pop-up en usuarios que siempre tienen saldo.</p>
-      <span class="rec-priority priority-high">Prioridad Crítica</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">04</div>
-      <h4>Scoring comunicado como mérito, no como concesión</h4>
-      <p>Para el segmento de independientes e informales, el mensaje debe ser: "Te aprobamos con base en tus pagos con PSE, no en certificados laborales." Esto transforma el producto de un crédito de último recurso a una recompensa por buen comportamiento transaccional.</p>
-      <span class="rec-priority priority-high">Prioridad Alta</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">05</div>
-      <h4>Política de mora humana y visible en la pantalla de aprobación</h4>
-      <p>Garantizar explícitamente que los primeros 5 días de atraso no generan reporte a centrales de riesgo — no en los T&C, sino en un bloque visible antes del "Acepto". Esto elimina el mayor bloqueador de Mateo y perfiles similares.</p>
-      <span class="rec-priority priority-med">Prioridad Alta</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">06</div>
-      <h4>Framing para jóvenes: "Inicia tu historial con PSE"</h4>
-      <p>Para el segmento de 18-27 años sin historial crediticio, posicionar PSE Crédito como la puerta de entrada al sistema financiero formal. Juan pasó de neutral a "de una" con ese argumento. Es el hook de adquisición más poderoso para este segmento.</p>
-      <span class="rec-priority priority-med">Prioridad Media</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">07</div>
-      <h4>Política de reversas proactiva (no en T&C)</h4>
-      <p>Valentina preguntó: "¿Qué pasa si el comercio no me despacha y ya empecé a pagar cuotas?" Esta pregunta debe tener respuesta en la pantalla de checkout, no después. Una garantía de reversa visible aumenta la conversión de los perfiles más cautelosos.</p>
-      <span class="rec-priority priority-med">Prioridad Media</span>
-    </div>
-    <div class="rec-card">
-      <div class="rec-num">08</div>
-      <h4>Evitar referencias personales como requisito</h4>
-      <p>La fricción de Addi que más mencionaron fue pedir "referencias personales". PSE Crédito no debe replicar esta práctica bajo ningún esquema. Si necesita validación adicional de identidad, usar biometría o datos transaccionales propios del ecosistema PSE.</p>
-      <span class="rec-priority priority-low">Diferenciador competitivo</span>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- QUESTIONS OPEN -->
-<section class="section section-dark">
-  <div class="section-label">08 · Preguntas sin Responder</div>
-  <h2 class="section-title">Lo que este estudio no pudo contestar</h2>
-  <p class="section-intro">Hipótesis que requieren rondas adicionales de investigación o pruebas con prototipos para ser validadas.</p>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
-    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(122,173,207,0.2); border-radius: 12px; padding: 24px;">
-      <div style="color: var(--sky); font-family: var(--font-head); font-size: 13px; margin-bottom: 10px; font-weight: 700;">MONTO</div>
-      <p style="font-size: 14px; line-height: 1.6;">¿Cuál es el rango de monto donde la conversión es más alta? ¿$150k–$400k donde el dolor es agudo pero la cuota es manejable?</p>
-    </div>
-    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(122,173,207,0.2); border-radius: 12px; padding: 24px;">
-      <div style="color: var(--sky); font-family: var(--font-head); font-size: 13px; margin-bottom: 10px; font-weight: 700;">SCORING</div>
-      <p style="font-size: 14px; line-height: 1.6;">¿Están los independientes dispuestos a que PSE analice su historial de pagos de servicios para determinar el cupo? ¿A cambio de qué?</p>
-    </div>
-    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(122,173,207,0.2); border-radius: 12px; padding: 24px;">
-      <div style="color: var(--sky); font-family: var(--font-head); font-size: 13px; margin-bottom: 10px; font-weight: 700;">DATACRÉDITO</div>
-      <p style="font-size: 14px; line-height: 1.6;">¿El miedo al reporte en Datacrédito es una barrera real o una racionalización de la resistencia emocional? ¿Un primer crédito de bajo monto sin reporte convertiría a Valentina?</p>
-    </div>
-    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(122,173,207,0.2); border-radius: 12px; padding: 24px;">
-      <div style="color: var(--sky); font-family: var(--font-head); font-size: 13px; margin-bottom: 10px; font-weight: 700;">CANAL</div>
-      <p style="font-size: 14px; line-height: 1.6;">¿Qué canal de atención (WhatsApp, chat, llamada) generaría más confianza ante un problema con el pago o una reversa? El soporte post-aprobación no fue explorado.</p>
-    </div>
-    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(122,173,207,0.2); border-radius: 12px; padding: 24px;">
-      <div style="color: var(--sky); font-family: var(--font-head); font-size: 13px; margin-bottom: 10px; font-weight: 700;">MODELO</div>
-      <p style="font-size: 14px; line-height: 1.6;">¿Preferiría el usuario que PSE sea el originador del crédito directamente, o un aliado como Addi/Creditop invisible detrás de la marca PSE? ¿Importa si lo saben?</p>
-    </div>
-    <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(122,173,207,0.2); border-radius: 12px; padding: 24px;">
-      <div style="color: var(--sky); font-family: var(--font-head); font-size: 13px; margin-bottom: 10px; font-weight: 700;">HISTORIAL</div>
-      <p style="font-size: 14px; line-height: 1.6;">¿Cuántos jóvenes como Juan cambiarían de aversión a adopción si el mensaje principal fuera "construye historial con PSE"? ¿Es escalable este framing para campañas?</p>
-    </div>
-  </div>
-</section>
+</div><!-- /reporte-body -->
 
 <!-- FOOTER -->
-<footer class="footer">
-  <div>
-    <strong>Diagrama de Afinidad — PSE Crédito (BNPL)</strong><br>
-    Laboratorio Digital · ACH Colombia · Abril 2026
-  </div>
-  <div style="text-align: right; color: #8A9BB0;">
-    5 entrevistas analizadas · Método JTBD / Cuatro Fuerzas<br>
-    Uso confidencial — solo para equipos de producto ACH Colombia
-  </div>
-</footer>
+<div class="report-footer">
+  <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NjAgMjg4Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjNTQ1NGU5OwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI4OCIvPgogIDxnPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3OS42LDcxLjFjMS43LDEuMiwzLjQsMi40LDUsMy42bC0xMy45LDE5LjJjLTEuNi0xLjMtMy4zLTIuNS01LTMuNmwxMy45LTE5LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTc5LjYsNzEuMWMxLjcsMS4yLDMuNCwyLjQsNSwzLjZsLTEzLjksMTkuMmMtMS42LTEuMy0zLjMtMi41LTUtMy42bDEzLjktMTkuMloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05Ni4xLDYzLjJsNy40LDIyLjZjNC43LTIuMiw5LjYtMy44LDE0LjgtNC44bC03LjQtMjIuNmMtNS4xLDEuMi0xMC4xLDIuOC0xNC44LDQuOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05Ni4xLDYzLjJsNy40LDIyLjZjNC43LTIuMiw5LjYtMy44LDE0LjgtNC44bC03LjQtMjIuNmMtNS4xLDEuMi0xMC4xLDIuOC0xNC44LDQuOFoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNDcuNyw4Mi4xYzEuOC41LDMuNiwxLjEsNS4zLDEuN2w3LjMtMjIuNWMtMS43LS42LTMuNS0xLjItNS4zLTEuN2wtNy4zLDIyLjVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTQ3LjcsODIuMWMxLjguNSwzLjYsMS4xLDUuMywxLjdsNy4zLTIyLjVjLTEuNy0uNi0zLjUtMS4yLTUuMy0xLjdsLTcuMywyMi41WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTc0LjgsMTEyLjJjMi4zLTQuMSw1LjEtNy45LDguMy0xMS40bC0xOS4yLTE0Yy0zLjEsMy42LTUuOCw3LjQtOC4zLDExLjRsMTkuMiwxNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik03NC44LDExMi4yYzIuMy00LjEsNS4xLTcuOSw4LjMtMTEuNGwtMTkuMi0xNGMtMy4xLDMuNi01LjgsNy40LTguMywxMS40bDE5LjIsMTRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNODcuMSw5Ni44YzMuNi0zLjMsNy43LTYuMywxMi04LjdsLTE0LTE5LjJjLTQuMiwyLjYtOC4zLDUuNS0xMiw4LjdsMTQsMTkuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Ny4xLDk2LjhjMy42LTMuMyw3LjctNi4zLDEyLTguN2wtMTQtMTkuMmMtNC4yLDIuNi04LjMsNS41LTEyLDguN2wxNCwxOS4yWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY2LjMsMTQ0YzAtMi4xLjEtNC4zLjMtNi40aC0yMy43Yy0uMiwyLjEtLjIsNC4yLS4yLDYuNHMwLDQuMy4yLDYuNGgyMy43Yy0uMi0yLjEtLjMtNC4yLS4zLTYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02Ni4zLDE0NGMwLTIuMS4xLTQuMy4zLTYuNGgtMjMuN2MtLjIsMi4xLS4yLDQuMi0uMiw2LjRzMCw0LjMuMiw2LjRoMjMuN2MtLjItMi4xLS4zLTQuMi0uMy02LjRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk0LjgsMTQ0YzAsMS4zLDAsMi43LS4xLDRoMjMuN2MwLTEuMywwLTIuNywwLTRzMC0yLjcsMC00aC0yMy43YzAsMS4zLjEsMi43LjEsNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTQuOCwxNDRjMCwxLjMsMCwyLjctLjEsNGgyMy43YzAtMS4zLDAtMi43LDAtNHMwLTIuNywwLTRoLTIzLjdjMCwxLjMuMSwyLjcuMSw0WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY3LjcsMTMwLjZjLjktNC40LDIuMy04LjcsNC4xLTEyLjdsLTIyLjYtNy4zYy0xLjcsNC4xLTMuMSw4LjMtNC4xLDEyLjdsMjIuNiw3LjNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNjcuNywxMzAuNmMuOS00LjQsMi4zLTguNyw0LjEtMTIuN2wtMjIuNi03LjNjLTEuNyw0LjEtMy4xLDguMy00LjEsMTIuN2wyMi42LDcuM1oiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODAuNCwxMDMuNmMxLjQsMS44LDIuOCwzLjYsNCw1LjZsMTkuMi0xMy45Yy0xLjMtMS45LTIuNi0zLjgtNC01LjZsLTE5LjIsMTMuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODAuNCwxMDMuNmMxLjQsMS44LDIuOCwzLjYsNCw1LjZsMTkuMi0xMy45Yy0xLjMtMS45LTIuNi0zLjgtNC01LjZsLTE5LjIsMTMuOVoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjIuMyw1Ni41djIzLjhzMCwwLDAsMGMxLjEtLjEsNC41LS41LDguMi0uNXM3LjEuNCw4LjIuNWMwLDAsMCwwLDAsMHYtMjMuOGMtMS4zLS4xLTQuNy0uNC04LjItLjRzLTYuOS4zLTguMi40WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTEyMi4zLDU2LjV2MjMuOHMwLDAsMCwwYzEuMS0uMSw0LjUtLjUsOC4yLS41czcuMS40LDguMi41YzAsMCwwLDAsMCwwdi0yMy44Yy0xLjMtLjEtNC43LS40LTguMi0uNHMtNi45LjMtOC4yLjRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTcyLjQsMTkyLjZjLTIuNCwyLTQuOSwzLjktNy41LDUuNmwxNCwxOS4yYzIuNi0xLjcsNS4xLTMuNiw3LjUtNS42bC0xNC0xOS4yWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3Mi40LDE5Mi42Yy0yLjQsMi00LjksMy45LTcuNSw1LjZsMTQsMTkuMmMyLjYtMS43LDUuMS0zLjYsNy41LTUuNmwtMTQtMTkuMloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik03MS42LDE2OS41Yy0xLjYtMy43LTIuOC03LjUtMy43LTExLjVsLTIyLjYsNy4zYzEsMy45LDIuMiw3LjgsMy43LDExLjVsMjIuNi03LjNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNzEuNiwxNjkuNWMtMS42LTMuNy0yLjgtNy41LTMuNy0xMS41bC0yMi42LDcuM2MxLDMuOSwyLjIsNy44LDMuNywxMS41bDIyLjYtNy4zWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE1NC44LDIwMy41Yy0yLjksMS4yLTUuOCwyLjEtOC45LDIuOWw3LjMsMjIuNmMzLS44LDYtMS44LDguOS0yLjlsLTcuMy0yMi42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE1NC44LDIwMy41Yy0yLjksMS4yLTUuOCwyLjEtOC45LDIuOWw3LjMsMjIuNmMzLS44LDYtMS44LDguOS0yLjlsLTcuMy0yMi42WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44LDE1OS44Yy0uNywyLjctMS42LDUuNC0yLjYsOGwyMi42LDcuM2MxLTIuNiwxLjktNS4zLDIuNi04bC0yMi41LTcuM1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTIuOCwxNTkuOGMtLjcsMi43LTEuNiw1LjQtMi42LDhsMjIuNiw3LjNjMS0yLjYsMS45LTUuMywyLjYtOGwtMjIuNS03LjNaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTg1LDE3OGMtMS42LDIuNS0zLjMsNC45LTUuMiw3LjJsMTkuMiwxMy45YzEuOS0yLjMsMy42LTQuNyw1LjItNy4ybC0xOS4yLTEzLjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTg1LDE3OGMtMS42LDIuNS0zLjMsNC45LTUuMiw3LjJsMTkuMiwxMy45YzEuOS0yLjMsMy42LTQuNyw1LjItNy4ybC0xOS4yLTEzLjlaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNODMuNCwyMTguMmwxMy45LTE5LjJjLTMuMS0xLjktNi4xLTQtOC44LTYuNGwtMTQsMTkuMmMyLjgsMi4zLDUuNyw0LjUsOC44LDYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04My40LDIxOC4ybDEzLjktMTkuMmMtMy4xLTEuOS02LjEtNC04LjgtNi40bC0xNCwxOS4yYzIuOCwyLjMsNS43LDQuNSw4LjgsNi40WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTgyLjIsMTg2LjJjLTIuNS0yLjktNC44LTYtNi44LTkuM2wtMTkuMiwxNGMyLDMuMiw0LjMsNi4zLDYuNyw5LjNsMTkuMi0xNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Mi4yLDE4Ni4yYy0yLjUtMi45LTQuOC02LTYuOC05LjNsLTE5LjIsMTRjMiwzLjIsNC4zLDYuMyw2LjcsOS4zbDE5LjItMTRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTE1LjcsMjA2LjVjLTMuNC0uOC02LjctMS45LTkuOS0zLjJsLTcuMywyMi42YzMuMiwxLjMsNi41LDIuMyw5LjgsMy4ybDcuMy0yMi42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTExNS43LDIwNi41Yy0zLjQtLjgtNi43LTEuOS05LjktMy4ybC03LjMsMjIuNmMzLjIsMS4zLDYuNSwyLjMsOS44LDMuMmw3LjMtMjIuNloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzUuNSwyMzEuN3YtMjMuN2MtMS42LjEtMy4zLjItNC45LjJzLTMuMywwLTQuOS0uMnYyMy43YzEuNiwwLDMuMy4xLDQuOS4xczMuMywwLDQuOS0uMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzUuNSwyMzEuN3YtMjMuN2MtMS42LjEtMy4zLjItNC45LjJzLTMuMywwLTQuOS0uMnYyMy43YzEuNiwwLDMuMy4xLDQuOS4xczMuMywwLDQuOS0uMVoiLz4KICAgICAgPC9nPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjAuMywxMDYuNWMtMS4yLjMtMi40LjctMy41LDEuMWwtNi42LTIwLjRjMS4yLS40LDIuMy0uOCwzLjUtMS4xbDYuNiwyMC40Wk0xMzAuNSw4My43Yy0xLjQsMC0yLjksMC00LjMuMnYyMS42YzEuNC0uMiwyLjgtLjIsNC4zLS4yLDEuNSwwLDIuOSwwLDQuMy4ydi0yMS42Yy0xLjQsMC0yLjgtLjItNC4zLS4yWk0xNTMuMSw4OGMtMi42LTEtNS4yLTEuOS03LjktMi42bC02LjcsMjAuNWMyLjguNiw1LjQsMS41LDcuOSwyLjZsNi43LTIwLjVaTTE2OS4yLDk3LjdjLTIuMS0xLjctNC4yLTMuMy02LjUtNC43bC0xMi43LDE3LjRjMi4zLDEuNCw0LjUsMi45LDYuNSw0LjdsMTIuNy0xNy40Wk05Ni43LDk0Yy0xLjEuNy0yLjEsMS41LTMuMiwyLjNsMTIuNiwxNy40YzEtLjgsMi4xLTEuNiwzLjItMi4zbC0xMi42LTE3LjRaTTE4MS41LDExMS44Yy0xLjQtMi4yLTIuOS00LjMtNC42LTYuM2wtMTcuNCwxMi43YzEuNywxLjksMy4zLDQuMSw0LjYsNi4zbDE3LjQtMTIuN1pNNzIuNSwxMjcuNWwyMC40LDYuNmMuNC0xLjQuOS0yLjksMS40LTQuMmwtMjAuNS02LjZjLS41LDEuNC0xLDIuOC0xLjQsNC4yWk0xNjkuMiwxNDcuNmgyMS41YzAtMS4yLjEtMi40LjEtMy42czAtMi40LS4xLTMuNmgtMjEuNWMuMSwxLjIuMiwyLjQuMiwzLjYsMCwxLjIsMCwyLjQtLjIsMy42Wk04MywxMDYuOGMtLjksMS4xLTEuNywyLjItMi41LDMuNGwxNy40LDEyLjZjLjgtMS4yLDEuNi0yLjMsMi41LTMuNGwtMTcuNC0xMi42Wk05MS44LDE0MS42aC0yMS41YzAsLjgsMCwxLjYsMCwyLjRzMCwxLjYsMCwyLjRoMjEuNWMwLS44LDAtMS42LDAtMi40czAtMS42LDAtMi40Wk05Mi45LDE5MS4xYzEuNCwxLjEsMi45LDIuMiw0LjQsMy4ybDEyLjYtMTcuNGMtMS42LTEtMy0yLjEtNC40LTMuMmwtMTIuNiwxNy40Wk0xMDkuMiwyMDAuNGMxLjguNywzLjYsMS4zLDUuNSwxLjhsNi43LTIwLjVjLTEuOS0uNS0zLjctMS4xLTUuNS0xLjhsLTYuNywyMC41Wk04MC4yLDE3Ny4zYzEsMS41LDIsMi45LDMuMSw0LjJsMTcuNC0xMi42Yy0xLjEtMS4zLTIuMS0yLjgtMy4xLTQuMmwtMTcuNCwxMi42Wk03Mi40LDE2MC4zYy40LDEuNiwxLDMuMiwxLjUsNC43bDIwLjUtNi42Yy0uNi0xLjUtMS4xLTMuMS0xLjUtNC43bC0yMC40LDYuNlpNMTMwLjUsMjA0LjNjMSwwLDIsMCwzLDB2LTIxLjVjLTEsMC0yLC4xLTMsLjFzLTIsMC0zLS4xdjIxLjVjMSwwLDIsMCwzLDBaTTE4OSwxMjljLS42LTIuNS0xLjQtNC45LTIuMy03LjJsLTIwLjUsNi43YzEsMi4zLDEuOCw0LjcsMi4zLDcuMmwyMC41LTYuN1pNMTQ2LjIsMjAyLjNjMi0uNSw0LTEuMiw2LTEuOWwtNi43LTIwLjVjLTEuOS44LTMuOSwxLjQtNiwxLjlsNi43LDIwLjVaTTE4Ni43LDE2NmMuOS0yLjIsMS42LTQuNCwyLjItNi43bC0yMC41LTYuN2MtLjUsMi4zLTEuMiw0LjYtMi4yLDYuN2wyMC41LDYuN1pNMTc3LjMsMTgyLjFjMS40LTEuNywyLjgtMy42LDQtNS41bC0xNy40LTEyLjdjLTEuMiwxLjktMi41LDMuOC00LDUuNWwxNy40LDEyLjdaTTE2My4zLDE5NC43YzEuOC0xLjIsMy42LTIuNSw1LjMtMy44bC0xMi43LTE3LjRjLTEuNiwxLjQtMy40LDIuNy01LjMsMy44bDEyLjYsMTcuNFoiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yNDguNywxMjhoMTIuMnY3MC43aC0xMi4ydi03MC43WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yNzUuMywxNjMuOGMwLTIxLjMsMTYuMS0zNy40LDM3LTM3LjRzMjMuNCw1LjMsMzAuMiwxNWwtOS43LDcuNGMtNS43LTcuNy0xMi44LTExLjMtMjAuNi0xMS4zLTEzLjUsMC0yNC4yLDEwLjctMjQuMiwyNS45czExLDI1LjksMjQuNCwyNS45LDE2LjQtNC4zLDIxLjktMTEuOGw5LjMsNi44Yy02LjgsMTAuMy0xOC4yLDE2LjEtMzEuMywxNi4xLTIxLjMsMC0zNi45LTE1LjUtMzYuOS0zNi42WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00MjIuNCwxNjYuMWgtNTljMSwxNC45LDEwLjksMjMuNCwyNS4xLDIzLjRzMTcuNC0zLjksMjMuNC0xMmw4LjgsNi43Yy02LjgsMTAuMi0xOC4yLDE2LjEtMzIuNCwxNi4xLTIyLjEsMC0zNy4zLTE0LjktMzcuMy0zNi41czE1LjktMzcuNiwzNy40LTM3LjYsMzQuNSwxMy44LDM0LjUsMzQuNS0uMSwzLjYtLjQsNS4zWk0zNjQuMSwxNTUuNWg0Ni4yYy0xLjgtMTIuMi05LjktMTguNy0yMi0xOC43cy0yMS40LDYuOC0yNC4yLDE4LjdaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTQzMi40LDE4OS4xbDcuOC05LjJjNi43LDYuMywxNS41LDkuNSwyMy43LDkuNXMxNS4yLTQuMywxNS4yLTEwLjItMy4xLTcuNS0xMi4xLTkuNmwtMTIuNC0yLjhjLTE0LjItMy4yLTIwLjItOS4zLTIwLjItMTguOXMxMC42LTIxLjYsMjcuMS0yMS42LDIyLDQsMjguNywxMS4zbC04LjIsOC41Yy01LjgtNS44LTEzLjEtOC44LTIxLjMtOC44cy0xNC4zLDMuOS0xNC4zLDkuNiwyLjYsNi44LDEyLjQsOWwxMi40LDIuOGMxNC4zLDMuMiwxOS45LDkuNywxOS45LDE5LjVzLTEwLjIsMjIuMS0yNy42LDIyLjEtMjMuOS00LjMtMzEtMTEuM1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNTA1LjEsMTI4aDEyLjJ2NzAuN2gtMTIuMnYtNzAuN1oiLz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjQ4LjcsMTAxLjF2LTEyLjNoMy43djEyYzAsMy43LDEuOCw1LjUsNC45LDUuNXM0LjktMS44LDQuOS01LjV2LTEyaDMuN3YxMi4zYzAsNS41LTMuMyw4LjYtOC42LDguNnMtOC42LTMuMS04LjYtOC42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTI4NC43LDEwMC4zdjloLTMuNXYtOC4zYzAtMi42LTEuMi0zLjktMy4yLTMuOXMtMi42LjUtMy43LDEuOHYxMC40aC0zLjV2LTE1aDMuNXYxLjNjMS4yLTEsMi45LTEuNiw0LjYtMS42LDMuNSwwLDUuOCwyLjMsNS44LDYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yODguOSw5MGMwLTEuMiwxLTIuMiwyLjMtMi4yczIuMiwxLDIuMiwyLjItMSwyLjMtMi4yLDIuMy0yLjMtMS0yLjMtMi4zWk0yODkuNCw5NC4zaDMuNXYxNWgtMy41di0xNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zMTIuMSw5NC4zbC02LjIsMTVoLTMuOGwtNi4yLTE1aDMuOWw0LjIsMTAuNyw0LjItMTAuN2gzLjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzI5LjIsMTAyLjdoLTExLjljLjMsMi42LDIsNCw0LjYsNHMzLjItLjYsNC40LTIuMWwyLjUsMS45Yy0xLjYsMi4xLTQsMy4zLTcsMy4zLTQuOSwwLTguMS0zLjItOC4xLTcuOHMzLjMtOCw4LTgsNy41LDIuOSw3LjUsNy40LDAsLjksMCwxLjNaTTMxNy41LDEwMGg4LjNjLS40LTIuMS0xLjgtMy4xLTMuOS0zLjFzLTMuOCwxLjEtNC4zLDMuMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNDIuNSw5NC4xbC0uMiwzLjNjLS41LDAtMS0uMS0xLjQtLjEtMS43LDAtMy4yLjgtNC4xLDIuM3Y5LjhoLTMuNXYtMTVoMy41djEuNmMxLTEuMywyLjYtMiw0LjItMnMxLDAsMS42LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzQ0LjksMTA3LjVsMS44LTIuNmMxLjYsMS4yLDMuMywxLjgsNSwxLjhzMi42LS43LDIuNi0xLjYtLjUtMS4yLTIuMS0xLjZsLTIuNi0uNmMtMy0uNy00LjMtMi00LjMtNC4xczIuMy00LjgsNi00LjgsNC43LjgsNi4yLDIuMmwtMS45LDIuNWMtMS40LTEuMS0yLjktMS43LTQuNS0xLjdzLTIuNC42LTIuNCwxLjUuNSwxLjEsMi4xLDEuNWwyLjYuNmMzLjEuNyw0LjMsMi4xLDQuMyw0LjJzLTIuMyw0LjktNi4yLDQuOS01LjEtLjktNi43LTIuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNjEsOTBjMC0xLjIsMS0yLjIsMi4zLTIuMnMyLjIsMSwyLjIsMi4yLTEsMi4zLTIuMiwyLjMtMi4zLTEtMi4zLTIuM1pNMzYxLjUsOTQuM2gzLjV2MTVoLTMuNXYtMTVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzg0LjMsODcuNnYyMS43aC0zLjV2LTEuMWMtMS4xLDEtMi43LDEuNS00LjMsMS41LTQuMSwwLTcuNS0zLjMtNy41LTcuOXMzLjQtNy45LDcuNS03LjksMy4yLjUsNC4zLDEuNXYtNy44aDMuNVpNMzgwLjgsMTA0Ljd2LTUuOGMtMS0xLjItMi40LTEuNy0zLjgtMS43LTIuNSwwLTQuNCwxLjgtNC40LDQuNnMxLjksNC42LDQuNCw0LjYsMi44LS42LDMuOC0xLjhaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDAzLjUsOTQuM3YxNWgtMy41di0xLjFjLTEuMSwxLTIuNywxLjUtNC4zLDEuNS00LjEsMC03LjUtMy4zLTcuNS03LjlzMy40LTcuOSw3LjUtNy45LDMuMi41LDQuMywxLjV2LTEuMWgzLjVaTTQwMCwxMDQuN3YtNS44Yy0xLTEuMi0yLjQtMS43LTMuOC0xLjctMi41LDAtNC40LDEuOC00LjQsNC42czEuOSw0LjYsNC40LDQuNiwyLjgtLjYsMy44LTEuOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00MjIuOCw4Ny42djIxLjdoLTMuNXYtMS4xYy0xLjEsMS0yLjcsMS41LTQuMywxLjUtNC4xLDAtNy41LTMuMy03LjUtNy45czMuNC03LjksNy41LTcuOSwzLjIuNSw0LjMsMS41di03LjhoMy41Wk00MTkuMywxMDQuN3YtNS44Yy0xLTEuMi0yLjQtMS43LTMuOC0xLjctMi41LDAtNC40LDEuOC00LjQsNC42czEuOSw0LjYsNC40LDQuNiwyLjgtLjYsMy44LTEuOFoiLz4KICAgICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+" alt="Universidad Icesi">
+  <span class="report-footer__info">Diagrama de Afinidad — PSE Crédito (BNPL) · Laboratorio Digital · ACH Colombia · Abril 2026<br>5 entrevistas analizadas · Método JTBD / Cuatro Fuerzas · Uso confidencial</span>
+  <span class="report-footer__url">innlab.icesi.edu.co</span>
+</div>
 
 </body>
 </html>
