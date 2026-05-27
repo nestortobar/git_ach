@@ -64,6 +64,14 @@
       width: 50%;
       z-index: 2;
     }
+
+    .state-b-frame {
+      width: 100%;
+      height: 1px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
   </style>
 </head>
 <body class="bg-gray-100 font-sans text-sm text-gray-800">
@@ -232,7 +240,7 @@
 </div>
 </div>
 <!-- Payment List -->
-<div class="bg-white border border-gray-200 rounded shadow-sm divide-y divide-gray-100">
+<div id="stateA-payment-list" class="bg-white border border-gray-200 rounded shadow-sm divide-y divide-gray-100">
 <!-- Credit Card -->
 <div class="flex items-center p-4 cursor-pointer hover:bg-gray-50">
 <div class="w-24 flex items-center justify-center shrink-0">
@@ -242,7 +250,7 @@
 <div class="flex-1 text-right text-xs font-medium text-gray-700">Tarjeta Crédito o Débito con CVV</div>
 </div>
 <!-- PSE -->
-<div class="flex items-center p-4 cursor-pointer hover:bg-gray-50">
+<div class="flex items-center p-4 cursor-pointer hover:bg-gray-50" id="open-state-b-pse">
 <div class="w-24 flex items-center justify-center shrink-0">
 <img alt="PSE" class="h-8" src="img/pse.png"/>
 </div>
@@ -301,6 +309,9 @@
 </div>
 </div>
 </div>
+<div class="hidden bg-white border border-gray-200 rounded shadow-sm overflow-hidden" id="stateB-payment-detail">
+<iframe class="state-b-frame" id="stateBFrame" src="alkosto-detalle-pse-resumen.html" title="Alkosto - Detalle PSE y Resumen"></iframe>
+</div>
 <!-- Step 5 Disabled Section -->
 <div class="mt-4 bg-gray-50 border border-gray-200 rounded p-4 flex items-center gap-3 opacity-60">
 <div class="bg-gray-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">5</div>
@@ -314,4 +325,56 @@
 <p>© 2026 Alkosto S.A - Todos los derechos reservados - Colombiana de Comercio S.A. NIT: 890.900.943-1</p>
 </footer>
 <!-- END: Footer -->
+<script>
+  (function () {
+    var openStateB = document.getElementById('open-state-b-pse');
+    var stateA = document.getElementById('stateA-payment-list');
+    var stateB = document.getElementById('stateB-payment-detail');
+    var stateBFrame = document.getElementById('stateBFrame');
+
+    function resizeStateBFrame() {
+      if (!stateBFrame) return;
+      try {
+        var doc = stateBFrame.contentDocument || (stateBFrame.contentWindow && stateBFrame.contentWindow.document);
+        if (!doc) return;
+        var bodyH = doc.body ? doc.body.scrollHeight : 0;
+        var docH = doc.documentElement ? doc.documentElement.scrollHeight : 0;
+        var height = Math.max(bodyH, docH, 1);
+        stateBFrame.style.height = height + 'px';
+      } catch (e) {
+        /* noop */
+      }
+    }
+
+    function showStateB() {
+      stateA.classList.add('hidden');
+      stateB.classList.remove('hidden');
+      requestAnimationFrame(resizeStateBFrame);
+    }
+
+    function showStateA() {
+      stateB.classList.add('hidden');
+      stateA.classList.remove('hidden');
+    }
+
+    if (openStateB) {
+      openStateB.addEventListener('click', showStateB);
+    }
+
+    if (stateBFrame) {
+      stateBFrame.addEventListener('load', resizeStateBFrame);
+      window.addEventListener('resize', resizeStateBFrame);
+    }
+
+    window.addEventListener('message', function (event) {
+      if (event && event.data && event.data.type === 'ALKOSTO_BACK_TO_A') {
+        showStateA();
+      } else if (event && event.data && event.data.type === 'ALKOSTO_STATE_B_HEIGHT') {
+        if (stateBFrame && typeof event.data.height === 'number' && event.data.height > 0) {
+          stateBFrame.style.height = event.data.height + 'px';
+        }
+      }
+    });
+  })();
+</script>
 </body></html>

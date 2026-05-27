@@ -1120,6 +1120,7 @@ body{
         <!-- ══ S1: COMMERCE PAYMENT (ALKOSTO) ══ -->
         <div class="scr" id="s1">
           <iframe
+            id="alkostoFlowFrame"
             src="alkosto-envio-pago.html"
             title="Alkosto - Envio y Pago"
             style="width:100%;height:100%;border:0;background:#fff;display:block;"
@@ -1748,9 +1749,11 @@ let enelMethod = 'pse';
 let enelConsent = false;
 const STORAGE_KEY = 'pse_usability_session';
 
+const ALKOSTO_FLOW_SRC = 'alkosto-envio-pago.html';
+
 const screenMeta = [
   { name:'Introducción', sub:'Escenario de prueba', shortName:'Intro' },
-  { name:'Comercio — Factura pendiente', sub:'Selección del medio de pago', shortName:'Comercio' },
+  { name:'Alkosto — Envío y Pago', sub:'Estado A/B de medios de pago', shortName:'Alkosto' },
   { name:'PSE — Elige cómo pagar', sub:'Selección de método', shortName:'PSE' },
   { name:'PSE — Redirigiéndote al aliado', sub:'Pantalla de transición', shortName:'Pre-load' },
   { name:'Aliado — Datos personales', sub:'Formulario 1 de 2', shortName:'Form 1' },
@@ -1919,6 +1922,12 @@ function resetEnelScreen() {
   updateEnelPayBtn();
 }
 
+function resetAlkostoScreen() {
+  const frame = document.getElementById('alkostoFlowFrame');
+  if (!frame) return;
+  frame.src = ALKOSTO_FLOW_SRC + '?v=' + Date.now();
+}
+
 /* ─ PARTICIPANT SCREEN TRACKER ─ */
 function setParticipantScreen(n) {
   participantCur = n;
@@ -2050,6 +2059,7 @@ function resetAll() {
   resetTimer();
   stopOtpTimer();
   resetEnelScreen();
+  resetAlkostoScreen();
   document.querySelectorAll('.otp-b').forEach(b => { b.value = ''; b.classList.remove('filled'); });
   go(0);
 }
@@ -2110,6 +2120,7 @@ document.addEventListener('keydown', e => {
 /* ─ INIT ─ */
 initOtp();
 resetEnelScreen();
+resetAlkostoScreen();
 loadSession();
 updateUI();
 
