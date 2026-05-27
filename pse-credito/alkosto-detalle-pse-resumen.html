@@ -20,6 +20,171 @@
       color: #333;
       background-color: var(--alkosto-gray-bg);
     }
+
+    .pay-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .pay-tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fff;
+      color: #6b7280;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pay-tab svg {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+    }
+
+    .pay-tab.active-debit {
+      border-color: #00469B;
+      background: #eef4ff;
+      color: #00469B;
+    }
+
+    .pay-tab.active-finance {
+      border-color: #E4532A;
+      background: #FDF0EB;
+      color: #E4532A;
+    }
+
+    .credit-card-option {
+      position: relative;
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .credit-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-right: 84px;
+    }
+
+    .credit-card-entity {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #1f2937;
+      letter-spacing: 0;
+    }
+
+    .finance-metrics {
+      margin-top: 10px;
+      padding-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .finance-metric {
+      padding: 0 8px;
+    }
+
+    .finance-metric:first-child {
+      padding-left: 0;
+    }
+
+    .finance-metric:last-child {
+      padding-right: 0;
+    }
+
+    .finance-metric-label {
+      font-size: 11px;
+      line-height: 1.25;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    .finance-metric-value {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #163e7a;
+      white-space: nowrap;
+    }
+
+    .credit-card-option.selected {
+      border-color: #E4532A;
+      background: #FDF0EB;
+      box-shadow: 0 0 0 1px rgba(228, 83, 42, 0.12);
+    }
+
+    .credit-card-check {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #E4532A;
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .credit-card-option.selected .credit-card-check {
+      display: inline-flex;
+    }
+
+    .finance-badge {
+      position: absolute;
+      top: 10px;
+      right: 8px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      background: #e5e7eb;
+      border: 1px solid #e5e7eb;
+      color: #163e7a;
+    }
+
+    .finance-cta {
+      width: 100%;
+      margin-top: 6px;
+      background: #E4532A;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .finance-cta:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -32,15 +197,37 @@
 <img alt="PSE Logo" class="h-6 w-auto" src="img/pse.png"/>
 </div>
 <div class="flex items-center gap-2 text-blue-800 font-medium text-sm">
-          Transferencia por PSE
+          Paga con PSE
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="vertical-arrows-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><polyline points="7 10 12 15 17 10"></polyline></svg>
 </div>
 </div>
 </section>
 <!-- END: PaymentMethodSelection -->
+
+<!-- BEGIN: PaymentModeTabs -->
+<section class="px-4 pt-3" data-purpose="pse-payment-mode-tabs">
+<div class="pay-tabs">
+<button class="pay-tab active-debit" id="tab-debito" type="button">
+<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3 7h18"></path>
+<path d="M5 7v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7"></path>
+<path d="M9 11h6"></path>
+</svg>
+<span>Débito bancario</span>
+</button>
+<button class="pay-tab" id="tab-financiar" type="button">
+<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="2" y="5" width="20" height="14" rx="2"></rect>
+<path d="M2 10h20"></path>
+</svg>
+<span>Financiar compra</span>
+</button>
+</div>
+</section>
+<!-- END: PaymentModeTabs -->
+
 <!-- BEGIN: PSEFormSection -->
-<section class="p-4 space-y-4" data-purpose="pse-form">
-<h2 class="font-bold text-gray-800">Pagos con PSE</h2>
+<section class="p-4 space-y-4" data-purpose="pse-form" id="tab-debito-panel">
 <div class="text-xs text-gray-600 space-y-2">
 <p>PSE te permite realizar compras debitando de tu cuenta de ahorros, corriente o billetera digital.</p>
 <ul class="space-y-1">
@@ -90,12 +277,57 @@
 </div>
 </section>
 <!-- END: PSEFormSection -->
+
+<!-- BEGIN: FinancingSection -->
+<section class="p-4 space-y-4 hidden" data-purpose="financing-form" id="tab-financing-panel">
+<p class="text-[12px] text-gray-600 leading-snug">Elige una entidad financiadora. PSE procesa el pago; el crédito queda directamente con la entidad.</p>
+
+<div class="space-y-3">
+<button class="credit-card-option" data-entidad="ADDI" type="button">
+<span class="credit-card-check">✓</span>
+<div class="credit-card-top">
+<div class="credit-card-entity">Aliado 1</div>
+</div>
+<div class="finance-metrics">
+<div class="finance-metric">
+<div class="finance-metric-label">Tasa mensual</div>
+<div class="finance-metric-value">2%</div>
+</div>
+<div class="finance-metric">
+<div class="finance-metric-label">Plazo</div>
+<div class="finance-metric-value">Hasta 36</div>
+</div>
+<div class="finance-metric">
+<div class="finance-metric-label">Aprobación</div>
+<div class="finance-metric-value">~2 min</div>
+</div>
+</div>
+</button>
+</div>
+
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-white text-[10px] text-gray-500">Número de identificación del solicitante</label>
+<input class="w-full border border-blue-900 rounded-md px-3 py-3 text-sm text-gray-700" type="text" value="25283528"/>
+</div>
+
+<p class="text-[12px] text-gray-500 leading-snug">La tasa y las cuotas son referenciales. La entidad confirma las condiciones finales según tu perfil crediticio.</p>
+<p class="text-[12px] text-gray-500">Serás redirigido a la entidad para validar tu identidad</p>
+
+<button class="finance-cta" disabled id="financing-cta" type="button">Solicitar financiación</button>
+</section>
+<!-- END: FinancingSection -->
 </main>
 <!-- END: MainContainer -->
 <script>
   (function () {
     var trigger = document.getElementById('back-to-state-a');
-    if (!trigger) return;
+    var tabDebito = document.getElementById('tab-debito');
+    var tabFinanciar = document.getElementById('tab-financiar');
+    var panelDebito = document.getElementById('tab-debito-panel');
+    var panelFinanciar = document.getElementById('tab-financing-panel');
+    var financingCards = document.querySelectorAll('.credit-card-option');
+    var financingCta = document.getElementById('financing-cta');
+    var selectedEntidad = null;
 
     function publishHeight() {
       if (window.parent && window.parent !== window) {
@@ -112,17 +344,69 @@
       }
     }
 
-    trigger.addEventListener('click', sendBackToStateA);
-    trigger.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        sendBackToStateA();
-      }
+    function setPaymentTab(mode) {
+      if (!tabDebito || !tabFinanciar || !panelDebito || !panelFinanciar) return;
+
+      var isDebito = mode === 'debito';
+
+      panelDebito.classList.toggle('hidden', !isDebito);
+      panelFinanciar.classList.toggle('hidden', isDebito);
+
+      tabDebito.classList.toggle('active-debit', isDebito);
+      tabFinanciar.classList.toggle('active-finance', !isDebito);
+      publishHeight();
+    }
+
+    if (trigger) {
+      trigger.addEventListener('click', sendBackToStateA);
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          sendBackToStateA();
+        }
+      });
+    }
+
+    if (tabDebito) {
+      tabDebito.addEventListener('click', function () {
+        setPaymentTab('debito');
+      });
+    }
+
+    if (tabFinanciar) {
+      tabFinanciar.addEventListener('click', function () {
+        setPaymentTab('financiar');
+      });
+    }
+
+    financingCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        financingCards.forEach(function (c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        selectedEntidad = card.getAttribute('data-entidad');
+        if (financingCta) financingCta.disabled = false;
+        publishHeight();
+      });
     });
 
-    window.addEventListener('load', publishHeight);
+    if (financingCta) {
+      financingCta.addEventListener('click', function () {
+        if (!selectedEntidad) return;
+        console.log('Solicitar financiación con entidad:', selectedEntidad);
+      });
+    }
+
+    setPaymentTab('debito');
+
+    window.addEventListener('load', function () {
+      publishHeight();
+      setPaymentTab('debito');
+    });
     window.addEventListener('resize', publishHeight);
-    setTimeout(publishHeight, 0);
+    setTimeout(function () {
+      publishHeight();
+      setPaymentTab('debito');
+    }, 0);
   })();
 </script>
 </body></html>
