@@ -1210,7 +1210,7 @@ body{
                 <div class="pl-contact-row">💬 <span>Contáctanos: pse.com.co/persona-centro-de-ayuda</span></div>
               </div>
             </div>
-            <div class="pl-tap" onclick="go(4)">Toca para continuar →</div>
+            <div class="pl-tap" onclick="goToAllyForm()">Toca para continuar →</div>
           </div>
         </div>
 
@@ -1766,6 +1766,7 @@ const screenMeta = [
 
 /* ─ NAVIGATION ─ */
 function go(n) {
+  if (n === 2) n = 3;
   if (n < 0 || n >= TOTAL) return;
   cur = n;
   for (let i = 0; i < TOTAL; i++) {
@@ -1927,6 +1928,16 @@ function resetAlkostoScreen() {
   if (!frame) return;
   frame.src = ALKOSTO_FLOW_SRC + '?v=' + Date.now();
 }
+
+function goToAllyForm() {
+  go(4);
+}
+
+window.addEventListener('message', function (event) {
+  if (event && event.data && event.data.type === 'ALKOSTO_GO_REDIRECT') {
+    go(3);
+  }
+});
 
 /* ─ PARTICIPANT SCREEN TRACKER ─ */
 function setParticipantScreen(n) {
@@ -2138,7 +2149,7 @@ var PRELOADER_DELAY = 5000; // ms
 function startPreloaderAnim() {
   resetPreloaderAnim();
   preloaderTimer = setTimeout(function() {
-    if (cur === 3) go(4);
+    if (cur === 3) goToAllyForm();
   }, PRELOADER_DELAY);
 }
 

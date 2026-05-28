@@ -373,6 +373,10 @@
         if (stateBFrame && typeof event.data.height === 'number' && event.data.height > 0) {
           stateBFrame.style.height = event.data.height + 'px';
         }
+      } else if (event && event.data && event.data.type === 'ALKOSTO_GO_REDIRECT') {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(event.data, '*');
+        }
       }
     });
   })();

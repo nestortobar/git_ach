@@ -395,7 +395,9 @@
     if (financingCta) {
       financingCta.addEventListener('click', function () {
         if (!selectedEntidad) return;
-        console.log('Solicitar financiación con entidad:', selectedEntidad);
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'ALKOSTO_GO_REDIRECT', entidad: selectedEntidad }, '*');
+        }
       });
     }
 
