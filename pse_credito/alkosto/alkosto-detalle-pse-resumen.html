@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alkosto - Pago PSE y Revisión</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-colors">
+    :root {
+      --alkosto-orange: #ef5a24;
+      --alkosto-blue: #004b93;
+      --alkosto-gray-bg: #f4f4f4;
+      --alkosto-border: #e2e8f0;
+    }
+  </style>
+<style data-purpose="typography">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #333;
+      background-color: #fff;
+    }
+
+    .pay-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .pay-tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fff;
+      color: #6b7280;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pay-tab svg {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+    }
+
+    .pay-tab-finance {
+      position: relative;
+      overflow: visible;
+    }
+
+    .pay-tab-new-chip {
+      position: absolute;
+      top: -8px;
+      right: 8px;
+      border-radius: 999px;
+      background: #E4532A;
+      color: #fff;
+      border: 1px solid #fff;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      padding: 3px 6px;
+      text-transform: uppercase;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .pay-tab.active-debit {
+      border-color: #00469B;
+      background: #eef4ff;
+      color: #00469B;
+    }
+
+    .pay-tab.active-finance {
+      border-color: #E4532A;
+      background: #FDF0EB;
+      color: #E4532A;
+    }
+
+    .credit-card-option {
+      position: relative;
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .credit-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-right: 84px;
+    }
+
+    .credit-card-entity {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #1f2937;
+      letter-spacing: 0;
+    }
+
+    .finance-metrics {
+      margin-top: 10px;
+      padding-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .finance-metric {
+      padding: 0 8px;
+    }
+
+    .finance-metric:first-child {
+      padding-left: 0;
+    }
+
+    .finance-metric:last-child {
+      padding-right: 0;
+    }
+
+    .finance-metric-label {
+      font-size: 11px;
+      line-height: 1.25;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    .finance-metric-value {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #163e7a;
+      white-space: nowrap;
+    }
+
+    .credit-card-option.selected {
+      border-color: #E4532A;
+      background: #FDF0EB;
+      box-shadow: 0 0 0 1px rgba(228, 83, 42, 0.12);
+    }
+
+    .credit-card-check {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #E4532A;
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .credit-card-option.selected .credit-card-check {
+      display: inline-flex;
+    }
+
+    .finance-badge {
+      position: absolute;
+      top: 10px;
+      right: 8px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      background: #e5e7eb;
+      border: 1px solid #e5e7eb;
+      color: #163e7a;
+    }
+
+    .finance-cta {
+      width: 100%;
+      margin-top: 6px;
+      background: #E4532A;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .finance-cta:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body class="flex flex-col">
+<!-- BEGIN: MainContainer -->
+<main class="pb-8 relative" data-purpose="app-container">
+<!-- BEGIN: PaymentMethodSelection -->
+<section class="p-4 border-b border-gray-100" data-purpose="payment-method-header">
+<div class="flex items-center justify-between p-3 border border-gray-300 rounded-md cursor-pointer" id="back-to-state-a" role="button" tabindex="0">
+<div class="flex items-center gap-2">
+<img alt="PSE Logo" class="h-6 w-auto" src="../img/pse.png"/>
+</div>
+<div class="flex items-center gap-2 text-blue-800 font-medium text-sm">
+          Paga con PSE
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="vertical-arrows-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><polyline points="7 10 12 15 17 10"></polyline></svg>
+</div>
+</div>
+</section>
+<!-- END: PaymentMethodSelection -->
+
+<!-- BEGIN: PaymentModeTabs -->
+<section class="px-4 pt-3" data-purpose="pse-payment-mode-tabs">
+<div class="pay-tabs">
+<button class="pay-tab active-debit" id="tab-debito" type="button">
+<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3 7h18"></path>
+<path d="M5 7v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7"></path>
+<path d="M9 11h6"></path>
+</svg>
+<span>Débito bancario</span>
+</button>
+<button class="pay-tab pay-tab-finance" id="tab-financiar" type="button">
+<span class="pay-tab-new-chip">Nuevo</span>
+<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="2" y="5" width="20" height="14" rx="2"></rect>
+<path d="M2 10h20"></path>
+</svg>
+<span>Financiar compra</span>
+</button>
+</div>
+</section>
+<!-- END: PaymentModeTabs -->
+
+<!-- BEGIN: PSEFormSection -->
+<section class="p-4 space-y-4" data-purpose="pse-form" id="tab-debito-panel">
+<div class="text-xs text-gray-600 space-y-2">
+<p>PSE te permite realizar compras debitando de tu cuenta de ahorros, corriente o billetera digital.</p>
+<ul class="space-y-1">
+<li class="flex gap-2">
+<span class="text-blue-700 font-bold">✓</span>
+<span><strong>Si ya estás registrado</strong> en PSE: Serás redirigido a tu banco para completar el pago.</span>
+</li>
+<li class="flex gap-2">
+<span class="text-blue-700 font-bold">✓</span>
+<span><strong>Si no estás registrado</strong> en PSE: Deberás primero realizar el registro en la opción "Registrarme" en la página de PSE y luego si podrás completar el pago.</span>
+</li>
+</ul>
+<p class="italic text-[10px] text-gray-400">Si eres cliente Bancolombia te invitamos a hacer el pago por la opción "Débito Bancolombia"</p>
+</div>
+<!-- Bank Select -->
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-white text-[10px] text-gray-500">Banco</label>
+<div class="w-full p-3 border border-gray-300 rounded-md flex justify-between items-center">
+<span class="text-sm">BANCOLOMBIA</span>
+<svg class="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Person Type Tabs -->
+<div class="flex border border-blue-900 rounded-md overflow-hidden">
+<button class="flex-1 py-2 bg-[#004b93] text-white text-sm font-medium">Natural</button>
+<button class="flex-1 py-2 bg-white text-orange-600 text-sm font-medium">Jurídico</button>
+</div>
+<!-- ID Type and Input -->
+<div class="space-y-4">
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-[#004b93] text-white text-xs font-bold rounded">C.C</button>
+<button class="flex-1 py-2 border border-gray-300 text-orange-600 text-xs font-bold rounded">C.E</button>
+<button class="flex-1 py-2 border border-gray-300 text-orange-600 text-xs font-bold rounded uppercase">Pasaporte</button>
+</div>
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-white text-[10px] text-gray-500">Número de identificación del titular</label>
+<div class="flex items-center border border-blue-900 rounded-md px-3 py-3">
+<input class="w-full border-none p-0 text-sm focus:ring-0 text-gray-700" type="text" value="25283528"/>
+<svg class="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+</div>
+<div class="text-center py-2">
+<p class="text-[10px] text-gray-400">Serás dirigido al Sitio Web del Banco para realizar el pago.</p>
+<button class="w-full mt-4 bg-[#ef5a24] text-white font-bold py-3 rounded-md shadow-sm">Continuar</button>
+<p class="text-[10px] text-gray-400 mt-2">En el siguiente paso, podrás revisar y confirmar tu pedido antes del pago.</p>
+</div>
+</section>
+<!-- END: PSEFormSection -->
+
+<!-- BEGIN: FinancingSection -->
+<section class="p-4 space-y-4 hidden" data-purpose="financing-form" id="tab-financing-panel">
+<p class="text-[12px] text-gray-600 leading-snug">Elige una entidad financiadora. PSE procesa el pago; el crédito queda directamente con la entidad.</p>
+
+<div class="space-y-3">
+<button class="credit-card-option" data-entidad="ADDI" type="button">
+<span class="credit-card-check">✓</span>
+<div class="credit-card-top">
+<div class="credit-card-entity">Aliado 1</div>
+</div>
+<div class="finance-metrics">
+<div class="finance-metric">
+<div class="finance-metric-label">Tasa mensual</div>
+<div class="finance-metric-value">2%</div>
+</div>
+<div class="finance-metric">
+<div class="finance-metric-label">Plazo</div>
+<div class="finance-metric-value">Hasta 36</div>
+</div>
+<div class="finance-metric">
+<div class="finance-metric-label">Aprobación</div>
+<div class="finance-metric-value">~2 min</div>
+</div>
+</div>
+</button>
+
+<button class="credit-card-option" data-entidad="ALIADO_2" type="button">
+<span class="credit-card-check">✓</span>
+<div class="credit-card-top">
+<div class="credit-card-entity">Aliado 2</div>
+</div>
+<div class="finance-metrics">
+<div class="finance-metric">
+<div class="finance-metric-label">Tasa mensual</div>
+<div class="finance-metric-value">1.9%</div>
+</div>
+<div class="finance-metric">
+<div class="finance-metric-label">Plazo</div>
+<div class="finance-metric-value">Hasta 30</div>
+</div>
+<div class="finance-metric">
+<div class="finance-metric-label">Aprobación</div>
+<div class="finance-metric-value">~3 min</div>
+</div>
+</div>
+</button>
+</div>
+
+<div class="relative">
+<label class="absolute -top-2 left-2 px-1 bg-white text-[10px] text-gray-500">Número de identificación del solicitante</label>
+<input class="w-full border border-blue-900 rounded-md px-3 py-3 text-sm text-gray-700" type="text" value="25283528"/>
+</div>
+
+<div class="flex items-start gap-2 rounded-lg border border-[#F2CEC2] bg-[#FDF0EB] px-3 py-3 text-[12px] text-[#5F2E1F] leading-snug">
+<span class="inline-flex h-4 w-4 items-center justify-center rounded-full border border-[#C17A64] text-[10px] font-bold text-[#8A4732]">!</span>
+<p>La tasa y las cuotas son referenciales. La entidad confirma las condiciones finales según tu perfil crediticio.</p>
+</div>
+<p class="text-[12px] text-gray-500">Serás redirigido a la entidad para validar tu identidad</p>
+
+<button class="finance-cta" disabled id="financing-cta" type="button">Solicitar financiación</button>
+</section>
+<!-- END: FinancingSection -->
+</main>
+<!-- END: MainContainer -->
+<script>
+  (function () {
+    var trigger = document.getElementById('back-to-state-a');
+    var tabDebito = document.getElementById('tab-debito');
+    var tabFinanciar = document.getElementById('tab-financiar');
+    var panelDebito = document.getElementById('tab-debito-panel');
+    var panelFinanciar = document.getElementById('tab-financing-panel');
+    var financingCards = document.querySelectorAll('.credit-card-option');
+    var financingCta = document.getElementById('financing-cta');
+    var selectedEntidad = null;
+
+    function publishHeight() {
+      if (window.parent && window.parent !== window) {
+        var bodyH = document.body ? document.body.scrollHeight : 0;
+        var docH = document.documentElement ? document.documentElement.scrollHeight : 0;
+        var height = Math.max(bodyH, docH, 1);
+        window.parent.postMessage({ type: 'ALKOSTO_STATE_B_HEIGHT', height: height }, '*');
+      }
+    }
+
+    function sendBackToStateA() {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'ALKOSTO_BACK_TO_A' }, '*');
+      }
+    }
+
+    function setPaymentTab(mode) {
+      if (!tabDebito || !tabFinanciar || !panelDebito || !panelFinanciar) return;
+
+      var isDebito = mode === 'debito';
+
+      panelDebito.classList.toggle('hidden', !isDebito);
+      panelFinanciar.classList.toggle('hidden', isDebito);
+
+      tabDebito.classList.toggle('active-debit', isDebito);
+      tabFinanciar.classList.toggle('active-finance', !isDebito);
+      publishHeight();
+    }
+
+    if (trigger) {
+      trigger.addEventListener('click', sendBackToStateA);
+      trigger.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          sendBackToStateA();
+        }
+      });
+    }
+
+    if (tabDebito) {
+      tabDebito.addEventListener('click', function () {
+        setPaymentTab('debito');
+      });
+    }
+
+    if (tabFinanciar) {
+      tabFinanciar.addEventListener('click', function () {
+        setPaymentTab('financiar');
+      });
+    }
+
+    financingCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        financingCards.forEach(function (c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        selectedEntidad = card.getAttribute('data-entidad');
+        if (financingCta) financingCta.disabled = false;
+        publishHeight();
+      });
+    });
+
+    if (financingCta) {
+      financingCta.addEventListener('click', function () {
+        if (!selectedEntidad) return;
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'ALKOSTO_GO_REDIRECT', entidad: selectedEntidad }, '*');
+        }
+      });
+    }
+
+    setPaymentTab('debito');
+
+    window.addEventListener('load', function () {
+      publishHeight();
+      setPaymentTab('debito');
+    });
+    window.addEventListener('resize', publishHeight);
+    setTimeout(function () {
+      publishHeight();
+      setPaymentTab('debito');
+    }, 0);
+  })();
+</script>
+</body></html>

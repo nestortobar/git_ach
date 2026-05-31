@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Respaldo - Enel paga tu factura en linea</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f4f4f6;
+      color: #1f1f1f;
+    }
+    .enel-screen { min-height: 100vh; background: #fff; color: #1f1f1f; display: flex; flex-direction: column; }
+    .enel-topbar {
+      background: #ff0a6c; color: #fff; padding: 14px 18px 12px;
+      display: flex; align-items: flex-end; justify-content: space-between; min-height: 84px;
+    }
+    .enel-brand { font-size: 40px; line-height: .9; font-weight: 300; letter-spacing: -2px; color: #fff; }
+    .enel-menu { display: flex; flex-direction: column; gap: 6px; padding-bottom: 8px; }
+    .enel-menu span { display: block; width: 28px; height: 2px; border-radius: 2px; background: rgba(255,255,255,.92); }
+    .enel-body { padding: 18px 16px 32px; max-width: 560px; width: 100%; margin: 0 auto; }
+    .enel-title { font-size: 25px; line-height: 1.14; font-weight: 600; color: #2d2d2d; margin-bottom: 18px; letter-spacing: -.8px; }
+    .enel-fields { display: grid; grid-template-columns: 1fr 104px; gap: 10px; margin-bottom: 18px; }
+    .enel-field-lbl { font-size: 12px; font-weight: 500; color: #444; margin-bottom: 6px; }
+    .enel-field {
+      height: 52px; border: 2px solid #8f8f8f; background: #fff;
+      display: flex; align-items: center; padding: 0 14px; font-size: 16px; color: #404040;
+    }
+    .enel-subtitle { font-size: 24px; line-height: 1.16; font-weight: 600; color: #2d2d2d; margin: 0 0 10px; letter-spacing: -.7px; }
+    .enel-alert { font-size: 13px; font-weight: 600; color: #ff0a6c; margin-bottom: 12px; }
+    .enel-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 0 18px; }
+    .enel-table {
+      display: grid; grid-template-columns: 76px minmax(92px,1fr) minmax(82px,.8fr) minmax(92px,.9fr);
+      min-width: 404px; width: max-content; border: 1px solid #e2e2e2; background: #fff;
+    }
+    .enel-th, .enel-td { padding: 10px 8px; border-right: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; min-width: 0; overflow: hidden; }
+    .enel-th:last-child, .enel-td:last-child { border-right: none; }
+    .enel-th { font-size: 11px; font-weight: 700; color: #222; background: #fff; line-height: 1.2; white-space: normal; word-break: break-word; }
+    .enel-td { font-size: 12px; color: #2f2f2f; min-height: 64px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.35; word-break: break-word; }
+    .enel-row-last { border-bottom: none; }
+    .enel-check {
+      width: 28px; height: 28px; border: 2px solid #ff0a6c; display: flex; align-items: center; justify-content: center;
+      color: #4a4a4a; font-size: 20px; line-height: 1; background: #fff;
+    }
+    .enel-pay-title { font-size: 24px; line-height: 1.16; font-weight: 600; color: #2d2d2d; margin: 0 0 12px; letter-spacing: -.7px; }
+    .enel-methods { display: flex; gap: 10px; margin-bottom: 16px; }
+    .enel-method {
+      flex: 1; border: 1.5px solid #dedede; background: #fff; min-height: 86px; padding: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .enel-method.selected { border-color: #ff0a6c; box-shadow: 0 0 0 3px rgba(255,10,108,.08); }
+    .enel-pse-logo { width: 66px; height: 66px; display: block; object-fit: contain; }
+    .enel-bank-logo { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; color: #111; }
+    .enel-bank-kicker { font-size: 11px; font-weight: 600; }
+    .enel-bank-name { font-size: 15px; font-weight: 700; line-height: 1.15; }
+    .enel-consent { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: #2d2d2d; line-height: 1.45; margin-bottom: 16px; }
+    .enel-consent-box {
+      width: 26px; height: 26px; border: 1.5px solid #d9d9d9; background: #fff; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 17px; color: #ff0a6c; margin-top: 1px;
+    }
+    .enel-consent-box.checked { border-color: #ff0a6c; background: #fff4f8; }
+    .enel-consent a { color: #2f5f9e; text-decoration: underline; }
+    .enel-pay-btn {
+      width: 100%; height: 52px; border: none; border-radius: 0; background: #ff0a6c; color: #fff;
+      font-size: 16px; font-weight: 700; font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+  <div class="enel-screen">
+    <div class="enel-topbar">
+      <div class="enel-brand">enel</div>
+      <div class="enel-menu" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="enel-body">
+      <div class="enel-title">Paga tu factura en linea.</div>
+      <div class="enel-fields">
+        <div>
+          <div class="enel-field-lbl">No. de cliente*</div>
+          <div class="enel-field">1234567</div>
+        </div>
+        <div>
+          <div class="enel-field-lbl">DV*</div>
+          <div class="enel-field">8</div>
+        </div>
+      </div>
+      <div class="enel-subtitle">Documentos disponibles para pago.</div>
+      <div class="enel-alert">Por favor, seleccione el documento a pagar.</div>
+      <div class="enel-table-scroll">
+        <div class="enel-table">
+          <div class="enel-th">Seleccione</div>
+          <div class="enel-th">Numero de<br>documento</div>
+          <div class="enel-th">Tipo de documento</div>
+          <div class="enel-th">Valor de deuda</div>
+          <div class="enel-td enel-row-last"><div class="enel-check">✓</div></div>
+          <div class="enel-td enel-row-last">1029775890</div>
+          <div class="enel-td enel-row-last">CC</div>
+          <div class="enel-td enel-row-last">$240.000</div>
+        </div>
+      </div>
+      <div class="enel-pay-title">Selecciona el medio de pago.</div>
+      <div class="enel-methods">
+        <div class="enel-method selected">
+          <img class="enel-pse-logo" src="../../img/logo_pse.png" alt="Logo PSE" />
+        </div>
+        <div class="enel-method">
+          <div class="enel-bank-logo">
+            <div class="enel-bank-kicker">Paga con</div>
+            <div class="enel-bank-name">Bancolombia</div>
+          </div>
+        </div>
+      </div>
+      <div class="enel-consent">
+        <div class="enel-consent-box checked">✓</div>
+        <div>Autorizo el <a href="#">tratamiento de datos personales</a>.</div>
+      </div>
+      <button class="enel-pay-btn">Pagar</button>
+    </div>
+  </div>
+</body>
+</html>

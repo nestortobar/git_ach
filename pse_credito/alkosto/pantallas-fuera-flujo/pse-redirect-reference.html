@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redirección PSE — Referencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --navy:#00337A;
+  --blue:#0050C7;
+  --green:#00A86B;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#0d1117;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;
+  background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+
+.label{
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);font-weight:500;margin-bottom:16px;
+  font-family:'DM Sans',sans-serif;
+}
+
+/* Phone frame */
+.phone-frame{
+  width:375px;height:724px;
+  background:#1c1c1e;border-radius:52px;
+  border:10px solid #1c1c1e;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08),
+    0 40px 80px rgba(0,0,0,.7),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+  overflow:hidden;position:relative;
+}
+.phone-notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:126px;height:34px;
+  background:#1c1c1e;border-radius:0 0 20px 20px;z-index:10;
+}
+.phone-screen{
+  width:100%;height:100%;
+  border-radius:42px;overflow:hidden;
+  position:relative;
+}
+
+/* ── Preloader screen ── */
+.preloader-wrap{
+  min-height:100%;background:#fff;
+  display:flex;flex-direction:column;
+  padding:0;
+}
+
+.pl-header{
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  padding:50px 20px 18px;
+  display:flex;align-items:center;gap:7px;
+}
+.pl-logo-row{display:flex;align-items:center;gap:7px;}
+.pl-logo-brand{height:44px;width:auto;display:block;}
+.pl-logo-circle{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.3);
+  display:flex;align-items:center;justify-content:center;
+}
+.pl-logo-text{font-size:20px;font-weight:700;font-style:italic;color:#fff;letter-spacing:-1px;}
+.pl-tagline{font-size:13px;color:rgba(255,255,255,.75);font-weight:400;}
+
+.pl-stepper{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;padding:36px 24px 28px;
+}
+.pl-step-icon{
+  width:52px;height:52px;border-radius:50%;
+  background:#F0F4FF;border:2px solid #C7D2F0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+}
+.pl-connector{width:42px;height:2px;background:#D0D8E8;}
+
+.pl-center-text{
+  text-align:center;font-size:22px;font-weight:500;
+  color:var(--navy);line-height:1.45;
+  padding:0 32px 36px;
+}
+
+.pl-big-logo{
+  display:flex;justify-content:center;padding-bottom:28px;
+}
+.pl-spinner-wrap{
+  position:relative;width:90px;height:90px;
+  display:flex;align-items:center;justify-content:center;
+}
+.pl-big-gif{
+  width:96px;height:96px;display:block;object-fit:contain;
+}
+
+.pl-contact{
+  margin:auto 16px 0;
+  background:#FFF8E1;border-radius:12px;
+  padding:14px 16px;display:flex;gap:12px;align-items:flex-start;
+  border-left:5px solid #F5A623;
+}
+.pl-contact-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.pl-contact-title{font-size:12px;font-weight:600;color:#333;margin-bottom:6px;}
+.pl-contact-row{font-size:11px;color:#555;margin-bottom:3px;display:flex;gap:5px;}
+
+.pl-tap{
+  text-align:center;padding:16px;font-size:11px;
+  color:rgba(0,51,122,.4);
+}
+</style>
+</head>
+<body>
+
+<div class="label">Redirección PSE — Pantalla de referencia</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"></div>
+  <div class="phone-screen">
+
+    <div class="preloader-wrap">
+
+      <!-- Header -->
+      <div class="pl-header">
+        <div class="pl-logo-row">
+          <img class="pl-logo-brand" src="../../img/logo_pse.png" alt="PSE logo">
+        </div>
+        <span class="pl-tagline">¡Fácil, rápido y seguro!</span>
+      </div>
+
+      <!-- Step indicators -->
+      <div class="pl-stepper">
+        <div class="pl-step"><div class="pl-step-icon">🏪</div></div>
+        <div class="pl-connector"></div>
+        <div class="pl-step"><div class="pl-step-icon">📄</div></div>
+        <div class="pl-connector"></div>
+        <div class="pl-step"><div class="pl-step-icon">🏦</div></div>
+      </div>
+
+      <!-- Main text -->
+      <div class="pl-center-text">Te estamos redirigiendo<br>a nuestro aliado.</div>
+
+      <!-- Spinner + PSE logo -->
+      <div class="pl-big-logo">
+        <div class="pl-spinner-wrap">
+          <img class="pl-big-gif" src="../../img/loader_psd.GIF" alt="PSE loading animation">
+        </div>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <!-- Contact info -->
+      <div class="pl-contact">
+        <div class="pl-contact-icon">📨</div>
+        <div class="pl-contact-info">
+          <div class="pl-contact-title">Para mas informacion,<br>contactanos:</div>
+          <div class="pl-contact-row">📞 <span>Bogota: +57 (601) 3808890 opcion 5</span></div>
+          <div class="pl-contact-row">💬 <span>Ayuda: pse.com.co/persona-centro-de-ayuda</span></div>
+        </div>
+      </div>
+
+      <div class="pl-tap">Redirigiendo automaticamente...</div>
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
