@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmarking HCM Colombia 2026 — Parte 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --c-blue:#5454e9; --c-blue-dark:#3a3acc; --c-blue-tint:#eeeeff;
+  --c-green:#27ae60; --c-green-tint:#e8f8f0;
+  --c-orange:#e67e22; --c-orange-tint:#fef3e8;
+  --c-red:#e74c3c;   --c-red-tint:#fdecea;
+  --c-purple:#8e44ad; --c-purple-tint:#f5eeff;
+  --c-yellow:#e4eb60;
+  --c-gray0:#f4f4f6; --c-gray1:#88898c; --c-gray2:#cecfd4;
+  --c-black:#1a1a1a; --c-white:#ffffff;
+  --font:'Plus Jakarta Sans', sans-serif;
+  --radius:10px;
+  --space-xs:8px; --space-sm:16px; --space-md:24px; --space-lg:32px; --space-xl:48px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height:1.6;}
+
+/* WRAPPER */
+.reporte{max-width:1100px;margin:0 auto;background:var(--c-white);box-shadow:0 4px 40px rgba(0,0,0,.10);}
+.reporte-body{display:flex;flex-direction:column;gap:var(--space-xl);padding:48px 52px;}
+
+/* HEADER */
+.report-header{background:linear-gradient(135deg,#1a1a2e 0%,#2e2ec0 55%,#5454e9 100%);color:white;padding:52px 52px 40px;position:relative;overflow:hidden;}
+.report-header::before{content:'';position:absolute;right:-80px;top:-80px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.04);}
+.report-header::after{content:'';position:absolute;left:30%;bottom:-120px;width:280px;height:280px;border-radius:50%;background:rgba(228,235,96,.06);}
+.report-header__top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px;}
+.report-header__logo img{height:30px;}
+.report-header__meta{text-align:right;}
+.report-header__meta-label{display:block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-bottom:2px;}
+.report-header__meta-value{display:block;font-size:13px;font-weight:500;opacity:.85;}
+.report-header__title-block{margin-bottom:36px;}
+.report-header__eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-yellow);margin-bottom:12px;opacity:.9;}
+.report-header__title{font-size:clamp(26px,3.5vw,42px);font-weight:800;line-height:1.1;margin-bottom:14px;}
+.report-header__subtitle{font-size:15px;font-weight:400;opacity:.75;max-width:660px;line-height:1.6;}
+.report-header__kpi-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:rgba(255,255,255,.12);border-radius:10px;padding:20px 24px;}
+.report-header__kpi-item{text-align:center;}
+.report-header__kpi-value{display:block;font-size:18px;font-weight:800;color:white;line-height:1.2;}
+.report-header__kpi-label{display:block;font-size:10px;font-weight:500;opacity:.65;margin-top:4px;letter-spacing:.04em;}
+
+/* SECTIONS */
+.section{display:flex;flex-direction:column;gap:20px;}
+.section--tinted{background:var(--c-gray0);border-radius:var(--radius);padding:var(--space-lg);}
+.section--accented{border-left:4px solid var(--c-blue);padding-left:var(--space-md);}
+.section-title{border-bottom:2px solid var(--c-blue);padding-bottom:14px;margin-bottom:4px;}
+.section-title--compact{border-bottom:none;padding-bottom:0;}
+.section-title__label{display:block;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--c-blue);margin-bottom:6px;}
+.section-title__heading{font-size:clamp(18px,2.2vw,24px);font-weight:800;color:var(--c-black);line-height:1.25;}
+.section-title__desc{font-size:14px;color:var(--c-gray1);margin-top:6px;line-height:1.55;}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
+.grid-1-2{display:grid;grid-template-columns:1fr 2fr;gap:20px;}
+
+/* KPI CARDS */
+.kpi-card{background:var(--c-white);border:1px solid var(--c-gray2);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:6px;border-left-width:4px;border-left-style:solid;}
+.kpi-card--blue{border-left-color:var(--c-blue);}
+.kpi-card--green{border-left-color:var(--c-green);}
+.kpi-card--orange{border-left-color:var(--c-orange);}
+.kpi-card--purple{border-left-color:var(--c-purple);}
+.kpi-card--red{border-left-color:var(--c-red);}
+.kpi-card--yellow{border-left-color:#c8a000;}
+.kpi-card--tint-blue{background:var(--c-blue-tint);border-color:var(--c-blue-tint);border-left-color:var(--c-blue);}
+.kpi-card--tint-green{background:var(--c-green-tint);border-color:var(--c-green-tint);border-left-color:var(--c-green);}
+.kpi-card--tint-orange{background:var(--c-orange-tint);border-color:var(--c-orange-tint);border-left-color:var(--c-orange);}
+.kpi-card--tint-purple{background:var(--c-purple-tint);border-color:var(--c-purple-tint);border-left-color:var(--c-purple);}
+.kpi-card--tint-red{background:var(--c-red-tint);border-color:var(--c-red-tint);border-left-color:var(--c-red);}
+.kpi-card--solid-blue{background:var(--c-blue);color:white;border-color:var(--c-blue);}
+.kpi-card--solid-green{background:var(--c-green);color:white;border-color:var(--c-green);}
+.kpi-card--solid-orange{background:var(--c-orange);color:white;border-color:var(--c-orange);}
+.kpi-card__label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c-gray1);}
+.kpi-card--solid-blue .kpi-card__label,
+.kpi-card--solid-green .kpi-card__label,
+.kpi-card--solid-orange .kpi-card__label{color:rgba(255,255,255,.7);}
+.kpi-card__value{font-size:28px;font-weight:800;color:var(--c-blue);line-height:1;}
+.kpi-card--solid-blue .kpi-card__value,
+.kpi-card--solid-green .kpi-card__value,
+.kpi-card--solid-orange .kpi-card__value{color:white;}
+.kpi-card__delta{font-size:12px;font-weight:600;}
+.kpi-card__delta--up{color:var(--c-green);}
+.kpi-card__delta--down{color:var(--c-orange);}
+.kpi-card__delta--flat{color:var(--c-gray1);}
+.kpi-card__desc{font-size:12px;color:var(--c-gray1);line-height:1.4;}
+
+/* HIGHLIGHT BOXES */
+.highlight-box{border-radius:var(--radius);padding:20px 24px;display:flex;flex-direction:column;gap:6px;}
+.highlight-box--green{background:var(--c-green);color:white;}
+.highlight-box--orange{background:var(--c-orange);color:white;}
+.highlight-box--purple{background:var(--c-purple);color:white;}
+.highlight-box--yellow{background:var(--c-yellow);color:var(--c-black);}
+.highlight-box--blue{background:var(--c-blue);color:white;}
+.highlight-box--red{background:var(--c-red);color:white;}
+.highlight-box--dark{background:var(--c-black);color:white;}
+.highlight-box__label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;opacity:.7;}
+.highlight-box__texto{font-size:14px;font-weight:600;line-height:1.45;}
+
+/* TABLA */
+.tabla-wrapper{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--c-gray2);}
+.tabla-datos{width:100%;border-collapse:collapse;font-size:13px;}
+.tabla-datos thead tr{background:var(--c-blue);color:white;}
+.tabla-datos thead th{padding:12px 14px;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:left;white-space:nowrap;}
+.tabla-datos tbody tr{border-bottom:1px solid var(--c-gray2);}
+.tabla-datos tbody tr:hover{background:var(--c-blue-tint);}
+.tabla-datos tbody td{padding:10px 14px;vertical-align:top;font-size:13px;}
+.tabla-datos--striped tbody tr:nth-child(even){background:var(--c-gray0);}
+.row--highlight{background:var(--c-blue-tint)!important;font-weight:700;}
+.row--green{background:var(--c-green-tint)!important;}
+.row--orange{background:var(--c-orange-tint)!important;}
+.row--red{background:var(--c-red-tint)!important;}
+
+/* ALERTAS */
+.alerta{border-radius:var(--radius);padding:16px 20px;border-left:4px solid;}
+.alerta--info{background:var(--c-blue-tint);border-color:var(--c-blue);}
+.alerta--ok{background:var(--c-green-tint);border-color:var(--c-green);}
+.alerta--advertencia{background:var(--c-orange-tint);border-color:var(--c-orange);}
+.alerta--critica{background:var(--c-red-tint);border-color:var(--c-red);}
+.alerta__titulo{display:block;font-size:13px;font-weight:700;margin-bottom:4px;}
+.alerta--info .alerta__titulo{color:var(--c-blue);}
+.alerta--ok .alerta__titulo{color:var(--c-green);}
+.alerta--advertencia .alerta__titulo{color:var(--c-orange);}
+.alerta--critica .alerta__titulo{color:var(--c-red);}
+.alerta__texto{font-size:13px;color:var(--c-black);line-height:1.5;}
+
+/* LISTAS */
+.lista-icesi{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.lista-icesi li{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;}
+.lista-icesi li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--c-blue);flex-shrink:0;margin-top:7px;}
+.lista-hallazgos{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.lista-hallazgos li{font-size:14px;padding:10px 14px;border-radius:6px;border-left:4px solid;line-height:1.5;}
+.lista-hallazgos li.ok{background:var(--c-green-tint);border-color:var(--c-green);}
+.lista-hallazgos li.alerta{background:var(--c-orange-tint);border-color:var(--c-orange);}
+.lista-hallazgos li.info{background:var(--c-blue-tint);border-color:var(--c-blue);}
+.lista-hallazgos li.critica{background:var(--c-red-tint);border-color:var(--c-red);}
+.lista-numerada{list-style:none;counter-reset:lst;display:flex;flex-direction:column;gap:12px;}
+.lista-numerada li{display:flex;gap:14px;align-items:flex-start;font-size:14px;line-height:1.5;counter-increment:lst;}
+.lista-numerada li::before{content:counter(lst);background:var(--c-blue);color:white;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.05em;}
+.badge--blue{background:var(--c-blue);color:white;}
+.badge--green{background:var(--c-green);color:white;}
+.badge--orange{background:var(--c-orange);color:white;}
+.badge--purple{background:var(--c-purple);color:white;}
+.badge--yellow{background:var(--c-yellow);color:var(--c-black);}
+.badge--gray{background:var(--c-gray2);color:var(--c-black);}
+.badge--red{background:var(--c-red);color:white;}
+.badge--outline-blue{border:2px solid var(--c-blue);color:var(--c-blue);background:transparent;}
+.badge--outline-green{border:2px solid var(--c-green);color:var(--c-green);background:transparent;}
+
+/* CITA */
+.cita{border-left:4px solid var(--c-blue);padding:16px 20px;background:var(--c-gray0);border-radius:0 var(--radius) var(--radius) 0;}
+.cita__texto{display:block;font-size:15px;font-style:italic;color:var(--c-black);line-height:1.6;margin-bottom:8px;}
+.cita__fuente{display:block;font-size:12px;font-weight:600;color:var(--c-gray1);letter-spacing:.05em;}
+
+/* DIVIDERS */
+.divider{border:none;border-top:1px solid var(--c-gray2);margin:0;}
+.divider--blue{border:none;border-top:2px solid var(--c-blue);}
+.divider--thick{border:none;border-top:4px solid var(--c-blue);}
+.divider-label{display:flex;align-items:center;gap:12px;color:var(--c-gray1);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.divider-label::before,.divider-label::after{content:'';flex:1;border-top:1px solid var(--c-gray2);}
+
+/* OPORTUNIDAD CARD */
+.opp-card{background:white;border:1px solid var(--c-gray2);border-radius:var(--radius);overflow:hidden;}
+.opp-card__head{padding:16px 20px;display:flex;align-items:center;gap:12px;}
+.opp-card__num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:white;flex-shrink:0;}
+.opp-card__title{font-size:15px;font-weight:800;color:var(--c-black);}
+.opp-card__body{padding:0 20px 20px;display:flex;flex-direction:column;gap:10px;}
+.opp-card__row{display:flex;gap:8px;font-size:13px;line-height:1.45;}
+.opp-card__key{font-weight:700;color:var(--c-gray1);min-width:130px;flex-shrink:0;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px;}
+.opp-card__val{color:var(--c-black);}
+.opp-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
+
+/* CANDIDATO CARD */
+.candidato{background:white;border:1px solid var(--c-gray2);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:10px;}
+.candidato__header{display:flex;justify-content:space-between;align-items:flex-start;}
+.candidato__name{font-size:15px;font-weight:800;}
+.candidato__stars{font-size:18px;letter-spacing:2px;}
+.candidato__row{font-size:13px;line-height:1.5;padding:8px 0;border-bottom:1px solid var(--c-gray0);}
+.candidato__row:last-child{border-bottom:none;}
+.candidato__label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--c-gray1);display:block;margin-bottom:2px;}
+
+/* PASO CARD (next steps) */
+.paso{display:flex;gap:16px;align-items:flex-start;padding:16px 20px;border-radius:var(--radius);background:var(--c-gray0);border-left:4px solid var(--c-blue);}
+.paso__num{width:36px;height:36px;border-radius:50%;background:var(--c-blue);color:white;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;}
+.paso__content{flex:1;}
+.paso__title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.paso__desc{font-size:13px;color:var(--c-gray1);line-height:1.5;}
+.paso__meta{font-size:11px;font-weight:700;color:var(--c-blue);margin-top:6px;letter-spacing:.06em;text-transform:uppercase;}
+
+/* FOOTER */
+.report-footer{background:var(--c-black);color:var(--c-gray1);padding:28px 52px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.report-footer img{height:22px;opacity:.7;}
+.report-footer__info{font-size:12px;}
+.report-footer__url{font-size:12px;color:var(--c-yellow);font-weight:600;}
+
+/* TYPOGRAPHY */
+.text-sm{font-size:13px;} .text-xs{font-size:11px;}
+.text-muted{color:var(--c-gray1);} .text-blue{color:var(--c-blue);}
+.text-bold{font-weight:700;} .text-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--c-gray1);}
+p{font-size:14px;line-height:1.65;color:var(--c-black);}
+strong{font-weight:700;}
+
+@media(max-width:900px){
+  .grid-3,.grid-4{grid-template-columns:repeat(2,1fr);}
+  .grid-2-1,.grid-1-2{grid-template-columns:1fr;}
+  .report-header__kpi-bar{grid-template-columns:repeat(3,1fr);}
+  .reporte-body{padding:28px 20px;}
+  .report-header{padding:32px 20px 28px;}
+  .report-footer{flex-direction:column;align-items:flex-start;padding:20px;}
+}
+</style>
+</head>
+<body>
+<div class="reporte">
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<div class="report-header">
+  <div class="report-header__top">
+    <div class="report-header__logo">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMjIuMTUgMjIwLjg0Ij4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMzAuMy4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMi4xLjMgQnVpbGQgMTgyKSAgLS0+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5zdDAgewogICAgICAgIGZpbGw6ICNmZmZmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJDYXBhXzEiPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNi4zOSwxNzIuMjdWMjUuMTdoMTkuMzV2MTQ3LjA5aC0xOS4zNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNjguNTEsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOUw4MS4xNSw1Mi42Mmw2LjcxLS43OXYxMjAuNDRoLTE5LjM1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMTQuMjIsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOWwtODQuMTEtMTE5LjY1LDYuNzEtLjc5djEyMC40NGgtMTkuMzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTM1OS45MywxNzIuMjdWMjUuMTdoMTkuMzV2MTI5LjMyaDY0LjU2djE3Ljc3aC04My45MVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDUxLjM0LDE3Mi4yN2w1Mi43Mi0xNDcuMDloMjIuOWw1Mi43MiwxNDcuMDloLTIwLjczbC0xMi4wNC0zNC41NWgtNjIuNzlsLTEyLjA0LDM0LjU1aC0yMC43M1pNNDkwLjI0LDExOS45NWg1MC41NGwtMjguMDQtODAuNzVoNS41M2wtMjguMDQsODAuNzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5OC4yNCwxNzIuMjdWMjUuMTdoNjEuOGM4LjgyLDAsMTYuNDIsMS41OCwyMi44LDQuNzQsNi4zOCwzLjE2LDExLjMyLDcuNiwxNC44MSwxMy4zMywzLjQ5LDUuNzMsNS4yMywxMi41NCw1LjIzLDIwLjQzLDAsNy4yNC0xLjg4LDEzLjc5LTUuNjMsMTkuNjUtMy43NSw1Ljg2LTkuMjUsMTAuNDMtMTYuNDksMTMuNzJsLS4yLTcuMzFjNi4zMiwyLjM3LDExLjU1LDUuNSwxNS43LDkuMzgsNC4xNSwzLjg4LDcuMjcsOC4zNiw5LjM4LDEzLjQzLDIuMSw1LjA3LDMuMTYsMTAuNDMsMy4xNiwxNi4wOSwwLDEzLjU2LTQuMzQsMjQuMjItMTMuMDMsMzEuOTktOC42OSw3Ljc3LTIwLjUzLDExLjY1LTM1LjU0LDExLjY1aC02MlpNNjE3LjU5LDg1LjU5aDQyLjA1YzcuMTEsMCwxMi44My0yLjA3LDE3LjE4LTYuMjIsNC4zNC00LjE1LDYuNTItOS40NCw2LjUyLTE1Ljg5cy0yLjE3LTExLjg1LTYuNTItMTUuNGMtNC4zNC0zLjU1LTEwLjA3LTUuMzMtMTcuMTgtNS4zM2gtNDIuMDV2NDIuODRaTTYxNy41OSwxNTQuNWg0My40NGM4LjU1LDAsMTUuNC0yLjMsMjAuNTMtNi45MSw1LjEzLTQuNjEsNy43LTEwLjg2LDcuNy0xOC43NnMtMi41Ny0xNC4xOC03LjctMTguODZjLTUuMTMtNC42Ny0xMS45OC03LjAxLTIwLjUzLTcuMDFoLTQzLjQ0djUxLjUzWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MzEuNiw5NC4zN2MtMy4wNywwLTUuOTEtLjU1LTguNDktMS42Ni0yLjU5LTEuMTEtNC44NS0yLjY4LTYuNzctNC43LTEuOTMtMi4wMi0zLjQyLTQuNC00LjQ3LTcuMTItMS4wNS0yLjcyLTEuNTgtNS43LTEuNTgtOC45M3MuNTMtNi4yNywxLjU4LTguOTljMS4wNS0yLjcyLDIuNTMtNS4xLDQuNDQtNy4xMiwxLjkxLTIuMDIsNC4xNi0zLjU5LDYuNzctNC43LDIuNjEtMS4xMSw1LjQ1LTEuNjYsOC41Mi0xLjY2czUuNjkuNTMsOC4wOSwxLjU4LDQuNDIsMi40MSw2LjA3LDQuMDljMS42NSwxLjY3LDIuODMsMy40NiwzLjUzLDUuMzdsLTUuMjUsMi4zOWMtMS4wMS0yLjQxLTIuNTktNC4zNy00LjczLTUuODctMi4xNC0xLjUtNC43MS0yLjI1LTcuNzEtMi4yNXMtNS43My43Mi04LjA5LDIuMTZjLTIuMzUsMS40NC00LjE5LDMuNDQtNS41Miw2LjAxLTEuMzIsMi41Ny0xLjk4LDUuNTctMS45OCw4Ljk5cy42Niw2LjM2LDEuOTgsOC45M2MxLjMyLDIuNTcsMy4xNiw0LjU3LDUuNTIsNi4wMSwyLjM1LDEuNDQsNS4wNSwyLjE2LDguMDksMi4xNnM1LjU3LS43NSw3LjcxLTIuMjVjMi4xNC0xLjUsMy43Mi0zLjQ1LDQuNzMtNS44N2w1LjI1LDIuMzljLS43LDEuOTEtMS44OCwzLjctMy41Myw1LjM3LTEuNjUsMS42Ny0zLjY4LDMuMDQtNi4wNyw0LjA5cy01LjA5LDEuNTgtOC4wOSwxLjU4WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NzAuMzEsOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04OTEuNjcsOTMuNjd2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODZzLS45OSwyLjctLjk5LDQuNDF2MTguNjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTkzOC4zMSw5NC4wMmMtMy4wOCwwLTUuNDQtLjg4LTcuMDktMi42My0xLjY1LTEuNzUtMi40OC00LjIyLTIuNDgtNy40MXYtMTYuNThoLTUuNzJ2LTUuMmgxLjE3YzEuNCwwLDIuNTEtLjQzLDMuMzMtMS4yOC44Mi0uODYsMS4yMy0xLjk5LDEuMjMtMy4zOXYtMi41N2g1LjQzdjcuMjRoNy4wNnY1LjJoLTcuMDZ2MTYuNGMwLDEuMDUuMTYsMS45Ny41LDIuNzQuMzMuNzguODgsMS4zOSwxLjY2LDEuODQuNzguNDUsMS44MS42NywzLjA5LjY3LjI3LDAsLjYxLS4wMiwxLjAyLS4wNnMuNzktLjA4LDEuMTQtLjEydjQuNzljLS41MS4xMi0xLjA3LjItMS42OS4yNi0uNjIuMDYtMS4xNS4wOS0xLjU4LjA5WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05NDguNjUsOTMuNjd2LTMxLjQ3aDUuMzF2NS43OGwtLjU4LS44MmMuNzQtMS43OSwxLjg3LTMuMTIsMy4zOS00czMuMzctMS4zMSw1LjU1LTEuMzFoMS45M3Y1LjE0aC0yLjc0Yy0yLjIyLDAtNC4wMS42OS01LjM3LDIuMDctMS4zNiwxLjM4LTIuMDQsMy4zNC0yLjA0LDUuODd2MTguNzRoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk4NC4wMiw5NC4zN2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk05ODQuMDIsODkuMTJjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OS0yLjE2LTIuOTgtMy43NC0zLjk3LTMuMzQtMS40OS01LjI4LTEuNDktMy43Ny41LTUuMzQsMS40OS0yLjgzLDIuMzItMy43NywzLjk3LTEuNCwzLjU1LTEuNCw1LjY5LjQ3LDQuMDEsMS40LDUuNzJjLjkzLDEuNzEsMi4xOSwzLjA2LDMuNzcsNC4wM3MzLjM2LDEuNDYsNS4zNCwxLjQ2WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMxLjY2LDk0LjM3Yy0yLjk2LDAtNS42Mi0uNzItNy45Ny0yLjE2LTIuMzYtMS40NC00LjIxLTMuNDEtNS41OC01LjktMS4zNi0yLjQ5LTIuMDQtNS4yNy0yLjA0LTguMzVzLjY4LTUuOTYsMi4wNC04LjQ0YzEuMzYtMi40NywzLjIyLTQuNDMsNS41OC01Ljg3LDIuMzUtMS40NCw1LjAxLTIuMTYsNy45Ny0yLjE2LDIuNjEsMCw0LjkyLjU1LDYuOTUsMS42NiwyLjAyLDEuMTEsMy42MiwyLjYsNC43OSw0LjQ3bC0uODgsMS4zNHYtMTkuNWg1LjQ5djQ0LjE5aC01LjMxdi02LjcxbC43LjkzYy0xLjA5LDIuMDYtMi42OCwzLjY2LTQuNzYsNC43OS0yLjA4LDEuMTMtNC40MSwxLjY5LTYuOTgsMS42OVpNMTAzMi4xMyw4OS4xMmMxLjk4LDAsMy43Ni0uNDksNS4zMS0xLjQ2czIuNzktMi4zMSwzLjcxLTRjLjkxLTEuNjksMS4zNy0zLjU5LDEuMzctNS42OXMtLjQ2LTQuMDYtMS4zNy01Ljc1Yy0uOTItMS42OS0yLjE1LTMuMDMtMy43MS00LTEuNTYtLjk3LTMuMzMtMS40Ni01LjMxLTEuNDZzLTMuNzEuNS01LjI4LDEuNDktMi44MSwyLjMyLTMuNzEsMy45N2MtLjksMS42NS0xLjM0LDMuNTctMS4zNCw1Ljc1cy40NSw0LDEuMzQsNS42OWMuODksMS42OSwyLjEyLDMuMDMsMy42OCw0czMuMzMsMS40Niw1LjMxLDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwNzAuODksOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MTEuNTgsMTYzLjczdi00My40OWg1LjcydjQzLjQ5aC01LjcyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMzUsMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMiwxLjAzLDEuNzksMS41NSwzLjgxLDEuNTUsNi4wN3YyMC4zN2gtNS40OXYtMTguNjJjMC0xLjc1LS4zMS0zLjIzLS45My00LjQ0LS42Mi0xLjIxLTEuNTEtMi4xNS0yLjY2LTIuODMtMS4xNS0uNjgtMi40Ni0xLjAyLTMuOTQtMS4wMnMtMi43OS4zNC0zLjk0LDEuMDJjLTEuMTUuNjgtMi4wNSwxLjYzLTIuNzEsMi44Ni0uNjYsMS4yMy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NjAuMiwxNjMuNzN2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODYtLjY2LDEuMjMtLjk5LDIuNy0uOTksNC40MXYxOC42MmgtNS40M1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNOTA5LjAxLDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MSwzLjM2LTQuNCw1LjgxLTUuODRjMi40NS0xLjQ0LDUuMjEtMi4xNiw4LjI5LTIuMTZzNS43OC43MSw4LjIzLDIuMTNjMi40NSwxLjQyLDQuMzksMy4zNiw1LjgxLDUuODEsMS40MiwyLjQ1LDIuMTMsNS4yNywyLjEzLDguNDZzLS43NCw2LjAyLTIuMjIsOC40OWMtMS40OCwyLjQ3LTMuNDMsNC40Mi01Ljg3LDUuODQtMi40MywxLjQyLTUuMTMsMi4xMy04LjA5LDIuMTNaTTkwOS4wMSwxNTkuMTdjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OWMtLjkyLTEuNjUtMi4xNi0yLjk4LTMuNzQtMy45N3MtMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk0MC40MiwxNjMuNzNsLTEyLjMyLTMxLjQ3aDYuMDdsOS44NywyNi42MmgtMi4xbDkuOTItMjYuNjJoNi4wN2wtMTIuMzgsMzEuNDdoLTUuMTRaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk3MC44MywxNjQuNDNjLTIuMDYsMC0zLjg4LS4zOC01LjQ2LTEuMTRzLTIuODEtMS44MS0zLjcxLTMuMTVjLS45LTEuMzQtMS4zNC0yLjg5LTEuMzQtNC42NHMuMzYtMy4xOCwxLjA4LTQuNTJjLjcyLTEuMzQsMS44NS0yLjQ4LDMuMzktMy40MiwxLjU0LS45MywzLjQ3LTEuNiw1LjgxLTEuOTlsMTEuNjgtMS45M3Y0LjU1bC0xMC40NSwxLjc1Yy0yLjAyLjM1LTMuNDkuOTktNC40MSwxLjkzLS45Mi45My0xLjM3LDIuMDgtMS4zNywzLjQ0LDAsMS4yOC41MiwyLjM1LDEuNTUsMy4yMXMyLjMzLDEuMjgsMy44OCwxLjI4YzEuOTgsMCwzLjcxLS40Miw1LjE3LTEuMjYsMS40Ni0uODQsMi42MS0xLjk3LDMuNDUtMy40Mi44NC0xLjQ0LDEuMjUtMy4wNCwxLjI1LTQuNzl2LThjMC0xLjcxLS42My0zLjEtMS45LTQuMTctMS4yNy0xLjA3LTIuOTMtMS42MS00Ljk5LTEuNjEtMS43OSwwLTMuMzguNDYtNC43NiwxLjM3LTEuMzguOTItMi40LDIuMTMtMy4wNiwzLjY1bC00LjczLTIuNDVjLjU4LTEuNDQsMS41Mi0yLjczLDIuOC0zLjg4LDEuMjgtMS4xNSwyLjc4LTIuMDUsNC40OS0yLjcxczMuNS0uOTksNS4zNy0uOTljMi40MSwwLDQuNTMuNDYsNi4zNiwxLjM3LDEuODMuOTIsMy4yNiwyLjE4LDQuMjksMy43OSwxLjAzLDEuNjIsMS41NSwzLjQ5LDEuNTUsNS42M3YyMS4zN2gtNS4zMXYtNS45NmwuOTkuMzVjLS42NiwxLjI1LTEuNTYsMi4zMy0yLjY5LDMuMjctMS4xMy45My0yLjQ1LDEuNjctMy45NywyLjIyLTEuNTIuNTQtMy4xNy44Mi00Ljk2LjgyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDA5Ljc3LDE2NC40M2MtMy4wOCwwLTUuODEtLjcyLTguMi0yLjE2cy00LjI3LTMuNDEtNS42My01LjljLTEuMzYtMi40OS0yLjA0LTUuMjktMi4wNC04LjQxcy42OC01Ljk1LDIuMDQtOC40MWMxLjM2LTIuNDUsMy4yNC00LjQsNS42My01Ljg0LDIuMzktMS40NCw1LjEzLTIuMTYsOC4yLTIuMTYsMi4wNiwwLDMuOTkuMzcsNS43OCwxLjExLDEuNzkuNzQsMy4zNywxLjczLDQuNzMsMi45OCwxLjM2LDEuMjUsMi4zNSwyLjcxLDIuOTgsNC4zOGwtNC44NSwyLjM0Yy0uNzQtMS42My0xLjg3LTIuOTctMy4zOC00LTEuNTItMS4wMy0zLjI3LTEuNTUtNS4yNS0xLjU1cy0zLjYzLjQ5LTUuMTcsMS40NmMtMS41NC45Ny0yLjc1LDIuMy0zLjY1LDMuOTctLjksMS42Ny0xLjM0LDMuNi0xLjM0LDUuNzhzLjQ1LDQsMS4zNCw1LjY5Yy44OSwxLjY5LDIuMTEsMy4wMywzLjY1LDRzMy4yNiwxLjQ2LDUuMTcsMS40NiwzLjc0LS41Miw1LjI1LTEuNTVjMS41Mi0xLjAzLDIuNjUtMi40LDMuMzgtNC4xMmw0Ljg1LDIuNDVjLS42MiwxLjYzLTEuNjIsMy4wOC0yLjk4LDQuMzUtMS4zNiwxLjI2LTIuOTQsMi4yNy00LjczLDMuMDEtMS43OS43NC0zLjcyLDEuMTEtNS43OCwxLjExWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMwLjM4LDEyNy4yNHYtNy4wMWg1LjQzdjcuMDFoLTUuNDNaTTEwMzAuMzgsMTYzLjczdi0zMS40N2g1LjQzdjMxLjQ3aC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDU5LjE2LDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk0xMDU5LjE2LDE1OS4xN2MxLjk1LDAsMy43MS0uNDksNS4yOC0xLjQ2czIuODItMi4zMiwzLjc0LTQuMDNjLjkxLTEuNzEsMS4zNy0zLjYyLDEuMzctNS43MnMtLjQ2LTQuMDQtMS4zNy01LjY5LTIuMTYtMi45OC0zLjc0LTMuOTctMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaTTEwNTYuNDEsMTI2LjM2bDQuNjEtOS4yMmg3LjM2bC02LjU0LDkuMjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwODIuMzksMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMnMxLjU1LDMuODEsMS41NSw2LjA3djIwLjM3aC01LjQ5di0xOC42MmMwLTEuNzUtLjMxLTMuMjMtLjkzLTQuNDQtLjYyLTEuMjEtMS41MS0yLjE1LTIuNjYtMi44M3MtMi40Ni0xLjAyLTMuOTQtMS4wMi0yLjc5LjM0LTMuOTQsMS4wMmMtMS4xNS42OC0yLjA1LDEuNjMtMi43MSwyLjg2cy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=" alt="INNLAB" style="height:30px">
+    </div>
+    <div class="report-header__meta">
+      <span class="report-header__meta-label">Fecha</span>
+      <span class="report-header__meta-value">Junio 2026</span>
+      <span class="report-header__meta-label" style="margin-top:8px">Versión</span>
+      <span class="report-header__meta-value">Parte 2 — Brechas · PeopleSoft · Ejecutivo</span>
+    </div>
+  </div>
+  <div class="report-header__title-block">
+    <span class="report-header__eyebrow">Consultoría HR Tech · Estrategia de Producto · ACH Colombia</span>
+    <h1 class="report-header__title">Análisis de Brechas,<br>Oportunidades de Mercado<br>y Comparativo vs. PeopleSoft</h1>
+    <p class="report-header__subtitle">Vacíos funcionales del mercado colombiano, fricciones verificadas de usuarios, cinco oportunidades concretas de diferenciación, benchmarking específico vs. Oracle PeopleSoft y recomendación estratégica para ACH Colombia.</p>
+  </div>
+  <div class="report-header__kpi-bar">
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">6</span>
+      <span class="report-header__kpi-label">Vacíos de mercado identificados</span>
+    </div>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">5</span>
+      <span class="report-header__kpi-label">Oportunidades de diferenciación</span>
+    </div>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">37–52%</span>
+      <span class="report-header__kpi-label">Reducción TCO potencial (OCI vs. on-prem)</span>
+    </div>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">SAP SF</span>
+      <span class="report-header__kpi-label">Único reemplazo enterprise viable</span>
+    </div>
+    <div class="report-header__kpi-item">
+      <span class="report-header__kpi-value">3</span>
+      <span class="report-header__kpi-label">Próximos pasos concretos</span>
+    </div>
+  </div>
+</div>
+
+<div class="reporte-body">
+
+<!-- ═══════════════════ SECCIÓN 3A: COMMODITY ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 3 · Parte A</span>
+    <h2 class="section-title__heading">Funcionalidades Commodity — Dónde No Invertir</h2>
+    <p class="section-title__desc">Capacidades que la mayoría de vendors ya ofrecen. Son el piso de entrada, no el techo de diferenciación. Invertir esfuerzo aquí produce paridad, no ventaja competitiva.</p>
+  </div>
+  <div class="grid-3">
+    <div class="kpi-card kpi-card--tint-blue">
+      <span class="kpi-card__label">Cumplimiento básico DIAN / UGPP / PILA</span>
+      <span class="kpi-card__value" style="font-size:15px;color:var(--c-blue)">7 de 8 vendors</span>
+      <span class="kpi-card__desc">Nómina electrónica, documento soporte (CUNE), planilla PILA y reportes UGPP son commodity total. No diferencian a nadie en 2026.</span>
+    </div>
+    <div class="kpi-card kpi-card--tint-green">
+      <span class="kpi-card__label">Portal web de autoservicio básico</span>
+      <span class="kpi-card__value" style="font-size:15px;color:var(--c-green)">6 de 8 vendors</span>
+      <span class="kpi-card__desc">Desprendibles, certificados, solicitud de vacaciones vía web. Presente en casi todos. Sin app móvil nativa ya no es suficiente diferenciador.</span>
+    </div>
+    <div class="kpi-card kpi-card--tint-orange">
+      <span class="kpi-card__label">Interfaz a sistemas contables / ERP</span>
+      <span class="kpi-card__value" style="font-size:15px;color:var(--c-orange)">7 de 8 vendors</span>
+      <span class="kpi-card__desc">Todos los vendors comerciales tienen algún conector ERP o archivo de interfaz contable. La diferenciación está en APIs abiertas y ecosistemas nativos.</span>
+    </div>
+  </div>
+  <div class="alerta alerta--info">
+    <span class="alerta__titulo">Regla de posicionamiento</span>
+    <p class="alerta__texto">Cualquier jugador nuevo o en evolución que solo ofrezca las funcionalidades anteriores quedará en posición de paridad con el mercado. La batalla ya no se libra ahí. La diferenciación real está en IA, experiencia del empleado, analytics predictivo e integración con infraestructura de pagos moderna.</p>
+  </div>
+</div>
+
+<hr class="divider--thick">
+
+<!-- ═══════════════════ SECCIÓN 3B: VACÍOS ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 3 · Parte B</span>
+    <h2 class="section-title__heading">Vacíos Funcionales del Mercado Colombiano</h2>
+    <p class="section-title__desc">Seis dimensiones donde ningún vendor cubre bien la necesidad del mercado. Cada vacío representa una ventana de diferenciación.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="kpi-card kpi-card--blue" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 1 — IA aplicada a nómina</span>
+      <span class="kpi-card__value" style="font-size:16px;color:white">0 de 8 vendors tienen IA en liquidación</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">Ningún vendor del top 8 ofrece detección automática de anomalías, asistente conversacional para novedades ni simulación de escenarios de liquidación. Solo SAP tiene Joule (global, no localizado para nómina COL). El 88% de líderes RR.HH. no obtiene valor real de IA según Gartner oct. 2025.</span>
+    </div>
+    <div class="kpi-card kpi-card--purple" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 2 — Experiencia digital del empleado</span>
+      <span class="kpi-card__value" style="font-size:16px;color:white">Solo 1 app nativa estable en el top 8</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">Heinsohn tiene la app más avanzada pero con problemas de redirección documentados en Google Play. Kactus lanzó en 2024 (adopción temprana). Novasoft, Siigo y Soporte Lógico sin app nativa. Oracle PeopleSoft explícitamente criticado por no ser mobile-friendly.</span>
+    </div>
+    <div class="kpi-card kpi-card--orange" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 3 — People analytics predictivo</span>
+      <span class="kpi-card__value" style="font-size:16px;color:white">0 vendors locales con modelos predictivos</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">Ningún vendor local colombiano ofrece predicción de rotación (90 días), ausentismo estacional ni benchmarking salarial contra el mercado laboral colombiano. SAP tiene capacidad global pero a costo no accesible para la mayoría del mercado.</span>
+    </div>
+    <div class="kpi-card kpi-card--green" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 4 — Integración pagos inmediatos</span>
+      <span class="kpi-card__value" style="font-size:16px;color:white">0 vendors integrados con Bre-B / TESO PSE</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">ACH Colombia lanzó TESO PSE y Cuenta a Cuenta en 2025–2026 para pagos masivos inmediatos de nómina (47 entidades financieras). Todos los vendors HCM siguen usando archivos planos. Ventana competitiva: 12–24 meses.</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="kpi-card kpi-card--tint-orange">
+      <span class="kpi-card__label">Vacío 5 — Cumplimiento normativo proactivo</span>
+      <span class="kpi-card__value" style="font-size:15px;color:var(--c-orange)">Todos actualizan reactivamente</span>
+      <span class="kpi-card__desc">La Reforma Laboral 2025 (Ley 2466) introdujo cambios urgentes: jornada nocturna desde 7pm (ene. 2026), reducción jornada a 44h (jul. 2025), nuevos recargos dominicales. Ningún vendor ofrece alertas antes de la vigencia ni simulador de impacto presupuestal. El incumplimiento puede generar multas UGPP de hasta 15.000 UVT.</span>
+    </div>
+    <div class="kpi-card kpi-card--tint-purple">
+      <span class="kpi-card__label">Vacío 6 — Fuerza laboral flexible</span>
+      <span class="kpi-card__value" style="font-size:15px;color:var(--c-purple)">Sin módulos para freelancers / pluriempleo</span>
+      <span class="kpi-card__desc">Ningún vendor tiene módulo específico para freelancers (Formulario 350 retención), pluriempleo simultáneo, beneficios de trabajo remoto (auxilio conectividad Ley 2121/2021) ni gestión de plataformas digitales. La Reforma Laboral 2025 amplió estas modalidades, aumentando la presión sobre los sistemas de nómina.</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider--thick">
+
+<!-- ═══════════════════ SECCIÓN 3C: FRICCIONES ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 3 · Parte C</span>
+    <h2 class="section-title__heading">Fricciones Reales No Resueltas — Priorización</h2>
+    <p class="section-title__desc">Cruce de reviews negativos verificados (Capterra, G2, Google Play) con los vacíos funcionales del mercado. Mayor a menor frecuencia de queja.</p>
+  </div>
+  <div class="tabla-wrapper">
+    <table class="tabla-datos">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fricción</th>
+          <th>Evidencia verificada</th>
+          <th>Vendors afectados</th>
+          <th>Vacío conectado</th>
+          <th>Urgencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row--red">
+          <td><strong>1</strong></td>
+          <td><strong>Servicio al cliente lento y deficiente</strong></td>
+          <td>Siigo Capterra: <em>"sigue siendo un servicio muy deficiente"</em> (múltiples reviews 2024–25). SAP/Oracle: soporte en inglés sin expertise normativo local.</td>
+          <td>Siigo · SAP · Oracle PS</td>
+          <td>Soporte local</td>
+          <td><span class="badge badge--red">Crítica</span></td>
+        </tr>
+        <tr class="row--orange">
+          <td><strong>2</strong></td>
+          <td><strong>Interfaz anticuada o difícil de usar</strong></td>
+          <td>Oracle PeopleSoft Capterra 2024–25: <em>"clunky"</em>, <em>"no mobile-friendly"</em>. <em>"Si pudiera cambiar de herramienta, lo haría"</em> (jul. 2025).</td>
+          <td>Oracle PS · Siigo · Soporte Lógico</td>
+          <td>Vacío 2 — EX</td>
+          <td><span class="badge badge--orange">Alta</span></td>
+        </tr>
+        <tr class="row--orange">
+          <td><strong>3</strong></td>
+          <td><strong>Lentitud en actualización normativa colombiana</strong></td>
+          <td>Reforma Laboral 2025 (Ley 2466): empresas en incumplimiento semanas mientras esperaban actualización del software de su vendor.</td>
+          <td>Oracle PS · SAP (partners)</td>
+          <td>Vacío 5 — Normativa proactiva</td>
+          <td><span class="badge badge--orange">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><strong>App móvil inexistente o inestable</strong></td>
+          <td>Heinsohn Google Play: <em>"cuando inicio sesión me redirige a un nuevo sitio web, no tiene sentido tener una app"</em>. Oracle PS: <em>"no da la posibilidad de gestionar vía móvil con facilidad"</em>.</td>
+          <td>Heinsohn · Oracle PS · Novasoft · Siigo</td>
+          <td>Vacío 2 — EX</td>
+          <td><span class="badge badge--blue">Media–Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><strong>Sin people analytics ejecutivo</strong></td>
+          <td>La mayoría de vendors ofrece reportes operativos (desprendibles, exógena, PILA) pero no dashboards de talento estratégicos para la dirección.</td>
+          <td>Kactus · Novasoft · Heinsohn · Soporte Lógico</td>
+          <td>Vacío 3 — Analytics predictivo</td>
+          <td><span class="badge badge--gray">Media</span></td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><strong>Sin integración con pagos inmediatos colombianos</strong></td>
+          <td>Dispersión de nómina vía archivo plano sigue siendo el estándar universal. Bre-B y TESO PSE sin adopción en ningún vendor HCM a junio 2026.</td>
+          <td>Todos (8/8)</td>
+          <td>Vacío 4 — Pagos inmediatos</td>
+          <td><span class="badge badge--gray">Emergente</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider--thick">
+
+<!-- ═══════════════════ SECCIÓN 3D: OPORTUNIDADES ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 3 · Parte D</span>
+    <h2 class="section-title__heading">Cinco Oportunidades de Propuesta de Valor Diferenciada</h2>
+    <p class="section-title__desc">Donde una oferta nueva o una evolución del producto actual puede superar lo existente en el mercado colombiano, con evidencia del gap y palanca de diferenciación.</p>
+  </div>
+  
+<div class="opp-card">
+  <div class="opp-card__head" style="background:#5454e910;border-bottom:1px solid #5454e930;">
+    <div class="opp-card__num" style="background:#5454e9">1</div>
+    <div class="opp-card__title">Nómina Cognitiva — IA conversacional sin formularios</div>
+  </div>
+  <div class="opp-card__body" style="margin-top:12px;">
+    <div class="opp-card__row">
+      <span class="opp-card__key">Capacidad</span>
+      <span class="opp-card__val">Motor IA conversacional (chatbot/voz) para registrar novedades en lenguaje natural. Detecta anomalías antes del cierre y genera resumen de riesgo del período.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+      <span class="opp-card__val">Solo Bitákora (fuera del top 8) lo ofrece en Colombia. Ningún vendor de los 8 evaluados tiene IA en el motor de liquidación.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Segmento beneficiado</span>
+      <span class="opp-card__val">Empresas medianas 200–1.000 empleados; sector financiero con equipos de RR.HH. pequeños.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Palanca</span>
+      <span class="opp-card__val"><span class="opp-badge" style="background:#eeeeff;color:#5454e9">Tecnología (LLM localizado) + UX conversacional</span></span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Complejidad</span>
+      <span class="opp-card__val">Alta — requiere LLM entrenado en normativa colombiana e integrado al motor de cálculo.</span>
+    </div>
+  </div>
+</div>
+
+<div class="opp-card">
+  <div class="opp-card__head" style="background:#e67e2210;border-bottom:1px solid #e67e2230;">
+    <div class="opp-card__num" style="background:#e67e22">2</div>
+    <div class="opp-card__title">Monitor Normativo Proactivo — alertas antes de la vigencia</div>
+  </div>
+  <div class="opp-card__body" style="margin-top:12px;">
+    <div class="opp-card__row">
+      <span class="opp-card__key">Capacidad</span>
+      <span class="opp-card__val">Monitorea Diario Oficial, resoluciones DIAN/UGPP y Ministerio del Trabajo. Alerta con simulación de impacto en pesos para la plantilla específica antes de que entre en vigencia el cambio.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+      <span class="opp-card__val">Todos los vendors actualizan de forma reactiva. La Reforma Laboral 2025 (Ley 2466) dejó empresas en incumplimiento semanas. Nadie ofrece simulador de impacto previo.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Segmento beneficiado</span>
+      <span class="opp-card__val">Sector financiero, salud y sector público — alta exposición a multas UGPP/DIAN.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Palanca</span>
+      <span class="opp-card__val"><span class="opp-badge" style="background:#fef3e8;color:#c0621a">Normativa + NLP para scraping regulatorio</span></span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Complejidad</span>
+      <span class="opp-card__val">Media — scraping de fuentes regulatorias + clasificación por NLP es factible; el reto es conectarlo al motor de parámetros del cliente.</span>
+    </div>
+  </div>
+</div>
+
+<div class="opp-card">
+  <div class="opp-card__head" style="background:#27ae6010;border-bottom:1px solid #27ae6030;">
+    <div class="opp-card__num" style="background:#27ae60">3</div>
+    <div class="opp-card__title">Nómina Inmediata — integración nativa con ACH / Bre-B</div>
+  </div>
+  <div class="opp-card__body" style="margin-top:12px;">
+    <div class="opp-card__row">
+      <span class="opp-card__key">Capacidad</span>
+      <span class="opp-card__val">Dispersión de nómina vía Transfiya/Bre-B y TESO PSE de ACH Colombia; billeteras Nequi/Daviplata como destino; pagos 24/7 sin archivos planos ni restricción de horario bancario.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+      <span class="opp-card__val">ACH Colombia lanzó TESO PSE y Cuenta a Cuenta en 2025–2026. Ningún vendor HCM ha anunciado integración nativa. Ventana de 12–24 meses.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Segmento beneficiado</span>
+      <span class="opp-card__val">Sector financiero; empresas con trabajadores en zonas rurales o sin cuenta bancaria; alta rotación.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Palanca</span>
+      <span class="opp-card__val"><span class="opp-badge" style="background:#e8f8f0;color:#1e8449">Integración (ecosistema financiero colombiano) + UX de pago instantáneo</span></span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Complejidad</span>
+      <span class="opp-card__val">Media — API de Transfiya/Bre-B accesible; el reto es la integración segura con el motor de nómina y cumplimiento Superfinanciera.</span>
+    </div>
+  </div>
+</div>
+
+<div class="opp-card">
+  <div class="opp-card__head" style="background:#8e44ad10;border-bottom:1px solid #8e44ad30;">
+    <div class="opp-card__num" style="background:#8e44ad">4</div>
+    <div class="opp-card__title">People Intelligence — analytics predictivo localizado Colombia</div>
+  </div>
+  <div class="opp-card__body" style="margin-top:12px;">
+    <div class="opp-card__row">
+      <span class="opp-card__key">Capacidad</span>
+      <span class="opp-card__val">Modelos de predicción de rotación voluntaria (90 días), ausentismo estacional, correlación nómina–desempeño y benchmarking salarial integrado. Dashboards ejecutivos sin exportar a Excel.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+      <span class="opp-card__val">SAP tiene esto globalmente pero a costo elevado. Ningún vendor local colombiano ofrece modelos predictivos entrenados con datos del mercado laboral colombiano.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Segmento beneficiado</span>
+      <span class="opp-card__val">Sector financiero, BPO, salud y retail — alta rotación con ROI directo medible en retención.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Palanca</span>
+      <span class="opp-card__val"><span class="opp-badge" style="background:#f5eeff;color:#6c3483">Tecnología ML + datos de mercado laboral colombiano propietarios</span></span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Complejidad</span>
+      <span class="opp-card__val">Alta — requiere datasets históricos anonimizados, ciencia de datos y gestión de privacidad (Habeas Data).</span>
+    </div>
+  </div>
+</div>
+
+<div class="opp-card">
+  <div class="opp-card__head" style="background:#1a1a1a10;border-bottom:1px solid #1a1a1a30;">
+    <div class="opp-card__num" style="background:#1a1a1a">5</div>
+    <div class="opp-card__title">EX Total — app de empleado con estándares consumer</div>
+  </div>
+  <div class="opp-card__body" style="margin-top:12px;">
+    <div class="opp-card__row">
+      <span class="opp-card__key">Capacidad</span>
+      <span class="opp-card__val">App móvil nativa (iOS + Android) con UX de consumer app: portal nómina + novedades + comunicaciones + encuestas clima + reconocimientos + carpeta laboral digital. Canal bidireccional empresa-empleado.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+      <span class="opp-card__val">Solo Heinsohn tiene app nativa local con biometría, pero con problemas de estabilidad documentados. Oracle PeopleSoft explícitamente criticado por no ser mobile-friendly.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Segmento beneficiado</span>
+      <span class="opp-card__val">Empresas con fuerza laboral dispersa; sector financiero con sucursales; plantillas con alta participación Gen Z/Millennials.</span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Palanca</span>
+      <span class="opp-card__val"><span class="opp-badge" style="background:#f4f4f6;color:#1a1a1a">UX/diseño centrado en el usuario + movilidad</span></span>
+    </div>
+    <div class="opp-card__row">
+      <span class="opp-card__key">Complejidad</span>
+      <span class="opp-card__val">Media — desarrollo de app nativa es conocido; el reto está en la integración con el motor de nómina y el change management para adopción masiva.</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<hr class="divider--thick">
+
+<!-- ═══════════════════ SECCIÓN 4A: FORTALEZAS PEOPLESOFT ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 4 · Parte A</span>
+    <h2 class="section-title__heading">Fortalezas de PeopleSoft que los Vendors Locales No Replican</h2>
+    <p class="section-title__desc">Capacidades donde Oracle PeopleSoft supera a los 7 competidores colombianos/regionales evaluados.</p>
+  </div>
+  <div class="grid-2">
+    <ul class="lista-icesi">
+      <li><strong>Suite ERP+HCM integrada nativa:</strong> PeopleSoft unifica nómina, gestión financiera, cadena de suministro y CRM en una sola plataforma. Ningún vendor local integra estas dimensiones sin conectores de terceros.</li>
+      <li><strong>Escalabilidad enterprise sin límite de tamaño:</strong> Maneja estructuras organizacionales complejas con miles de empleados, convenios colectivos diferenciados y múltiples personas jurídicas. Garantiza que el sistema no se quede corto ante crecimiento de ACH.</li>
+      <li><strong>Reportes de auditoría robustos para sector regulado:</strong> BIP (Business Intelligence Publisher) y OTBI permiten reportes complejos de trazabilidad y auditoría, críticos para una entidad vigilada por la Superfinanciera de Colombia.</li>
+      <li><strong>Soporte garantizado hasta 2036:</strong> Oracle extendió el soporte Premier de PeopleSoft hasta al menos 2036, eliminando la presión inmediata de migración forzada.</li>
+    </ul>
+    <ul class="lista-icesi">
+      <li><strong>Seguridad certificada global:</strong> TDE (Transparent Data Encryption) desde PeopleTools 8.46. Actualizaciones críticas de seguridad (CPU) publicadas periódicamente por Oracle. Historial probado en sectores regulados globalmente (banca, gobierno, salud).</li>
+      <li><strong>Localización de nómina Colombia disponible:</strong> Módulo de nómina con localización para DIAN, UGPP y PILA. Aunque con menor agilidad de actualización que vendors locales, la cobertura existe y es certificada.</li>
+      <li><strong>Integración nativa con ecosistema Oracle:</strong> Oracle Financials, Oracle Analytics Cloud y Oracle ERP Cloud se integran nativamente, sin necesidad de middleware adicional para organizaciones con ecosistema Oracle.</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════════ SECCIÓN 4B: BRECHAS PEOPLESOFT ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 4 · Parte B</span>
+    <h2 class="section-title__heading">Brechas de PeopleSoft Frente al Mercado Local Colombiano</h2>
+    <p class="section-title__desc">Lo que los competidores locales ofrecen mejor para el contexto regulatorio y operacional de Colombia.</p>
+  </div>
+  <div class="tabla-wrapper">
+    <table class="tabla-datos tabla-datos--striped">
+      <thead>
+        <tr>
+          <th>Brecha</th>
+          <th>Impacto para ACH Colombia</th>
+          <th>Quién lo resuelve mejor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row--red">
+          <td><strong>Lentitud en actualización normativa COL</strong></td>
+          <td>La Reforma Laboral 2025 y cambios DIAN/UGPP requieren intervención pagada del partner (Entelgy) para cada cambio. Riesgo de incumplimiento en una entidad vigilada por la Superfinanciera.</td>
+          <td><span class="badge badge--green">Heinsohn · Siigo · Kactus</span></td>
+        </tr>
+        <tr class="row--orange">
+          <td><strong>Costo total de propiedad elevado</strong></td>
+          <td>Licencia perpetua + 21–22% mantenimiento/año + honorarios Entelgy por cada cambio normativo. Oracle estima que mover PeopleSoft a OCI reduce el TCO en <strong>37–38%</strong> vs. on-premise.</td>
+          <td><span class="badge badge--blue">Siigo · Heinsohn · Kactus (SaaS)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Interfaz y UX desactualizada</strong></td>
+          <td>Usuarios Capterra 2024–25: <em>"anticuada"</em>, <em>"clunky"</em>, <em>"no mobile-friendly"</em>. La interfaz Fluid UI mejora pero no elimina la complejidad estructural.</td>
+          <td><span class="badge badge--green">Heinsohn · Siigo · Kactus</span></td>
+        </tr>
+        <tr>
+          <td><strong>App móvil del empleado limitada</strong></td>
+          <td>El autoservicio móvil de PeopleSoft es funcional pero criticado como insuficiente para gestión moderna. Nueva fuerza laboral (Gen Z) compara con apps de consumo.</td>
+          <td><span class="badge badge--orange">Heinsohn (líder local)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Sin IA nativa en PeopleSoft on-premise</strong></td>
+          <td>La IA de Oracle está en Oracle Cloud HCM (Fusion), no en PeopleSoft on-premise. Acceder a ella requiere un proyecto de transformación completo hacia OCI + Oracle Cloud HCM.</td>
+          <td><span class="badge badge--blue">SAP SuccessFactors (único)</span></td>
+        </tr>
+        <tr class="row--orange">
+          <td><strong>Dependencia de un solo partner local</strong></td>
+          <td>Entelgy es el actor dominante de PeopleSoft en Colombia. Esta concentración crea riesgo de dependencia, limita la capacidad de negociación y genera costos variables impredecibles.</td>
+          <td><span class="badge badge--green">Vendors locales con soporte directo</span></td>
+        </tr>
+        <tr class="row--red">
+          <td><strong>Sin integración con nueva infra. de pagos COL</strong></td>
+          <td>PeopleSoft genera archivos planos para dispersión de nómina. Sin integración con Bre-B, TESO PSE o Transfiya — especialmente crítico para ACH Colombia como operador de esta infraestructura.</td>
+          <td><span class="badge badge--gray">Nadie aún — ventana de oportunidad</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════════ SECCIÓN 4C: RAZONES MIGRACIÓN ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 4 · Parte C</span>
+    <h2 class="section-title__heading">Por Qué Empresas Migran Desde PeopleSoft — Latam y Colombia</h2>
+    <p class="section-title__desc">Drivers de migración documentados en reviews, foros especializados, casos de estudio y publicaciones del sector (2024–2025).</p>
+  </div>
+  <ol class="lista-numerada">
+    <li><strong>TCO insostenible para organizaciones medianas.</strong> El modelo licencia perpetua + mantenimiento anual + partner requerido para cada cambio normativo genera un costo por empleado muy superior al de alternativas SaaS. Oracle estima hasta 52% de ahorro al migrar PeopleSoft a OCI vs. ejecutarlo en otra nube.</li>
+    <li><strong>Lentitud de actualización normativa local.</strong> Los partners implementadores facturan por cada actualización normativa. Cuando los cambios son frecuentes —como en 2024–25 con la Reforma Laboral 2025— el costo y el tiempo de espera se vuelven inaceptables versus vendors locales que actualizan automáticamente en días.</li>
+    <li><strong>Insatisfacción de usuarios con la interfaz.</strong> La queja más frecuente en Capterra y G2 (2024–25) es la interfaz compleja y no intuitiva. Las nuevas generaciones del sector financiero, acostumbradas a apps de consumo, experimentan fricción significativa con PeopleSoft.</li>
+    <li><strong>Ausencia de IA y analytics modernos en la versión on-premise.</strong> Las organizaciones que buscan people analytics predictivo o IA para selección no encuentran estas capacidades en PeopleSoft on-premise. Acceder a ellas requiere migrar a Oracle Cloud HCM — un proyecto de transformación mayor.</li>
+    <li><strong>Dependencia de un solo partner local.</strong> El ecosistema de partners certificados para PeopleSoft en Colombia es muy pequeño. Esta concentración crea riesgo estructural: si el partner tiene problemas de capacidad o escala precios, el cliente queda en posición vulnerable sin alternativas inmediatas.</li>
+    <li><strong>Velocidad de innovación muy baja.</strong> La última versión de la aplicación (PeopleSoft 9.2) fue lanzada en 2013. Oracle innova en Oracle Cloud HCM, no en PeopleSoft on-premise. Las mejoras se concentran en PeopleTools (capa técnica), no en funcionalidades de negocio.</li>
+  </ol>
+  <div class="cita">
+    <span class="cita__texto">"PeopleSoft is incredibly difficult to use, and the user interface is absolutely not mobile-friendly. Everything — if we could switch HR management tools, I would beg of it and promptly fight for that switch."</span>
+    <span class="cita__fuente">Usuario verificado de PeopleSoft — Capterra, julio 2025 · Sector educación superior · 51–200 empleados</span>
+  </div>
+</div>
+
+<hr class="divider--thick">
+
+<!-- ═══════════════════ SECCIÓN 4D: CANDIDATOS REEMPLAZO ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Sección 4 · Parte D</span>
+    <h2 class="section-title__heading">Vendors Candidatos Realistas de Reemplazo para ACH Colombia</h2>
+    <p class="section-title__desc">Criterios: sector financiero regulado (Superfinanciera), 200–500 empleados, nómina compleja, integración con infraestructura bancaria. Ordenados por madurez para el sector.</p>
+  </div>
+  <div class="alerta alerta--advertencia">
+    <span class="alerta__titulo">Vendors descartados para ACH</span>
+    <p class="alerta__texto"><strong>Siigo Nómina:</strong> diseñado para pyme; HCM muy limitado; sin capacidades enterprise para sector financiero regulado. <strong>Soporte Lógico (HUMANO®):</strong> líder en sector público pero con rezago digital significativo; sin app; interfaz desactualizada. <strong>PERNO (JBB):</strong> sistema interno distrital no aplicable.</p>
+  </div>
+  <div class="tabla-wrapper">
+    <table class="tabla-datos">
+      <thead>
+        <tr>
+          <th>Vendor / Madurez</th>
+          <th>Por qué sería viable para ACH</th>
+          <th>Mayor riesgo o limitación</th>
+          <th>Madurez sector financiero regulado</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+<tr>
+  <td><strong>SAP SuccessFactors</strong><br><span class="badge badge--blue" style="margin-top:4px;display:inline-block">★★★★★</span></td>
+  <td>Localización COL certificada (DIAN, UGPP, PILA). Suite completa HCM + analytics. IA madura (Joule). ISO 27001 / SOC 2.</td>
+  <td style="color:var(--c-orange)">Costo de implementación alto; proyecto 6–18 meses. Requiere partner SAP certificado en Colombia.</td>
+  <td>Muy alto — referencia global para banca y finanzas reguladas.</td>
+</tr>
+<tr>
+  <td><strong>Kactus HCM (Digital Ware)</strong><br><span class="badge badge--purple" style="margin-top:4px;display:inline-block">★★★☆☆</span></td>
+  <td>Nómina más profunda del mercado local. BPM para flujos complejos. App móvil 2024. 30+ años. 1.000+ clientes.</td>
+  <td style="color:var(--c-orange)">Sin ISO 27001/SOC 2 públicos — barrera Superfinanciera. Sin IA. Analytics limitado.</td>
+  <td>Medio — sólido en nómina, requiere validación en seguridad certificada y reporting regulatorio.</td>
+</tr>
+<tr>
+  <td><strong>Novasoft GTH</strong><br><span class="badge badge--green" style="margin-top:4px;display:inline-block">★★★☆☆</span></td>
+  <td>ISO 9001 · MS Gold Partner. 35 años. Power BI nativo. Superintendencias como clientes. Híbrido SaaS/on-premise.</td>
+  <td style="color:var(--c-orange)">Sin app móvil nativa confirmada. Sin ISO 27001. HCM en proceso de modernización.</td>
+  <td>Medio — muy sólido en nómina y cumplimiento; requiere certificación de seguridad para Superfinanciera.</td>
+</tr>
+<tr>
+  <td><strong>Heinsohn HCM</strong><br><span class="badge badge--orange" style="margin-top:4px;display:inline-block">★★★☆☆</span></td>
+  <td>40+ años. Líder nómina electrónica DIAN. App iOS/Android con biometría. BPO disponible. 100% SaaS.</td>
+  <td style="color:var(--c-orange)">Sin ISO 27001/SOC 2 públicos. Problemas de estabilidad en app (redirección a web). HCM limitado vs. SAP.</td>
+  <td>Medio — excelente en cumplimiento y EX; requiere certificación de seguridad para filtro Superfinanciera.</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider--thick">
+
+<!-- ═══════════════════ RESUMEN EJECUTIVO ═══════════════════ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-title__label">Entrega Final</span>
+    <h2 class="section-title__heading">Resumen Ejecutivo — Para la Dirección de ACH Colombia</h2>
+    <p class="section-title__desc">Los hallazgos más importantes, las oportunidades de mayor potencial y la recomendación de foco estratégico.</p>
+  </div>
+
+  <!-- 3 HALLAZGOS -->
+  <div class="divider-label"><span>3 Hallazgos Más Importantes</span></div>
+
+  <div class="grid-3">
+    <div class="kpi-card kpi-card--solid-blue" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Hallazgo 1</span>
+      <span class="kpi-card__value" style="font-size:15px;color:white;line-height:1.3">PeopleSoft cuesta 37–52% más que alternativas SaaS equivalentes</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8)">El TCO on-premise (licencias + mantenimiento + Entelgy por cada cambio normativo) es significativamente mayor al de alternativas SaaS. La Reforma Laboral 2025 evidenció el riesgo de incumplimiento mientras se espera la actualización del partner.</span>
+    </div>
+    <div class="kpi-card kpi-card--solid-orange" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Hallazgo 2</span>
+      <span class="kpi-card__value" style="font-size:15px;color:white;line-height:1.3">Tres brechas críticas del mercado que nadie resuelve hoy</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8)">Integración con nueva infraestructura de pagos colombiana (Bre-B/TESO PSE — operada por ACH mismo), people analytics predictivo localizado y cumplimiento normativo proactivo. Ventana de diferenciación: 12–24 meses.</span>
+    </div>
+    <div class="kpi-card kpi-card--solid-green" style="padding:22px;">
+      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Hallazgo 3</span>
+      <span class="kpi-card__value" style="font-size:15px;color:white;line-height:1.3">La experiencia digital del empleado es el diferenciador más subestimado</span>
+      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8)">Solo Heinsohn tiene app móvil nativa local con biometría, y aún con problemas de estabilidad. Oracle PeopleSoft es explícitamente criticado por no ser mobile-friendly. En un sector financiero con alta participación millennial/Gen Z, esto tiene costo directo en productividad.</span>
+    </div>
+  </div>
+
+  <!-- 2 OPORTUNIDADES -->
+  <div class="divider-label" style="margin-top:8px"><span>2 Oportunidades de Mayor Potencial para ACH Colombia</span></div>
+
+  <div class="grid-2">
+    <div class="kpi-card kpi-card--tint-blue" style="padding:22px;">
+      <span class="kpi-card__label">Oportunidad A — ROI inmediato · Ventana 12–18 meses</span>
+      <span class="kpi-card__value" style="font-size:16px;color:var(--c-blue)">Monitor Normativo Proactivo</span>
+      <span class="kpi-card__desc" style="font-size:13px;">Un módulo que alerte antes de que entre en vigencia un cambio regulatorio —no después— con simulación del impacto en pesos para la plantilla específica de ACH. Dado que ACH procesa nómina de entidades del sector financiero vigilado por la Superfinanciera, el incumplimiento normativo tiene consecuencias regulatorias directas. Ningún vendor lo ofrece hoy. El riesgo de multas UGPP puede ser de hasta 15.000 UVT por período.</span>
+    </div>
+    <div class="kpi-card kpi-card--tint-green" style="padding:22px;">
+      <span class="kpi-card__label">Oportunidad B — Relevancia estratégica única para ACH</span>
+      <span class="kpi-card__value" style="font-size:16px;color:var(--c-green)">Integración Nativa con Infraestructura ACH</span>
+      <span class="kpi-card__desc" style="font-size:13px;">ACH Colombia opera PSE, Transfiya y Bre-B. Integrar el módulo de dispersión de nómina directamente con TESO PSE — eliminando el archivo plano y habilitando pagos de nómina en segundos, 24/7 — es una propuesta de valor que ningún vendor externo puede ofrecer con la misma naturalidad. Esta integración convertiría el proceso interno de ACH en demostrador de su propia infraestructura.</span>
+    </div>
+  </div>
+
+  <!-- RECOMENDACIÓN -->
+  <div class="divider-label" style="margin-top:8px"><span>Recomendación de Foco Estratégico</span></div>
+
+  <div class="highlight-box highlight-box--dark">
+    <span class="highlight-box__label">Recomendación principal</span>
+    <span class="highlight-box__texto" style="font-size:16px;">No migrar a un vendor local hoy. Evolucionar PeopleSoft con una capa de innovación propia.</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="kpi-card kpi-card--tint-blue">
+      <span class="kpi-card__label">Acción 1 — Infraestructura</span>
+      <span class="kpi-card__value" style="font-size:15px">Migrar a OCI</span>
+      <span class="kpi-card__desc">Mover PeopleSoft on-premise a Oracle Cloud Infrastructure reduce el TCO en hasta 37% sin cambiar la plataforma de nómina ni re-entrenar al equipo. Abre acceso a Oracle Cloud HCM con IA para el futuro.</span>
+    </div>
+    <div class="kpi-card kpi-card--tint-orange">
+      <span class="kpi-card__label">Acción 2 — Diferenciación</span>
+      <span class="kpi-card__value" style="font-size:15px">Construir capas propias</span>
+      <span class="kpi-card__desc">Desarrollar el Monitor Normativo Proactivo y la integración con Bre-B/TESO PSE como APIs que complementen PeopleSoft. No reemplazarlo, superarlo en las dimensiones que más importan al sector financiero colombiano.</span>
+    </div>
+    <div class="kpi-card kpi-card--tint-green">
+      <span class="kpi-card__label">Acción 3 — Experiencia</span>
+      <span class="kpi-card__value" style="font-size:15px">Complementar EX</span>
+      <span class="kpi-card__desc">Resolver la brecha de experiencia del empleado con Heinsohn o Kactus como capa de autoservicio y app móvil, sin migrar el motor de nómina. Si en 24–36 meses el TCO sigue siendo insostenible, SAP SuccessFactors es el único reemplazo integral viable.</span>
+    </div>
+  </div>
+
+  <!-- PRÓXIMOS PASOS -->
+  <div class="divider-label" style="margin-top:8px"><span>3 Próximos Pasos Concretos</span></div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    
+<div class="paso" style="border-left-color:var(--c-blue)">
+  <div class="paso__num" style="background:var(--c-blue)">1</div>
+  <div class="paso__content">
+    <div class="paso__title">Auditoría de TCO real</div>
+    <div class="paso__desc">Calcular el costo total de propiedad real de PeopleSoft en ACH Colombia para los últimos 3 años: licencias Oracle + mantenimiento anual + honorarios Entelgy por actualizaciones normativas + costos internos de TI. Comparar contra cotizaciones formales de SAP SuccessFactors y Kactus HCM para el mismo alcance funcional. Este número es la base objetiva de cualquier decisión.</div>
+    <div class="paso__meta" style="color:var(--c-blue)">Plazo sugerido: 30 días</div>
+  </div>
+</div>
+<div class="paso" style="border-left-color:var(--c-purple)">
+  <div class="paso__num" style="background:var(--c-purple)">2</div>
+  <div class="paso__content">
+    <div class="paso__title">Piloto migración PeopleSoft → OCI</div>
+    <div class="paso__desc">Explorar con Oracle/Entelgy la factibilidad de migrar PeopleSoft on-premise a OCI. Oracle estima reducción de TCO del 37–38% sin cambiar la plataforma de nómina, con Zero Downtime Migration y sin reentrenamiento del equipo. Esto abre acceso a PeopleTools modernos, Fluid UI y puerta de entrada a Oracle Cloud HCM con IA.</div>
+    <div class="paso__meta" style="color:var(--c-purple)">Plazo sugerido: 90 días</div>
+  </div>
+</div>
+<div class="paso" style="border-left-color:var(--c-green)">
+  <div class="paso__num" style="background:var(--c-green)">3</div>
+  <div class="paso__content">
+    <div class="paso__title">Diseñar integración con infraestructura ACH</div>
+    <div class="paso__desc">Convocar a Tecnología, Talento Humano y el área de Pagos de ACH Colombia para diseñar la arquitectura de integración entre el módulo de dispersión de nómina y TESO PSE / Transfiya / Bre-B. Esta integración convierte el proceso interno de ACH en demostrador de su propia infraestructura de pagos — un activo estratégico único imposible de replicar por un vendor externo.</div>
+    <div class="paso__meta" style="color:var(--c-green)">Plazo sugerido: 60 días</div>
+  </div>
+</div>
+  </div>
+
+</div>
+
+<!-- CITA DE CIERRE -->
+<div class="section">
+  <div class="cita">
+    <span class="cita__texto">El mercado colombiano de HCM no necesita otro sistema de nómina más. Necesita una plataforma que combine la solidez normativa local, la inteligencia de datos para decisiones estratégicas de talento y la integración nativa con la infraestructura financiera digital que Colombia está construyendo hoy. Quien resuelva esas tres dimensiones en los próximos 18 meses definirá el estándar del mercado por la próxima década.</span>
+    <span class="cita__fuente">Síntesis estratégica — Benchmarking HCM Colombia 2026 · Parte 2 · Para ACH Colombia</span>
+  </div>
+</div>
+
+</div><!-- /reporte-body -->
+
+<!-- FOOTER -->
+<div class="report-footer">
+  <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMjIuMTUgMjIwLjg0Ij4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMzAuMy4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMi4xLjMgQnVpbGQgMTgyKSAgLS0+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5zdDAgewogICAgICAgIGZpbGw6ICNmZmZmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJDYXBhXzEiPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNi4zOSwxNzIuMjdWMjUuMTdoMTkuMzV2MTQ3LjA5aC0xOS4zNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNjguNTEsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOUw4MS4xNSw1Mi42Mmw2LjcxLS43OXYxMjAuNDRoLTE5LjM1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMTQuMjIsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOWwtODQuMTEtMTE5LjY1LDYuNzEtLjc5djEyMC40NGgtMTkuMzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTM1OS45MywxNzIuMjdWMjUuMTdoMTkuMzV2MTI5LjMyaDY0LjU2djE3Ljc3aC04My45MVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDUxLjM0LDE3Mi4yN2w1Mi43Mi0xNDcuMDloMjIuOWw1Mi43MiwxNDcuMDloLTIwLjczbC0xMi4wNC0zNC41NWgtNjIuNzlsLTEyLjA0LDM0LjU1aC0yMC43M1pNNDkwLjI0LDExOS45NWg1MC41NGwtMjguMDQtODAuNzVoNS41M2wtMjguMDQsODAuNzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5OC4yNCwxNzIuMjdWMjUuMTdoNjEuOGM4LjgyLDAsMTYuNDIsMS41OCwyMi44LDQuNzQsNi4zOCwzLjE2LDExLjMyLDcuNiwxNC44MSwxMy4zMywzLjQ5LDUuNzMsNS4yMywxMi41NCw1LjIzLDIwLjQzLDAsNy4yNC0xLjg4LDEzLjc5LTUuNjMsMTkuNjUtMy43NSw1Ljg2LTkuMjUsMTAuNDMtMTYuNDksMTMuNzJsLS4yLTcuMzFjNi4zMiwyLjM3LDExLjU1LDUuNSwxNS43LDkuMzgsNC4xNSwzLjg4LDcuMjcsOC4zNiw5LjM4LDEzLjQzLDIuMSw1LjA3LDMuMTYsMTAuNDMsMy4xNiwxNi4wOSwwLDEzLjU2LTQuMzQsMjQuMjItMTMuMDMsMzEuOTktOC42OSw3Ljc3LTIwLjUzLDExLjY1LTM1LjU0LDExLjY1aC02MlpNNjE3LjU5LDg1LjU5aDQyLjA1YzcuMTEsMCwxMi44My0yLjA3LDE3LjE4LTYuMjIsNC4zNC00LjE1LDYuNTItOS40NCw2LjUyLTE1Ljg5cy0yLjE3LTExLjg1LTYuNTItMTUuNGMtNC4zNC0zLjU1LTEwLjA3LTUuMzMtMTcuMTgtNS4zM2gtNDIuMDV2NDIuODRaTTYxNy41OSwxNTQuNWg0My40NGM4LjU1LDAsMTUuNC0yLjMsMjAuNTMtNi45MSw1LjEzLTQuNjEsNy43LTEwLjg2LDcuNy0xOC43NnMtMi41Ny0xNC4xOC03LjctMTguODZjLTUuMTMtNC42Ny0xMS45OC03LjAxLTIwLjUzLTcuMDFoLTQzLjQ0djUxLjUzWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MzEuNiw5NC4zN2MtMy4wNywwLTUuOTEtLjU1LTguNDktMS42Ni0yLjU5LTEuMTEtNC44NS0yLjY4LTYuNzctNC43LTEuOTMtMi4wMi0zLjQyLTQuNC00LjQ3LTcuMTItMS4wNS0yLjcyLTEuNTgtNS43LTEuNTgtOC45M3MuNTMtNi4yNywxLjU4LTguOTljMS4wNS0yLjcyLDIuNTMtNS4xLDQuNDQtNy4xMiwxLjkxLTIuMDIsNC4xNi0zLjU5LDYuNzctNC43LDIuNjEtMS4xMSw1LjQ1LTEuNjYsOC41Mi0xLjY2czUuNjkuNTMsOC4wOSwxLjU4LDQuNDIsMi40MSw2LjA3LDQuMDljMS42NSwxLjY3LDIuODMsMy40NiwzLjUzLDUuMzdsLTUuMjUsMi4zOWMtMS4wMS0yLjQxLTIuNTktNC4zNy00LjczLTUuODctMi4xNC0xLjUtNC43MS0yLjI1LTcuNzEtMi4yNXMtNS43My43Mi04LjA5LDIuMTZjLTIuMzUsMS40NC00LjE5LDMuNDQtNS41Miw2LjAxLTEuMzIsMi41Ny0xLjk4LDUuNTctMS45OCw4Ljk5cy42Niw2LjM2LDEuOTgsOC45M2MxLjMyLDIuNTcsMy4xNiw0LjU3LDUuNTIsNi4wMSwyLjM1LDEuNDQsNS4wNSwyLjE2LDguMDksMi4xNnM1LjU3LS43NSw3LjcxLTIuMjVjMi4xNC0xLjUsMy43Mi0zLjQ1LDQuNzMtNS44N2w1LjI1LDIuMzljLS43LDEuOTEtMS44OCwzLjctMy41Myw1LjM3LTEuNjUsMS42Ny0zLjY4LDMuMDQtNi4wNyw0LjA5cy01LjA5LDEuNTgtOC4wOSwxLjU4WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NzAuMzEsOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04OTEuNjcsOTMuNjd2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODZzLS45OSwyLjctLjk5LDQuNDF2MTguNjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTkzOC4zMSw5NC4wMmMtMy4wOCwwLTUuNDQtLjg4LTcuMDktMi42My0xLjY1LTEuNzUtMi40OC00LjIyLTIuNDgtNy40MXYtMTYuNThoLTUuNzJ2LTUuMmgxLjE3YzEuNCwwLDIuNTEtLjQzLDMuMzMtMS4yOC44Mi0uODYsMS4yMy0xLjk5LDEuMjMtMy4zOXYtMi41N2g1LjQzdjcuMjRoNy4wNnY1LjJoLTcuMDZ2MTYuNGMwLDEuMDUuMTYsMS45Ny41LDIuNzQuMzMuNzguODgsMS4zOSwxLjY2LDEuODQuNzguNDUsMS44MS42NywzLjA5LjY3LjI3LDAsLjYxLS4wMiwxLjAyLS4wNnMuNzktLjA4LDEuMTQtLjEydjQuNzljLS41MS4xMi0xLjA3LjItMS42OS4yNi0uNjIuMDYtMS4xNS4wOS0xLjU4LjA5WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05NDguNjUsOTMuNjd2LTMxLjQ3aDUuMzF2NS43OGwtLjU4LS44MmMuNzQtMS43OSwxLjg3LTMuMTIsMy4zOS00czMuMzctMS4zMSw1LjU1LTEuMzFoMS45M3Y1LjE0aC0yLjc0Yy0yLjIyLDAtNC4wMS42OS01LjM3LDIuMDctMS4zNiwxLjM4LTIuMDQsMy4zNC0yLjA0LDUuODd2MTguNzRoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk4NC4wMiw5NC4zN2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk05ODQuMDIsODkuMTJjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OS0yLjE2LTIuOTgtMy43NC0zLjk3LTMuMzQtMS40OS01LjI4LTEuNDktMy43Ny41LTUuMzQsMS40OS0yLjgzLDIuMzItMy43NywzLjk3LTEuNCwzLjU1LTEuNCw1LjY5LjQ3LDQuMDEsMS40LDUuNzJjLjkzLDEuNzEsMi4xOSwzLjA2LDMuNzcsNC4wM3MzLjM2LDEuNDYsNS4zNCwxLjQ2WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMxLjY2LDk0LjM3Yy0yLjk2LDAtNS42Mi0uNzItNy45Ny0yLjE2LTIuMzYtMS40NC00LjIxLTMuNDEtNS41OC01LjktMS4zNi0yLjQ5LTIuMDQtNS4yNy0yLjA0LTguMzVzLjY4LTUuOTYsMi4wNC04LjQ0YzEuMzYtMi40NywzLjIyLTQuNDMsNS41OC01Ljg3LDIuMzUtMS40NCw1LjAxLTIuMTYsNy45Ny0yLjE2LDIuNjEsMCw0LjkyLjU1LDYuOTUsMS42NiwyLjAyLDEuMTEsMy42MiwyLjYsNC43OSw0LjQ3bC0uODgsMS4zNHYtMTkuNWg1LjQ5djQ0LjE5aC01LjMxdi02LjcxbC43LjkzYy0xLjA5LDIuMDYtMi42OCwzLjY2LTQuNzYsNC43OS0yLjA4LDEuMTMtNC40MSwxLjY5LTYuOTgsMS42OVpNMTAzMi4xMyw4OS4xMmMxLjk4LDAsMy43Ni0uNDksNS4zMS0xLjQ2czIuNzktMi4zMSwzLjcxLTRjLjkxLTEuNjksMS4zNy0zLjU5LDEuMzctNS42OXMtLjQ2LTQuMDYtMS4zNy01Ljc1Yy0uOTItMS42OS0yLjE1LTMuMDMtMy43MS00LTEuNTYtLjk3LTMuMzMtMS40Ni01LjMxLTEuNDZzLTMuNzEuNS01LjI4LDEuNDktMi44MSwyLjMyLTMuNzEsMy45N2MtLjksMS42NS0xLjM0LDMuNTctMS4zNCw1Ljc1cy40NSw0LDEuMzQsNS42OWMuODksMS42OSwyLjEyLDMuMDMsMy42OCw0czMuMzMsMS40Niw1LjMxLDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwNzAuODksOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MTEuNTgsMTYzLjczdi00My40OWg1LjcydjQzLjQ5aC01LjcyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMzUsMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMiwxLjAzLDEuNzksMS41NSwzLjgxLDEuNTUsNi4wN3YyMC4zN2gtNS40OXYtMTguNjJjMC0xLjc1LS4zMS0zLjIzLS45My00LjQ0LS42Mi0xLjIxLTEuNTEtMi4xNS0yLjY2LTIuODMtMS4xNS0uNjgtMi40Ni0xLjAyLTMuOTQtMS4wMnMtMi43OS4zNC0zLjk0LDEuMDJjLTEuMTUuNjgtMi4wNSwxLjYzLTIuNzEsMi44Ni0uNjYsMS4yMy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NjAuMiwxNjMuNzN2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODYtLjY2LDEuMjMtLjk5LDIuNy0uOTksNC40MXYxOC42MmgtNS40M1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNOTA5LjAxLDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MSwzLjM2LTQuNCw1LjgxLTUuODRjMi40NS0xLjQ0LDUuMjEtMi4xNiw4LjI5LTIuMTZzNS43OC43MSw4LjIzLDIuMTNjMi40NSwxLjQyLDQuMzksMy4zNiw1LjgxLDUuODEsMS40MiwyLjQ1LDIuMTMsNS4yNywyLjEzLDguNDZzLS43NCw2LjAyLTIuMjIsOC40OWMtMS40OCwyLjQ3LTMuNDMsNC40Mi01Ljg3LDUuODQtMi40MywxLjQyLTUuMTMsMi4xMy04LjA5LDIuMTNaTTkwOS4wMSwxNTkuMTdjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OWMtLjkyLTEuNjUtMi4xNi0yLjk4LTMuNzQtMy45N3MtMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk0MC40MiwxNjMuNzNsLTEyLjMyLTMxLjQ3aDYuMDdsOS44NywyNi42MmgtMi4xbDkuOTItMjYuNjJoNi4wN2wtMTIuMzgsMzEuNDdoLTUuMTRaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk3MC44MywxNjQuNDNjLTIuMDYsMC0zLjg4LS4zOC01LjQ2LTEuMTRzLTIuODEtMS44MS0zLjcxLTMuMTVjLS45LTEuMzQtMS4zNC0yLjg5LTEuMzQtNC42NHMuMzYtMy4xOCwxLjA4LTQuNTJjLjcyLTEuMzQsMS44NS0yLjQ4LDMuMzktMy40MiwxLjU0LS45MywzLjQ3LTEuNiw1LjgxLTEuOTlsMTEuNjgtMS45M3Y0LjU1bC0xMC40NSwxLjc1Yy0yLjAyLjM1LTMuNDkuOTktNC40MSwxLjkzLS45Mi45My0xLjM3LDIuMDgtMS4zNywzLjQ0LDAsMS4yOC41MiwyLjM1LDEuNTUsMy4yMXMyLjMzLDEuMjgsMy44OCwxLjI4YzEuOTgsMCwzLjcxLS40Miw1LjE3LTEuMjYsMS40Ni0uODQsMi42MS0xLjk3LDMuNDUtMy40Mi44NC0xLjQ0LDEuMjUtMy4wNCwxLjI1LTQuNzl2LThjMC0xLjcxLS42My0zLjEtMS45LTQuMTctMS4yNy0xLjA3LTIuOTMtMS42MS00Ljk5LTEuNjEtMS43OSwwLTMuMzguNDYtNC43NiwxLjM3LTEuMzguOTItMi40LDIuMTMtMy4wNiwzLjY1bC00LjczLTIuNDVjLjU4LTEuNDQsMS41Mi0yLjczLDIuOC0zLjg4LDEuMjgtMS4xNSwyLjc4LTIuMDUsNC40OS0yLjcxczMuNS0uOTksNS4zNy0uOTljMi40MSwwLDQuNTMuNDYsNi4zNiwxLjM3LDEuODMuOTIsMy4yNiwyLjE4LDQuMjksMy43OSwxLjAzLDEuNjIsMS41NSwzLjQ5LDEuNTUsNS42M3YyMS4zN2gtNS4zMXYtNS45NmwuOTkuMzVjLS42NiwxLjI1LTEuNTYsMi4zMy0yLjY5LDMuMjctMS4xMy45My0yLjQ1LDEuNjctMy45NywyLjIyLTEuNTIuNTQtMy4xNy44Mi00Ljk2LjgyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDA5Ljc3LDE2NC40M2MtMy4wOCwwLTUuODEtLjcyLTguMi0yLjE2cy00LjI3LTMuNDEtNS42My01LjljLTEuMzYtMi40OS0yLjA0LTUuMjktMi4wNC04LjQxcy42OC01Ljk1LDIuMDQtOC40MWMxLjM2LTIuNDUsMy4yNC00LjQsNS42My01Ljg0LDIuMzktMS40NCw1LjEzLTIuMTYsOC4yLTIuMTYsMi4wNiwwLDMuOTkuMzcsNS43OCwxLjExLDEuNzkuNzQsMy4zNywxLjczLDQuNzMsMi45OCwxLjM2LDEuMjUsMi4zNSwyLjcxLDIuOTgsNC4zOGwtNC44NSwyLjM0Yy0uNzQtMS42My0xLjg3LTIuOTctMy4zOC00LTEuNTItMS4wMy0zLjI3LTEuNTUtNS4yNS0xLjU1cy0zLjYzLjQ5LTUuMTcsMS40NmMtMS41NC45Ny0yLjc1LDIuMy0zLjY1LDMuOTctLjksMS42Ny0xLjM0LDMuNi0xLjM0LDUuNzhzLjQ1LDQsMS4zNCw1LjY5Yy44OSwxLjY5LDIuMTEsMy4wMywzLjY1LDRzMy4yNiwxLjQ2LDUuMTcsMS40NiwzLjc0LS41Miw1LjI1LTEuNTVjMS41Mi0xLjAzLDIuNjUtMi40LDMuMzgtNC4xMmw0Ljg1LDIuNDVjLS42MiwxLjYzLTEuNjIsMy4wOC0yLjk4LDQuMzUtMS4zNiwxLjI2LTIuOTQsMi4yNy00LjczLDMuMDEtMS43OS43NC0zLjcyLDEuMTEtNS43OCwxLjExWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMwLjM4LDEyNy4yNHYtNy4wMWg1LjQzdjcuMDFoLTUuNDNaTTEwMzAuMzgsMTYzLjczdi0zMS40N2g1LjQzdjMxLjQ3aC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDU5LjE2LDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk0xMDU5LjE2LDE1OS4xN2MxLjk1LDAsMy43MS0uNDksNS4yOC0xLjQ2czIuODItMi4zMiwzLjc0LTQuMDNjLjkxLTEuNzEsMS4zNy0zLjYyLDEuMzctNS43MnMtLjQ2LTQuMDQtMS4zNy01LjY5LTIuMTYtMi45OC0zLjc0LTMuOTctMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaTTEwNTYuNDEsMTI2LjM2bDQuNjEtOS4yMmg3LjM2bC02LjU0LDkuMjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwODIuMzksMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMnMxLjU1LDMuODEsMS41NSw2LjA3djIwLjM3aC01LjQ5di0xOC42MmMwLTEuNzUtLjMxLTMuMjMtLjkzLTQuNDQtLjYyLTEuMjEtMS41MS0yLjE1LTIuNjYtMi44M3MtMi40Ni0xLjAyLTMuOTQtMS4wMi0yLjc5LjM0LTMuOTQsMS4wMmMtMS4xNS42OC0yLjA1LDEuNjMtMi43MSwyLjg2cy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=" alt="INNLAB" style="height:22px;opacity:.6">
+  <span class="report-footer__info">Benchmarking HCM &amp; Nómina Colombia 2026 · Parte 2: Brechas, Oportunidades y Comparativo PeopleSoft · Confidencial · ACH Colombia</span>
+  <span class="report-footer__url">Junio 2026</span>
+</div>
+
+</div><!-- /reporte -->
+</body>
+</html>
