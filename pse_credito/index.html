@@ -715,38 +715,25 @@ body{
   position:relative;
   overflow:hidden;
 }
-.pl-header {
-  background:linear-gradient(135deg,var(--navy),var(--blue));
-  padding:50px 20px 18px;
-  display:flex; align-items:center; gap:7px;
-}
-.pl-logo-row { display:flex; align-items:center; gap:7px; }
-.pl-logo-brand { height:44px; width:auto; display:block; }
-.pl-logo-circle {
-  width:38px; height:38px; border-radius:50%;
-  background:rgba(0,0,0,.25); border:1.5px solid rgba(255,255,255,.3);
-  display:flex; align-items:center; justify-content:center;
-}
-.pl-logo-text { font-size:20px; font-weight:700; font-style:italic; color:#fff; letter-spacing:-1px; }
-.pl-tagline { font-size:13px; color:rgba(255,255,255,.75); font-weight:400; }
 
-.pl-stepper {
-  display:flex; align-items:center; justify-content:center;
-  gap:0; padding:36px 24px 28px;
+.pl-top-img,
+.pl-bottom-img{
+  width:100%;
+  display:block;
+  object-fit:cover;
 }
-.pl-step-icon {
-  width:52px; height:52px; border-radius:50%;
-  background:#F0F4FF; border:2px solid #C7D2F0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px;
-}
-.pl-connector { width:42px; height:2px; background:#D0D8E8; }
+.pl-top-img{margin-top:30px;}
 
 .pl-center-text {
   text-align:center; font-size:22px; font-weight:500;
   color:var(--navy); line-height:1.45;
   padding:0 32px 36px;
 }
+.pl-center-name{
+  text-align:center;font-size:14px;font-weight:700;
+  color:var(--navy);line-height:1.35;padding:0 32px 6px;
+}
+.pl-center-text.processing-copy{font-size:14px;line-height:1.4;}
 .pl-center-text.redir-choice-heading{
   margin-top:20px;
   padding-bottom:4px;
@@ -771,15 +758,6 @@ body{
 }
 .pl-big-text { font-size:24px; font-weight:700; font-style:italic; color:#fff; letter-spacing:-1px; margin-top:2px; }
 
-.pl-contact {
-  margin:auto 16px 0;
-  background:#FFF8E1; border-radius:12px;
-  padding:14px 16px; display:flex; gap:12px; align-items:flex-start;
-  border-left:5px solid #F5A623;
-}
-.pl-contact-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
-.pl-contact-title { font-size:12px; font-weight:600; color:#333; margin-bottom:6px; }
-.pl-contact-row { font-size:11px; color:#555; margin-bottom:3px; display:flex; gap:5px; }
 .pl-tap {
   text-align:center; padding:16px; font-size:11px;
   color:rgba(0,51,122,.4); cursor:pointer;
@@ -1179,34 +1157,16 @@ body{
         <!-- ══ S3: PRE-LOADER TRANSICIÓN PSE → ALIADO ══ -->
         <div class="scr" id="s3">
           <div class="preloader-wrap">
-            <div class="pl-header">
-              <div class="pl-logo-row">
-                <img class="pl-logo-brand" src="img/logo_pse.png" alt="Logo PSE">
-              </div>
-              <span class="pl-tagline">¡Fácil, rápido y seguro!</span>
-            </div>
-            <div class="pl-stepper">
-              <div class="pl-step"><div class="pl-step-icon">🏪</div></div>
-              <div class="pl-connector"></div>
-              <div class="pl-step"><div class="pl-step-icon">📄</div></div>
-              <div class="pl-connector"></div>
-              <div class="pl-step"><div class="pl-step-icon">🏦</div></div>
-            </div>
-            <div class="pl-center-text">Te estamos redirigiendo<br>a nuestro aliado.</div>
+            <img class="pl-top-img" src="img/procesando_up.png" alt="Encabezado de proceso PSE">
+            <div class="pl-center-name">Pablo Perez</div>
+            <div class="pl-center-text processing-copy">Estamos procesando tu transacción...</div>
             <div class="pl-big-logo">
               <div class="pl-spinner-wrap" id="plSpinnerWrap">
                 <img class="pl-big-gif" src="img/loader_psd.GIF" alt="PSE loading animation">
               </div>
             </div>
             <div style="flex:1"></div>
-            <div class="pl-contact">
-              <div class="pl-contact-icon">📨</div>
-              <div class="pl-contact-info">
-                <div class="pl-contact-title">Para mayor información<br>comunícate con nosotros:</div>
-                <div class="pl-contact-row">📞 <span>En Bogotá: +57 (601) 3808890 opción 5</span></div>
-                <div class="pl-contact-row">💬 <span>Contáctanos: pse.com.co/persona-centro-de-ayuda</span></div>
-              </div>
-            </div>
+            <img class="pl-bottom-img" src="img/procesando_bottom.png" alt="Información de contacto y logos ACH">
             <div class="pl-tap" onclick="goToAllyForm()"></div>
           </div>
         </div>
@@ -1229,9 +1189,17 @@ body{
                 <input class="f-inp" id="f-doctype" value="CC">
               </div>
               <div class="f-g">
-                <label class="f-lbl">Número de documento</label>
+                <label class="f-lbl">Documento de identidad</label>
                 <input class="f-inp" id="f-docnum" value="12345678">
               </div>
+            </div>
+            <div class="f-g">
+              <label class="f-lbl">Correo electrónico</label>
+              <input class="f-inp" id="f-email-doc" type="email" placeholder="correo@email.com" value="pablo@mail.com">
+            </div>
+            <div class="f-g">
+              <label class="f-lbl">Financiación con:</label>
+              <input class="f-inp pre-hi" value="SUMAS" readonly>
             </div>
             <div class="f-row">
               <div class="f-g">
@@ -1374,7 +1342,7 @@ body{
           <div class="appv-body">
             <div class="data-card">
               <div class="data-card-ttl">Confirma que tus datos sean correctos</div>
-              <div class="d-row"><span class="dk">Número de documento</span><span class="dv" id="rv-doc">12345678</span></div>
+              <div class="d-row"><span class="dk">Documento de identidad</span><span class="dv" id="rv-doc">12345678</span></div>
               <div class="d-row"><span class="dk">Nombre</span><span class="dv" id="rv-nombre">Pablo</span></div>
               <div class="d-row"><span class="dk">Apellido</span><span class="dv" id="rv-apellido">Perez</span></div>
               <div class="d-row"><span class="dk">Celular</span><span class="dv" id="rv-celular">12345678</span></div>
@@ -1431,7 +1399,7 @@ body{
       <div class="redir-modal-backdrop" id="redirNoticeModal" onclick="closeRedirectNotice(event)">
         <div class="redir-modal" role="dialog" aria-modal="true" aria-labelledby="redirNoticeTitle" aria-describedby="redirNoticeText" onclick="event.stopPropagation()">
           <h3 class="redir-modal-title" id="redirNoticeTitle">Pagar con financiamiento</h3>
-          <p class="redir-modal-msg" id="redirNoticeText">PSE únicamente procesa el pago. El crédito es otorgado directamente por la entidad aliada.</p>
+          <p class="redir-modal-msg" id="redirNoticeText">PSE únicamente procesa el pago. El crédito es otorgado directamente por SUMAS.</p>
           <button class="redir-modal-btn" type="button" onclick="confirmRedirectNotice()">Entendido</button>
         </div>
       </div>

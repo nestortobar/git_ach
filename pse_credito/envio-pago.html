@@ -355,6 +355,13 @@
       box-shadow: 0 0 0 2px rgba(0, 75, 145, 0.12);
     }
 
+    .f-inp.readonly {
+      background: #f5f7fa;
+      color: #3f4a5a;
+      border-color: #d6deea;
+      cursor: not-allowed;
+    }
+
     .f-sel {
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235d6675' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -624,14 +631,8 @@
               <button class="redir-choice-btn finance" id="redirFinanceBtn" type="button">Pagar con financiamiento <span class="tag-new">Nuevo</span></button>
               <div class="redir-form" id="redirFinanceForm">
                 <div class="f-g">
-                  <label class="f-lbl">Lista de aliados</label>
-                  <select class="f-inp f-sel" id="redirAlly" onchange="updateRedirectContinue()">
-                    <option value="">Seleccionar aliado</option>
-                    <option>Aliado 1</option>
-                    <option>Aliado 2</option>
-                    <option>Aliado 3</option>
-                    <option>Aliado 4</option>
-                  </select>
+                  <label class="f-lbl">Financiación con:</label>
+                  <input class="f-inp readonly" id="redirAllyFixed" type="text" value="SUMAS" readonly />
                 </div>
                 <div class="f-g">
                   <label class="f-lbl">Tipo de documento</label>
@@ -642,8 +643,12 @@
                   </select>
                 </div>
                 <div class="f-g">
-                  <label class="f-lbl">Numero de documento</label>
+                  <label class="f-lbl">Documento de identidad</label>
                   <input class="f-inp" id="redirDocNum" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Escribe tu documento de identidad" oninput="updateRedirectContinue()" />
+                </div>
+                <div class="f-g">
+                  <label class="f-lbl">Correo electrónico</label>
+                  <input class="f-inp" id="redirEmail" type="email" placeholder="correo@email.com" oninput="updateRedirectContinue()" />
                   <p class="redir-doc-note">La cedula ingresada en este campo sera utilizada para la evaluacion del credito.</p>
                 </div>
               </div>
@@ -738,18 +743,19 @@
     const redirBankBtn = document.getElementById('redirBankBtn');
     const redirFinanceBtn = document.getElementById('redirFinanceBtn');
     const redirFinanceForm = document.getElementById('redirFinanceForm');
-    const redirAlly = document.getElementById('redirAlly');
     const redirDocType = document.getElementById('redirDocType');
     const redirDocNum = document.getElementById('redirDocNum');
+    const redirEmail = document.getElementById('redirEmail');
     const continueBtn = document.getElementById('continueBtn');
     let selectedMethod = null;
 
     function isFinanceFormComplete() {
-      if (!redirAlly || !redirDocType || !redirDocNum) {
+      if (!redirDocType || !redirDocNum || !redirEmail) {
         return false;
       }
       const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
-      return !!redirAlly.value && !!redirDocType.value && onlyDigits.length > 0;
+      const emailValue = (redirEmail.value || '').trim();
+      return !!redirDocType.value && onlyDigits.length > 0 && emailValue.length > 0;
     }
 
     function updateRedirectContinue() {
