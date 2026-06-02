@@ -1165,9 +1165,9 @@ body{
                 </div>
               </div>
               <div class="credit-plans">
-                <button class="credit-plan" type="button" onclick="go(10)">1 cuota<small>Interés X%</small></button>
-                <button class="credit-plan" type="button" onclick="go(10)">3 cuotas<small>Interés X%</small></button>
-                <button class="credit-plan" type="button" onclick="go(10)">6 cuotas<small>Interés X%</small></button>
+                <button class="credit-plan" type="button" onclick="go(3)">1 cuota<small>Interés X%</small></button>
+                <button class="credit-plan" type="button" onclick="go(3)">3 cuotas<small>Interés X%</small></button>
+                <button class="credit-plan" type="button" onclick="go(3)">6 cuotas<small>Interés X%</small></button>
               </div>
             </div>
           </div>
@@ -1426,74 +1426,15 @@ body{
           </div>
         </div>
 
-        <!-- ══ S10: MÉTODO ANTES DE REDIRECCIÓN ══ -->
-        <div class="scr" id="s10">
-          <div class="preloader-wrap">
-            <div class="pl-header">
-              <div class="pl-logo-row">
-                <img class="pl-logo-brand" src="img/logo_pse.png" alt="Logo PSE">
-              </div>
-              <span class="pl-tagline">¡Fácil, rápido y seguro!</span>
-            </div>
-
-            <div class="pl-center-text redir-choice-heading">Débito en cuenta o financiación con PSE</div>
-
-            <div class="redir-choice-wrap">
-              <button class="redir-choice-btn" id="redirBankBtn" type="button" onclick="chooseRedirectPath('bank')">Pagar con mi banco</button>
-              <button class="redir-choice-btn finance" id="redirFinanceBtn" type="button" onclick="chooseRedirectPath('finance')">Pagar con financiamiento <span class="tag-new">Nuevo</span></button>
-            </div>
-
-            <div class="redir-form" id="redirFinanceForm">
-              <div class="f-g">
-                <label class="f-lbl">Lista de aliados</label>
-                <select class="f-inp f-sel" id="redirAlly" onchange="updateRedirectContinue()">
-                  <option value="">Seleccionar aliado</option>
-                  <option>Aliado 1</option>
-                  <option>Aliado 2</option>
-                  <option>Aliado 3</option>
-                  <option>Aliado 4</option>
-                </select>
-              </div>
-              <div class="f-g">
-                <label class="f-lbl">Tipo de documento</label>
-                <select class="f-inp f-sel" id="redirDocType" onchange="updateRedirectContinue()">
-                  <option value="">Seleccionar tipo</option>
-                  <option>C.C.</option>
-                  <option>Tarjeta de Identidad</option>
-                </select>
-              </div>
-              <div class="f-g">
-                <label class="f-lbl">Número de documento</label>
-                <input class="f-inp" id="redirDocNum" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Escribe tu documento de identidad" oninput="updateRedirectContinue()">
-                <p class="redir-doc-note">La cédula ingresada en este campo será utilizada para la evaluación del crédito.</p>
-              </div>
-            </div>
-
-            <button class="redir-continue" id="redirContinueBtn" type="button" onclick="submitRedirectChoice()">Continuar</button>
-
-            <div style="flex:1"></div>
-
-            <div class="pl-contact">
-              <div class="pl-contact-icon">📨</div>
-              <div class="pl-contact-info">
-                <div class="pl-contact-title">Para mayor información<br>comunícate con nosotros:</div>
-                <div class="pl-contact-row">📞 <span>En Bogotá: +57 (601) 3808890 opción 5</span></div>
-                <div class="pl-contact-row">💬 <span>Contáctanos: pse.com.co/persona-centro-de-ayuda</span></div>
-              </div>
-            </div>
-            <div class="pl-tap"></div>
-
-            <div class="redir-modal-backdrop" id="redirNoticeModal" onclick="closeRedirectNotice(event)">
-              <div class="redir-modal" role="dialog" aria-modal="true" aria-labelledby="redirNoticeTitle" aria-describedby="redirNoticeText" onclick="event.stopPropagation()">
-                <h3 class="redir-modal-title" id="redirNoticeTitle">Pagar con financiamiento</h3>
-                <p class="redir-modal-msg" id="redirNoticeText">PSE únicamente procesa el pago. El crédito es otorgado directamente por la entidad aliada.</p>
-                <button class="redir-modal-btn" type="button" onclick="confirmRedirectNotice()">Entendido</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div><!-- /screens -->
+
+      <div class="redir-modal-backdrop" id="redirNoticeModal" onclick="closeRedirectNotice(event)">
+        <div class="redir-modal" role="dialog" aria-modal="true" aria-labelledby="redirNoticeTitle" aria-describedby="redirNoticeText" onclick="event.stopPropagation()">
+          <h3 class="redir-modal-title" id="redirNoticeTitle">Pagar con financiamiento</h3>
+          <p class="redir-modal-msg" id="redirNoticeText">PSE únicamente procesa el pago. El crédito es otorgado directamente por la entidad aliada.</p>
+          <button class="redir-modal-btn" type="button" onclick="confirmRedirectNotice()">Entendido</button>
+        </div>
+      </div>
 
       <!-- Home bar -->
       <div class="home-bar"></div>
@@ -1582,7 +1523,7 @@ body{
       <div class="fac-nav">
         <button class="nav-b" onclick="go(Math.max(0,cur-1))">‹ Anterior</button>
         <button class="nav-b rst" onclick="resetAll()">↺ Reiniciar</button>
-        <button class="nav-b" onclick="go(Math.min(10,cur+1))">Siguiente ›</button>
+        <button class="nav-b" onclick="go(Math.min(9,cur+1))">Siguiente ›</button>
       </div>
     </div>
 
@@ -1738,7 +1679,7 @@ body{
 <script>
 /* ─ STATE ─ */
 let cur = 0;
-const TOTAL = 11;
+const TOTAL = 10;
 let timerSec = 0;
 let timerRunning = false;
 let timerInterval = null;
@@ -1764,7 +1705,6 @@ const screenMeta = [
   { name:'Aliado — Pago realizado', sub:'Revisión y aceptación', shortName:'Pago' },
   { name:'PSE — Resumen de crédito', sub:'Confirmación PSE', shortName:'Resumen' },
   { name:'Fin de la prueba', sub:'Flujo completado', shortName:'Fin' },
-  { name:'PSE — Método de pago', sub:'Selección para redirección', shortName:'Método' },
 ];
 
 /* ─ NAVIGATION ─ */
@@ -1951,53 +1891,6 @@ function goToAllyForm() {
   go(4);
 }
 
-function chooseRedirectPath(type) {
-  var form = document.getElementById('redirFinanceForm');
-  var btn = document.getElementById('redirContinueBtn');
-  var bankBtn = document.getElementById('redirBankBtn');
-  var financeBtn = document.getElementById('redirFinanceBtn');
-  if (!form || !btn || !financeBtn || !bankBtn) return;
-
-  if (type === 'bank') {
-    financeBtn.classList.remove('selected');
-    bankBtn.classList.remove('selected');
-    form.classList.remove('open');
-    btn.classList.remove('enabled');
-    btn.disabled = true;
-    toast('Esta ruta no está disponible en el prototipo');
-    return;
-  }
-
-  financeBtn.classList.add('selected');
-  bankBtn.classList.remove('selected');
-  form.classList.add('open');
-  updateRedirectContinue();
-}
-
-function updateRedirectContinue() {
-  var ally = document.getElementById('redirAlly');
-  var docType = document.getElementById('redirDocType');
-  var docNum = document.getElementById('redirDocNum');
-  var btn = document.getElementById('redirContinueBtn');
-  if (!ally || !docType || !docNum || !btn) return;
-
-  var numeric = (docNum.value || '').replace(/\D/g, '');
-  if (docNum.value !== numeric) docNum.value = numeric;
-
-  var complete = !!ally.value && !!docType.value && numeric.length > 0;
-  btn.disabled = !complete;
-  btn.classList.toggle('enabled', complete);
-}
-
-function submitRedirectChoice() {
-  var btn = document.getElementById('redirContinueBtn');
-  if (!btn || btn.disabled) {
-    toast('Completa todos los datos para continuar');
-    return;
-  }
-  openRedirectNotice();
-}
-
 function openRedirectNotice() {
   var modal = document.getElementById('redirNoticeModal');
   if (!modal) return;
@@ -2017,8 +1910,8 @@ function confirmRedirectNotice() {
 }
 
 window.addEventListener('message', function (event) {
-  if (event && event.data && event.data.type === 'PSE_GO_METHOD_SCREEN') {
-    go(10);
+  if (event && event.data && event.data.type === 'PSE_OPEN_FINANCE_NOTICE') {
+    openRedirectNotice();
     return;
   }
   if (event && event.data && (event.data.type === 'ALKOSTO_GO_REDIRECT' || event.data.type === 'PSE_GO_REDIRECT')) {
@@ -2209,7 +2102,7 @@ setInterval(updateClock, 10000);
 /* ─ KEYBOARD SHORTCUTS ─ */
 document.addEventListener('keydown', e => {
   if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
-  if (e.key === 'ArrowRight' || e.key === 'Enter') go(Math.min(10, cur + 1));
+  if (e.key === 'ArrowRight' || e.key === 'Enter') go(Math.min(9, cur + 1));
   if (e.key === 'ArrowLeft') go(Math.max(0, cur - 1));
   if (e.key === 'f' || e.key === 'F') toggleFac();
   if (e.key === 'r' || e.key === 'R') resetAll();
@@ -2219,7 +2112,6 @@ document.addEventListener('keydown', e => {
 initOtp();
 resetEnelScreen();
 resetAlkostoScreen();
-updateRedirectContinue();
 loadSession();
 updateUI();
 

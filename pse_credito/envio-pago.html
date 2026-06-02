@@ -216,6 +216,160 @@
       box-shadow: 0 16px 30px rgba(0, 75, 145, 0.12);
     }
 
+    .option--collapsible {
+      padding: 0;
+      display: block;
+      overflow: hidden;
+    }
+
+    .option-toggle {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      text-align: left;
+      padding: 14px 14px 14px 12px;
+      cursor: pointer;
+    }
+
+    .option-expand {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 75, 145, 0.16);
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      transition: transform 180ms ease;
+      margin-left: 2px;
+    }
+
+    .option--collapsible.is-open .option-expand {
+      transform: rotate(180deg);
+    }
+
+    .option-collapse {
+      display: none;
+      padding: 0 12px 12px;
+      border-top: 1px solid rgba(217, 227, 239, 0.9);
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+    }
+
+    .option--collapsible.is-open .option-collapse {
+      display: grid;
+      gap: 10px;
+      padding-top: 12px;
+    }
+
+    .redir-choice-btn {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      min-height: 44px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+    }
+
+    .redir-choice-btn:hover {
+      border-color: rgba(0, 75, 145, 0.28);
+    }
+
+    .redir-choice-btn.selected {
+      border-color: rgba(0, 75, 145, 0.36);
+      box-shadow: 0 0 0 2px rgba(0, 75, 145, 0.14);
+      background: #f2f8ff;
+    }
+
+    .redir-choice-btn.finance .tag-new {
+      position: absolute;
+      top: -8px;
+      right: 12px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 2px 7px;
+      color: #fff;
+      background: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .redir-form {
+      display: none;
+      margin-top: 2px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(0, 75, 145, 0.03);
+    }
+
+    .redir-form.open {
+      display: block;
+    }
+
+    .f-g {
+      margin-bottom: 10px;
+    }
+
+    .f-g:last-child {
+      margin-bottom: 0;
+    }
+
+    .f-lbl {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .f-inp {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .f-inp:focus {
+      border-color: rgba(0, 75, 145, 0.4);
+      box-shadow: 0 0 0 2px rgba(0, 75, 145, 0.12);
+    }
+
+    .f-sel {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235d6675' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 34px;
+    }
+
+    .redir-doc-note {
+      margin: 6px 0 0;
+      font-size: 0.74rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
     .check {
       width: 24px;
       height: 24px;
@@ -363,6 +517,13 @@
       cursor: pointer;
     }
 
+    .continue:disabled {
+      background: linear-gradient(180deg, #c9d5e2, #b5c4d4);
+      box-shadow: none;
+      cursor: not-allowed;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
     .continue svg { width: 18px; height: 18px; }
 
     .brand-footer {
@@ -438,20 +599,56 @@
       <section aria-label="Métodos disponibles">
         <h2 class="section-title">Opciones disponibles</h2>
         <div class="options" role="list">
-          <button class="option" type="button" data-method="pse" role="listitem" aria-pressed="false">
-            <div class="check" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor">
-                <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
-              </svg>
+          <div class="option option--collapsible" data-method="pse" role="listitem" aria-pressed="false">
+            <button class="option-toggle" id="pseToggle" type="button" aria-expanded="false" aria-controls="pseChoicesPanel">
+              <div class="check" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
+                </svg>
+              </div>
+              <div class="option-icon option-icon--pse" aria-hidden="true">
+                <img src="img/logo_pse.png" alt="" />
+              </div>
+              <div class="option-copy">
+                <strong>PSE</strong>
+                <span>Débito en cuenta o financiación</span>
+              </div>
+              <div class="option-expand" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </div>
+            </button>
+            <div class="option-collapse" id="pseChoicesPanel">
+              <button class="redir-choice-btn" id="redirBankBtn" type="button">Pagar con mi banco</button>
+              <button class="redir-choice-btn finance" id="redirFinanceBtn" type="button">Pagar con financiamiento <span class="tag-new">Nuevo</span></button>
+              <div class="redir-form" id="redirFinanceForm">
+                <div class="f-g">
+                  <label class="f-lbl">Lista de aliados</label>
+                  <select class="f-inp f-sel" id="redirAlly" onchange="updateRedirectContinue()">
+                    <option value="">Seleccionar aliado</option>
+                    <option>Aliado 1</option>
+                    <option>Aliado 2</option>
+                    <option>Aliado 3</option>
+                    <option>Aliado 4</option>
+                  </select>
+                </div>
+                <div class="f-g">
+                  <label class="f-lbl">Tipo de documento</label>
+                  <select class="f-inp f-sel" id="redirDocType" onchange="updateRedirectContinue()">
+                    <option value="">Seleccionar tipo</option>
+                    <option>C.C.</option>
+                    <option>Tarjeta de Identidad</option>
+                  </select>
+                </div>
+                <div class="f-g">
+                  <label class="f-lbl">Numero de documento</label>
+                  <input class="f-inp" id="redirDocNum" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Escribe tu documento de identidad" oninput="updateRedirectContinue()" />
+                  <p class="redir-doc-note">La cedula ingresada en este campo sera utilizada para la evaluacion del credito.</p>
+                </div>
+              </div>
             </div>
-            <div class="option-icon option-icon--pse" aria-hidden="true">
-              <img src="img/logo_pse.png" alt="" />
-            </div>
-            <div class="option-copy">
-              <strong>PSE</strong>
-              <span>Débito en cuenta o financiación</span>
-            </div>
-          </button>
+          </div>
 
           <button class="option" type="button" data-method="card" role="listitem" aria-pressed="false">
             <div class="check" aria-hidden="true">
@@ -512,7 +709,7 @@
               </div>
               <div class="reference">#ORD-99281</div>
             </div>
-            <button class="continue" type="button" id="continueBtn">
+            <button class="continue" type="button" id="continueBtn" disabled>
               Continuar
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m9 18 6-6-6-6" />
@@ -535,29 +732,121 @@
 
   <script>
     const options = Array.from(document.querySelectorAll('.option'));
+    const simpleOptions = Array.from(document.querySelectorAll('.option[data-method="card"], .option[data-method="cash"]'));
+    const pseOption = document.querySelector('.option[data-method="pse"]');
+    const pseToggle = document.getElementById('pseToggle');
+    const redirBankBtn = document.getElementById('redirBankBtn');
+    const redirFinanceBtn = document.getElementById('redirFinanceBtn');
+    const redirFinanceForm = document.getElementById('redirFinanceForm');
+    const redirAlly = document.getElementById('redirAlly');
+    const redirDocType = document.getElementById('redirDocType');
+    const redirDocNum = document.getElementById('redirDocNum');
     const continueBtn = document.getElementById('continueBtn');
     let selectedMethod = null;
+
+    function isFinanceFormComplete() {
+      if (!redirAlly || !redirDocType || !redirDocNum) {
+        return false;
+      }
+      const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
+      return !!redirAlly.value && !!redirDocType.value && onlyDigits.length > 0;
+    }
+
+    function updateRedirectContinue() {
+      if (!continueBtn || !redirDocNum) {
+        return;
+      }
+
+      const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
+      if (redirDocNum.value !== onlyDigits) {
+        redirDocNum.value = onlyDigits;
+      }
+
+      const enabled = selectedMethod === 'pse-finance' && isFinanceFormComplete();
+      continueBtn.disabled = !enabled;
+    }
+
+    function setPseChoice(choice) {
+      if (!redirBankBtn || !redirFinanceBtn || !pseOption || !redirFinanceForm) {
+        return;
+      }
+
+      redirBankBtn.classList.toggle('selected', choice === 'bank');
+      redirFinanceBtn.classList.toggle('selected', choice === 'finance');
+      redirFinanceForm.classList.toggle('open', choice === 'finance');
+      setSelected('pse-' + choice);
+      updateRedirectContinue();
+    }
+
+    function setPseOpen(open) {
+      if (!pseOption || !pseToggle) {
+        return;
+      }
+
+      pseOption.classList.toggle('is-open', open);
+      pseToggle.setAttribute('aria-expanded', String(open));
+    }
 
     function setSelected(method) {
       selectedMethod = method;
       options.forEach((option) => {
-        const active = option.dataset.method === method;
+        const optionMethod = option.dataset.method;
+        const active = optionMethod === method || (optionMethod === 'pse' && method && method.startsWith('pse-'));
         option.classList.toggle('is-active', active);
         option.setAttribute('aria-pressed', String(active));
       });
+
+      if (!method || !method.startsWith('pse-')) {
+        if (redirBankBtn) {
+          redirBankBtn.classList.remove('selected');
+        }
+        if (redirFinanceBtn) {
+          redirFinanceBtn.classList.remove('selected');
+        }
+        if (redirFinanceForm) {
+          redirFinanceForm.classList.remove('open');
+        }
+      }
+
+      updateRedirectContinue();
     }
 
-    options.forEach((option) => {
-      option.addEventListener('click', () => setSelected(option.dataset.method));
+    simpleOptions.forEach((option) => {
+      option.addEventListener('click', () => {
+        setPseOpen(false);
+        setSelected(option.dataset.method);
+      });
     });
 
+    if (pseToggle) {
+      pseToggle.addEventListener('click', () => {
+        const open = !pseOption.classList.contains('is-open');
+        setPseOpen(open);
+      });
+    }
+
+    if (redirBankBtn) {
+      redirBankBtn.addEventListener('click', () => setPseChoice('bank'));
+    }
+
+    if (redirFinanceBtn) {
+      redirFinanceBtn.addEventListener('click', () => setPseChoice('finance'));
+    }
+
     continueBtn.addEventListener('click', () => {
-      if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'PSE_GO_METHOD_SCREEN' }, '*');
+      if (continueBtn.disabled || selectedMethod !== 'pse-finance') {
         return;
       }
-      window.location.href = 'index.html';
+
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'PSE_OPEN_FINANCE_NOTICE' }, '*');
+        return;
+      }
+
+      window.location.href = 'detalle-pse-resumen.html';
     });
+
+    updateRedirectContinue();
   </script>
 </body>
 </html>
