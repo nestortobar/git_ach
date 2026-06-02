@@ -28,7 +28,7 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height
 /* MENU SUPERIOR FIJO */
 .top-menu{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(26,26,26,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.12);padding:10px 16px;}
 .top-menu__inner{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;}
-.top-menu__link{text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 14px;transition:background-color .2s, color .2s, border-color .2s;white-space:nowrap;}
+.top-menu__link{text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 14px;transition:background-color .2s,color .2s,border-color .2s;white-space:nowrap;}
 .top-menu__link:hover{color:var(--c-white);border-color:rgba(255,255,255,.45);}
 .top-menu__link--active{background:var(--c-yellow);border-color:var(--c-yellow);color:var(--c-black);}
 
@@ -212,7 +212,6 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height
 .report-footer__info{font-size:12px;}
 .report-footer__url{font-size:12px;color:var(--c-yellow);font-weight:600;}
 
-
 /* TYPOGRAPHY */
 .text-sm{font-size:13px;} .text-xs{font-size:11px;}
 .text-muted{color:var(--c-gray1);} .text-blue{color:var(--c-blue);}
@@ -231,15 +230,38 @@ strong{font-weight:700;}
   .top-menu{padding:10px 12px;}
   .top-menu__inner{justify-content:flex-start;overflow-x:auto;}
 }
-</style>
+
+/* VACIOS ITEM */
+.vacios-item { border: 1px solid var(--c-gray2); border-radius: var(--radius); overflow: hidden; }
+.vacios-header { display: flex; align-items: center; gap: 14px; padding: 14px 20px; }
+.vacios-header--blue   { background: var(--c-blue-tint);   border-bottom: 1px solid #c4c4f8; }
+.vacios-header--purple { background: var(--c-purple-tint); border-bottom: 1px solid #d9b8f5; }
+.vacios-header--orange { background: var(--c-orange-tint); border-bottom: 1px solid #fad5aa; }
+.vacios-header--green  { background: var(--c-green-tint);  border-bottom: 1px solid #a9e4c2; }
+.vacios-header--yellow { background: #fdfbe8;              border-bottom: 1px solid #e8e08a; }
+.vacios-header--dark   { background: var(--c-gray0);       border-bottom: 1px solid var(--c-gray2); }
+.vacios-num  { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--c-gray1); min-width: 30px; }
+.vacios-title{ font-size: 15px; font-weight: 700; color: var(--c-black); }
+.vacios-body { padding: 20px; }
+
+/* FRICCION */
+.friccion { border: 1px solid var(--c-gray2); border-radius: var(--radius); overflow: hidden; }
+.friccion__header { display: flex; align-items: flex-start; gap: 14px; padding: 14px 20px; background: var(--c-gray0); border-bottom: 1px solid var(--c-gray2); }
+.friccion__num  { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: white; flex-shrink: 0; }
+.friccion__info { flex: 1; }
+.friccion__title{ font-size: 14px; font-weight: 700; color: var(--c-black); margin-bottom: 6px; }
+.friccion__meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.friccion__body { padding: 20px; }
+
+  </style>
 </head>
 <body>
-<nav class="top-menu" aria-label="Navegacion entre partes del informe">
-  <div class="top-menu__inner">
-    <a class="top-menu__link" href="benchmarking_HCM_parte1_landing.html">Parte 1: Fichas</a>
-    <a class="top-menu__link top-menu__link--active" href="benchmarking_HCM_parte2_landing.html">Parte 2: Brechas</a>
-  </div>
-</nav>
+  <nav class="top-menu" aria-label="Navegacion entre partes del informe">
+    <div class="top-menu__inner">
+      <a class="top-menu__link" href="benchmarking_HCM_parte1_landing.html">Parte 1: Fichas</a>
+      <a class="top-menu__link top-menu__link--active" href="benchmarking_HCM_parte2_landing.html">Parte 2: Brechas</a>
+    </div>
+  </nav>
 <div class="reporte">
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
@@ -291,28 +313,71 @@ strong{font-weight:700;}
   <div class="section-title">
     <span class="section-title__label">Sección 3 · Parte A</span>
     <h2 class="section-title__heading">Funcionalidades Commodity — Dónde No Invertir</h2>
-    <p class="section-title__desc">Capacidades que la mayoría de vendors ya ofrecen. Son el piso de entrada, no el techo de diferenciación. Invertir esfuerzo aquí produce paridad, no ventaja competitiva.</p>
+    <p class="section-title__desc">Capacidades que 5 o más de los 8 vendors ya ofrecen. Son el piso de entrada del mercado, no el techo de diferenciación. Invertir esfuerzo aquí produce paridad, no ventaja competitiva.</p>
   </div>
-  <div class="grid-3">
-    <div class="kpi-card kpi-card--tint-blue">
-      <span class="kpi-card__label">Cumplimiento básico DIAN / UGPP / PILA</span>
-      <span class="kpi-card__value" style="font-size:15px;color:var(--c-blue)">7 de 8 vendors</span>
-      <span class="kpi-card__desc">Nómina electrónica, documento soporte (CUNE), planilla PILA y reportes UGPP son commodity total. No diferencian a nadie en 2026.</span>
-    </div>
-    <div class="kpi-card kpi-card--tint-green">
-      <span class="kpi-card__label">Portal web de autoservicio básico</span>
-      <span class="kpi-card__value" style="font-size:15px;color:var(--c-green)">6 de 8 vendors</span>
-      <span class="kpi-card__desc">Desprendibles, certificados, solicitud de vacaciones vía web. Presente en casi todos. Sin app móvil nativa ya no es suficiente diferenciador.</span>
-    </div>
-    <div class="kpi-card kpi-card--tint-orange">
-      <span class="kpi-card__label">Interfaz a sistemas contables / ERP</span>
-      <span class="kpi-card__value" style="font-size:15px;color:var(--c-orange)">7 de 8 vendors</span>
-      <span class="kpi-card__desc">Todos los vendors comerciales tienen algún conector ERP o archivo de interfaz contable. La diferenciación está en APIs abiertas y ecosistemas nativos.</span>
-    </div>
+
+  <div class="tabla-wrapper">
+    <table class="tabla-datos tabla-datos--striped">
+      <thead>
+        <tr>
+          <th>Funcionalidad commodity</th>
+          <th>Vendors que la ofrecen</th>
+          <th>Cobertura</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Liquidación de nómina — periodicidades múltiples y todos los tipos de contrato colombiano</td>
+          <td>Todos los vendors (excepto PERNO en comercial)</td>
+          <td><span class="badge badge--gray">8/8</span></td>
+        </tr>
+        <tr>
+          <td>Generación y transmisión de nómina electrónica DIAN (CUNE / documento soporte)</td>
+          <td>Novasoft, Heinsohn, Kactus, Siigo, SAP, Oracle PS</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+        <tr>
+          <td>Planilla PILA / integración con operadores de seguridad social</td>
+          <td>Todos los vendors comerciales</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+        <tr>
+          <td>Gestión de novedades básicas: incapacidades, vacaciones, horas extras</td>
+          <td>Todos los vendors comerciales</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+        <tr>
+          <td>Reportes UGPP e información exógena DIAN</td>
+          <td>Todos los vendors comerciales</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+        <tr>
+          <td>Gestión de hojas de vida y documentos de personal</td>
+          <td>Todos los vendors comerciales</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+        <tr>
+          <td>Portal web del empleado — autoservicio básico (desprendibles, certificados)</td>
+          <td>Novasoft, Heinsohn, Kactus, SAP, Oracle PS, Soporte Lógico</td>
+          <td><span class="badge badge--green">6/8</span></td>
+        </tr>
+        <tr>
+          <td>Interfaz a sistemas contables / ERP</td>
+          <td>Todos los vendors comerciales</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+        <tr>
+          <td>Actualización ante cambios normativos colombianos</td>
+          <td>Todos los vendors comerciales (con distintas velocidades)</td>
+          <td><span class="badge badge--blue">7/8</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
   <div class="alerta alerta--info">
-    <span class="alerta__titulo">Regla de posicionamiento</span>
-    <p class="alerta__texto">Cualquier jugador nuevo o en evolución que solo ofrezca las funcionalidades anteriores quedará en posición de paridad con el mercado. La batalla ya no se libra ahí. La diferenciación real está en IA, experiencia del empleado, analytics predictivo e integración con infraestructura de pagos moderna.</p>
+    <span class="alerta__titulo">Conclusión de posicionamiento</span>
+    <p class="alerta__texto">Cualquier jugador nuevo o en evolución que solo ofrezca estas capacidades quedará en posición de paridad con el mercado, sin diferenciación. La batalla ya no se libra aquí. La diferenciación real está en IA aplicada, experiencia digital del empleado, analytics predictivo e integración con infraestructura de pagos moderna.</p>
   </div>
 </div>
 
@@ -323,42 +388,217 @@ strong{font-weight:700;}
   <div class="section-title">
     <span class="section-title__label">Sección 3 · Parte B</span>
     <h2 class="section-title__heading">Vacíos Funcionales del Mercado Colombiano</h2>
-    <p class="section-title__desc">Seis dimensiones donde ningún vendor cubre bien la necesidad del mercado. Cada vacío representa una ventana de diferenciación.</p>
+    <p class="section-title__desc">Seis dimensiones donde ningún vendor cubre bien la necesidad del mercado. Para cada una se documenta el estado actual, el vacío concreto con bullets específicos y la evidencia del gap.</p>
   </div>
 
-  <div class="grid-2">
-    <div class="kpi-card kpi-card--blue" style="padding:22px;">
-      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 1 — IA aplicada a nómina</span>
-      <span class="kpi-card__value" style="font-size:16px;color:white">0 de 8 vendors tienen IA en liquidación</span>
-      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">Ningún vendor del top 8 ofrece detección automática de anomalías, asistente conversacional para novedades ni simulación de escenarios de liquidación. Solo SAP tiene Joule (global, no localizado para nómina COL). El 88% de líderes RR.HH. no obtiene valor real de IA según Gartner oct. 2025.</span>
+  <!-- B.1 IA -->
+  <div class="vacios-item">
+    <div class="vacios-header vacios-header--blue">
+      <span class="vacios-num">B.1</span>
+      <span class="vacios-title">Automatización e IA aplicada a nómina y talento humano</span>
     </div>
-    <div class="kpi-card kpi-card--purple" style="padding:22px;">
-      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 2 — Experiencia digital del empleado</span>
-      <span class="kpi-card__value" style="font-size:16px;color:white">Solo 1 app nativa estable en el top 8</span>
-      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">Heinsohn tiene la app más avanzada pero con problemas de redirección documentados en Google Play. Kactus lanzó en 2024 (adopción temprana). Novasoft, Siigo y Soporte Lógico sin app nativa. Oracle PeopleSoft explícitamente criticado por no ser mobile-friendly.</span>
-    </div>
-    <div class="kpi-card kpi-card--orange" style="padding:22px;">
-      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 3 — People analytics predictivo</span>
-      <span class="kpi-card__value" style="font-size:16px;color:white">0 vendors locales con modelos predictivos</span>
-      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">Ningún vendor local colombiano ofrece predicción de rotación (90 días), ausentismo estacional ni benchmarking salarial contra el mercado laboral colombiano. SAP tiene capacidad global pero a costo no accesible para la mayoría del mercado.</span>
-    </div>
-    <div class="kpi-card kpi-card--green" style="padding:22px;">
-      <span class="kpi-card__label" style="color:rgba(255,255,255,.65)">Vacío 4 — Integración pagos inmediatos</span>
-      <span class="kpi-card__value" style="font-size:16px;color:white">0 vendors integrados con Bre-B / TESO PSE</span>
-      <span class="kpi-card__desc" style="color:rgba(255,255,255,.8);font-size:13px;">ACH Colombia lanzó TESO PSE y Cuenta a Cuenta en 2025–2026 para pagos masivos inmediatos de nómina (47 entidades financieras). Todos los vendors HCM siguen usando archivos planos. Ventana competitiva: 12–24 meses.</span>
+    <div class="vacios-body">
+      <div class="grid-2-1">
+        <div>
+          <p class="text-label" style="margin-bottom:8px">Estado actual</p>
+          <p>Solo SAP (con Joule) tiene IA generativa madura integrada al producto. Heinsohn anuncia IA desde 2024 pero limitada a identificación de necesidades de capacitación. Novasoft declara IA en reclutamiento (2026, muy incipiente). Kactus, Siigo y Soporte Lógico no declaran IA operativa.</p>
+
+          <p class="text-label" style="margin-top:16px;margin-bottom:8px">Vacío concreto — ningún vendor local ofrece</p>
+          <ul class="lista-icesi">
+            <li>Detección automática de errores en nómina antes de cerrar el período (anomaly detection)</li>
+            <li>Asistente conversacional para registro de novedades en lenguaje natural — texto o voz</li>
+            <li>Predicción de liquidaciones con simulación de escenarios al cierre del período</li>
+            <li>Automatización de respuesta a consultas frecuentes del empleado (días de vacaciones, retención del mes)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="alerta alerta--advertencia">
+            <span class="alerta__titulo">Evidencia del gap</span>
+            <p class="alerta__texto">Estudio Gartner (oct. 2025): el <strong>88% de líderes de RR.HH.</strong> afirma que sus organizaciones no han obtenido valor significativo de herramientas de IA en el área. El mercado tiene el deseo pero no las herramientas localizadas para Colombia.</p>
+          </div>
+          <div class="kpi-card kpi-card--tint-blue" style="margin-top:12px">
+            <span class="kpi-card__label">Único con IA madura (global)</span>
+            <span class="kpi-card__value" style="font-size:16px">SAP Joule</span>
+            <span class="kpi-card__desc">No localizado para nómina colombiana. Los 7 restantes: sin IA en liquidación.</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="grid-2">
-    <div class="kpi-card kpi-card--tint-orange">
-      <span class="kpi-card__label">Vacío 5 — Cumplimiento normativo proactivo</span>
-      <span class="kpi-card__value" style="font-size:15px;color:var(--c-orange)">Todos actualizan reactivamente</span>
-      <span class="kpi-card__desc">La Reforma Laboral 2025 (Ley 2466) introdujo cambios urgentes: jornada nocturna desde 7pm (ene. 2026), reducción jornada a 44h (jul. 2025), nuevos recargos dominicales. Ningún vendor ofrece alertas antes de la vigencia ni simulador de impacto presupuestal. El incumplimiento puede generar multas UGPP de hasta 15.000 UVT.</span>
+  <hr class="divider">
+
+  <!-- B.2 EX -->
+  <div class="vacios-item">
+    <div class="vacios-header vacios-header--purple">
+      <span class="vacios-num">B.2</span>
+      <span class="vacios-title">Experiencia digital del empleado (EX)</span>
     </div>
-    <div class="kpi-card kpi-card--tint-purple">
-      <span class="kpi-card__label">Vacío 6 — Fuerza laboral flexible</span>
-      <span class="kpi-card__value" style="font-size:15px;color:var(--c-purple)">Sin módulos para freelancers / pluriempleo</span>
-      <span class="kpi-card__desc">Ningún vendor tiene módulo específico para freelancers (Formulario 350 retención), pluriempleo simultáneo, beneficios de trabajo remoto (auxilio conectividad Ley 2121/2021) ni gestión de plataformas digitales. La Reforma Laboral 2025 amplió estas modalidades, aumentando la presión sobre los sistemas de nómina.</span>
+    <div class="vacios-body">
+      <div class="grid-2-1">
+        <div>
+          <p class="text-label" style="margin-bottom:8px">Estado actual</p>
+          <p>Solo Heinsohn tiene app móvil nativa funcional con biometría. Kactus lanzó su app en 2024 para 300 empresas (adopción temprana). SAP SuccessFactors tiene app robusta para el mercado corporativo global. Novasoft, Siigo, Soporte Lógico y Oracle PeopleSoft tienen portales web o acceso responsivo sin app nativa de calidad probada.</p>
+
+          <p class="text-label" style="margin-top:16px;margin-bottom:8px">Vacío concreto — ningún vendor local ofrece</p>
+          <ul class="lista-icesi">
+            <li>Journey completo del empleado desde onboarding digital hasta desvinculación con firma electrónica integrada y sin papel</li>
+            <li>Chatbot de RR.HH. en español con conocimiento de normativa colombiana para autoatención del empleado</li>
+            <li>App nativa estable — la experiencia de la mayoría es percibida como redirigir al sitio web</li>
+          </ul>
+        </div>
+        <div>
+          <div class="alerta alerta--critica">
+            <span class="alerta__titulo">Queja documentada — Google Play</span>
+            <p class="alerta__texto">Heinsohn: <em>"cuando inicio sesión me redirige a un nuevo sitio web, no tiene sentido tener una app"</em>. Oracle PeopleSoft Capterra: <em>"no da la posibilidad de gestionar vía móvil con facilidad"</em>.</p>
+          </div>
+          <div class="kpi-card kpi-card--tint-purple" style="margin-top:12px">
+            <span class="kpi-card__label">Apps nativas disponibles</span>
+            <span class="kpi-card__value" style="font-size:16px">2 de 8</span>
+            <span class="kpi-card__desc">Heinsohn (con fallos) y Kactus (adopción temprana 2024). Los 6 restantes no tienen app nativa dedicada al empleado confirmada.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- B.3 Analytics -->
+  <div class="vacios-item">
+    <div class="vacios-header vacios-header--orange">
+      <span class="vacios-num">B.3</span>
+      <span class="vacios-title">People analytics predictivo</span>
+    </div>
+    <div class="vacios-body">
+      <div class="grid-2-1">
+        <div>
+          <p class="text-label" style="margin-bottom:8px">Estado actual</p>
+          <p>Novasoft usa Power BI (reporting descriptivo, no predictivo). Heinsohn menciona Power BI con análisis en tiempo real. SAP tiene People Analytics avanzado (global, alto costo). Los demás tienen reportes operativos únicamente, no analítica predictiva.</p>
+
+          <p class="text-label" style="margin-top:16px;margin-bottom:8px">Vacío concreto — ningún vendor local colombiano ofrece módulo propio de</p>
+          <ul class="lista-icesi">
+            <li>Predicción de rotación voluntaria — modelos de riesgo de fuga de talento por empleado</li>
+            <li>Predicción de ausentismo por área, temporada o perfil demográfico</li>
+            <li>Análisis de clima organizacional con correlación a indicadores de negocio</li>
+            <li>Benchmarking salarial contra el mercado laboral colombiano integrado al sistema</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kpi-card kpi-card--tint-orange">
+            <span class="kpi-card__label">Vendors con analytics predictivo propio</span>
+            <span class="kpi-card__value" style="font-size:16px;color:var(--c-orange)">0 locales</span>
+            <span class="kpi-card__desc">SAP tiene People Analytics globalmente. Los 7 vendors colombianos/regionales ofrecen únicamente reportes operativos (desprendibles, PILA, exógena DIAN).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- B.4 Pagos -->
+  <div class="vacios-item">
+    <div class="vacios-header vacios-header--green">
+      <span class="vacios-num">B.4</span>
+      <span class="vacios-title">Integración nativa con el ecosistema financiero colombiano</span>
+    </div>
+    <div class="vacios-body">
+      <div class="grid-2-1">
+        <div>
+          <p class="text-label" style="margin-bottom:8px">Estado actual</p>
+          <p>Todos los vendors tienen integración básica con bancos vía archivo plano (ACH tradicional). Ninguno declara integración nativa con la nueva infraestructura de pagos inmediatos de Colombia.</p>
+
+          <p class="text-label" style="margin-top:16px;margin-bottom:8px">Vacío concreto — ningún vendor ha integrado</p>
+          <ul class="lista-icesi">
+            <li>Pagos inmediatos de nómina vía Bre-B / Transfiya (infraestructura de ACH Colombia)</li>
+            <li>Billeteras digitales (Nequi, Daviplata) como destino de dispersión de nómina</li>
+            <li>TESO PSE — nueva plataforma de tesorería empresarial de ACH Colombia (lanzada mar. 2026)</li>
+            <li>Cuenta a Cuenta — pagos empresariales masivos inmediatos (lanzada may. 2026)</li>
+            <li>APIs bancarias abiertas (Open Banking emergente en Colombia)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="alerta alerta--ok">
+            <span class="alerta__titulo">Ventana competitiva</span>
+            <p class="alerta__texto">ACH Colombia lanzó TESO PSE (mar. 2026) y Cuenta a Cuenta (may. 2026) conectados con las <strong>47 entidades financieras</strong> del país. Ningún software HCM del mercado ha anunciado integración nativa. Ventana estimada: <strong>12–24 meses</strong>.</p>
+          </div>
+          <div class="kpi-card kpi-card--tint-green" style="margin-top:12px">
+            <span class="kpi-card__label">Vendors integrados con Bre-B / TESO PSE</span>
+            <span class="kpi-card__value" style="font-size:16px;color:var(--c-green)">0 de 8</span>
+            <span class="kpi-card__desc">El 100% del mercado sigue usando archivos planos para dispersión de nómina a junio 2026.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- B.5 Normativa proactiva -->
+  <div class="vacios-item">
+    <div class="vacios-header vacios-header--yellow">
+      <span class="vacios-num">B.5</span>
+      <span class="vacios-title">Cumplimiento normativo proactivo</span>
+    </div>
+    <div class="vacios-body">
+      <div class="grid-2-1">
+        <div>
+          <p class="text-label" style="margin-bottom:8px">Estado actual</p>
+          <p>Todos los vendors actualizan sus motores de nómina ante cambios de ley, pero de forma <strong>reactiva</strong> — actualizan después de la publicación oficial y no siempre con suficiente antelación. La Reforma Laboral 2025 (Ley 2466) implicó reparametrización urgente de: recargos dominicales y festivos, nueva jornada nocturna desde las 7pm, reducción progresiva de jornada de 48 a 42 horas, nuevos tipos de contrato y licencias obligatorias.</p>
+
+          <p class="text-label" style="margin-top:16px;margin-bottom:8px">Vacío concreto — ningún vendor ofrece</p>
+          <ul class="lista-icesi">
+            <li>Monitor en tiempo real de cambios regulatorios (DIAN, UGPP, Ministerio del Trabajo) con alertas antes de la vigencia</li>
+            <li>Simulador de impacto presupuestal de un cambio normativo antes de que entre a regir</li>
+            <li>Dashboard de "riesgo de cumplimiento" mostrando qué empleados o procesos están en zona de riesgo normativo</li>
+          </ul>
+        </div>
+        <div>
+          <div class="alerta alerta--advertencia">
+            <span class="alerta__titulo">Evidencia del gap — Reforma Laboral 2025</span>
+            <p class="alerta__texto">La Ley 2466 introdujo: jornada nocturna desde 7pm (ene. 2026), jornada máxima 44h (jul. 2025), reducción a 42h (2026), nuevos recargos. Varios vendors tardaron semanas en publicar actualizaciones. Incumplimiento puede generar multas UGPP de hasta <strong>15.000 UVT</strong> por período.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- B.6 Fuerza laboral flexible -->
+  <div class="vacios-item">
+    <div class="vacios-header vacios-header--dark">
+      <span class="vacios-num">B.6</span>
+      <span class="vacios-title">Soporte a modelos de trabajo híbrido y fuerza laboral flexible</span>
+    </div>
+    <div class="vacios-body">
+      <div class="grid-2-1">
+        <div>
+          <p class="text-label" style="margin-bottom:8px">Estado actual</p>
+          <p>Ningún vendor del mercado colombiano evaluado tiene módulo específico y declarado para gestión de fuerza laboral flexible. La Reforma Laboral 2025 amplió las modalidades de contratación e incorporó medidas para trabajo remoto y plataformas digitales, aumentando la presión sobre los sistemas de nómina.</p>
+
+          <p class="text-label" style="margin-top:16px;margin-bottom:8px">Vacío concreto — ningún vendor cubre específicamente</p>
+          <ul class="lista-icesi">
+            <li>Freelancers / contratistas: Régimen de Contratación Independiente, Formulario 350, retención en la fuente a terceros</li>
+            <li>Pluriempleo: trabajadores con múltiples empleadores simultáneos y su impacto en aportes a seguridad social</li>
+            <li>Trabajo híbrido: control de asistencia diferenciado por modalidad (presencial / remoto / mixto)</li>
+            <li>Beneficios trabajo remoto: auxilio de conectividad y dotación — Ley 2121 de 2021</li>
+            <li>Plataformas digitales: nuevas categorías de vinculación introducidas en la Reforma Laboral 2025</li>
+          </ul>
+        </div>
+        <div>
+          <div class="alerta alerta--info">
+            <span class="alerta__titulo">Contexto regulatorio</span>
+            <p class="alerta__texto">La Ley 2466/2025 amplió modalidades de contratación e incorporó regulación para trabajo en plataformas digitales. La Ley 2121/2021 ya exige el auxilio de conectividad para trabajo remoto. Los sistemas de nómina actuales no distinguen entre estas modalidades de manera nativa.</p>
+          </div>
+          <div class="kpi-card kpi-card--tint-blue" style="margin-top:12px">
+            <span class="kpi-card__label">Módulo específico fuerza laboral flexible</span>
+            <span class="kpi-card__value" style="font-size:16px">0 de 8</span>
+            <span class="kpi-card__desc">Ningún vendor del mercado colombiano tiene módulo declarado para freelancers, pluriempleo o trabajo híbrido diferenciado.</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -370,71 +610,215 @@ strong{font-weight:700;}
   <div class="section-title">
     <span class="section-title__label">Sección 3 · Parte C</span>
     <h2 class="section-title__heading">Fricciones Reales No Resueltas — Priorización</h2>
-    <p class="section-title__desc">Cruce de reviews negativos verificados (Capterra, G2, Google Play) con los vacíos funcionales del mercado. Mayor a menor frecuencia de queja.</p>
+    <p class="section-title__desc">Cruce de reviews negativos verificados (Capterra, G2, Google Play) con los vacíos funcionales identificados en la Parte B. Ordenadas de mayor a menor frecuencia de queja.</p>
   </div>
-  <div class="tabla-wrapper">
-    <table class="tabla-datos">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Fricción</th>
-          <th>Evidencia verificada</th>
-          <th>Vendors afectados</th>
-          <th>Vacío conectado</th>
-          <th>Urgencia</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="row--red">
-          <td><strong>1</strong></td>
-          <td><strong>Servicio al cliente lento y deficiente</strong></td>
-          <td>Siigo Capterra: <em>"sigue siendo un servicio muy deficiente"</em> (múltiples reviews 2024–25). SAP/Oracle: soporte en inglés sin expertise normativo local.</td>
-          <td>Siigo · SAP · Oracle PS</td>
-          <td>Soporte local</td>
-          <td><span class="badge badge--red">Crítica</span></td>
-        </tr>
-        <tr class="row--orange">
-          <td><strong>2</strong></td>
-          <td><strong>Interfaz anticuada o difícil de usar</strong></td>
-          <td>Oracle PeopleSoft Capterra 2024–25: <em>"clunky"</em>, <em>"no mobile-friendly"</em>. <em>"Si pudiera cambiar de herramienta, lo haría"</em> (jul. 2025).</td>
-          <td>Oracle PS · Siigo · Soporte Lógico</td>
-          <td>Vacío 2 — EX</td>
-          <td><span class="badge badge--orange">Alta</span></td>
-        </tr>
-        <tr class="row--orange">
-          <td><strong>3</strong></td>
-          <td><strong>Lentitud en actualización normativa colombiana</strong></td>
-          <td>Reforma Laboral 2025 (Ley 2466): empresas en incumplimiento semanas mientras esperaban actualización del software de su vendor.</td>
-          <td>Oracle PS · SAP (partners)</td>
-          <td>Vacío 5 — Normativa proactiva</td>
-          <td><span class="badge badge--orange">Alta</span></td>
-        </tr>
-        <tr>
-          <td><strong>4</strong></td>
-          <td><strong>App móvil inexistente o inestable</strong></td>
-          <td>Heinsohn Google Play: <em>"cuando inicio sesión me redirige a un nuevo sitio web, no tiene sentido tener una app"</em>. Oracle PS: <em>"no da la posibilidad de gestionar vía móvil con facilidad"</em>.</td>
-          <td>Heinsohn · Oracle PS · Novasoft · Siigo</td>
-          <td>Vacío 2 — EX</td>
-          <td><span class="badge badge--blue">Media–Alta</span></td>
-        </tr>
-        <tr>
-          <td><strong>5</strong></td>
-          <td><strong>Sin people analytics ejecutivo</strong></td>
-          <td>La mayoría de vendors ofrece reportes operativos (desprendibles, exógena, PILA) pero no dashboards de talento estratégicos para la dirección.</td>
-          <td>Kactus · Novasoft · Heinsohn · Soporte Lógico</td>
-          <td>Vacío 3 — Analytics predictivo</td>
-          <td><span class="badge badge--gray">Media</span></td>
-        </tr>
-        <tr>
-          <td><strong>6</strong></td>
-          <td><strong>Sin integración con pagos inmediatos colombianos</strong></td>
-          <td>Dispersión de nómina vía archivo plano sigue siendo el estándar universal. Bre-B y TESO PSE sin adopción en ningún vendor HCM a junio 2026.</td>
-          <td>Todos (8/8)</td>
-          <td>Vacío 4 — Pagos inmediatos</td>
-          <td><span class="badge badge--gray">Emergente</span></td>
-        </tr>
-      </tbody>
-    </table>
+
+  <!-- Fricción 1 -->
+  <div class="friccion">
+    <div class="friccion__header">
+      <div class="friccion__num" style="background:var(--c-red)">#1</div>
+      <div class="friccion__info">
+        <div class="friccion__title">Servicio al cliente lento y deficiente</div>
+        <div class="friccion__meta">
+          <span class="badge badge--red">Urgencia crítica</span>
+          <span class="badge badge--gray" style="margin-left:6px">Todos los segmentos</span>
+        </div>
+      </div>
+    </div>
+    <div class="friccion__body">
+      <div class="grid-3">
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Evidencia verificada</p>
+          <p>Siigo en Capterra: <em>"sigue siendo un servicio muy deficiente"</em> (queja recurrente en múltiples reviews 2024–2025). Oracle PeopleSoft: dependencia de partners costosos para cualquier soporte. SAP: soporte global en inglés sin expertise de normativa colombiana local.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vacío funcional conectado</p>
+          <p>Ningún vendor local ofrece soporte en tiempo real con chatbot especializado en normativa colombiana + agente humano disponible 24/7 con SLA garantizado públicamente. La Reforma Laboral 2025 generó oleadas de consultas urgentes que saturaron todos los canales de soporte.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vendors afectados</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="badge badge--orange">Siigo</span>
+            <span class="badge badge--gray">Oracle PS</span>
+            <span class="badge badge--blue">SAP</span>
+          </div>
+          <p style="margin-top:8px;font-size:12px;color:var(--c-gray1)">Vacío conectado: ausencia de soporte local en tiempo real con expertise normativo colombiano.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fricción 2 -->
+  <div class="friccion">
+    <div class="friccion__header">
+      <div class="friccion__num" style="background:var(--c-orange)">#2</div>
+      <div class="friccion__info">
+        <div class="friccion__title">Interfaz desactualizada o difícil de usar</div>
+        <div class="friccion__meta">
+          <span class="badge badge--orange">Urgencia alta</span>
+          <span class="badge badge--gray" style="margin-left:6px">Verificada en 4 de 8 vendors</span>
+        </div>
+      </div>
+    </div>
+    <div class="friccion__body">
+      <div class="grid-3">
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Evidencia verificada</p>
+          <p>Oracle PeopleSoft en Capterra (2024–25): <em>"interfaz anticuada"</em>, <em>"clunky"</em>, <em>"no mobile-friendly"</em>. Usuario jul. 2025: <em>"si pudiéramos cambiar de herramienta, lo haría y lo pediría enfáticamente"</em>. Soporte Lógico: sitio web de diseño ~2014. Siigo: versión nube menos completa que desktop.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vacío funcional conectado</p>
+          <p>La mayoría de vendors colombianos no ha invertido en UX moderna (design system, accesibilidad, responsividad nativa). Solo Heinsohn tiene app móvil con biometría, y aún presenta problemas de estabilidad documentados. Las nuevas generaciones (millennials/Gen Z) comparan el portal de nómina con sus apps de consumo.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vendors afectados</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="badge badge--gray">Oracle PS</span>
+            <span class="badge badge--gray">Soporte Lógico</span>
+            <span class="badge badge--orange">Siigo</span>
+            <span class="badge badge--gray">Novasoft</span>
+          </div>
+          <p style="margin-top:8px;font-size:12px;color:var(--c-gray1)">Vacío conectado: B.2 — Experiencia digital del empleado (EX).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fricción 3 -->
+  <div class="friccion">
+    <div class="friccion__header">
+      <div class="friccion__num" style="background:var(--c-orange)">#3</div>
+      <div class="friccion__info">
+        <div class="friccion__title">Lentitud en actualización normativa colombiana</div>
+        <div class="friccion__meta">
+          <span class="badge badge--orange">Urgencia alta</span>
+          <span class="badge badge--gray" style="margin-left:6px">Segmento mediana-grande y sector financiero</span>
+        </div>
+      </div>
+    </div>
+    <div class="friccion__body">
+      <div class="grid-3">
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Evidencia verificada</p>
+          <p>La Reforma Laboral 2025 (Ley 2466) generó urgencia de reparametrización: recargos nocturnos desde 7pm (ene. 2026), reducción de jornada (jul. 2025), nuevas licencias. Varios vendors tardaron semanas en publicar actualizaciones oficiales. La comunicación proactiva a los clientes fue nula. Fuente: <em>aleluya.com/blog/reforma-laboral-2025</em></p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vacío funcional conectado</p>
+          <p>Ausencia de alertas proactivas antes de la vigencia de cambios normativos y de simuladores de impacto presupuestal. Todas las actualizaciones son reactivas: el software se corrige después de que el cambio ya entró en vigencia — en ese período la empresa queda expuesta a sanciones UGPP.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vendors más afectados</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="badge badge--gray">Oracle PS</span>
+            <span class="badge badge--blue">SAP (partners)</span>
+          </div>
+          <p style="margin-top:8px;font-size:12px;color:var(--c-gray1)">Vacío conectado: B.5 — Cumplimiento normativo proactivo. Riesgo de multas hasta 15.000 UVT/período.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fricción 4 -->
+  <div class="friccion">
+    <div class="friccion__header">
+      <div class="friccion__num" style="background:var(--c-blue)">#4</div>
+      <div class="friccion__info">
+        <div class="friccion__title">App móvil inexistente o inestable para el empleado</div>
+        <div class="friccion__meta">
+          <span class="badge badge--blue">Urgencia media-alta</span>
+          <span class="badge badge--gray" style="margin-left:6px">Documentada en reviews públicos</span>
+        </div>
+      </div>
+    </div>
+    <div class="friccion__body">
+      <div class="grid-3">
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Evidencia verificada</p>
+          <p>Heinsohn Google Play: <em>"la app no está funcionando, cuando inicio sesión me redirige a un nuevo sitio"</em>. Oracle PeopleSoft Capterra: <em>"no da la posibilidad de gestionar vía móvil con facilidad"</em>. Novasoft: sin app nativa confirmada. Siigo: acceso web responsivo sin app dedicada al empleado.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vacío funcional conectado</p>
+          <p>Experiencia digital del empleado (EX) subdesarrollada. La productividad del empleado y la adopción del autoservicio dependen directamente de la calidad de la app móvil. Sin app nativa estable, el empleado debe usar el portal web desde el teléfono — experiencia inferior a cualquier app de consumo.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vendors afectados</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="badge badge--green">Heinsohn (inestable)</span>
+            <span class="badge badge--gray">Oracle PS</span>
+            <span class="badge badge--gray">Novasoft</span>
+            <span class="badge badge--orange">Siigo</span>
+          </div>
+          <p style="margin-top:8px;font-size:12px;color:var(--c-gray1)">Vacío conectado: B.2 — EX digital.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fricción 5 -->
+  <div class="friccion">
+    <div class="friccion__header">
+      <div class="friccion__num" style="background:var(--c-gray1)">#5</div>
+      <div class="friccion__info">
+        <div class="friccion__title">Falta de analytics real para toma de decisiones de talento</div>
+        <div class="friccion__meta">
+          <span class="badge badge--gray">Urgencia media — queja latente estratégica</span>
+        </div>
+      </div>
+    </div>
+    <div class="friccion__body">
+      <div class="grid-3">
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Evidencia verificada</p>
+          <p>La mayoría de vendors ofrece reportes operativos (desprendibles, exógena DIAN, PILA) pero no dashboards de talento ejecutivo. La demanda de people analytics predictivo crece en el sector financiero, donde la toma de decisiones basada en datos es ya un estándar para todas las demás áreas del negocio.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vacío funcional conectado</p>
+          <p>Ningún vendor local tiene módulo propio de people analytics predictivo. Novasoft y Heinsohn integran Power BI como capa de reporte descriptivo, pero no ofrecen modelos predictivos de rotación, ausentismo ni benchmarking salarial contra el mercado colombiano.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vendors afectados</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="badge badge--purple">Kactus</span>
+            <span class="badge badge--gray">Novasoft</span>
+            <span class="badge badge--green">Heinsohn</span>
+            <span class="badge badge--green">Soporte Lógico</span>
+          </div>
+          <p style="margin-top:8px;font-size:12px;color:var(--c-gray1)">Vacío conectado: B.3 — People analytics predictivo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fricción 6 -->
+  <div class="friccion">
+    <div class="friccion__header">
+      <div class="friccion__num" style="background:var(--c-gray2);color:var(--c-black)">#6</div>
+      <div class="friccion__info">
+        <div class="friccion__title">Integración con nueva infraestructura de pagos colombiana</div>
+        <div class="friccion__meta">
+          <span class="badge badge--gray">Urgencia emergente — ventana 12–24 meses</span>
+        </div>
+      </div>
+    </div>
+    <div class="friccion__body">
+      <div class="grid-3">
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Evidencia verificada</p>
+          <p>La dispersión de nómina vía archivo plano al banco sigue siendo el estándar universal en todos los vendors evaluados. ACH Colombia lanzó TESO PSE (mar. 2026), Cuenta a Cuenta (may. 2026) y Bre-B para pagos inmediatos de nómina conectados con 47 entidades financieras del país.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Vacío funcional conectado</p>
+          <p>Ningún software HCM ha anunciado integración nativa con esta nueva infraestructura. El mercado se moverá hacia pagos de nómina inmediatos en los próximos 12–24 meses. Para ACH Colombia, que opera esta infraestructura, la integración representa una oportunidad de diferenciación única e irrepetible.</p>
+        </div>
+        <div>
+          <p class="text-label" style="margin-bottom:6px">Alcance del vacío</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="badge badge--gray">Todos (8/8)</span>
+          </div>
+          <p style="margin-top:8px;font-size:12px;color:var(--c-gray1)">Vacío conectado: B.4 — Integración ecosistema financiero colombiano.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -445,153 +829,159 @@ strong{font-weight:700;}
   <div class="section-title">
     <span class="section-title__label">Sección 3 · Parte D</span>
     <h2 class="section-title__heading">Cinco Oportunidades de Propuesta de Valor Diferenciada</h2>
-    <p class="section-title__desc">Donde una oferta nueva o una evolución del producto actual puede superar lo existente en el mercado colombiano, con evidencia del gap y palanca de diferenciación.</p>
+    <p class="section-title__desc">Donde una oferta nueva o una evolución del producto actual puede superar lo existente en el mercado colombiano. Cada oportunidad incluye la capacidad concreta, la evidencia del gap y la palanca de diferenciación.</p>
   </div>
-  
-<div class="opp-card">
-  <div class="opp-card__head" style="background:#5454e910;border-bottom:1px solid #5454e930;">
-    <div class="opp-card__num" style="background:#5454e9">1</div>
-    <div class="opp-card__title">Nómina Cognitiva — IA conversacional sin formularios</div>
-  </div>
-  <div class="opp-card__body" style="margin-top:12px;">
-    <div class="opp-card__row">
-      <span class="opp-card__key">Capacidad</span>
-      <span class="opp-card__val">Motor IA conversacional (chatbot/voz) para registrar novedades en lenguaje natural. Detecta anomalías antes del cierre y genera resumen de riesgo del período.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
-      <span class="opp-card__val">Solo Bitákora (fuera del top 8) lo ofrece en Colombia. Ningún vendor de los 8 evaluados tiene IA en el motor de liquidación.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Segmento beneficiado</span>
-      <span class="opp-card__val">Empresas medianas 200–1.000 empleados; sector financiero con equipos de RR.HH. pequeños.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Palanca</span>
-      <span class="opp-card__val"><span class="opp-badge" style="background:#eeeeff;color:#5454e9">Tecnología (LLM localizado) + UX conversacional</span></span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Complejidad</span>
-      <span class="opp-card__val">Alta — requiere LLM entrenado en normativa colombiana e integrado al motor de cálculo.</span>
-    </div>
-  </div>
-</div>
 
-<div class="opp-card">
-  <div class="opp-card__head" style="background:#e67e2210;border-bottom:1px solid #e67e2230;">
-    <div class="opp-card__num" style="background:#e67e22">2</div>
-    <div class="opp-card__title">Monitor Normativo Proactivo — alertas antes de la vigencia</div>
+  <!-- OPP 1 -->
+  <div class="opp-card">
+    <div class="opp-card__head" style="background:#eeeeff;border-bottom:1px solid #c4c4f8;">
+      <div class="opp-card__num" style="background:#5454e9">1</div>
+      <div class="opp-card__title">"Nómina Cognitiva" — IA conversacional para liquidación sin formularios</div>
+    </div>
+    <div class="opp-card__body" style="margin-top:12px;">
+      <div class="opp-card__row">
+        <span class="opp-card__key">Capacidad que se ofrecería</span>
+        <span class="opp-card__val">Un motor de IA conversacional (chatbot/asistente) integrado al módulo de nómina que permita registrar novedades (vacaciones, incapacidades, préstamos, horas extras) mediante lenguaje natural — texto o voz — sin navegar formularios. El asistente detecta anomalías antes del cierre de nómina (duplicados, valores fuera de rango, empleados sin novedades esperadas) y genera un resumen de riesgo del período.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+        <span class="opp-card__val">Solo Bitákora (fuera de los 8 evaluados) declara un "Modo Crucero" con IA conversacional en Colombia. Entre los 8 vendors, ninguno lo tiene implementado en el motor de liquidación. SAP tiene Joule pero orientado al mercado global, no localizado para nómina colombiana; Heinsohn tiene IA en capacitación, no en liquidación. LLMs base (GPT-4, Claude, Gemini) ya existen — el diferenciador está en la localización normativa y la conexión al sistema.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Segmento que más se beneficia</span>
+        <span class="opp-card__val">Empresas medianas (200–1.000 empleados) con equipos de RR.HH. pequeños que administran nóminas complejas. Sector financiero regulado donde la trazabilidad y reducción de errores humanos tiene consecuencias directas.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Palanca de diferenciación</span>
+        <span class="opp-card__val"><span class="opp-badge" style="background:#eeeeff;color:#5454e9">Tecnología (LLM localizado)</span> <span class="opp-badge" style="background:#eeeeff;color:#5454e9;margin-left:6px">UX conversacional</span></span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Complejidad de implementación</span>
+        <span class="opp-card__val"><span class="badge badge--red">Alta</span> — Requiere LLM entrenado con normativa colombiana e integrado al motor de cálculo. El reto no es el modelo de lenguaje (existen), sino la localización normativa, la conexión al sistema y la gestión de datos sensibles (Habeas Data).</span>
+      </div>
+    </div>
   </div>
-  <div class="opp-card__body" style="margin-top:12px;">
-    <div class="opp-card__row">
-      <span class="opp-card__key">Capacidad</span>
-      <span class="opp-card__val">Monitorea Diario Oficial, resoluciones DIAN/UGPP y Ministerio del Trabajo. Alerta con simulación de impacto en pesos para la plantilla específica antes de que entre en vigencia el cambio.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
-      <span class="opp-card__val">Todos los vendors actualizan de forma reactiva. La Reforma Laboral 2025 (Ley 2466) dejó empresas en incumplimiento semanas. Nadie ofrece simulador de impacto previo.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Segmento beneficiado</span>
-      <span class="opp-card__val">Sector financiero, salud y sector público — alta exposición a multas UGPP/DIAN.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Palanca</span>
-      <span class="opp-card__val"><span class="opp-badge" style="background:#fef3e8;color:#c0621a">Normativa + NLP para scraping regulatorio</span></span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Complejidad</span>
-      <span class="opp-card__val">Media — scraping de fuentes regulatorias + clasificación por NLP es factible; el reto es conectarlo al motor de parámetros del cliente.</span>
-    </div>
-  </div>
-</div>
 
-<div class="opp-card">
-  <div class="opp-card__head" style="background:#27ae6010;border-bottom:1px solid #27ae6030;">
-    <div class="opp-card__num" style="background:#27ae60">3</div>
-    <div class="opp-card__title">Nómina Inmediata — integración nativa con ACH / Bre-B</div>
+  <!-- OPP 2 -->
+  <div class="opp-card">
+    <div class="opp-card__head" style="background:#fef3e8;border-bottom:1px solid #fad5aa;">
+      <div class="opp-card__num" style="background:#e67e22">2</div>
+      <div class="opp-card__title">"Monitor Normativo en Tiempo Real" — cumplimiento proactivo, no reactivo</div>
+    </div>
+    <div class="opp-card__body" style="margin-top:12px;">
+      <div class="opp-card__row">
+        <span class="opp-card__key">Capacidad que se ofrecería</span>
+        <span class="opp-card__val">Un módulo de inteligencia regulatoria que monitorea en tiempo real las publicaciones del Diario Oficial, resoluciones DIAN, circulares UGPP y pronunciamientos del Ministerio del Trabajo. Cuando detecta un cambio relevante, genera: (1) alerta al administrador de nómina con el impacto estimado en pesos para su plantilla específica; (2) propuesta de reparametrización automática; (3) simulador de escenarios "¿qué pasa con mi nómina si aplico este cambio?".</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+        <span class="opp-card__val">Todos los vendors actualizan su motor de nómina tras los cambios, pero de forma reactiva. La Reforma Laboral 2025 demostró que muchas empresas quedaron en incumplimiento durante semanas mientras esperaban la actualización del software. Ningún vendor ofrece alertas predictivas ni simuladores de impacto presupuestal antes de la vigencia del cambio.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Segmento que más se beneficia</span>
+        <span class="opp-card__val">Empresas del sector financiero, salud y sector público — los sectores con mayor exposición a multas de la UGPP y DIAN. Área de compensación y nómina de empresas con más de 100 empleados donde el incumplimiento tiene consecuencias regulatorias directas.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Palanca de diferenciación</span>
+        <span class="opp-card__val"><span class="opp-badge" style="background:#fef3e8;color:#c0621a">Normativa</span> <span class="opp-badge" style="background:#fef3e8;color:#c0621a;margin-left:6px">NLP para scraping regulatorio</span></span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Complejidad de implementación</span>
+        <span class="opp-card__val"><span class="badge badge--orange">Media</span> — El scraping de fuentes regulatorias y la clasificación de cambios con NLP es técnicamente factible hoy. El reto está en conectar el cambio normativo identificado con los parámetros específicos del motor de nómina de cada cliente y en la validación jurídica de las interpretaciones.</span>
+      </div>
+    </div>
   </div>
-  <div class="opp-card__body" style="margin-top:12px;">
-    <div class="opp-card__row">
-      <span class="opp-card__key">Capacidad</span>
-      <span class="opp-card__val">Dispersión de nómina vía Transfiya/Bre-B y TESO PSE de ACH Colombia; billeteras Nequi/Daviplata como destino; pagos 24/7 sin archivos planos ni restricción de horario bancario.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
-      <span class="opp-card__val">ACH Colombia lanzó TESO PSE y Cuenta a Cuenta en 2025–2026. Ningún vendor HCM ha anunciado integración nativa. Ventana de 12–24 meses.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Segmento beneficiado</span>
-      <span class="opp-card__val">Sector financiero; empresas con trabajadores en zonas rurales o sin cuenta bancaria; alta rotación.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Palanca</span>
-      <span class="opp-card__val"><span class="opp-badge" style="background:#e8f8f0;color:#1e8449">Integración (ecosistema financiero colombiano) + UX de pago instantáneo</span></span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Complejidad</span>
-      <span class="opp-card__val">Media — API de Transfiya/Bre-B accesible; el reto es la integración segura con el motor de nómina y cumplimiento Superfinanciera.</span>
-    </div>
-  </div>
-</div>
 
-<div class="opp-card">
-  <div class="opp-card__head" style="background:#8e44ad10;border-bottom:1px solid #8e44ad30;">
-    <div class="opp-card__num" style="background:#8e44ad">4</div>
-    <div class="opp-card__title">People Intelligence — analytics predictivo localizado Colombia</div>
+  <!-- OPP 3 -->
+  <div class="opp-card">
+    <div class="opp-card__head" style="background:#e8f8f0;border-bottom:1px solid #a9e4c2;">
+      <div class="opp-card__num" style="background:#27ae60">3</div>
+      <div class="opp-card__title">"Nómina Inmediata" — integración nativa con ACH Colombia / Bre-B / Transfiya</div>
+    </div>
+    <div class="opp-card__body" style="margin-top:12px;">
+      <div class="opp-card__row">
+        <span class="opp-card__key">Capacidad que se ofrecería</span>
+        <span class="opp-card__val">Integración nativa del módulo de dispersión de nómina con la infraestructura de pagos inmediatos de Colombia: Transfiya/Bre-B de ACH Colombia, TESO PSE y billeteras Nequi/Daviplata. El empleado elige su destino de pago desde el portal de autoservicio; la empresa despacha la nómina en segundos, 24/7, sin restricciones de horario bancario y sin generación manual de archivos planos.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+        <span class="opp-card__val">El estándar actual en todos los vendors es la generación de archivo plano cargado manualmente al portal del banco. ACH Colombia lanzó Bre-B, TESO PSE y "Cuenta a Cuenta" en 2025–2026 pero ningún vendor HCM ha anunciado integración nativa. Esta es una ventana de 12–24 meses antes de que el mercado la adopte masivamente. Para ACH Colombia, que opera esta infraestructura, integrarla es una ventaja estructural irrepetible.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Segmento que más se beneficia</span>
+        <span class="opp-card__val">Sector financiero (eficiencia estratégica en pagos), empresas con trabajadores en zonas rurales o sin cuenta bancaria (billeteras digitales como destino), y empresas con alta rotación que liquidan contratos frecuentemente.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Palanca de diferenciación</span>
+        <span class="opp-card__val"><span class="opp-badge" style="background:#e8f8f0;color:#1e8449">Integración ecosistema financiero colombiano</span> <span class="opp-badge" style="background:#e8f8f0;color:#1e8449;margin-left:6px">UX pago instantáneo</span></span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Complejidad de implementación</span>
+        <span class="opp-card__val"><span class="badge badge--orange">Media</span> — La API de Transfiya/Bre-B es accesible. El reto está en la integración segura con el motor de nómina, el cumplimiento de regulaciones de la Superfinanciera para entidades no bancarias que procesan pagos, y la gestión de errores en tiempo real (reversiones, reintentos).</span>
+      </div>
+    </div>
   </div>
-  <div class="opp-card__body" style="margin-top:12px;">
-    <div class="opp-card__row">
-      <span class="opp-card__key">Capacidad</span>
-      <span class="opp-card__val">Modelos de predicción de rotación voluntaria (90 días), ausentismo estacional, correlación nómina–desempeño y benchmarking salarial integrado. Dashboards ejecutivos sin exportar a Excel.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
-      <span class="opp-card__val">SAP tiene esto globalmente pero a costo elevado. Ningún vendor local colombiano ofrece modelos predictivos entrenados con datos del mercado laboral colombiano.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Segmento beneficiado</span>
-      <span class="opp-card__val">Sector financiero, BPO, salud y retail — alta rotación con ROI directo medible en retención.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Palanca</span>
-      <span class="opp-card__val"><span class="opp-badge" style="background:#f5eeff;color:#6c3483">Tecnología ML + datos de mercado laboral colombiano propietarios</span></span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Complejidad</span>
-      <span class="opp-card__val">Alta — requiere datasets históricos anonimizados, ciencia de datos y gestión de privacidad (Habeas Data).</span>
-    </div>
-  </div>
-</div>
 
-<div class="opp-card">
-  <div class="opp-card__head" style="background:#1a1a1a10;border-bottom:1px solid #1a1a1a30;">
-    <div class="opp-card__num" style="background:#1a1a1a">5</div>
-    <div class="opp-card__title">EX Total — app de empleado con estándares consumer</div>
+  <!-- OPP 4 -->
+  <div class="opp-card">
+    <div class="opp-card__head" style="background:#f5eeff;border-bottom:1px solid #d9b8f5;">
+      <div class="opp-card__num" style="background:#8e44ad">4</div>
+      <div class="opp-card__title">"People Intelligence" — people analytics predictivo localizado para Colombia</div>
+    </div>
+    <div class="opp-card__body" style="margin-top:12px;">
+      <div class="opp-card__row">
+        <span class="opp-card__key">Capacidad que se ofrecería</span>
+        <span class="opp-card__val">Un módulo de analytics que va más allá de reportes operativos: modelos de predicción de rotación voluntaria (probabilidad de renuncia en los próximos 90 días por empleado), predicción de ausentismo por temporada o área, correlación entre indicadores de nómina y métricas de desempeño, y benchmarking salarial contra el mercado colombiano integrado al sistema. Todo en dashboards ejecutivos sin necesidad de exportar a Excel o Power BI.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+        <span class="opp-card__val">SAP tiene People Analytics, pero es un producto global de alto costo no accesible para la mayoría del mercado colombiano. Novasoft y Heinsohn integran Power BI como capa de reporte descriptivo, pero sin modelos predictivos propios. Ningún vendor local colombiano ofrece modelos de rotación o ausentismo predictivos entrenados con datos del mercado laboral colombiano.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Segmento que más se beneficia</span>
+        <span class="opp-card__val">Sector financiero, BPO, salud y retail — sectores con alta rotación donde la predicción tiene un ROI directo medible (costo de reemplazo de un empleado: 6–9 meses de salario). Áreas de compensación total y talent management con presión de resultados.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Palanca de diferenciación</span>
+        <span class="opp-card__val"><span class="opp-badge" style="background:#f5eeff;color:#6c3483">Tecnología ML</span> <span class="opp-badge" style="background:#f5eeff;color:#6c3483;margin-left:6px">Datos mercado laboral colombiano propietarios</span></span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Complejidad de implementación</span>
+        <span class="opp-card__val"><span class="badge badge--red">Alta</span> — Requiere datasets históricos anonimizados de múltiples clientes (mínimo 18–24 meses), expertise en ciencia de datos aplicada a RR.HH. y gestión rigurosa de privacidad conforme a Habeas Data Colombia (Ley 1581). El diferenciador principal son los datos del mercado laboral colombiano, no el algoritmo en sí.</span>
+      </div>
+    </div>
   </div>
-  <div class="opp-card__body" style="margin-top:12px;">
-    <div class="opp-card__row">
-      <span class="opp-card__key">Capacidad</span>
-      <span class="opp-card__val">App móvil nativa (iOS + Android) con UX de consumer app: portal nómina + novedades + comunicaciones + encuestas clima + reconocimientos + carpeta laboral digital. Canal bidireccional empresa-empleado.</span>
+
+  <!-- OPP 5 -->
+  <div class="opp-card">
+    <div class="opp-card__head" style="background:#f4f4f6;border-bottom:1px solid var(--c-gray2);">
+      <div class="opp-card__num" style="background:var(--c-black)">5</div>
+      <div class="opp-card__title">"EX Total" — experiencia del empleado como producto, no como módulo</div>
     </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
-      <span class="opp-card__val">Solo Heinsohn tiene app nativa local con biometría, pero con problemas de estabilidad documentados. Oracle PeopleSoft explícitamente criticado por no ser mobile-friendly.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Segmento beneficiado</span>
-      <span class="opp-card__val">Empresas con fuerza laboral dispersa; sector financiero con sucursales; plantillas con alta participación Gen Z/Millennials.</span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Palanca</span>
-      <span class="opp-card__val"><span class="opp-badge" style="background:#f4f4f6;color:#1a1a1a">UX/diseño centrado en el usuario + movilidad</span></span>
-    </div>
-    <div class="opp-card__row">
-      <span class="opp-card__key">Complejidad</span>
-      <span class="opp-card__val">Media — desarrollo de app nativa es conocido; el reto está en la integración con el motor de nómina y el change management para adopción masiva.</span>
+    <div class="opp-card__body" style="margin-top:12px;">
+      <div class="opp-card__row">
+        <span class="opp-card__key">Capacidad que se ofrecería</span>
+        <span class="opp-card__val">Una app móvil nativa (iOS y Android) diseñada con estándares de consumer app — no de software empresarial — que agrupa: portal de autoservicio de nómina, gestión de novedades, comunicaciones del empleador, encuestas de clima, reconocimientos entre pares, acceso a beneficios y carpeta digital laboral (contrato, certificados, paz y salvo). La app funciona como canal de comunicación bidireccional empresa-empleado, no solo como consulta.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Por qué el mercado no lo resuelve</span>
+        <span class="opp-card__val">Heinsohn tiene la app más avanzada del mercado local, pero con problemas de estabilidad documentados (redirige al sitio web). Kactus lanzó su app en 2024 en adopción temprana. Novasoft no tiene app nativa confirmada. Oracle PeopleSoft es explícitamente criticado en Capterra por interfaz no mobile-friendly. Ningún vendor local ha apostado por la experiencia del empleado como su diferenciador central de producto.</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Segmento que más se beneficia</span>
+        <span class="opp-card__val">Empresas con fuerza laboral dispersa geográficamente, sector financiero con empleados en sucursales y centros de operaciones, y empresas con alta participación de Gen Z/Millennials en la planta (generaciones que comparan el portal de nómina con Instagram o Rappi).</span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Palanca de diferenciación</span>
+        <span class="opp-card__val"><span class="opp-badge" style="background:#f4f4f6;color:#1a1a1a">UX / Diseño centrado en el usuario</span> <span class="opp-badge" style="background:#f4f4f6;color:#1a1a1a;margin-left:6px">Movilidad nativa</span></span>
+      </div>
+      <div class="opp-card__row">
+        <span class="opp-card__key">Complejidad de implementación</span>
+        <span class="opp-card__val"><span class="badge badge--orange">Media</span> — El desarrollo de una app móvil nativa de calidad consumer es un proceso conocido (React Native / Flutter). El reto no es técnico sino de integración con el motor de nómina y de change management: lograr que los empleados adopten la app requiere estrategia de lanzamiento, comunicación y soporte inicial.</span>
+      </div>
     </div>
   </div>
-</div>
+
 </div>
 
 <hr class="divider--thick">
