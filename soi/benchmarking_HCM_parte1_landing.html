@@ -35,7 +35,50 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; }
-    body { font-family: var(--font); background: #f0f0f5; color: var(--c-black); line-height: 1.6; }
+    body { font-family: var(--font); background: #f0f0f5; color: var(--c-black); line-height: 1.6; padding-top: 66px; }
+
+    /* ====== MENU SUPERIOR FIJO ====== */
+    .top-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(26, 26, 26, .92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      padding: 10px 16px;
+    }
+    .top-menu__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+    .top-menu__link {
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .82);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 999px;
+      padding: 8px 14px;
+      transition: background-color .2s, color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .top-menu__link:hover {
+      color: var(--c-white);
+      border-color: rgba(255, 255, 255, .45);
+    }
+    .top-menu__link--active {
+      background: var(--c-yellow);
+      border-color: var(--c-yellow);
+      color: var(--c-black);
+    }
 
     /* ====== REPORTE WRAPPER ====== */
     .reporte { max-width: 1100px; margin: 0 auto; background: var(--c-white); box-shadow: 0 4px 40px rgba(0,0,0,.10); }
@@ -53,7 +96,7 @@
     .report-header__title-block { margin-bottom: 36px; }
     .report-header__eyebrow { display: block; font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c-yellow); margin-bottom: 12px; opacity: .9; }
     .report-header__title { font-size: clamp(26px, 3.5vw, 42px); font-weight: 800; line-height: 1.1; margin-bottom: 14px; }
-    .report-header__subtitle { font-size: 15px; font-weight: 400; opacity: .75; max-width: 640px; line-height: 1.6; }
+    .report-header__subtitle { font-size: 15px; font-weight: 500; color: rgba(255,255,255,.94); max-width: 640px; line-height: 1.6; }
     .report-header__kpi-bar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; background: rgba(255,255,255,.12); border-radius: 10px; padding: 20px 24px; }
     .report-header__kpi-item { text-align: center; }
     .report-header__kpi-value { display: block; font-size: 20px; font-weight: 800; color: white; line-height: 1.2; }
@@ -107,6 +150,42 @@
     .tabla-datos { width: 100%; border-collapse: collapse; font-size: 13px; }
     .tabla-datos thead tr { background: var(--c-blue); color: white; }
     .tabla-datos thead th { padding: 12px 14px; font-weight: 700; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; text-align: left; white-space: nowrap; }
+    .tabla-datos thead th.is-sortable { padding: 0; }
+    .tabla-datos .sort-button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      text-align: left;
+      padding: 12px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tabla-datos .sort-button:hover { background: rgba(255,255,255,.12); }
+    .tabla-datos .sort-button:focus-visible {
+      outline: 2px solid var(--c-yellow);
+      outline-offset: -2px;
+    }
+    .tabla-datos .sort-icon {
+      font-size: 10px;
+      opacity: .7;
+      line-height: 1;
+      min-width: 12px;
+      text-align: center;
+    }
+    .tabla-datos thead th.is-active {
+      background: rgba(0,0,0,.2);
+      box-shadow: inset 0 -2px 0 var(--c-yellow);
+    }
+    .tabla-datos thead th.is-active .sort-icon {
+      opacity: 1;
+      color: var(--c-yellow);
+    }
     .tabla-datos tbody tr { border-bottom: 1px solid var(--c-gray2); transition: background .15s; }
     .tabla-datos tbody tr:hover { background: var(--c-blue-tint); }
     .tabla-datos tbody td { padding: 10px 14px; vertical-align: top; }
@@ -145,6 +224,37 @@
     .lista-numerada li { display: flex; gap: 14px; align-items: flex-start; font-size: 14px; line-height: 1.5; counter-increment: lst; }
     .lista-numerada li::before { content: counter(lst); background: var(--c-blue); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
+    /* ====== RESUMEN COMPARATIVO ====== */
+    .grid-2--leaders { gap: 20px; }
+    .lista-icesi--leaders {
+      list-style: none;
+      display: grid;
+      grid-template-rows: repeat(5, minmax(112px, auto));
+      gap: 10px;
+    }
+    .lista-icesi--leaders li {
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--c-gray2);
+      background: var(--c-white);
+      font-size: 13px;
+      line-height: 1.5;
+      display: block;
+      position: relative;
+    }
+    .lista-icesi--leaders li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 8px 0 0 8px;
+      background: var(--c-blue);
+      margin: 0;
+    }
+
     /* ====== BADGES ====== */
     .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: .05em; }
     .badge--blue { background: var(--c-blue); color: white; }
@@ -170,6 +280,7 @@
     .report-footer img { height: 24px; opacity: .7; }
     .report-footer__info { font-size: 12px; }
     .report-footer__url { font-size: 12px; color: var(--c-yellow); font-weight: 600; }
+
 
     /* ====== TYPOGRAPHY UTILS ====== */
     .text-sm { font-size: 13px; }
@@ -198,10 +309,19 @@
       .reporte-body { padding: 28px 20px; }
       .report-header { padding: 32px 20px 28px; }
       .report-footer { flex-direction: column; align-items: flex-start; padding: 20px; }
+      body { padding-top: 74px; }
+      .top-menu { padding: 10px 12px; }
+      .top-menu__inner { justify-content: flex-start; overflow-x: auto; }
     }
   </style>
 </head>
 <body>
+<nav class="top-menu" aria-label="Navegacion entre partes del informe">
+  <div class="top-menu__inner">
+    <a class="top-menu__link top-menu__link--active" href="benchmarking_HCM_parte1_landing.html">Parte 1: Fichas</a>
+    <a class="top-menu__link" href="benchmarking_HCM_parte2_landing.html">Parte 2: Brechas</a>
+  </div>
+</nav>
 <div class="reporte">
 
   <!-- HEADER -->
@@ -290,8 +410,8 @@
           <div class="vendor-card__row"><span class="vendor-card__key">IA</span><span class="vendor-card__val">Capacitación y retención 2024</span></div>
         </div>
         <div class="vendor-card" style="border-top-color:#e67e22">
-          <div class="vendor-card__name">SAP HCM / SuccessFactors</div>
-          <div class="vendor-card__segment"><span class="badge badge--orange">Empresa grande · Corporativo</span></div>
+          <div class="vendor-card__name">SAP HCM/SuccessFactors</div>
+          <div class="vendor-card__segment"><span class="badge badge--orange">Emp. grande · Corp</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Modelo</span><span class="vendor-card__val">SaaS / On-premise / RISE</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Antigüedad</span><span class="vendor-card__val">30+ años (SF desde 2001)</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Clientes COL</span><span class="vendor-card__val">Ecopetrol, Alpina, Avianca…</span></div>
@@ -300,7 +420,7 @@
         </div>
         <div class="vendor-card" style="border-top-color:#8e44ad">
           <div class="vendor-card__name">Kactus HCM (Digital Ware)</div>
-          <div class="vendor-card__segment"><span class="badge badge--purple">Empresa grande · +500 emp.</span></div>
+          <div class="vendor-card__segment"><span class="badge badge--purple">Emp grande · +500 emp.</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Modelo</span><span class="vendor-card__val">On-premise / SaaS / BPO</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Antigüedad</span><span class="vendor-card__val">30+ años</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Clientes</span><span class="vendor-card__val">1.000+ · 3M nóminas Latam</span></div>
@@ -308,8 +428,8 @@
           <div class="vendor-card__row"><span class="vendor-card__key">App móvil</span><span class="vendor-card__val">iOS + Android (lanzada 2024)</span></div>
         </div>
         <div class="vendor-card" style="border-top-color:#2ecc71">
-          <div class="vendor-card__name">Soporte Lógico (HUMANO®)</div>
-          <div class="vendor-card__segment"><span class="badge badge--green">Sector público colombiano</span></div>
+          <div class="vendor-card__name">Soport. Lógico HUMANO®</div>
+          <div class="vendor-card__segment"><span class="badge badge--green">Sector público Col</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Modelo</span><span class="vendor-card__val">SaaS / Licencia / BPO</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Antigüedad</span><span class="vendor-card__val">20+ años</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Funcionarios</span><span class="vendor-card__val">450.000+ liquidados</span></div>
@@ -327,7 +447,7 @@
         </div>
         <div class="vendor-card" style="border-top-color:#f39c12">
           <div class="vendor-card__name">Siigo Nómina</div>
-          <div class="vendor-card__segment"><span class="badge badge--yellow">Startup · Pyme colombiana</span></div>
+          <div class="vendor-card__segment"><span class="badge badge--yellow">Startup · Pyme Col.</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Modelo</span><span class="vendor-card__val">SaaS 100% nube</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Antigüedad</span><span class="vendor-card__val">1980s — referente mercado</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Precio</span><span class="vendor-card__val">Desde $9.075 COP/mes</span></div>
@@ -336,7 +456,7 @@
         </div>
         <div class="vendor-card" style="border-top-color:#e74c3c">
           <div class="vendor-card__name">Oracle PeopleSoft HCM</div>
-          <div class="vendor-card__segment"><span class="badge badge--gray">Empresa grande · Educación</span></div>
+          <div class="vendor-card__segment"><span class="badge badge--gray">Emp. grande · Educación</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Modelo</span><span class="vendor-card__val">On-premise / OCI</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Soporte hasta</span><span class="vendor-card__val">2036 (garantizado)</span></div>
           <div class="vendor-card__row"><span class="vendor-card__key">Versión actual</span><span class="vendor-card__val">PeopleSoft 9.2 (2013)</span></div>
@@ -456,20 +576,20 @@
         <p class="section-title__desc">Puntaje 1–5 por vendor en cada dimensión, con nota justificativa basada en evidencia pública. PERNO aparece sombreado por ser sistema interno no comercializable.</p>
       </div>
       <div class="tabla-wrapper">
-        <table class="tabla-datos tabla-datos--striped">
+        <table id="tabla-comparativa" class="tabla-datos tabla-datos--striped">
           <thead>
             <tr>
               <th>Vendor</th>
-              <th>1. Cumplimiento normativo</th>
-              <th>2. Cobertura nómina</th>
-              <th>3. Cobertura HCM</th>
-              <th>4. Autoservicio empleado</th>
-              <th>5. People analytics</th>
-              <th>6. IA aplicada</th>
-              <th>7. Integración externa</th>
-              <th>8. Madurez cloud</th>
-              <th>9. UX / Usabilidad</th>
-              <th>10. Soporte local COL</th>
+              <th class="is-sortable" data-col-index="1"><button type="button" class="sort-button">1. Cumplimiento normativo <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="2"><button type="button" class="sort-button">2. Cobertura nómina <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="3"><button type="button" class="sort-button">3. Cobertura HCM <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="4"><button type="button" class="sort-button">4. Autoservicio empleado <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="5"><button type="button" class="sort-button">5. People analytics <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="6"><button type="button" class="sort-button">6. IA aplicada <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="7"><button type="button" class="sort-button">7. Integración externa <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="8"><button type="button" class="sort-button">8. Madurez cloud <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="9"><button type="button" class="sort-button">9. UX / Usabilidad <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
+              <th class="is-sortable" data-col-index="10"><button type="button" class="sort-button">10. Soporte local COL <span class="sort-icon" aria-hidden="true">⇅</span></button></th>
             </tr>
           </thead>
           <tbody>
@@ -489,9 +609,9 @@
         <h2 class="section-title__heading">Panorama del Mercado — Líderes por Dimensión</h2>
         <p class="section-title__desc">Síntesis del benchmarking: quién lidera en qué y qué implica para el mercado colombiano.</p>
       </div>
-      <div class="grid-2">
+      <div class="grid-2 grid-2--leaders">
         <div>
-          <ul class="lista-icesi">
+          <ul class="lista-icesi lista-icesi--leaders">
             <li><strong>Cumplimiento normativo DIAN/UGPP:</strong> Heinsohn y Siigo lideran. Todos los vendors comerciales alcanzan 4–5 excepto Oracle PeopleSoft (3) y PERNO (2).</li>
             <li><strong>Cobertura de nómina:</strong> Kactus, Heinsohn y SAP comparten el puntaje máximo (5). La nómina colombiana es compleja y todos los vendors consolidados la cubren bien.</li>
             <li><strong>Cobertura HCM:</strong> SAP SuccessFactors es el único con suite completa (5). Kactus y Oracle PeopleSoft alcanzan 4. Los demás locales están en transformación.</li>
@@ -500,7 +620,7 @@
           </ul>
         </div>
         <div>
-          <ul class="lista-icesi">
+          <ul class="lista-icesi lista-icesi--leaders">
             <li><strong>IA aplicada al producto:</strong> SAP lidera en solitario (5). Solo Heinsohn declara IA activa (3). El resto del mercado colombiano tiene una brecha de 2–4 años en este aspecto.</li>
             <li><strong>Integración con sistemas externos:</strong> SAP tiene la arquitectura más abierta (5). Kactus, Novasoft y Oracle PeopleSoft alcanzan 4. Siigo y Soporte Lógico tienen ecosistemas más cerrados.</li>
             <li><strong>Madurez tecnológica cloud:</strong> SAP SuccessFactors es cloud-native (5). Siigo y Heinsohn son SaaS modernos (4). Oracle PeopleSoft es principalmente on-premise (2).</li>
@@ -526,5 +646,115 @@
   </div>
 
 </div><!-- /reporte -->
+<script>
+  (function () {
+    var table = document.getElementById('tabla-comparativa');
+    if (!table) {
+      return;
+    }
+
+    var tbody = table.tBodies[0];
+    if (!tbody) {
+      return;
+    }
+
+    var sortableHeaders = Array.prototype.slice.call(
+      table.querySelectorAll('thead th.is-sortable')
+    );
+
+    var activeCol = null;
+    var activeOrder = 'desc';
+
+    function getScoreFromCell(cell) {
+      if (!cell) {
+        return Number.NEGATIVE_INFINITY;
+      }
+
+      var scoreEl = cell.querySelector('.cell-score strong');
+      if (scoreEl) {
+        var score = parseFloat(scoreEl.textContent.replace(',', '.'));
+        if (!Number.isNaN(score)) {
+          return score;
+        }
+      }
+
+      var match = cell.textContent.match(/-?\d+(?:[\.,]\d+)?/);
+      if (match) {
+        return parseFloat(match[0].replace(',', '.'));
+      }
+
+      return Number.NEGATIVE_INFINITY;
+    }
+
+    function updateHeaderState() {
+      sortableHeaders.forEach(function (header) {
+        var icon = header.querySelector('.sort-icon');
+        var button = header.querySelector('.sort-button');
+        var isActive = Number(header.dataset.colIndex) === activeCol;
+
+        header.classList.toggle('is-active', isActive);
+
+        if (!icon || !button) {
+          return;
+        }
+
+        if (isActive) {
+          icon.textContent = activeOrder === 'desc' ? '↓' : '↑';
+          button.setAttribute(
+            'aria-label',
+            'Orden actual: ' + (activeOrder === 'desc' ? 'de mayor a menor' : 'de menor a mayor') + '. Haz clic para alternar.'
+          );
+        } else {
+          icon.textContent = '⇅';
+          button.setAttribute('aria-label', 'Ordenar por esta columna');
+        }
+      });
+    }
+
+    function sortByColumn(colIndex, order) {
+      var rows = Array.prototype.slice.call(tbody.rows);
+
+      rows.sort(function (rowA, rowB) {
+        var a = getScoreFromCell(rowA.cells[colIndex]);
+        var b = getScoreFromCell(rowB.cells[colIndex]);
+
+        if (a === b) {
+          var nameA = rowA.cells[0] ? rowA.cells[0].textContent.trim().toLowerCase() : '';
+          var nameB = rowB.cells[0] ? rowB.cells[0].textContent.trim().toLowerCase() : '';
+          return nameA.localeCompare(nameB, 'es');
+        }
+
+        return order === 'desc' ? b - a : a - b;
+      });
+
+      rows.forEach(function (row) {
+        tbody.appendChild(row);
+      });
+    }
+
+    sortableHeaders.forEach(function (header) {
+      var button = header.querySelector('.sort-button');
+      if (!button) {
+        return;
+      }
+
+      button.addEventListener('click', function () {
+        var colIndex = Number(header.dataset.colIndex);
+
+        if (activeCol === colIndex) {
+          activeOrder = activeOrder === 'desc' ? 'asc' : 'desc';
+        } else {
+          activeCol = colIndex;
+          activeOrder = 'desc';
+        }
+
+        sortByColumn(activeCol, activeOrder);
+        updateHeaderState();
+      });
+    });
+
+    updateHeaderState();
+  })();
+</script>
 </body>
 </html>

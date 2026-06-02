@@ -23,7 +23,14 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{font-size:16px;}
-body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height:1.6;}
+body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height:1.6;padding-top:66px;}
+
+/* MENU SUPERIOR FIJO */
+.top-menu{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(26,26,26,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.12);padding:10px 16px;}
+.top-menu__inner{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:center;}
+.top-menu__link{text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 14px;transition:background-color .2s, color .2s, border-color .2s;white-space:nowrap;}
+.top-menu__link:hover{color:var(--c-white);border-color:rgba(255,255,255,.45);}
+.top-menu__link--active{background:var(--c-yellow);border-color:var(--c-yellow);color:var(--c-black);}
 
 /* WRAPPER */
 .reporte{max-width:1100px;margin:0 auto;background:var(--c-white);box-shadow:0 4px 40px rgba(0,0,0,.10);}
@@ -41,7 +48,7 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height
 .report-header__title-block{margin-bottom:36px;}
 .report-header__eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--c-yellow);margin-bottom:12px;opacity:.9;}
 .report-header__title{font-size:clamp(26px,3.5vw,42px);font-weight:800;line-height:1.1;margin-bottom:14px;}
-.report-header__subtitle{font-size:15px;font-weight:400;opacity:.75;max-width:660px;line-height:1.6;}
+.report-header__subtitle{font-size:15px;font-weight:500;color:rgba(255,255,255,.94);max-width:660px;line-height:1.6;}
 .report-header__kpi-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:rgba(255,255,255,.12);border-radius:10px;padding:20px 24px;}
 .report-header__kpi-item{text-align:center;}
 .report-header__kpi-value{display:block;font-size:18px;font-weight:800;color:white;line-height:1.2;}
@@ -205,6 +212,7 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--c-black);line-height
 .report-footer__info{font-size:12px;}
 .report-footer__url{font-size:12px;color:var(--c-yellow);font-weight:600;}
 
+
 /* TYPOGRAPHY */
 .text-sm{font-size:13px;} .text-xs{font-size:11px;}
 .text-muted{color:var(--c-gray1);} .text-blue{color:var(--c-blue);}
@@ -219,10 +227,19 @@ strong{font-weight:700;}
   .reporte-body{padding:28px 20px;}
   .report-header{padding:32px 20px 28px;}
   .report-footer{flex-direction:column;align-items:flex-start;padding:20px;}
+  body{padding-top:74px;}
+  .top-menu{padding:10px 12px;}
+  .top-menu__inner{justify-content:flex-start;overflow-x:auto;}
 }
 </style>
 </head>
 <body>
+<nav class="top-menu" aria-label="Navegacion entre partes del informe">
+  <div class="top-menu__inner">
+    <a class="top-menu__link" href="benchmarking_HCM_parte1_landing.html">Parte 1: Fichas</a>
+    <a class="top-menu__link top-menu__link--active" href="benchmarking_HCM_parte2_landing.html">Parte 2: Brechas</a>
+  </div>
+</nav>
 <div class="reporte">
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
