@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PILA Crossborder — Secuencia de Pantallas</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'IBM Plex Sans',sans-serif;
+  background:#F0EDE8;
+  min-height:100vh;
+  padding:40px 32px 60px;
+}
+
+/* Header */
+.page-header{margin-bottom:40px;}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#888;font-weight:500;margin-bottom:10px;}
+.page-title{font-size:28px;font-weight:600;color:#1a1a1a;letter-spacing:-.4px;margin-bottom:6px;}
+.page-sub{font-size:14px;color:#666;line-height:1.6;max-width:620px;}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555;}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+
+/* Scroll container */
+.screens-row{
+  display:flex;gap:24px;overflow-x:auto;padding-bottom:16px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.screens-row::-webkit-scrollbar{height:4px;}
+.screens-row::-webkit-scrollbar-track{background:#e0ddd8;border-radius:2px;}
+.screens-row::-webkit-scrollbar-thumb{background:#bbb;border-radius:2px;}
+
+/* Phone wrapper */
+.phone-wrap{
+  flex-shrink:0;width:240px;
+  scroll-snap-align:start;
+}
+.phone-label{
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;
+}
+.screen-num{
+  width:22px;height:22px;border-radius:50%;
+  font-size:11px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.num-ach{background:#1A5CDB;color:#fff;}
+.num-3rd{background:#1a1a1a;color:#fff;}
+.num-back{background:#e0ddd8;color:#888;}
+.screen-name{font-size:12px;font-weight:500;color:#444;letter-spacing:.01em;}
+
+/* Phone frame */
+.phone{
+  width:240px;height:480px;
+  background:#fff;
+  border-radius:36px;
+  border:2px solid #1a1a1a;
+  overflow:hidden;
+  position:relative;
+  box-shadow:4px 6px 0 #1a1a1a;
+}
+.notch{
+  width:80px;height:22px;background:#1a1a1a;
+  border-radius:0 0 12px 12px;
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  z-index:10;
+}
+.screen{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  overflow-y:auto;overflow-x:hidden;
+  padding-top:28px;
+}
+.screen::-webkit-scrollbar{display:none;}
+
+/* Annotation */
+.annotation{
+  margin-top:16px;
+  padding:14px;
+  background:#fff;
+  border-radius:12px;
+  border:1px solid #d8d5d0;
+}
+.ann-owner{
+  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:5px;
+}
+.ann-ach{color:#1A5CDB;}
+.ann-3rd{color:#444;}
+.ann-back{color:#aaa;}
+.ann-text{font-size:12px;color:#555;line-height:1.55;}
+
+/* ── SCREEN 0 — Scenario ── */
+.s0{background:#1A5CDB;display:flex;flex-direction:column;justify-content:center;padding:24px 20px;}
+.s0-eyebrow{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:16px;padding-top:4px;}
+.s0-title{font-size:18px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:12px;}
+.s0-body{font-size:12px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:20px;}
+.s0-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.8);}
+.s0-dot{width:6px;height:6px;border-radius:50%;background:#4AE8A0;}
+
+/* ── SCREEN 1 — SOI ── */
+.s1{background:#f7f7f5;}
+.s1-topbar{background:#fff;border-bottom:1px solid #ebebeb;padding:28px 14px 10px;display:flex;align-items:center;gap:8px;}
+.s1-logo{font-size:11px;font-weight:600;color:#1A5CDB;letter-spacing:.05em;}
+.s1-sep{width:1px;height:14px;background:#ddd;}
+.s1-ctx{font-size:11px;color:#888;}
+.s1-body{padding:14px;}
+.s1-card{background:#fff;border-radius:10px;border:1px solid #ebebeb;padding:14px;margin-bottom:10px;}
+.s1-card-label{font-size:10px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.s1-card-val{font-size:20px;font-weight:600;color:#1a1a1a;letter-spacing:-.3px;}
+.s1-card-sub{font-size:11px;color:#888;margin-top:2px;}
+.s1-row{display:flex;justify-content:space-between;margin-bottom:6px;}
+.s1-lbl{font-size:12px;color:#888;}
+.s1-val{font-size:12px;color:#333;font-weight:500;}
+.s1-divider{border:none;border-top:1px solid #ebebeb;margin:10px 0;}
+.s1-btn{
+  width:100%;background:#1A5CDB;color:#fff;border:none;
+  border-radius:8px;padding:12px;font-size:13px;font-weight:600;
+  font-family:'IBM Plex Sans',sans-serif;cursor:pointer;
+  letter-spacing:.01em;
+}
+.s1-btn-out{
+  width:100%;background:#fff;color:#333;border:1px solid #ddd;
+  border-radius:8px;padding:10px;font-size:12px;
+  font-family:'IBM Plex Sans',sans-serif;margin-top:8px;
+}
+
+/* ── SCREEN 2 — PSE ── */
+.s2{background:#f7f7f5;}
+.pse-header{background:#1A5CDB;padding:28px 14px 14px;}
+.pse-logo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;margin-bottom:2px;}
+.pse-sub{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.05em;}
+.pse-amount{background:rgba(255,255,255,.12);border-radius:8px;padding:8px 12px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.pse-amt-lbl{font-size:10px;color:rgba(255,255,255,.6);}
+.pse-amt-val{font-size:14px;font-weight:600;color:#fff;}
+.pse-body{padding:12px 14px;}
+.pse-cat-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aaa;padding:8px 0 6px;}
+.pse-bank-row{
+  background:#fff;border:1px solid #ebebeb;border-radius:8px;
+  display:flex;align-items:center;gap:10px;padding:9px 12px;margin-bottom:6px;
+}
+.pse-bank-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.pse-bank-name{font-size:12px;color:#333;font-weight:500;}
+.pse-bank-row.international{
+  background:#EBF1FF;border-color:#93B4F5;
+}
+.pse-bank-row.international .pse-bank-name{color:#1A5CDB;font-weight:600;}
+.pse-intl-badge{
+  margin-left:auto;font-size:9px;font-weight:600;
+  background:#1A5CDB;color:#fff;
+  border-radius:4px;padding:2px 6px;letter-spacing:.04em;
+}
+.pse-intl-sub{font-size:10px;color:#5580D4;margin-top:1px;}
+
+/* Pay-option cards — S2 new layout */
+.sec-lbl{font-size:10px;font-weight:600;color:#aaa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px;}
+.pay-opt{
+  display:flex;align-items:center;gap:13px;
+  padding:12px 13px;border:1px solid #ebebeb;border-radius:14px;
+  margin-bottom:9px;background:#fff;position:relative;
+}
+.pay-opt.highlight{border-color:#00A86B;background:#E8F5F0;}
+.opt-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.i-bnk{background:#EBF1FF;}
+.i-crd{background:#f0eeff;}
+.i-intl{background:#E8F5F0;}
+.opt-info{flex:1;}
+.opt-name{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:2px;}
+.opt-desc{font-size:10px;color:#888;line-height:1.35;}
+.opt-arr{color:#aaa;font-size:20px;line-height:1;}
+.new-pill{
+  position:absolute;top:-8px;right:12px;
+  background:#00A86B;color:#fff;
+  font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+
+/* ── SCREEN 3 — Pagaway ── */
+.s3{background:#0F0F0F;}
+.pay-header{padding:28px 14px 14px;border-bottom:1px solid #222;}
+.pay-logo{font-size:14px;font-weight:700;color:#fff;letter-spacing:.02em;}
+.pay-logo span{color:#00D068;}
+.pay-step{font-size:10px;color:#555;margin-top:2px;}
+.pay-amount-box{margin:0 14px 12px;background:#1a1a1a;border-radius:10px;padding:12px;margin-top:12px;}
+.pay-amt-lbl{font-size:10px;color:#666;margin-bottom:3px;}
+.pay-amt-row{display:flex;justify-content:space-between;align-items:baseline;}
+.pay-amt-usd{font-size:18px;font-weight:600;color:#fff;}
+.pay-amt-cop{font-size:11px;color:#555;}
+.pay-rate{font-size:10px;color:#555;margin-top:4px;}
+.pay-body{padding:0 14px;}
+.pay-cat{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#555;padding:8px 0 6px;}
+.pay-bank-row{
+  background:#1a1a1a;border:1px solid #222;border-radius:8px;
+  display:flex;align-items:center;gap:10px;padding:9px 12px;margin-bottom:6px;
+}
+.pay-bank-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.pay-bank-name{font-size:12px;color:#ddd;font-weight:500;}
+.pay-bank-flag{margin-left:auto;font-size:14px;}
+.pay-divider{border:none;border-top:1px solid #222;margin:8px 0;}
+
+/* ── SCREEN 4 — Bank Auth ── */
+.s4{background:#f7f7f5;}
+.auth-header{background:#003087;padding:28px 14px 14px;}
+.auth-bank-logo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.03em;}
+.auth-secure{display:flex;align-items:center;gap:5px;margin-top:4px;}
+.auth-secure-icon{font-size:10px;color:rgba(255,255,255,.5);}
+.auth-secure-txt{font-size:10px;color:rgba(255,255,255,.5);}
+.auth-body{padding:16px 14px;}
+.auth-title{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px;}
+.auth-sub{font-size:11px;color:#888;margin-bottom:16px;line-height:1.5;}
+.auth-field{margin-bottom:10px;}
+.auth-field-lbl{font-size:10px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.auth-field-inp{
+  width:100%;background:#fff;border:1px solid #ddd;border-radius:7px;
+  padding:9px 12px;font-size:13px;color:#1a1a1a;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.auth-field-inp.pass{letter-spacing:.2em;color:#333;font-size:16px;}
+.auth-notice{
+  background:#FFF8E6;border:1px solid #F5D87A;border-radius:8px;
+  padding:9px 12px;font-size:11px;color:#7A5F00;line-height:1.5;margin-bottom:12px;
+}
+.auth-btn{
+  width:100%;background:#003087;color:#fff;border:none;
+  border-radius:8px;padding:12px;font-size:13px;font-weight:600;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+
+/* ── SCREEN 5 — PSE Summary (estilo pse-summary-reference, escalado a 240px) ── */
+.s5{background:#fff;}
+.pse5-wrap{height:100%;background:#fff;display:flex;flex-direction:column;overflow:hidden;}
+.pse5-hdr{
+  padding:32px 12px 8px;
+  display:flex;align-items:center;gap:8px;flex-shrink:0;
+}
+.pse5-logo-circle{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(145deg,#1558c0 0%,#00297a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,51,122,.3);flex-shrink:0;
+}
+.pse5-logo-ring{
+  width:26px;height:26px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.22);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.pse5-logo-txt{font-size:9px;font-weight:800;font-style:italic;color:#fff;letter-spacing:-.4px;line-height:1;}
+.pse5-logo-dots{display:flex;gap:1.5px;margin-top:1px;}
+.pse5-logo-dots span{width:2px;height:2px;border-radius:50%;background:rgba(255,220,50,.8);}
+.pse5-tagline{font-size:10px;color:#0050C7;font-weight:500;}
+.pse5-body{
+  padding:6px 12px 10px;
+  display:flex;flex-direction:column;align-items:center;
+  flex:1;overflow-y:auto;
+}
+.pse5-check{
+  width:40px;height:40px;border-radius:50%;
+  background:#2DC87A;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:6px;
+  box-shadow:0 3px 10px rgba(45,200,122,.28);flex-shrink:0;
+}
+.pse5-check svg{width:20px;height:20px;}
+.pse5-title{font-size:13px;font-weight:700;color:#0050C7;margin-bottom:3px;letter-spacing:-.1px;flex-shrink:0;}
+.pse5-amount{font-size:22px;font-weight:400;color:#1a202c;letter-spacing:0;margin-bottom:2px;flex-shrink:0;}
+.pse5-datetime{font-size:10px;font-weight:700;color:#1a202c;margin-bottom:8px;flex-shrink:0;}
+.pse5-divider{width:100%;height:1px;background:#D8E4F0;flex-shrink:0;}
+.pse5-details{width:100%;margin-bottom:8px;flex-shrink:0;}
+.pse5-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:5px 0;font-size:11px;
+  border-bottom:1px solid #EEF3F8;
+}
+.pse5-row:last-child{border-bottom:none;}
+.pse5-key{font-weight:700;color:#1a202c;}
+.pse5-val{color:#4A5568;text-align:right;font-size:10px;}
+.pse5-btn{
+  width:100%;padding:9px;
+  background:#fff;color:#0050C7;
+  font-size:11px;font-weight:400;font-family:inherit;
+  border:1.5px solid #0050C7;border-radius:50px;
+  cursor:pointer;flex-shrink:0;transition:all .15s;
+}
+.pse5-procesado{
+  width:100%;padding:6px 0 6px;
+  border-top:1px solid #D8E4F0;
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;margin-top:8px;flex-shrink:0;
+}
+.pse5-procesado-lbl{font-size:9px;color:#A0ABBE;}
+.pse5-logos{display:flex;align-items:center;gap:8px;}
+.pse5-pagaway-circle{
+  width:30px;height:30px;border-radius:50%;
+  background:#0F0F0F;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7px;font-weight:700;color:#00D068;letter-spacing:.02em;
+  box-shadow:0 2px 5px rgba(0,0,0,.25);
+}
+.pse5-pse-circle{
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(145deg,#1558c0,#00297a);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 2px 5px rgba(0,51,122,.25);
+}
+.pse5-pse-circle span{font-size:8px;font-weight:800;font-style:italic;color:#fff;letter-spacing:-.4px;}
+
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="eyebrow">ACH Colombia · Iniciativa Crossborder · Mayo 2026</div>
+  <h1 class="page-title">PILA desde el exterior — Secuencia de pantallas</h1>
+  <p class="page-sub">Flujo completo desde SOI hasta la confirmación de pago. Las pantallas marcadas en azul son responsabilidad de ACH; las oscuras simulan interfaces de terceros (Pagaway, banco exterior).</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#1A5CDB;"></div> Pantalla ACH Colombia</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1a1a1a;"></div> Pantalla de terceros (simular)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ccc;"></div> Backend / invisible al usuario</div>
+  </div>
+</div>
+
+<div class="screens-row">
+
+  <!-- SCREEN 0 — Scenario -->
+  <div class="phone-wrap">
+    <div class="phone-label">
+      <div class="screen-num num-3rd">0</div>
+      <div class="screen-name">Escenario de prueba</div>
+    </div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen s0">
+        <div class="s0-eyebrow">Prueba de usabilidad · ACH Colombia</div>
+        <div class="s0-title">Imagina esta situación</div>
+        <div class="s0-body">Llevas 3 años viviendo en Miami. Tienes cuenta en Bank of America y debes pagar tu seguridad social colombiana (PILA) de este mes.<br><br>Monto a pagar: <strong style="color:#fff;">$520.000 COP</strong>. Hoy intentarás hacerlo desde tu teléfono, sin transferencias internacionales.</div>
+        <div class="s0-tag"><div class="s0-dot"></div> Sesión de testing · Mobile</div>
+      </div>
+    </div>
+    <div class="annotation">
+      <div class="ann-owner ann-3rd">Contexto · No es pantalla del flujo</div>
+      <div class="ann-text">Intro de la sesión de pruebas. Establece el escenario para que el usuario entienda su rol antes de interactuar con las pantallas reales.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 1 — SOI -->
+  <div class="phone-wrap">
+    <div class="phone-label">
+      <div class="screen-num num-3rd">1</div>
+      <div class="screen-name">SOI — Resumen PILA</div>
+    </div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen s1">
+        <div class="s1-topbar">
+          <div class="s1-logo">SOI</div>
+          <div class="s1-sep"></div>
+          <div class="s1-ctx">Mi PILA · Jun 2026</div>
+        </div>
+        <div class="s1-body">
+          <div class="s1-card">
+            <div class="s1-card-label">Total a pagar</div>
+            <div class="s1-card-val">$520.000</div>
+            <div class="s1-card-sub">COP · Período junio 2026</div>
+          </div>
+          <div class="s1-card">
+            <div class="s1-card-label">Total a pagar</div>
+            <div class="s1-row"><span class="s1-lbl">Salud (12,5%)</span><span class="s1-val">$260.000</span></div>
+            <div class="s1-row"><span class="s1-lbl">Pensión (16%)</span><span class="s1-val">$200.000</span></div>
+            <div class="s1-row"><span class="s1-lbl">ARL (0,5%)</span><span class="s1-val">$60.000</span></div>
+            <div class="s1-divider"></div>
+            <div class="s1-row"><span class="s1-lbl" style="font-weight:600;color:#333;">Total</span><span class="s1-val" style="color:#1A5CDB;font-weight:600;">$520.000</span></div>
+          </div>
+          <button class="s1-btn">Pagar con PSE</button>
+          <button class="s1-btn-out">Ver historial de pagos</button>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">
+      <div class="ann-owner ann-3rd">Tercero · Portal SOI / Operadores PILA</div>
+      <div class="ann-text">El usuario ya liquidó su PILA. Ve el resumen de aportes en COP y selecciona PSE como método de pago. Esta pantalla no es desarrollo de ACH — se muestra solo como contexto de entrada al flujo.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 — PSE -->
+  <div class="phone-wrap">
+    <div class="phone-label">
+      <div class="screen-num num-ach">2</div>
+      <div class="screen-name">PSE — Selección de pago ⭐</div>
+    </div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen s2">
+        <div class="pse-header">
+          <div class="pse-logo">PSE</div>
+          <div class="pse-sub">PAGOS SEGUROS EN LÍNEA</div>
+          <div class="pse-amount">
+            <div class="pse-amt-lbl">Monto a pagar</div>
+            <div class="pse-amt-val">$520.000 COP</div>
+          </div>
+        </div>
+        <div class="pse-body">
+          <div class="sec-lbl">Elige el método de pago</div>
+
+          <div class="pay-opt">
+            <div class="opt-icon i-bnk">🏦</div>
+            <div class="opt-info">
+              <div class="opt-name">Pagar con mi banco</div>
+              <div class="opt-desc">Débito desde cuenta de ahorro o corriente</div>
+            </div>
+            <div class="opt-arr">›</div>
+          </div>
+
+          <div class="pay-opt">
+            <div class="opt-icon i-crd">💳</div>
+            <div class="opt-info">
+              <div class="opt-name">Pagar con tarjeta de crédito</div>
+              <div class="opt-desc">Visa, Mastercard, American Express</div>
+            </div>
+            <div class="opt-arr">›</div>
+          </div>
+
+          <div class="pay-opt highlight">
+            <div class="new-pill">NUEVO</div>
+            <div class="opt-icon i-intl">🌎</div>
+            <div class="opt-info">
+              <div class="opt-name">Pago internacional</div>
+              <div class="opt-desc">Paga con tu banco desde el exterior</div>
+            </div>
+            <div class="opt-arr">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">
+      <div class="ann-owner ann-ach">ACH Colombia · Pantalla principal del MVP ⭐</div>
+      <div class="ann-text">La única pantalla que ACH debe construir. El usuario elige entre su banco local, tarjeta de crédito o pago internacional. Al seleccionar "Pago internacional" es redirigido a Pagaway — es Stripe (vía Pagaway) quien muestra los bancos del exterior.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3 — Pagaway -->
+  <div class="phone-wrap">
+    <div class="phone-label">
+      <div class="screen-num num-3rd">3</div>
+      <div class="screen-name">Pagaway — Bancos exterior</div>
+    </div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen s3">
+        <div class="pay-header">
+          <div class="pay-logo">paga<span>way</span></div>
+          <div class="pay-step">Selecciona tu banco en el exterior</div>
+        </div>
+        <div class="pay-amount-box">
+          <div class="pay-amt-lbl">Monto a debitar</div>
+          <div class="pay-amt-row">
+            <div class="pay-amt-usd">USD 128.40</div>
+            <div class="pay-amt-cop">= $520.000 COP</div>
+          </div>
+          <div class="pay-rate">TRM: $4.050,82 · Tasa garantizada por 15 min</div>
+        </div>
+        <div class="pay-body">
+          <div class="pay-cat">Estados Unidos</div>
+          <div class="pay-bank-row">
+            <div class="pay-bank-icon" style="background:#00356B;color:#fff;">BA</div>
+            <div class="pay-bank-name">Bank of America</div>
+            <div class="pay-bank-flag">🇺🇸</div>
+          </div>
+          <div class="pay-bank-row">
+            <div class="pay-bank-icon" style="background:#117ACA;color:#fff;">CH</div>
+            <div class="pay-bank-name">Chase</div>
+            <div class="pay-bank-flag">🇺🇸</div>
+          </div>
+          <div class="pay-bank-row">
+            <div class="pay-bank-icon" style="background:#C60D35;color:#fff;">WF</div>
+            <div class="pay-bank-name">Wells Fargo</div>
+            <div class="pay-bank-flag">🇺🇸</div>
+          </div>
+          <div class="pay-bank-row">
+            <div class="pay-bank-icon" style="background:#003B70;color:#fff;">CI</div>
+            <div class="pay-bank-name">Citibank</div>
+            <div class="pay-bank-flag">🇺🇸</div>
+          </div>
+          <div class="pay-divider"></div>
+          <div class="pay-cat">Europa</div>
+          <div class="pay-bank-row">
+            <div class="pay-bank-icon" style="background:#00519B;color:#fff;">SB</div>
+            <div class="pay-bank-name">Santander ES</div>
+            <div class="pay-bank-flag">🇪🇸</div>
+          </div>
+          <div class="pay-bank-row">
+            <div class="pay-bank-icon" style="background:#16324F;color:#fff;">DE</div>
+            <div class="pay-bank-name">Deutsche Bank</div>
+            <div class="pay-bank-flag">🇩🇪</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">
+      <div class="ann-owner ann-3rd">Tercero · Interfaz Pagaway (simular en prototipo)</div>
+      <div class="ann-text">El usuario llega a Pagaway ya redirigido desde PSE. Ve el monto convertido a USD (equivalente a sus COP de PILA) y selecciona su banco en el exterior. La tasa de cambio se muestra con garantía temporal.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4 — Bank Auth -->
+  <div class="phone-wrap">
+    <div class="phone-label">
+      <div class="screen-num num-3rd">4</div>
+      <div class="screen-name">Autenticación banco exterior</div>
+    </div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen s4">
+        <div class="auth-header">
+          <div class="auth-bank-logo">Bank of America</div>
+          <div class="auth-secure">
+            <div class="auth-secure-icon">🔒</div>
+            <div class="auth-secure-txt">Conexión segura · SSL</div>
+          </div>
+        </div>
+        <div class="auth-body">
+          <div class="auth-title">Autoriza el débito</div>
+          <div class="auth-sub">Ingresa tus credenciales de Bank of America para aprobar el pago de USD 128.40 a tu PILA Colombia.</div>
+          <div class="auth-notice">🔔 Pagarás USD 128.40 desde tu cuenta. El cargo aparecerá como "PILA COL – Pagaway"</div>
+          <div class="auth-field">
+            <div class="auth-field-lbl">Usuario / Online ID</div>
+            <div class="auth-field-inp">jgonzalez_col</div>
+          </div>
+          <div class="auth-field">
+            <div class="auth-field-lbl">Contraseña</div>
+            <div class="auth-field-inp pass">••••••••</div>
+          </div>
+          <button class="auth-btn">Autorizar pago →</button>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">
+      <div class="ann-owner ann-3rd">Tercero · Banco / Stripe TBD (simular en prototipo)</div>
+      <div class="ann-text">Pantalla genérica de autenticación bancaria. El usuario confirma con sus credenciales del banco en el exterior. Pendiente confirmar si Stripe aparece como capa visible aquí o solo opera en el backend de Pagaway.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5 — Confirmation -->
+  <div class="phone-wrap">
+    <div class="phone-label">
+      <div class="screen-num num-ach">5</div>
+      <div class="screen-name">Confirmación PSE</div>
+    </div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen s5">
+        <div class="pse5-wrap">
+
+          <!-- Header: logo PSE + tagline -->
+          <div class="pse5-hdr">
+            <div class="pse5-logo-circle">
+              <div class="pse5-logo-ring">
+                <span class="pse5-logo-txt">pse</span>
+                <div class="pse5-logo-dots">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <span class="pse5-tagline">¡Fácil. rápido y seguro!</span>
+          </div>
+
+          <div class="pse5-body">
+
+            <!-- Ícono aprobado -->
+            <div class="pse5-check">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18.5L15.5 25L27 12" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Título y monto -->
+            <div class="pse5-title">¡Pago aprobado!</div>
+            <div class="pse5-amount">$520.000</div>
+            <div class="pse5-datetime">11 jun 2026 · 10:34 AM</div>
+
+            <div class="pse5-divider"></div>
+
+            <!-- Detalle de la transacción -->
+            <div class="pse5-details">
+              <div class="pse5-row">
+                <span class="pse5-key">Autorización</span>
+                <span class="pse5-val" style="font-family:'IBM Plex Mono',monospace;">PSE-2026-8847123</span>
+              </div>
+              <div class="pse5-row">
+                <span class="pse5-key">Concepto</span>
+                <span class="pse5-val">PILA junio 2026</span>
+              </div>
+              <div class="pse5-row">
+                <span class="pse5-key">Método</span>
+                <span class="pse5-val">Pago internacional</span>
+              </div>
+              <div class="pse5-row">
+                <span class="pse5-key">Cuenta debitada</span>
+                <span class="pse5-val">BoA ···4821</span>
+              </div>
+              <div class="pse5-row">
+                <span class="pse5-key">Monto USD</span>
+                <span class="pse5-val">USD 128.40</span>
+              </div>
+              <div class="pse5-row">
+                <span class="pse5-key">TRM aplicada</span>
+                <span class="pse5-val">$4.050,82</span>
+              </div>
+            </div>
+
+            <!-- Botón -->
+            <button class="pse5-btn">Volver a SOI →</button>
+
+            <!-- Procesado por -->
+            <div class="pse5-procesado">
+              <span class="pse5-procesado-lbl">Transacción procesada por:</span>
+              <div class="pse5-logos">
+                <div class="pse5-pse-circle"><span>pse</span></div>
+                <div class="pse5-pagaway-circle">pway</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">
+      <div class="ann-owner ann-ach">ACH Colombia · Confirmación estándar PSE</div>
+      <div class="ann-text">El usuario ve la confirmación final de su PILA pagada. PSE muestra el comprobante con el monto en COP y el equivalente en USD debitado de su cuenta extranjera. Desde aquí regresa a SOI donde la PILA queda registrada como pagada.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Backend note -->
+<div style="margin-top:32px;padding:16px 20px;background:#fff;border-radius:12px;border:1px solid #d8d5d0;max-width:620px;">
+  <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aaa;margin-bottom:8px;">Backend · Invisible al usuario</div>
+  <div style="font-size:13px;color:#555;line-height:1.7;">
+    Entre las pantallas 4 y 5 ocurre la cadena de backend:
+    <strong style="color:#333;">Banco exterior → Pagaway → CoopCentral → ACH Colombia → Dispersión a PILA</strong>.
+    El usuario no ve nada de esto — solo experimenta una breve espera antes de llegar a la pantalla de confirmación.
+  </div>
+</div>
+
+<div style="margin-top:20px;font-size:11px;color:#aaa;padding-bottom:20px;">Brief · Crossborder / PILA Exterior · ACH Colombia · Mayo 2026</div>
+
+</body>
+</html>

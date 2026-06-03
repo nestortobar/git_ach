@@ -2,651 +2,2130 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PILA Crossborder — Secuencia de Pantallas</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>PSE Crédito — Prueba de Usabilidad v0.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --navy:#00337A;--blue:#0050C7;--blue-lt:#E8F0FD;
+  --green:#00A86B;--green-lt:#E6F7F1;
+  --sa:#FF4E6A;--sb:#FF8552;
+  --env:#0d1117;--frame:#1c1c1e;--panel:#13192a;
+  --tp:#0D1117;--ts:#5A6478;--tt:#9DA8BC;
+  --brd:#E3E8F0;--surf:#F7F9FC;
+  --ph-w:375px;--ph-h:724px;
+}
+
 body{
-  font-family:'IBM Plex Sans',sans-serif;
-  background:#F0EDE8;
+  font-family:'DM Sans',sans-serif;
+  background:var(--env);
   min-height:100vh;
-  padding:40px 32px 60px;
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 20px 80px;
+  background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:22px 22px;
 }
 
-/* Header */
-.page-header{margin-bottom:40px;}
-.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#888;font-weight:500;margin-bottom:10px;}
-.page-title{font-size:28px;font-weight:600;color:#1a1a1a;letter-spacing:-.4px;margin-bottom:6px;}
-.page-sub{font-size:14px;color:#666;line-height:1.6;max-width:620px;}
-.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555;}
-.legend-dot{width:8px;height:8px;border-radius:50%;}
+/* ── ENV HEADER ── */
+.env-hdr{
+  width:100%;max-width:600px;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;
+}
+.env-title{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+.env-pills{display:flex;gap:6px;}
+.env-pill{
+  font-size:10px;padding:3px 10px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.32);
+}
+.env-pill.live{border-color:rgba(0,168,107,.35);color:rgba(0,168,107,.7);display:flex;align-items:center;gap:5px;}
+.env-pill.live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;}
 
-/* Scroll container */
-.screens-row{
-  display:flex;gap:24px;overflow-x:auto;padding-bottom:16px;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-}
-.screens-row::-webkit-scrollbar{height:4px;}
-.screens-row::-webkit-scrollbar-track{background:#e0ddd8;border-radius:2px;}
-.screens-row::-webkit-scrollbar-thumb{background:#bbb;border-radius:2px;}
-
-/* Phone wrapper */
-.phone-wrap{
-  flex-shrink:0;width:240px;
-  scroll-snap-align:start;
-}
-.phone-label{
-  display:flex;align-items:center;gap:8px;margin-bottom:12px;
-}
-.screen-num{
-  width:22px;height:22px;border-radius:50%;
-  font-size:11px;font-weight:600;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.num-ach{background:#1A5CDB;color:#fff;}
-.num-3rd{background:#1a1a1a;color:#fff;}
-.num-back{background:#e0ddd8;color:#888;}
-.screen-name{font-size:12px;font-weight:500;color:#444;letter-spacing:.01em;}
-
-/* Phone frame */
-.phone{
-  width:240px;height:480px;
-  background:#fff;
-  border-radius:36px;
-  border:2px solid #1a1a1a;
-  overflow:hidden;
-  position:relative;
-  box-shadow:4px 6px 0 #1a1a1a;
-}
-.notch{
-  width:80px;height:22px;background:#1a1a1a;
-  border-radius:0 0 12px 12px;
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  z-index:10;
-}
-.screen{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  overflow-y:auto;overflow-x:hidden;
-  padding-top:28px;
-}
-.screen::-webkit-scrollbar{display:none;}
-
-/* Annotation */
-.annotation{
-  margin-top:16px;
+/* ── PHONE FRAME ── */
+.phone-wrap{position:relative;}
+.phone-frame{
+  width:calc(var(--ph-w) + 24px);
+  background:var(--frame);
+  border-radius:52px;
   padding:14px;
+  box-shadow:
+    0 0 0 .5px rgba(255,255,255,.14),
+    0 0 0 1px rgba(0,0,0,.9),
+    0 48px 120px rgba(0,0,0,.75),
+    inset 0 1px 0 rgba(255,255,255,.07);
+  position:relative;
+}
+/* volume */
+.phone-frame::before{
+  content:'';position:absolute;left:-3.5px;top:108px;
+  width:3.5px;height:30px;background:#2a2a2c;border-radius:3px 0 0 3px;
+  box-shadow:0 -44px 0 #2a2a2c,0 -74px 0 #2a2a2c;
+}
+/* power */
+.phone-frame::after{
+  content:'';position:absolute;right:-3.5px;top:130px;
+  width:3.5px;height:64px;background:#2a2a2c;border-radius:0 3px 3px 0;
+}
+
+.phone-screen{
+  width:var(--ph-w);height:var(--ph-h);
+  background:#fff;border-radius:40px;
+  overflow:hidden;position:relative;
+}
+
+/* Dynamic island */
+.dyn-island{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:124px;height:35px;background:var(--frame);border-radius:20px;
+  z-index:30;pointer-events:none;
+}
+/* status overlay */
+.status-ov{
+  position:absolute;top:0;left:0;right:0;z-index:25;
+  padding:12px 22px 0;display:flex;justify-content:space-between;align-items:center;
+  pointer-events:none;
+}
+.s-time{font-size:12px;font-weight:700;color:rgba(255,255,255,.93);font-family:'DM Mono',monospace;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.s-icons{display:flex;align-items:center;gap:5px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));}
+
+/* home bar */
+.home-bar{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:134px;height:5px;background:rgba(0,0,0,.18);border-radius:3px;
+  z-index:25;pointer-events:none;
+}
+
+/* ── SCREENS ── */
+.screens{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;}
+.scr{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  overflow-y:auto;overflow-x:hidden;scrollbar-width:none;
   background:#fff;
-  border-radius:12px;
-  border:1px solid #d8d5d0;
+  transform:translateX(100%);
+  transition:transform .36s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
 }
-.ann-owner{
-  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  margin-bottom:5px;
-}
-.ann-ach{color:#1A5CDB;}
-.ann-3rd{color:#444;}
-.ann-back{color:#aaa;}
-.ann-text{font-size:12px;color:#555;line-height:1.55;}
+.scr::-webkit-scrollbar{display:none;}
+.scr.active{transform:translateX(0);}
+.scr.past{transform:translateX(-100%);}
 
-/* ── SCREEN 0 — Scenario ── */
-.s0{background:#1A5CDB;display:flex;flex-direction:column;justify-content:center;padding:24px 20px;}
-.s0-eyebrow{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:16px;padding-top:4px;}
-.s0-title{font-size:18px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:12px;}
-.s0-body{font-size:12px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:20px;}
-.s0-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.8);}
-.s0-dot{width:6px;height:6px;border-radius:50%;background:#4AE8A0;}
+/* ══ SCREEN 0 – TASK INTRO ══ */
+.s0-bg{
+  min-height:100%;
+  background:linear-gradient(160deg,#0b0f1a 0%,#1a2240 60%,#0b0f1a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;text-align:center;gap:0;
+}
+.s0-eyebrow{
+  font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);margin-bottom:22px;
+  display:flex;align-items:center;gap:10px;
+}
+.s0-eyebrow::before,.s0-eyebrow::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+.s0-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:22px;padding:26px 22px;margin-bottom:24px;text-align:left;
+}
+.s0-icon{font-size:30px;margin-bottom:14px;display:block;}
+.s0-kicker{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:7px;}
+.s0-text{font-size:14px;color:rgba(255,255,255,.8);line-height:1.68;margin-bottom:14px;}
+.s0-goal{
+  font-size:13px;color:rgba(0,200,130,.85);
+  background:rgba(0,168,107,.1);border:1px solid rgba(0,168,107,.18);
+  border-radius:11px;padding:10px 14px;line-height:1.5;
+}
+.s0-hint{font-size:11px;color:rgba(255,255,255,.2);margin-bottom:16px;line-height:1.5;}
+.s0-btn{
+  width:100%;padding:15px;
+  background:#fff;color:var(--tp);
+  font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
+  border:none;border-radius:14px;cursor:pointer;
+  letter-spacing:-.2px;transition:opacity .15s;
+}
+.s0-btn:hover{opacity:.9;}
+.s0-btn:active{opacity:.8;transform:scale(.99);}
 
-/* ── SCREEN 1 — SOI ── */
-.s1{background:#f7f7f5;}
-.s1-topbar{background:#fff;border-bottom:1px solid #ebebeb;padding:28px 14px 10px;display:flex;align-items:center;gap:8px;}
-.s1-logo{font-size:11px;font-weight:600;color:#1A5CDB;letter-spacing:.05em;}
-.s1-sep{width:1px;height:14px;background:#ddd;}
-.s1-ctx{font-size:11px;color:#888;}
-.s1-body{padding:14px;}
-.s1-card{background:#fff;border-radius:10px;border:1px solid #ebebeb;padding:14px;margin-bottom:10px;}
-.s1-card-label{font-size:10px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
-.s1-card-val{font-size:20px;font-weight:600;color:#1a1a1a;letter-spacing:-.3px;}
-.s1-card-sub{font-size:11px;color:#888;margin-top:2px;}
-.s1-row{display:flex;justify-content:space-between;margin-bottom:6px;}
-.s1-lbl{font-size:12px;color:#888;}
-.s1-val{font-size:12px;color:#333;font-weight:500;}
-.s1-divider{border:none;border-top:1px solid #ebebeb;margin:10px 0;}
-.s1-btn{
-  width:100%;background:#1A5CDB;color:#fff;border:none;
-  border-radius:8px;padding:12px;font-size:13px;font-weight:600;
-  font-family:'IBM Plex Sans',sans-serif;cursor:pointer;
-  letter-spacing:.01em;
+/* ══ SCREEN 1 – COMMERCE PAYMENT ══ */
+.enel-screen{min-height:100%;background:#fff;color:#1f1f1f;display:flex;flex-direction:column;}
+.enel-topbar{
+  background:#ff0a6c;color:#fff;padding:14px 18px 12px;
+  display:flex;align-items:flex-end;justify-content:space-between;min-height:84px;
 }
-.s1-btn-out{
-  width:100%;background:#fff;color:#333;border:1px solid #ddd;
-  border-radius:8px;padding:10px;font-size:12px;
-  font-family:'IBM Plex Sans',sans-serif;margin-top:8px;
+.enel-brand{font-size:40px;line-height:.9;font-weight:300;letter-spacing:-2px;color:#fff;}
+.enel-menu{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;}
+.enel-menu span{display:block;width:28px;height:2px;border-radius:2px;background:rgba(255,255,255,.92);}
+.enel-body{padding:18px 16px 92px;}
+.enel-title{font-size:25px;line-height:1.14;font-weight:600;color:#2d2d2d;margin-bottom:18px;letter-spacing:-.8px;}
+.enel-fields{display:grid;grid-template-columns:1fr 104px;gap:10px;margin-bottom:18px;}
+.enel-field-lbl{font-size:12px;font-weight:500;color:#444;margin-bottom:6px;}
+.enel-field{
+  height:52px;border:2px solid #8f8f8f;background:#fff;
+  display:flex;align-items:center;padding:0 14px;font-size:16px;color:#404040;
 }
+.enel-subtitle{font-size:24px;line-height:1.16;font-weight:600;color:#2d2d2d;margin:0 0 10px;letter-spacing:-.7px;}
+.enel-alert{font-size:13px;font-weight:600;color:#ff0a6c;margin-bottom:12px;}
+.enel-table-scroll{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:0 -16px 18px;
+  padding:0 16px;
+}
+.enel-table{
+  display:grid;grid-template-columns:76px minmax(92px,1fr) minmax(82px,.8fr) minmax(92px,.9fr);
+  min-width:404px;width:max-content;
+  border:1px solid #e2e2e2;background:#fff;
+}
+.enel-th,.enel-td{padding:10px 8px;border-right:1px solid #e2e2e2;border-bottom:1px solid #e2e2e2;min-width:0;overflow:hidden;}
+.enel-th:last-child,.enel-td:last-child{border-right:none;}
+.enel-th{font-size:11px;font-weight:700;color:#222;background:#fff;line-height:1.2;white-space:normal;word-break:break-word;}
+.enel-td{font-size:12px;color:#2f2f2f;min-height:64px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.35;word-break:break-word;}
+.enel-row-last{border-bottom:none;}
+.enel-check{
+  width:28px;height:28px;border:2px solid #ff0a6c;display:flex;align-items:center;justify-content:center;
+  color:#4a4a4a;font-size:20px;line-height:1;background:#fff;
+}
+.enel-pay-title{font-size:24px;line-height:1.16;font-weight:600;color:#2d2d2d;margin:0 0 12px;letter-spacing:-.7px;}
+.enel-methods{display:flex;gap:10px;margin-bottom:16px;}
+.enel-method{
+  flex:1;border:1.5px solid #dedede;background:#fff;min-height:86px;padding:10px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .1s;
+}
+.enel-method:active{transform:scale(.985);}
+.enel-method.selected{border-color:#ff0a6c;box-shadow:0 0 0 3px rgba(255,10,108,.08);}
+.enel-pse-badge{
+  width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #2f93d5 0%, #195a9d 58%, #123e72 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-style:italic;letter-spacing:-1px;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.14);
+}
+.enel-pse-logo{width:66px;height:66px;display:block;object-fit:contain;}
+.enel-bank-logo{display:flex;flex-direction:column;gap:6px;align-items:flex-start;color:#111;}
+.enel-bank-kicker{font-size:11px;font-weight:600;}
+.enel-bank-name{font-size:15px;font-weight:700;line-height:1.15;}
+.enel-consent{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#2d2d2d;line-height:1.45;margin-bottom:16px;cursor:pointer;}
+.enel-consent-box{
+  width:26px;height:26px;border:1.5px solid #d9d9d9;background:#fff;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:17px;color:#ff0a6c;margin-top:1px;
+}
+.enel-consent-box.checked{border-color:#ff0a6c;background:#fff4f8;}
+.enel-consent a{color:#2f5f9e;text-decoration:underline;}
+.enel-pay-btn{
+  width:100%;height:52px;border:none;border-radius:0;background:#d3d3d6;color:#fff;
+  font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s, transform .1s;
+}
+.enel-pay-btn.enabled{background:#ff0a6c;}
+.enel-pay-btn:active{transform:scale(.99);}
 
-/* ── SCREEN 2 — PSE ── */
-.s2{background:#f7f7f5;}
-.pse-header{background:#1A5CDB;padding:28px 14px 14px;}
-.pse-logo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;margin-bottom:2px;}
-.pse-sub{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.05em;}
-.pse-amount{background:rgba(255,255,255,.12);border-radius:8px;padding:8px 12px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
-.pse-amt-lbl{font-size:10px;color:rgba(255,255,255,.6);}
-.pse-amt-val{font-size:14px;font-weight:600;color:#fff;}
-.pse-body{padding:12px 14px;}
-.pse-cat-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aaa;padding:8px 0 6px;}
-.pse-bank-row{
-  background:#fff;border:1px solid #ebebeb;border-radius:8px;
-  display:flex;align-items:center;gap:10px;padding:9px 12px;margin-bottom:6px;
+/* ══ SCREEN 1 – PSE SELECTOR ══ */
+.pse-hdr{
+  background:var(--navy);
+  padding:50px 20px 22px;text-align:center;
 }
-.pse-bank-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
-.pse-bank-name{font-size:12px;color:#333;font-weight:500;}
-.pse-bank-row.international{
-  background:#EBF1FF;border-color:#93B4F5;
+.pse-logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;}
+.pse-logo-brand{width:44px;height:44px;display:block;object-fit:contain;}
+.pse-circle{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,#1565C0,var(--navy));
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
 }
-.pse-bank-row.international .pse-bank-name{color:#1A5CDB;font-weight:600;}
-.pse-intl-badge{
-  margin-left:auto;font-size:9px;font-weight:600;
-  background:#1A5CDB;color:#fff;
-  border-radius:4px;padding:2px 6px;letter-spacing:.04em;
-}
-.pse-intl-sub{font-size:10px;color:#5580D4;margin-top:1px;}
+.pse-wm{font-size:22px;font-weight:700;font-style:italic;color:#fff;letter-spacing:-1px;}
+.pse-tag{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:12px;}
+.pse-amt-l{font-size:11px;color:rgba(255,255,255,.4);}
+.pse-amt{font-size:35px;font-weight:600;color:#fff;letter-spacing:-1.5px;}
 
-/* Pay-option cards — S2 new layout */
-.sec-lbl{font-size:10px;font-weight:600;color:#aaa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px;}
+.pse-body{padding:18px 16px 100px;}
+.sec-lbl{font-size:10px;font-weight:600;color:var(--tt);letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px;}
+
 .pay-opt{
   display:flex;align-items:center;gap:13px;
-  padding:12px 13px;border:1px solid #ebebeb;border-radius:14px;
-  margin-bottom:9px;background:#fff;position:relative;
+  padding:14px 15px;border:1px solid var(--brd);border-radius:14px;
+  margin-bottom:9px;cursor:pointer;background:#fff;
+  transition:all .15s ease;user-select:none;
+  -webkit-tap-highlight-color:transparent;position:relative;
 }
-.pay-opt.highlight{border-color:#00A86B;background:#E8F5F0;}
+.pay-opt:active{transform:scale(.985);}
+.pay-opt.highlight{border-color:var(--green);background:var(--green-lt);}
+.pay-opt.credit-box{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:14px;}
+.pay-opt.shake{animation:shake .4s ease;}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-5px);}
+  40%{transform:translateX(5px);}
+  60%{transform:translateX(-4px);}
+  80%{transform:translateX(4px);}
+}
 .opt-icon{
-  width:38px;height:38px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
 }
-.i-bnk{background:#EBF1FF;}
+.i-bnk{background:var(--blue-lt);}
 .i-crd{background:#f0eeff;}
-.i-intl{background:#E8F5F0;}
+.i-pse{background:var(--green-lt);}
 .opt-info{flex:1;}
-.opt-name{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:2px;}
-.opt-desc{font-size:10px;color:#888;line-height:1.35;}
-.opt-arr{color:#aaa;font-size:20px;line-height:1;}
+.opt-name{font-size:14px;font-weight:500;color:var(--tp);margin-bottom:2px;}
+.opt-desc{font-size:11px;color:var(--ts);line-height:1.35;}
+.opt-arr{color:var(--tt);font-size:20px;line-height:1;}
 .new-pill{
-  position:absolute;top:-8px;right:12px;
-  background:#00A86B;color:#fff;
-  font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;
+  position:absolute;top:-8px;right:13px;
+  background:var(--green);color:#fff;
+  font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;
   letter-spacing:.06em;text-transform:uppercase;
 }
-
-/* ── SCREEN 3 — Pagaway ── */
-.s3{background:#0F0F0F;}
-.pay-header{padding:28px 14px 14px;border-bottom:1px solid #222;}
-.pay-logo{font-size:14px;font-weight:700;color:#fff;letter-spacing:.02em;}
-.pay-logo span{color:#00D068;}
-.pay-step{font-size:10px;color:#555;margin-top:2px;}
-.pay-amount-box{margin:0 14px 12px;background:#1a1a1a;border-radius:10px;padding:12px;margin-top:12px;}
-.pay-amt-lbl{font-size:10px;color:#666;margin-bottom:3px;}
-.pay-amt-row{display:flex;justify-content:space-between;align-items:baseline;}
-.pay-amt-usd{font-size:18px;font-weight:600;color:#fff;}
-.pay-amt-cop{font-size:11px;color:#555;}
-.pay-rate{font-size:10px;color:#555;margin-top:4px;}
-.pay-body{padding:0 14px;}
-.pay-cat{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#555;padding:8px 0 6px;}
-.pay-bank-row{
-  background:#1a1a1a;border:1px solid #222;border-radius:8px;
-  display:flex;align-items:center;gap:10px;padding:9px 12px;margin-bottom:6px;
-}
-.pay-bank-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
-.pay-bank-name{font-size:12px;color:#ddd;font-weight:500;}
-.pay-bank-flag{margin-left:auto;font-size:14px;}
-.pay-divider{border:none;border-top:1px solid #222;margin:8px 0;}
-
-/* ── SCREEN 4 — Bank Auth ── */
-.s4{background:#f7f7f5;}
-.auth-header{background:#003087;padding:28px 14px 14px;}
-.auth-bank-logo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.03em;}
-.auth-secure{display:flex;align-items:center;gap:5px;margin-top:4px;}
-.auth-secure-icon{font-size:10px;color:rgba(255,255,255,.5);}
-.auth-secure-txt{font-size:10px;color:rgba(255,255,255,.5);}
-.auth-body{padding:16px 14px;}
-.auth-title{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px;}
-.auth-sub{font-size:11px;color:#888;margin-bottom:16px;line-height:1.5;}
-.auth-field{margin-bottom:10px;}
-.auth-field-lbl{font-size:10px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-.auth-field-inp{
-  width:100%;background:#fff;border:1px solid #ddd;border-radius:7px;
-  padding:9px 12px;font-size:13px;color:#1a1a1a;
-  font-family:'IBM Plex Sans',sans-serif;
-}
-.auth-field-inp.pass{letter-spacing:.2em;color:#333;font-size:16px;}
-.auth-notice{
-  background:#FFF8E6;border:1px solid #F5D87A;border-radius:8px;
-  padding:9px 12px;font-size:11px;color:#7A5F00;line-height:1.5;margin-bottom:12px;
-}
-.auth-btn{
-  width:100%;background:#003087;color:#fff;border:none;
-  border-radius:8px;padding:12px;font-size:13px;font-weight:600;
-  font-family:'IBM Plex Sans',sans-serif;
-}
-
-/* ── SCREEN 5 — PSE Summary (estilo pse-summary-reference, escalado a 240px) ── */
-.s5{background:#fff;}
-.pse5-wrap{height:100%;background:#fff;display:flex;flex-direction:column;overflow:hidden;}
-.pse5-hdr{
-  padding:32px 12px 8px;
-  display:flex;align-items:center;gap:8px;flex-shrink:0;
-}
-.pse5-logo-circle{
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(145deg,#1558c0 0%,#00297a 100%);
+.credit-top{display:flex;align-items:flex-start;gap:12px;}
+.credit-copy{display:flex;flex-direction:column;gap:2px;}
+.credit-plans{display:flex;gap:8px;}
+.credit-plan{
+  flex:1;min-width:0;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 2px 6px rgba(0,51,122,.3);flex-shrink:0;
+  gap:2px;padding:9px 6px;
+  border:1px solid rgba(0,168,107,.32);border-radius:10px;background:#fff;
+  font-size:11px;font-weight:700;color:var(--tp);font-family:'DM Sans',sans-serif;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:transform .1s ease,border-color .15s ease,box-shadow .15s ease;
 }
-.pse5-logo-ring{
-  width:26px;height:26px;border-radius:50%;
-  border:1.5px solid rgba(255,255,255,.22);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+.credit-plan small{font-size:10px;font-weight:500;color:var(--ts);line-height:1.2;}
+.credit-plan:active{transform:scale(.985);}
+.credit-plan:hover{border-color:rgba(0,168,107,.52);box-shadow:0 2px 10px rgba(0,168,107,.1);}
+
+.pse-foot{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px 16px;border-top:1px solid var(--brd);
 }
-.pse5-logo-txt{font-size:9px;font-weight:800;font-style:italic;color:#fff;letter-spacing:-.4px;line-height:1;}
-.pse5-logo-dots{display:flex;gap:1.5px;margin-top:1px;}
-.pse5-logo-dots span{width:2px;height:2px;border-radius:50%;background:rgba(255,220,50,.8);}
-.pse5-tagline{font-size:10px;color:#0050C7;font-weight:500;}
-.pse5-body{
-  padding:6px 12px 10px;
-  display:flex;flex-direction:column;align-items:center;
-  flex:1;overflow-y:auto;
+.ach-lbl{font-size:9px;color:var(--tt);font-weight:600;letter-spacing:.05em;}
+
+/* ══ SCREENS 2 & 3 – SUMAS FORMS ══ */
+.sumas-hdr{
+  background:linear-gradient(135deg,var(--sa) 0%,var(--sb) 100%);
+  padding:50px 20px 20px;
 }
-.pse5-check{
-  width:40px;height:40px;border-radius:50%;
-  background:#2DC87A;
+.back-row{display:inline-flex;align-items:center;gap:4px;color:rgba(255,255,255,.65);font-size:12px;cursor:pointer;margin-bottom:12px;}
+.sumas-nm{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:2px;}
+.sumas-sb{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px;}
+.prog-lbl{font-size:10px;color:rgba(255,255,255,.45);margin-bottom:5px;}
+.prog-track{height:3px;background:rgba(255,255,255,.2);border-radius:10px;overflow:hidden;}
+.prog-fill{height:100%;background:rgba(255,255,255,.88);border-radius:10px;}
+
+.sumas-body{padding:18px 16px 100px;}
+.form-intro{font-size:13px;color:var(--ts);line-height:1.55;margin-bottom:16px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px;}
+.f-g{margin-bottom:9px;}
+.f-lbl{font-size:10px;font-weight:600;color:var(--ts);margin-bottom:4px;display:block;letter-spacing:.03em;}
+.f-inp{
+  width:100%;padding:11px 12px;border:1px solid var(--brd);border-radius:10px;
+  font-size:13px;font-family:'DM Sans',sans-serif;color:var(--tp);background:#fff;
+  outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none;
+}
+.f-inp:focus{border-color:var(--sa);box-shadow:0 0 0 3px rgba(255,78,106,.08);}
+.f-inp.pre{background:var(--surf);color:var(--ts);border-color:rgba(255,78,106,.25);cursor:not-allowed;}
+.f-inp.pre-hi{background:#fff8f9;border-color:rgba(255,78,106,.4);color:var(--tp);font-weight:500;cursor:not-allowed;}
+.f-sel{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239DA8BC' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+
+.sumas-btn{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--sa),var(--sb));
+  color:#fff;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
+  border:none;border-radius:14px;cursor:pointer;letter-spacing:-.2px;margin-top:6px;
+  -webkit-tap-highlight-color:transparent;
+  transition:opacity .15s,transform .1s;
+}
+.sumas-btn:active{transform:scale(.98);opacity:.9;}
+
+/* ══ SCREEN 4 – OTP ══ */
+.otp-body{padding:28px 16px 100px;text-align:center;}
+.otp-title{font-size:18px;font-weight:600;color:var(--tp);margin-bottom:6px;}
+.otp-desc{font-size:13px;color:var(--ts);line-height:1.55;margin-bottom:26px;}
+.otp-row{display:flex;gap:8px;justify-content:center;margin-bottom:22px;}
+.otp-b{
+  width:46px;height:54px;border:1.5px solid var(--brd);border-radius:11px;
+  font-size:22px;font-weight:600;font-family:'DM Mono',monospace;
+  text-align:center;color:var(--tp);background:#fff;
+  outline:none;-webkit-appearance:none;appearance:none;caret-color:var(--sa);
+  transition:border-color .15s,background .15s;
+}
+.otp-b:focus{border-color:var(--sa);box-shadow:0 0 0 3px rgba(255,78,106,.09);}
+.otp-b.filled{border-color:var(--sa);background:#fff5f7;}
+.otp-timer-txt{font-size:13px;color:var(--ts);margin-bottom:22px;}
+.otp-timer-txt b{font-family:'DM Mono',monospace;color:var(--tp);}
+.otp-resend{font-size:12px;color:var(--sa);cursor:pointer;margin-top:10px;text-align:center;}
+
+/* ══ SCREEN 5 – APPROVAL ══ */
+.appv-hdr{
+  background:linear-gradient(135deg,var(--sa),var(--sb));
+  padding:50px 20px 28px;text-align:center;
+}
+.appv-lbl{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:3px;}
+.appv-amt{font-size:36px;font-weight:700;color:#fff;letter-spacing:-1.5px;margin-bottom:3px;}
+.appv-sub{font-size:12px;color:rgba(255,255,255,.55);}
+.appv-body{padding:18px 16px 100px;}
+.data-card{background:var(--surf);border:1px solid var(--brd);border-radius:14px;padding:16px;margin-bottom:14px;}
+.data-card-ttl{font-size:10px;font-weight:600;color:var(--tt);text-transform:uppercase;letter-spacing:.08em;margin-bottom:11px;}
+.d-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid var(--brd);}
+.d-row:last-child{border-bottom:none;}
+.dk{color:var(--ts);}
+.dv{font-weight:500;color:var(--tp);}
+.appv-cta{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--sa),var(--sb));
+  color:#fff;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
+  border:none;border-radius:14px;cursor:pointer;margin-bottom:9px;
+  -webkit-tap-highlight-color:transparent;transition:opacity .15s,transform .1s;
+}
+.appv-cta:active{transform:scale(.98);opacity:.9;}
+.appv-chg{text-align:center;font-size:12px;color:var(--sa);cursor:pointer;padding:6px;display:block;}
+
+/* ══ SCREEN 6 – CONFIRMATION ══ */
+.conf-hdr{background:var(--navy);padding:50px 20px 30px;text-align:center;}
+.conf-icon{
+  width:60px;height:60px;border-radius:50%;background:var(--green);
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:6px;
-  box-shadow:0 3px 10px rgba(45,200,122,.28);flex-shrink:0;
+  margin:0 auto 12px;font-size:28px;
 }
-.pse5-check svg{width:20px;height:20px;}
-.pse5-title{font-size:13px;font-weight:700;color:#0050C7;margin-bottom:3px;letter-spacing:-.1px;flex-shrink:0;}
-.pse5-amount{font-size:22px;font-weight:400;color:#1a202c;letter-spacing:0;margin-bottom:2px;flex-shrink:0;}
-.pse5-datetime{font-size:10px;font-weight:700;color:#1a202c;margin-bottom:8px;flex-shrink:0;}
-.pse5-divider{width:100%;height:1px;background:#D8E4F0;flex-shrink:0;}
-.pse5-details{width:100%;margin-bottom:8px;flex-shrink:0;}
-.pse5-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:5px 0;font-size:11px;
+.conf-ttl{font-size:20px;font-weight:600;color:#fff;margin-bottom:4px;}
+.conf-sb{font-size:12px;color:rgba(255,255,255,.5);}
+.conf-body{padding:18px 16px 100px;}
+.conf-card{background:var(--green-lt);border:1px solid rgba(0,168,107,.2);border-radius:14px;padding:16px;margin-bottom:14px;}
+.conf-card .d-row{border-bottom-color:rgba(0,168,107,.12);}
+.conf-btn{
+  width:100%;padding:15px;background:var(--navy);color:#fff;
+  font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
+  border:none;border-radius:14px;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:opacity .15s,transform .1s;
+}
+.conf-btn:active{transform:scale(.98);opacity:.9;}
+.conf-note{text-align:center;font-size:11px;color:var(--tt);margin-top:12px;line-height:1.5;}
+
+/* ══ SCREEN 7 – DONE ══ */
+.done-bg{
+  min-height:100%;
+  background:linear-gradient(160deg,#0b0f1a 0%,#1a2240 60%,#0b0f1a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 24px;text-align:center;
+}
+.done-icon{font-size:52px;margin-bottom:20px;}
+.done-ttl{font-size:21px;font-weight:600;color:#fff;margin-bottom:8px;}
+.done-sb{font-size:13px;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:32px;}
+.done-btn{
+  padding:13px 28px;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);
+  font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;
+  border-radius:12px;cursor:pointer;transition:background .15s;
+}
+.done-btn:hover{background:rgba(255,255,255,.11);}
+
+/* ── STEP DOTS ── */
+.step-dots{display:flex;gap:5px;margin-top:14px;align-items:center;justify-content:center;}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.13);
+  transition:all .3s ease;
+}
+.dot.active{width:22px;border-radius:4px;background:rgba(255,255,255,.55);}
+.dot.done{background:rgba(0,168,107,.45);}
+
+/* ── BOTTOM BAR ── */
+.btm-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(13,17,23,.93);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.05);
+  padding:10px 20px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:100;
+}
+.bb-info{display:flex;flex-direction:column;gap:2px;}
+.bb-name{font-size:11px;font-weight:500;color:rgba(255,255,255,.5);}
+.bb-step{font-size:10px;color:rgba(255,255,255,.22);}
+.bb-right{display:flex;gap:6px;align-items:center;}
+.bb-btn{
+  padding:6px 13px;border-radius:8px;font-size:11px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);background:transparent;
+  color:rgba(255,255,255,.4);transition:all .15s;
+}
+.bb-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);}
+.bb-fac{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:8px;font-size:11px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.5);transition:all .15s;
+}
+.bb-fac:hover{background:rgba(255,255,255,.09);color:rgba(255,255,255,.7);}
+.bb-fac.active{border-color:rgba(0,168,107,.35);background:rgba(0,168,107,.1);color:rgba(0,200,130,.8);}
+
+/* ── FACILITATOR PANEL ── */
+.fac-panel{
+  position:fixed;right:0;top:0;bottom:0;width:306px;
+  background:var(--panel);
+  border-left:1px solid rgba(255,255,255,.06);
+  transform:translateX(100%);
+  transition:transform .32s cubic-bezier(.4,0,.2,1);
+  z-index:150;display:flex;flex-direction:column;overflow:hidden;
+}
+.fac-panel.open{transform:translateX(0);}
+
+.fac-hdr{
+  padding:18px 18px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.fac-title-txt{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+.fac-x{
+  width:26px;height:26px;border-radius:7px;
+  background:rgba(255,255,255,.06);border:none;
+  color:rgba(255,255,255,.35);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-family:sans-serif;
+  transition:all .15s;
+}
+.fac-x:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);}
+
+.fac-body{
+  flex:1;overflow-y:auto;padding:14px 16px 20px;
+  display:flex;flex-direction:column;gap:18px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
+}
+
+/* Timer */
+.fac-timer{background:rgba(0,0,0,.35);border-radius:12px;padding:14px;text-align:center;}
+.timer-dig{
+  font-size:38px;font-weight:400;font-family:'DM Mono',monospace;
+  color:#fff;letter-spacing:3px;margin-bottom:11px;
+  transition:color .3s;
+}
+.timer-dig.running{color:rgba(0,230,140,.85);}
+.timer-btns{display:flex;gap:5px;}
+.t-btn{
+  flex:1;padding:7px 6px;border-radius:8px;font-size:11px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.45);transition:all .15s;
+}
+.t-btn:hover{background:rgba(255,255,255,.09);color:rgba(255,255,255,.75);}
+.t-btn.go{background:rgba(0,168,107,.15);border-color:rgba(0,168,107,.3);color:rgba(0,200,130,.85);}
+
+/* Section label */
+.fac-s-lbl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:6px;}
+
+/* Screen info */
+.fac-scr-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;padding:11px 13px;
+}
+.fac-scr-name{font-size:13px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:2px;}
+.fac-scr-num{font-size:10px;color:rgba(255,255,255,.26);}
+
+/* Nav */
+.fac-nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.nav-b{
+  padding:8px 5px;border-radius:8px;text-align:center;
+  font-size:11px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.45);transition:all .15s;
+}
+.nav-b:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.72);}
+.nav-b.rst{background:rgba(210,50,50,.1);border-color:rgba(210,50,50,.2);color:rgba(220,80,80,.75);}
+.nav-b.rst:hover{background:rgba(210,50,50,.16);color:rgba(220,80,80,1);}
+.pt-btn.pt-active{background:rgba(0,80,199,.2);border-color:rgba(0,80,199,.38);color:rgba(100,160,255,.85);font-weight:600;}
+.save-ind{font-size:10px;color:rgba(0,200,130,0);transition:color .4s;pointer-events:none;}
+.save-ind.visible{color:rgba(0,200,130,.55);}
+.exp-btn{
+  width:100%;padding:11px;
+  background:rgba(0,80,199,.12);border:1px solid rgba(0,80,199,.22);border-radius:10px;
+  color:rgba(100,160,255,.75);font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .15s;
+}
+.exp-btn:hover{background:rgba(0,80,199,.2);color:rgba(130,180,255,.95);}
+.new-session-btn{
+  width:100%;padding:9px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;
+  color:rgba(255,255,255,.3);font-size:11px;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .15s;
+}
+.new-session-btn:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);}
+.sess-input{
+  width:100%;padding:9px 11px;
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);border-radius:9px;
+  font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,.6);
+  outline:none;transition:border-color .15s;
+}
+.sess-input:focus{border-color:rgba(255,255,255,.18);}
+.sess-input::placeholder{color:rgba(255,255,255,.2);}
+.ts-btn{
+  padding:5px 10px;border-radius:7px;font-size:10px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.35);transition:all .15s;white-space:nowrap;
+}
+.ts-btn:hover{background:rgba(255,255,255,.09);color:rgba(255,255,255,.65);}
+.storage-notice{
+  font-size:10px;color:rgba(0,200,130,.45);
+  background:rgba(0,168,107,.07);border:1px solid rgba(0,168,107,.12);
+  border-radius:7px;padding:7px 10px;line-height:1.5;
+}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:4px;}
+.ck-item{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:7px 9px;border-radius:8px;cursor:pointer;transition:background .15s;
+}
+.ck-item:hover{background:rgba(255,255,255,.04);}
+.ck-box{
+  width:15px;height:15px;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;
+  flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;font-size:9px;color:transparent;
+}
+.ck-item.checked .ck-box{background:rgba(0,168,107,.22);border-color:rgba(0,168,107,.48);color:rgba(0,200,130,.9);}
+.ck-text{font-size:11px;color:rgba(255,255,255,.4);line-height:1.45;}
+.ck-item.checked .ck-text{color:rgba(255,255,255,.2);text-decoration:line-through;}
+
+/* Notes */
+.fac-notes-wrap{position:relative;}
+.fac-notes{
+  width:100%;min-height:90px;padding:10px 12px;
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;font-size:12px;font-family:'DM Sans',sans-serif;
+  color:rgba(255,255,255,.55);resize:none;outline:none;line-height:1.6;
+  transition:border-color .15s;
+}
+.fac-notes::placeholder{color:rgba(255,255,255,.18);}
+.fac-notes:focus{border-color:rgba(255,255,255,.14);}
+
+/* Hotspot toggle */
+.fac-tog-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;background:rgba(255,255,255,.03);
+  border-radius:10px;border:1px solid rgba(255,255,255,.05);
+}
+.fac-tog-lbl{font-size:11px;color:rgba(255,255,255,.38);}
+.tog-sw{
+  width:34px;height:19px;background:rgba(255,255,255,.1);border-radius:10px;
+  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;
+}
+.tog-sw.on{background:var(--blue);}
+.tog-knob{
+  position:absolute;top:2px;left:2px;
+  width:15px;height:15px;background:#fff;border-radius:50%;
+  transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.4);
+}
+.tog-sw.on .tog-knob{transform:translateX(15px);}
+
+/* ── HOTSPOT ── */
+.hotspot-on .pay-opt.highlight,
+.hotspot-on .sumas-btn,
+.hotspot-on .appv-cta,
+.hotspot-on .conf-btn,
+.hotspot-on .s0-btn{
+  animation:hs-pulse 1.6s ease-in-out infinite;
+}
+@keyframes hs-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,80,199,.35);}
+  50%{box-shadow:0 0 0 9px rgba(0,80,199,0);}
+}
+
+/* ── RIPPLE ── */
+.ripple{
+  position:fixed;pointer-events:none;
+  width:24px;height:24px;margin:-12px 0 0 -12px;
+  border-radius:50%;background:rgba(0,80,199,.35);
+  z-index:9999;animation:rpl .65s ease-out forwards;
+}
+@keyframes rpl{
+  from{transform:scale(.2);opacity:.9;}
+  to{transform:scale(4.5);opacity:0;}
+}
+
+/* ── TOAST ── */
+.toast-wrap{
+  position:fixed;bottom:78px;left:50%;transform:translateX(-50%);
+  z-index:9998;display:flex;flex-direction:column;gap:7px;align-items:center;pointer-events:none;
+}
+.toast{
+  background:rgba(18,22,36,.96);border:1px solid rgba(255,255,255,.1);
+  border-radius:11px;padding:9px 18px;font-size:12px;color:rgba(255,255,255,.72);
+  backdrop-filter:blur(12px);white-space:nowrap;
+  animation:tin .3s ease,tout .3s ease 2.7s forwards;
+}
+@keyframes tin{from{transform:translateY(8px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes tout{from{opacity:1;}to{opacity:0;}}
+
+/* ── RESPONSIVE SCALE ── */
+@media(max-height:860px){
+  :root{--ph-h:660px;}
+}
+@media(max-height:780px){
+  :root{--ph-h:600px;}
+}
+
+/* ── reCAPTCHA ── */
+.recaptcha-wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #f9f9f9; border: 1px solid #d3d3d3; border-radius: 4px;
+  padding: 12px 14px; margin-bottom: 10px; cursor: pointer;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: box-shadow .15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+.recaptcha-wrap:hover { box-shadow: 0 1px 6px rgba(0,0,0,.14); }
+.rc-check-area { display: flex; align-items: center; gap: 12px; }
+.rc-checkbox {
+  width: 24px; height: 24px; border: 2px solid #c1c1c1; border-radius: 3px;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all .2s ease;
+}
+.rc-checkbox.checked {
+  background: #4A90D9; border-color: #4A90D9;
+}
+.rc-check-icon {
+  opacity: 0; transform: scale(.5); transition: all .18s ease;
+}
+.rc-checkbox.checked .rc-check-icon { opacity: 1; transform: scale(1); }
+.rc-label { font-size: 14px; color: #333; font-family: 'DM Sans', sans-serif; }
+.rc-branding { display: flex; align-items: center; gap: 5px; }
+.rc-text { display: flex; flex-direction: column; align-items: flex-end; }
+.rc-brand { font-size: 10px; font-weight: 600; color: #555; letter-spacing: .02em; }
+.rc-links { font-size: 9px; color: #999; }
+
+/* ── ALIADO NEUTRAL (replaces rojizo sumas theme) ── */
+:root {
+  --al:#4A5568;--al-b:#2D3748;--al-lt:#F7FAFC;--al-acc:#718096;
+}
+.sumas-hdr {
+  background:linear-gradient(160deg,#2D3748 0%,#4A5568 100%) !important;
+}
+.f-inp:focus { border-color:var(--al) !important; box-shadow:0 0 0 3px rgba(74,85,104,.1) !important; }
+.f-inp.pre-hi { border-color:rgba(74,85,104,.35) !important; }
+.sumas-btn {
+  background:linear-gradient(135deg,#2D3748,#4A5568) !important;
+}
+.otp-b:focus { border-color:var(--al) !important; box-shadow:0 0 0 3px rgba(74,85,104,.1) !important; }
+.otp-b.filled { border-color:var(--al) !important; background:#F7FAFC !important; }
+.otp-resend { color:var(--al) !important; }
+.appv-hdr { background:linear-gradient(160deg,#2D3748 0%,#4A5568 100%) !important; }
+.appv-cta { background:linear-gradient(135deg,#2D3748,#4A5568) !important; }
+
+/* ── PRE-LOADER ── */
+.preloader-wrap {
+  min-height:100%; background:#fff;
+  display:flex; flex-direction:column;
+  padding:0;
+  position:relative;
+  overflow:hidden;
+}
+
+.pl-top-img,
+.pl-bottom-img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+.pl-top-img{margin-top:30px;}
+
+.pl-center-text {
+  text-align:center; font-size:22px; font-weight:500;
+  color:var(--navy); line-height:1.45;
+  padding:0 32px 36px;
+}
+.pl-center-name{
+  text-align:center;font-size:14px;font-weight:700;
+  color:var(--navy);line-height:1.35;padding:0 32px 6px;
+}
+.pl-center-text.processing-copy{font-size:14px;line-height:1.4;}
+.pl-center-text.redir-choice-heading{
+  margin-top:20px;
+  padding-bottom:4px;
+}
+
+.pl-big-logo {
+  display:flex; justify-content:center; padding-bottom:28px;
+}
+.pl-spinner-wrap {
+  position:relative; width:90px; height:90px;
+  display:flex; align-items:center; justify-content:center;
+}
+.pl-big-gif {
+  width:96px; height:96px; display:block; object-fit:contain;
+}
+.pl-big-circle {
+  width:90px; height:90px; border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2px;
+  box-shadow: 0 8px 24px rgba(0,51,122,.3);
+}
+.pl-big-text { font-size:24px; font-weight:700; font-style:italic; color:#fff; letter-spacing:-1px; margin-top:2px; }
+
+.pl-tap {
+  text-align:center; padding:16px; font-size:11px;
+  color:rgba(0,51,122,.4); cursor:pointer;
+}
+
+/* ── SCREEN: METHOD CHOICE BEFORE REDIRECT ── */
+.redir-choice-wrap{padding:20px 16px 14px;display:flex;flex-direction:column;gap:12px;}
+.redir-choice-btn{
+  width:100%;padding:14px 12px;border-radius:12px;
+  border:1px solid var(--brd);background:#fff;
+  font-size:14px;font-weight:600;color:var(--tp);
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  transition:all .15s ease;
+}
+.redir-choice-btn:active{transform:scale(.99);}
+.redir-choice-btn .tag-new{
+  font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  color:#fff;background:#ff7a00;border-radius:999px;padding:2px 7px;
+  position:absolute;top:-9px;right:20px;
+}
+.redir-choice-btn.finance{border-color:rgba(255,122,0,.38);}
+.redir-choice-btn.selected{
+  border-color:#ff9a3d;
+  background:#fff5ea;
+  box-shadow:0 0 0 2px rgba(255,154,61,.18);
+}
+
+.redir-form{
+  margin:4px 16px 0;padding:14px;
+  border:1px solid var(--brd);border-radius:12px;background:#fff;
+  display:none;
+}
+.redir-form.open{display:block;}
+.redir-form .f-g{margin-bottom:10px;}
+.redir-form .f-g:last-child{margin-bottom:0;}
+.redir-doc-note{
+  margin-top:6px;font-size:11px;line-height:1.45;color:var(--ts);
+}
+
+.redir-continue{
+  width:calc(100% - 32px);margin:12px 16px 30px;padding:14px;
+  border:1px solid #1f5e9e;border-radius:4px;
+  font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;
+  color:#fff;background:#2b6fb8;
+  opacity:.45;cursor:not-allowed;transition:all .15s ease;
+}
+.redir-continue.enabled{opacity:1;cursor:pointer;}
+.redir-continue.enabled:active{transform:scale(.99);}
+
+.redir-modal-backdrop{
+  position:absolute;inset:0;z-index:40;background:rgba(16,24,40,.55);
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.redir-modal-backdrop.open{display:flex;}
+.redir-modal{
+  width:100%;max-width:320px;background:#fff;border-radius:14px;
+  padding:18px 16px 14px;box-shadow:0 16px 34px rgba(16,24,40,.28);
+}
+.redir-modal-title{
+  margin:0 0 8px;font-size:16px;font-weight:700;line-height:1.3;color:var(--tp);
+}
+.redir-modal-msg{
+  font-size:13px;line-height:1.5;color:var(--tp);margin:0 0 12px;
+}
+.redir-modal-btn{
+  width:100%;padding:12px;border:1px solid #1f5e9e;border-radius:8px;
+  background:#2b6fb8;color:#fff;font-size:14px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+}
+.redir-modal-btn:active{transform:scale(.99);}
+
+/* ── PSE SUMMARY SCREEN (s7 new) ── */
+/* ── PSE SUMMARY SCREEN ── */
+.pse-sum-wrap {
+  height:100%; background:#fff;
+  display:flex; flex-direction:column; overflow:hidden;
+
+}
+.pse-sum-hdr {
+  padding:48px 16px 10px;
+  display:flex; align-items:center; gap:11px;
+  background:transparent; flex-shrink:0;
+}
+.pse-sum-logo-brand {
+  width:50px; height:50px; display:block; object-fit:contain; flex-shrink:0;
+}
+.pse-sum-logo-circle {
+  width:50px; height:50px; border-radius:50%;
+  background:linear-gradient(145deg,#1558c0 0%,#00297a 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-shadow:0 2px 8px rgba(0,51,122,.3); flex-shrink:0;
+}
+.pse-sum-logo-ring {
+  width:36px; height:36px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.22);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.pse-sum-logo-txt {
+  font-size:12px; font-weight:800; font-style:italic; color:#fff;
+  letter-spacing:-0.5px; line-height:1;
+}
+.pse-sum-logo-dots { display:flex; gap:2px; margin-top:1px; }
+.pse-sum-logo-dots span {
+  width:2.5px; height:2.5px; border-radius:50%; background:rgba(255,220,50,.8);
+}
+.pse-sum-tagline { font-size:14px; color:var(--blue); font-weight:500; }
+.pse-sum-body {
+  padding:8px 18px 12px;
+  display:flex; flex-direction:column; align-items:center;
+  flex:1;
+}
+.pse-sum-check {
+  width:56px; height:56px; border-radius:50%;
+  background:#2DC87A;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:8px;
+  box-shadow:0 4px 14px rgba(45,200,122,.28);
+  flex-shrink:0;
+}
+.pse-sum-check svg { width:28px; height:28px; }
+.pse-sum-title {
+  font-size:17px; font-weight:700; color:var(--blue);
+  margin-bottom:4px; letter-spacing:-.2px; flex-shrink:0;
+}
+.pse-sum-amount {
+  font-size:32px; font-weight:400; color:#1a202c;
+  letter-spacing:0; margin-bottom:3px; flex-shrink:0;
+}
+.pse-sum-datetime {
+  font-size:12px; font-weight:700; color:#1a202c;
+  margin-bottom:10px; letter-spacing:.01em; flex-shrink:0;
+}
+.pse-sum-divider {
+  width:100%; height:1px; background:#D8E4F0; margin-bottom:0; flex-shrink:0;
+}
+.pse-sum-details { width:100%; margin-bottom:10px; flex-shrink:0; }
+.pse-sum-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 0; font-size:13px;
   border-bottom:1px solid #EEF3F8;
 }
-.pse5-row:last-child{border-bottom:none;}
-.pse5-key{font-weight:700;color:#1a202c;}
-.pse5-val{color:#4A5568;text-align:right;font-size:10px;}
-.pse5-btn{
-  width:100%;padding:9px;
-  background:#fff;color:#0050C7;
-  font-size:11px;font-weight:400;font-family:inherit;
-  border:1.5px solid #0050C7;border-radius:50px;
-  cursor:pointer;flex-shrink:0;transition:all .15s;
+.pse-sum-row:last-child { border-bottom:none; }
+.pse-sum-key { font-weight:700; color:#1a202c; }
+.pse-sum-val { color:#4A5568; text-align:right; font-size:12px; }
+.pse-sum-btn {
+  width:100%; padding:11px;
+  background:#fff; color:var(--blue);
+  font-size:14px; font-weight:400; font-family:inherit;
+  border:1.5px solid var(--blue); border-radius:50px;
+  cursor:pointer; margin-bottom:0; flex-shrink:0;
+  -webkit-tap-highlight-color:transparent; transition:all .15s;
 }
-.pse5-procesado{
-  width:100%;padding:6px 0 6px;
+.pse-sum-btn:active { background:#EBF3FF; transform:scale(.99); }
+.pse-sum-procesado {
+  width:100%; padding:8px 0 8px;
   border-top:1px solid #D8E4F0;
-  display:flex;flex-direction:column;align-items:center;
-  gap:6px;margin-top:8px;flex-shrink:0;
+  display:flex; flex-direction:column; align-items:center;
+  gap:8px; margin-top:10px; flex-shrink:0;
 }
-.pse5-procesado-lbl{font-size:9px;color:#A0ABBE;}
-.pse5-logos{display:flex;align-items:center;gap:8px;}
-.pse5-pagaway-circle{
-  width:30px;height:30px;border-radius:50%;
-  background:#0F0F0F;
-  display:flex;align-items:center;justify-content:center;
-  font-size:7px;font-weight:700;color:#00D068;letter-spacing:.02em;
-  box-shadow:0 2px 5px rgba(0,0,0,.25);
+.pse-sum-procesado-lbl { font-size:11px; color:#A0ABBE; font-weight:400; }
+.pse-sum-logos { display:flex; align-items:center; gap:10px; }
+.alliance-aliado-circle {
+  width:36px; height:36px; border-radius:50%;
+  background:linear-gradient(135deg,#8B5CF6,#C026D3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:700; color:#fff; letter-spacing:.02em;
+  box-shadow:0 2px 6px rgba(139,92,246,.3);
 }
-.pse5-pse-circle{
-  width:30px;height:30px;border-radius:50%;
+.alliance-pse-circle {
+  width:36px; height:36px; border-radius:50%;
   background:linear-gradient(145deg,#1558c0,#00297a);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 2px 5px rgba(0,51,122,.25);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-shadow:0 2px 6px rgba(0,51,122,.25);
 }
-.pse5-pse-circle span{font-size:8px;font-weight:800;font-style:italic;color:#fff;letter-spacing:-.4px;}
+.alliance-pse-circle span {
+  font-size:9px; font-weight:800; font-style:italic; color:#fff; letter-spacing:-0.4px;
+}
+.pse-sum-contact {
+  margin:0; width:100%; flex-shrink:0;
+  background:#FFFBF0;
+  padding:10px 12px 10px 10px;
+  display:flex; gap:10px; align-items:flex-start;
+  border-left:5px solid #F5A623;
+}
 
+/* ── Pre-loader PSE logo spinner ── */
+.pl-big-logo { display:flex; justify-content:center; padding-bottom:28px; }
+.pl-spinner-wrap {
+  position:relative; width:90px; height:90px;
+  display:flex; align-items:center; justify-content:center;
+}
+.pl-spinner-svg {
+  position:absolute; top:-3px; left:-3px;
+  width:96px; height:96px;
+  transform:rotate(-90deg); pointer-events:none;
+}
+.pl-spinner-arc {
+  fill:none; stroke:var(--green); stroke-width:3.5; stroke-linecap:round;
+  stroke-dasharray:276.46; stroke-dashoffset:276.46;
+}
+
+/* ── Floating datos card (outside phone frame) ── */
+.datos-float {
+  display:none;
+  position:fixed;
+  left:calc(50% - 260px - 168px); /* left of phone: phone center - half phone width - card width - gap */
+  top:50%;
+  transform:translateY(-50%);
+  width:168px;
+  z-index:200;
+  flex-direction:column;
+  gap:0;
+}
+.datos-float.visible { display:flex; }
+.datos-float-tab {
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px 10px 0 0;
+  padding:8px 12px;
+  display:flex; align-items:center; gap:7px;
+  cursor:pointer;
+  transition:background .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.datos-float-tab:hover { background:rgba(255,255,255,.13); }
+.datos-float-tab-icon { font-size:13px; flex-shrink:0; }
+.datos-float-tab-label {
+  font-size:10px; font-weight:600; color:rgba(255,255,255,.55);
+  letter-spacing:.04em; flex:1;
+}
+.datos-float-chevron {
+  font-size:10px; color:rgba(255,255,255,.3);
+  transition:transform .2s;
+}
+.datos-float.collapsed .datos-float-chevron { transform:rotate(180deg); }
+.datos-float-body {
+  background:rgba(20,28,45,.96);
+  border:1px solid rgba(255,255,255,.1);
+  border-top:none;
+  border-radius:0 0 12px 12px;
+  padding:12px;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  overflow:hidden;
+  transition:max-height .25s ease, padding .25s ease;
+  max-height:300px;
+}
+.datos-float.collapsed .datos-float-body {
+  max-height:0;
+  padding-top:0;
+  padding-bottom:0;
+}
+.datos-float-row {
+  display:flex; flex-direction:column;
+  padding:5px 0; border-bottom:1px solid rgba(255,255,255,.06);
+}
+.datos-float-row:last-child { border-bottom:none; padding-bottom:0; }
+.datos-float-key {
+  font-size:9px; font-weight:600; letter-spacing:.07em; text-transform:uppercase;
+  color:rgba(255,255,255,.28); margin-bottom:2px;
+}
+.datos-float-val {
+  font-size:12px; font-weight:500; color:rgba(255,255,255,.82);
+  word-break:break-all;
+}
+.datos-float-val.mono { font-family:'DM Mono',monospace; font-size:11px; }
 </style>
 </head>
 <body>
 
-<div class="page-header">
-  <div class="eyebrow">ACH Colombia · Iniciativa Crossborder · Mayo 2026</div>
-  <h1 class="page-title">PILA desde el exterior — Secuencia de pantallas</h1>
-  <p class="page-sub">Flujo completo desde SOI hasta la confirmación de pago. Las pantallas marcadas en azul son responsabilidad de ACH; las oscuras simulan interfaces de terceros (Pagaway, banco exterior).</p>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#1A5CDB;"></div> Pantalla ACH Colombia</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#1a1a1a;"></div> Pantalla de terceros (simular)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#ccc;"></div> Backend / invisible al usuario</div>
+<!-- ENV HEADER -->
+<div class="env-hdr">
+  <span class="env-title">PSE Crédito · Prueba de Usabilidad</span>
+  <div class="env-pills">
+    <span class="env-pill live">Sesión activa</span>
+    <span class="env-pill">v0.1</span>
   </div>
 </div>
 
-<div class="screens-row">
-
-  <!-- SCREEN 0 — Scenario -->
-  <div class="phone-wrap">
-    <div class="phone-label">
-      <div class="screen-num num-3rd">0</div>
-      <div class="screen-name">Escenario de prueba</div>
-    </div>
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="screen s0">
-        <div class="s0-eyebrow">Prueba de usabilidad · ACH Colombia</div>
-        <div class="s0-title">Imagina esta situación</div>
-        <div class="s0-body">Llevas 3 años viviendo en Miami. Tienes cuenta en Bank of America y debes pagar tu seguridad social colombiana (PILA) de este mes.<br><br>Monto a pagar: <strong style="color:#fff;">$520.000 COP</strong>. Hoy intentarás hacerlo desde tu teléfono, sin transferencias internacionales.</div>
-        <div class="s0-tag"><div class="s0-dot"></div> Sesión de testing · Mobile</div>
-      </div>
-    </div>
-    <div class="annotation">
-      <div class="ann-owner ann-3rd">Contexto · No es pantalla del flujo</div>
-      <div class="ann-text">Intro de la sesión de pruebas. Establece el escenario para que el usuario entienda su rol antes de interactuar con las pantallas reales.</div>
-    </div>
-  </div>
-
-  <!-- SCREEN 1 — SOI -->
-  <div class="phone-wrap">
-    <div class="phone-label">
-      <div class="screen-num num-3rd">1</div>
-      <div class="screen-name">SOI — Resumen PILA</div>
-    </div>
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="screen s1">
-        <div class="s1-topbar">
-          <div class="s1-logo">SOI</div>
-          <div class="s1-sep"></div>
-          <div class="s1-ctx">Mi PILA · Jun 2026</div>
-        </div>
-        <div class="s1-body">
-          <div class="s1-card">
-            <div class="s1-card-label">Total a pagar</div>
-            <div class="s1-card-val">$520.000</div>
-            <div class="s1-card-sub">COP · Período junio 2026</div>
-          </div>
-          <div class="s1-card">
-            <div class="s1-card-label">Detalle del aporte</div>
-            <div class="s1-row"><span class="s1-lbl">Salud (12,5%)</span><span class="s1-val">$260.000</span></div>
-            <div class="s1-row"><span class="s1-lbl">Pensión (16%)</span><span class="s1-val">$200.000</span></div>
-            <div class="s1-row"><span class="s1-lbl">ARL (0,5%)</span><span class="s1-val">$60.000</span></div>
-            <div class="s1-divider"></div>
-            <div class="s1-row"><span class="s1-lbl" style="font-weight:600;color:#333;">Total</span><span class="s1-val" style="color:#1A5CDB;font-weight:600;">$520.000</span></div>
-          </div>
-          <button class="s1-btn">Pagar con PSE</button>
-          <button class="s1-btn-out">Ver historial de pagos</button>
+<!-- PHONE -->
+<div class="phone-wrap">
+  <div class="phone-frame">
+    <div class="phone-screen" id="phoneScreen">
+      <!-- Dynamic island -->
+      <div class="dyn-island"></div>
+      <!-- Status overlay -->
+      <div class="status-ov">
+        <span class="s-time" id="statusTime">9:41</span>
+        <div class="s-icons">
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
+            <rect x="0" y="4" width="3" height="7" rx="1" fill="rgba(255,255,255,.7)"/>
+            <rect x="4.5" y="2.5" width="3" height="8.5" rx="1" fill="rgba(255,255,255,.7)"/>
+            <rect x="9" y="0" width="3" height="11" rx="1" fill="rgba(255,255,255,.7)"/>
+            <rect x="13.5" y="1" width="2.5" height="9" rx="1" fill="rgba(255,255,255,.25)"/>
+          </svg>
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+            <path d="M7.5 2.5 Q7.5 1 9.5 1 L13 3.5 Q11 2.5 7.5 2.5Z" fill="rgba(255,255,255,.7)"/>
+            <path d="M7.5 2.5 Q7.5 1 5.5 1 L2 3.5 Q4 2.5 7.5 2.5Z" fill="rgba(255,255,255,.7)"/>
+            <path d="M4.5 4.5 Q6 3.2 7.5 3.2 Q9 3.2 10.5 4.5 Q9 4 7.5 4 Q6 4 4.5 4.5Z" fill="rgba(255,255,255,.7)"/>
+            <circle cx="7.5" cy="6.5" r="2" fill="rgba(255,255,255,.9)"/>
+          </svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+            <rect x="0" y="1" width="22" height="10" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+            <rect x="23" y="3.5" width="2" height="5" rx="1" fill="rgba(255,255,255,.4)"/>
+            <rect x="1.5" y="2.5" width="16" height="7" rx="2" fill="rgba(255,255,255,.8)"/>
+          </svg>
         </div>
       </div>
-    </div>
-    <div class="annotation">
-      <div class="ann-owner ann-3rd">Tercero · Portal SOI / Operadores PILA</div>
-      <div class="ann-text">El usuario ya liquidó su PILA. Ve el resumen de aportes en COP y selecciona PSE como método de pago. Esta pantalla no es desarrollo de ACH — se muestra solo como contexto de entrada al flujo.</div>
-    </div>
-  </div>
 
-  <!-- SCREEN 2 — PSE -->
-  <div class="phone-wrap">
-    <div class="phone-label">
-      <div class="screen-num num-ach">2</div>
-      <div class="screen-name">PSE — Selección de pago ⭐</div>
-    </div>
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="screen s2">
-        <div class="pse-header">
-          <div class="pse-logo">PSE</div>
-          <div class="pse-sub">PAGOS SEGUROS EN LÍNEA</div>
-          <div class="pse-amount">
-            <div class="pse-amt-lbl">Monto a pagar</div>
-            <div class="pse-amt-val">$520.000 COP</div>
-          </div>
-        </div>
-        <div class="pse-body">
-          <div class="sec-lbl">Elige el método de pago</div>
+      <!-- SCREENS CONTAINER -->
+      <div class="screens" id="screens">
 
-          <div class="pay-opt">
-            <div class="opt-icon i-bnk">🏦</div>
-            <div class="opt-info">
-              <div class="opt-name">Pagar con mi banco</div>
-              <div class="opt-desc">Débito desde cuenta de ahorro o corriente</div>
+        <!-- ══ S0: TASK INTRO ══ -->
+        <div class="scr active" id="s0">
+          <div class="s0-bg">
+            <div class="s0-eyebrow">Escenario de prueba</div>
+
+            <!-- Escenario -->
+            <div class="s0-card">
+              <span class="s0-icon">🛒</span>
+              <div class="s0-kicker">Situación</div>
+              <div class="s0-text">
+                Llevas 3 años viviendo en Miami. Tienes cuenta en Bank of America y debes pagar tu seguridad social colombiana (PILA) de este mes.<br>
+              </div>
             </div>
-            <div class="opt-arr">›</div>
-          </div>
 
-          <div class="pay-opt">
-            <div class="opt-icon i-crd">💳</div>
-            <div class="opt-info">
-              <div class="opt-name">Pagar con tarjeta de crédito</div>
-              <div class="opt-desc">Visa, Mastercard, American Express</div>
+            <p class="s0-hint">Navega como lo harías normalmente.<br>No hay respuestas correctas o incorrectas.</p>
+            <button class="s0-btn" onclick="go(1)">Comenzar →</button>
+          </div>
+        </div>
+
+        <!-- ══ S1: COMMERCE PAYMENT (ALKOSTO) ══ -->
+        <div class="scr" id="s1">
+          <iframe
+            id="alkostoFlowFrame"
+            src="envio-pago.html"
+            title="Alkosto - Envio y Pago"
+            style="width:100%;height:100%;border:0;background:#fff;display:block;"
+          ></iframe>
+        </div>
+
+        <!-- ══ S2: PSE SELECTOR ══ -->
+        <div class="scr" id="s2">
+          <div class="pse-hdr">
+            <div class="pse-logo-row">
+              <img class="pse-logo-brand" src="../pse_credito/img/logo_pse.png" alt="Logo PSE">
             </div>
-            <div class="opt-arr">›</div>
+            <div class="pse-tag">¡Fácil, rápido y seguro!</div>
+            <div class="pse-amt-l">Total a pagar</div>
+            <div class="pse-amt">$ 240.000</div>
           </div>
+          <div class="pse-body">
+            <div class="sec-lbl">Elige el método de pago</div>
 
-          <div class="pay-opt highlight">
-            <div class="new-pill">NUEVO</div>
-            <div class="opt-icon i-intl">🌎</div>
-            <div class="opt-info">
-              <div class="opt-name">Pago internacional</div>
-              <div class="opt-desc">Paga con tu banco desde el exterior</div>
+            <div class="pay-opt" id="opt-banco" onclick="shakeOpt('opt-banco')">
+              <div class="opt-icon i-bnk">🏦</div>
+              <div class="opt-info">
+                <div class="opt-name">Desde mi cuenta</div>
+                <div class="opt-desc">Débito desde cuenta de ahorro o corriente</div>
+              </div>
+              <div class="opt-arr">›</div>
             </div>
-            <div class="opt-arr">›</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="annotation">
-      <div class="ann-owner ann-ach">ACH Colombia · Pantalla principal del MVP ⭐</div>
-      <div class="ann-text">La única pantalla que ACH debe construir. El usuario elige entre su banco local, tarjeta de crédito o pago internacional. Al seleccionar "Pago internacional" es redirigido a Pagaway — es Stripe (vía Pagaway) quien muestra los bancos del exterior.</div>
-    </div>
-  </div>
 
-  <!-- SCREEN 3 — Pagaway -->
-  <div class="phone-wrap">
-    <div class="phone-label">
-      <div class="screen-num num-3rd">3</div>
-      <div class="screen-name">Pagaway — Bancos exterior</div>
-    </div>
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="screen s3">
-        <div class="pay-header">
-          <div class="pay-logo">paga<span>way</span></div>
-          <div class="pay-step">Selecciona tu banco en el exterior</div>
-        </div>
-        <div class="pay-amount-box">
-          <div class="pay-amt-lbl">Monto a debitar</div>
-          <div class="pay-amt-row">
-            <div class="pay-amt-usd">USD 128.40</div>
-            <div class="pay-amt-cop">= $520.000 COP</div>
-          </div>
-          <div class="pay-rate">TRM: $4.050,82 · Tasa garantizada por 15 min</div>
-        </div>
-        <div class="pay-body">
-          <div class="pay-cat">Estados Unidos</div>
-          <div class="pay-bank-row">
-            <div class="pay-bank-icon" style="background:#00356B;color:#fff;">BA</div>
-            <div class="pay-bank-name">Bank of America</div>
-            <div class="pay-bank-flag">🇺🇸</div>
-          </div>
-          <div class="pay-bank-row">
-            <div class="pay-bank-icon" style="background:#117ACA;color:#fff;">CH</div>
-            <div class="pay-bank-name">Chase</div>
-            <div class="pay-bank-flag">🇺🇸</div>
-          </div>
-          <div class="pay-bank-row">
-            <div class="pay-bank-icon" style="background:#C60D35;color:#fff;">WF</div>
-            <div class="pay-bank-name">Wells Fargo</div>
-            <div class="pay-bank-flag">🇺🇸</div>
-          </div>
-          <div class="pay-bank-row">
-            <div class="pay-bank-icon" style="background:#003B70;color:#fff;">CI</div>
-            <div class="pay-bank-name">Citibank</div>
-            <div class="pay-bank-flag">🇺🇸</div>
-          </div>
-          <div class="pay-divider"></div>
-          <div class="pay-cat">Europa</div>
-          <div class="pay-bank-row">
-            <div class="pay-bank-icon" style="background:#00519B;color:#fff;">SB</div>
-            <div class="pay-bank-name">Santander ES</div>
-            <div class="pay-bank-flag">🇪🇸</div>
-          </div>
-          <div class="pay-bank-row">
-            <div class="pay-bank-icon" style="background:#16324F;color:#fff;">DE</div>
-            <div class="pay-bank-name">Deutsche Bank</div>
-            <div class="pay-bank-flag">🇩🇪</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="annotation">
-      <div class="ann-owner ann-3rd">Tercero · Interfaz Pagaway (simular en prototipo)</div>
-      <div class="ann-text">El usuario llega a Pagaway ya redirigido desde PSE. Ve el monto convertido a USD (equivalente a sus COP de PILA) y selecciona su banco en el exterior. La tasa de cambio se muestra con garantía temporal.</div>
-    </div>
-  </div>
+            <div class="pay-opt" id="opt-tarjeta" onclick="shakeOpt('opt-tarjeta')">
+              <div class="opt-icon i-crd">💳</div>
+              <div class="opt-info">
+                <div class="opt-name">Pagar con tarjeta de crédito</div>
+                <div class="opt-desc">Visa, Mastercard, American Express</div>
+              </div>
+              <div class="opt-arr">›</div>
+            </div>
 
-  <!-- SCREEN 4 — Bank Auth -->
-  <div class="phone-wrap">
-    <div class="phone-label">
-      <div class="screen-num num-3rd">4</div>
-      <div class="screen-name">Autenticación banco exterior</div>
-    </div>
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="screen s4">
-        <div class="auth-header">
-          <div class="auth-bank-logo">Bank of America</div>
-          <div class="auth-secure">
-            <div class="auth-secure-icon">🔒</div>
-            <div class="auth-secure-txt">Conexión segura · SSL</div>
+            <div class="pay-opt highlight credit-box">
+              <div class="new-pill">NUEVO</div>
+              <div class="credit-top">
+                <div class="opt-icon i-pse">✨</div>
+                <div class="credit-copy">
+                  <div class="opt-name">Crédito con [Aliado]</div>
+                  <div class="opt-desc">Crédito con [Aliado] financia tu compra al instante, sin tarjeta.</div>
+                </div>
+              </div>
+              <div class="credit-plans">
+                <button class="credit-plan" type="button" onclick="go(3)">1 cuota<small>Interés X%</small></button>
+                <button class="credit-plan" type="button" onclick="go(3)">3 cuotas<small>Interés X%</small></button>
+                <button class="credit-plan" type="button" onclick="go(3)">6 cuotas<small>Interés X%</small></button>
+              </div>
+            </div>
+          </div>
+          <div class="pse-foot">
+            <span class="ach-lbl">VIGILADO SFC · ACH COLOMBIA</span>
           </div>
         </div>
-        <div class="auth-body">
-          <div class="auth-title">Autoriza el débito</div>
-          <div class="auth-sub">Ingresa tus credenciales de Bank of America para aprobar el pago de USD 128.40 a tu PILA Colombia.</div>
-          <div class="auth-notice">🔔 Pagarás USD 128.40 desde tu cuenta. El cargo aparecerá como "PILA COL – Pagaway"</div>
-          <div class="auth-field">
-            <div class="auth-field-lbl">Usuario / Online ID</div>
-            <div class="auth-field-inp">jgonzalez_col</div>
+
+        <!-- ══ S3: PRE-LOADER TRANSICIÓN PSE → ALIADO ══ -->
+        <div class="scr" id="s3">
+          <div class="preloader-wrap">
+            <img class="pl-top-img" src="../pse_credito/img/procesando_up.png" alt="Encabezado de proceso PSE">
+            <div class="pl-center-name">Pablo Perez</div>
+            <div class="pl-center-text processing-copy">Estamos procesando tu transacción...</div>
+            <div class="pl-big-logo">
+              <div class="pl-spinner-wrap" id="plSpinnerWrap">
+                <img class="pl-big-gif" src="../pse_credito/img/loader_psd.GIF" alt="PSE loading animation">
+              </div>
+            </div>
+            <div style="flex:1"></div>
+            <img class="pl-bottom-img" src="../pse_credito/img/procesando_bottom.png" alt="Información de contacto y logos ACH">
+            <div class="pl-tap" onclick="goToAllyForm()"></div>
           </div>
-          <div class="auth-field">
-            <div class="auth-field-lbl">Contraseña</div>
-            <div class="auth-field-inp pass">••••••••</div>
-          </div>
-          <button class="auth-btn">Autorizar pago →</button>
         </div>
-      </div>
-    </div>
-    <div class="annotation">
-      <div class="ann-owner ann-3rd">Tercero · Banco / Stripe TBD (simular en prototipo)</div>
-      <div class="ann-text">Pantalla genérica de autenticación bancaria. El usuario confirma con sus credenciales del banco en el exterior. Pendiente confirmar si Stripe aparece como capa visible aquí o solo opera en el backend de Pagaway.</div>
-    </div>
-  </div>
 
-  <!-- SCREEN 5 — Confirmation -->
-  <div class="phone-wrap">
-    <div class="phone-label">
-      <div class="screen-num num-ach">5</div>
-      <div class="screen-name">Confirmación PSE</div>
-    </div>
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="screen s5">
-        <div class="pse5-wrap">
+        <!-- ══ S4: SUMAS DATOS 1 ══ -->
+        <div class="scr" id="s4">
+          <div class="sumas-hdr">
+            <div class="back-row" onclick="go(2)">‹ PSE</div>
+            <div class="sumas-nm">Aliado</div>
+            <div class="sumas-sb">Solicitud de crédito</div>
+            <div class="prog-lbl">Paso 1 de 3 — Datos personales</div>
+            <div class="prog-track"><div class="prog-fill" style="width:33%"></div></div>
+          </div>
+          <div class="sumas-body">
+            <div class="form-intro">Completemos tu solicitud de crédito. La evaluación tarda segundos.</div>
 
-          <!-- Header: logo PSE + tagline -->
-          <div class="pse5-hdr">
-            <div class="pse5-logo-circle">
-              <div class="pse5-logo-ring">
-                <span class="pse5-logo-txt">pse</span>
-                <div class="pse5-logo-dots">
-                  <span></span><span></span><span></span>
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Tipo de ID</label>
+                <input class="f-inp" id="f-doctype" value="CC">
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Documento de identidad</label>
+                <input class="f-inp" id="f-docnum" value="12345678">
+              </div>
+            </div>
+            <div class="f-g">
+              <label class="f-lbl">Correo electrónico</label>
+              <input class="f-inp" id="f-email-doc" type="email" placeholder="correo@email.com" value="pablo@mail.com">
+            </div>
+            <div class="f-g">
+              <label class="f-lbl">Financiación con:</label>
+              <input class="f-inp pre-hi" value="SUMAS" readonly>
+            </div>
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Fecha de nacimiento *</label>
+                <input class="f-inp" type="date">
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Fecha de expedición *</label>
+                <input class="f-inp" type="date">
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Primer nombre *</label>
+                <input class="f-inp" id="f-nombre1" type="text" placeholder="Primer nombre" value="Pablo">
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Segundo nombre</label>
+                <input class="f-inp" id="f-apellido2" type="text" placeholder="Segundo apellido">
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Primer apellido *</label>
+                <input class="f-inp" id="f-apellido1" type="text" placeholder="Primer apellido" value="Perez">
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Segundo apellido</label>
+                <input class="f-inp" id="f-nombre2" type="text" placeholder="Segundo nombre">
+              </div>
+            </div>
+            <button class="sumas-btn" onclick="go(5)">Continuar →</button>
+          </div>
+        </div>
+
+        <!-- ══ S5: SUMAS DATOS 2 ══ -->
+        <div class="scr" id="s5">
+          <div class="sumas-hdr">
+            <div class="back-row" onclick="go(4)">‹ Atrás</div>
+            <div class="sumas-nm">Aliado</div>
+            <div class="sumas-sb">Datos de contacto y ubicación</div>
+            <div class="prog-lbl">Paso 2 de 3 — Información de contacto</div>
+            <div class="prog-track"><div class="prog-fill" style="width:66%"></div></div>
+          </div>
+          <div class="sumas-body">
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Celular *</label>
+                <input class="f-inp" id="f-celular" value="12345678">
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Confirmar celular *</label>
+                <input class="f-inp" type="tel" placeholder="Repetir número">
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Género *</label>
+                <select class="f-inp f-sel" id="f-genero"><option value="">Seleccionar</option><option selected>Masculino</option><option>Femenino</option><option>No binario</option></select>
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Estado civil *</label>
+                <select class="f-inp f-sel" id="f-estado"><option value="">Seleccionar</option><option selected>Soltero</option><option>Casado/a</option><option>Unión libre</option></select>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-g">
+                <label class="f-lbl">Correo electrónico *</label>
+                <input class="f-inp" id="f-email" type="email" placeholder="correo@email.com" value="pablo@mail.com">
+              </div>
+              <div class="f-g">
+                <label class="f-lbl">Confirmar correo *</label>
+                <input class="f-inp" type="email" placeholder="Repetir correo" value="pablo@mail.com">
+              </div>
+            </div>
+
+            <!-- reCAPTCHA -->
+            <div class="recaptcha-wrap" id="recaptchaBox" onclick="toggleCaptcha()">
+              <div class="rc-check-area">
+                <div class="rc-checkbox" id="rcCheckbox">
+                  <svg class="rc-check-icon" id="rcCheckIcon" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="rc-label">No soy un robot</span>
+              </div>
+              <div class="rc-branding">
+                <div class="rc-logo">
+                  <svg viewBox="0 0 64 64" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="32" fill="#4A90D9"/>
+                    <path d="M32 12C21 12 12 21 12 32s9 20 20 20 20-9 20-20S43 12 32 12z" fill="white" opacity=".15"/>
+                    <path d="M20 32c0-6.6 5.4-12 12-12s12 5.4 12 12-5.4 12-12 12" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M38 26l6-6M38 26h6M38 26v-6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="rc-text">
+                  <span class="rc-brand">reCAPTCHA</span>
+                  <span class="rc-links">Privacidad · Términos</span>
                 </div>
               </div>
             </div>
-            <span class="pse5-tagline">¡Fácil. rápido y seguro!</span>
+
+            <button class="sumas-btn" onclick="go(6)">Solicitar crédito →</button>
           </div>
+        </div>
 
-          <div class="pse5-body">
-
-            <!-- Ícono aprobado -->
-            <div class="pse5-check">
-              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18.5L15.5 25L27 12" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+        <!-- ══ S6: OTP ══ -->
+        <div class="scr" id="s6">
+          <div class="sumas-hdr">
+            <div class="back-row" onclick="go(5)">‹ Atrás</div>
+            <div class="sumas-nm">Aliado</div>
+            <div class="sumas-sb">Verificación de identidad</div>
+            <div class="prog-lbl">Paso 3 de 3 — Código de seguridad</div>
+            <div class="prog-track"><div class="prog-fill" style="width:100%"></div></div>
+          </div>
+          <div class="otp-body">
+            <div class="otp-title">Código de seguridad</div>
+            <div class="otp-desc">Enviamos un código por SMS al número<br><strong id="otp-phone-display">XXXXXX5678</strong></div>
+            <div class="otp-row" id="otpRow">
+              <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
+              <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
+              <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
+              <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
+              <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
+              <input class="otp-b" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
             </div>
+            <div class="otp-timer-txt">⏱ Tiempo restante: <b id="otpCountdown">1:55</b></div>
+            <button class="sumas-btn" onclick="go(7)">Verificar y continuar →</button>
+            <div class="otp-resend" onclick="toast('Código reenviado al XXXXXX5678')">¿No llegó? Reenviar código</div>
+          </div>
+        </div>
 
-            <!-- Título y monto -->
-            <div class="pse5-title">¡Pago aprobado!</div>
-            <div class="pse5-amount">$520.000</div>
-            <div class="pse5-datetime">11 jun 2026 · 10:34 AM</div>
-
-            <div class="pse5-divider"></div>
-
-            <!-- Detalle de la transacción -->
-            <div class="pse5-details">
-              <div class="pse5-row">
-                <span class="pse5-key">Autorización</span>
-                <span class="pse5-val" style="font-family:'IBM Plex Mono',monospace;">PSE-2026-8847123</span>
-              </div>
-              <div class="pse5-row">
-                <span class="pse5-key">Concepto</span>
-                <span class="pse5-val">PILA junio 2026</span>
-              </div>
-              <div class="pse5-row">
-                <span class="pse5-key">Método</span>
-                <span class="pse5-val">Pago internacional</span>
-              </div>
-              <div class="pse5-row">
-                <span class="pse5-key">Cuenta debitada</span>
-                <span class="pse5-val">BoA ···4821</span>
-              </div>
-              <div class="pse5-row">
-                <span class="pse5-key">Monto USD</span>
-                <span class="pse5-val">USD 128.40</span>
-              </div>
-              <div class="pse5-row">
-                <span class="pse5-key">TRM aplicada</span>
-                <span class="pse5-val">$4.050,82</span>
-              </div>
+        <!-- ══ S7: APPROVAL ══ -->
+        <div class="scr" id="s7">
+          <div class="appv-hdr">
+            <div class="appv-lbl">¡Crédito aprobado por!</div>
+            <div class="appv-amt">$ 240.000</div>
+            <div class="appv-sub">Para tu compra en Alkosto</div>
+          </div>
+          <div class="appv-body">
+            <div class="data-card">
+              <div class="data-card-ttl">Confirma que tus datos sean correctos</div>
+              <div class="d-row"><span class="dk">Documento de identidad</span><span class="dv" id="rv-doc">12345678</span></div>
+              <div class="d-row"><span class="dk">Nombre</span><span class="dv" id="rv-nombre">Pablo</span></div>
+              <div class="d-row"><span class="dk">Apellido</span><span class="dv" id="rv-apellido">Perez</span></div>
+              <div class="d-row"><span class="dk">Celular</span><span class="dv" id="rv-celular">12345678</span></div>
+              <div class="d-row"><span class="dk">Estado civil</span><span class="dv" id="rv-estado">Soltero/a</span></div>
+              <div class="d-row"><span class="dk">Correo</span><span class="dv" id="rv-email" style="font-size:11px">pablo@email.com ✏️</span></div>
             </div>
-
-            <!-- Botón -->
-            <button class="pse5-btn">Volver a SOI →</button>
-
-            <!-- Procesado por -->
-            <div class="pse5-procesado">
-              <span class="pse5-procesado-lbl">Transacción procesada por:</span>
-              <div class="pse5-logos">
-                <div class="pse5-pse-circle"><span>pse</span></div>
-                <div class="pse5-pagaway-circle">pway</div>
-              </div>
-            </div>
+            <button class="appv-cta" onclick="go(8)">Acepto, ir a pagar</button>
 
           </div>
         </div>
+
+        <!-- ══ S8: PSE SUMMARY ══ -->
+        <div class="scr" id="s8">
+          <div class="appv-hdr">
+            <div style="display:flex;justify-content:center;margin-top:30px;margin-bottom:10px;">
+              <div style="width:40px;height:40px;border-radius:999px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 6L9 17l-5-5" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="appv-lbl">Tu compra fue financiada por [Aliado]</div>
+            <div class="appv-amt">$ 240.000</div>
+            <div class="appv-sub">Para tu compra en Alkosto</div>
+          </div>
+          <div class="appv-body">
+            <div class="data-card">
+              <div class="data-card-ttl">Resumen de la financiación</div>
+              <div class="d-row"><span class="dk">CUS</span><span class="dv" style="font-family:'DM Mono',monospace">74fdbf4</span></div>
+              <div class="d-row"><span class="dk">Destino</span><span class="dv">Alkosto</span></div>
+              <div class="d-row"><span class="dk">Método</span><span class="dv">Crédito [Aliado] · procesado vía PSE</span></div>
+              <div class="d-row"><span class="dk">Valor inicial</span><span class="dv">$240.000</span></div>
+              <div class="d-row"><span class="dk">Costo de transacción</span><span class="dv">$455</span></div>
+              <div class="d-row"><span class="dk">Canal</span><span class="dv">Financiado por [Aliado] · PSE</span></div>
+            </div>
+            <button class="appv-cta" onclick="go(9)">Regresar al comercio</button>
+
+          </div>
+          </div>
+        </div>
+
+        <!-- ══ S9: DONE ══ -->
+        <div class="scr" id="s9">
+          <div class="done-bg">
+            <div class="done-icon">🎉</div>
+            <div class="done-ttl">¡Prueba completada!</div>
+            <div class="done-sb">El participante llegó al final del flujo.<br>Gracias por tu tiempo — ahora tómate un momento para compartir cómo te sentiste.</div>
+            <button class="done-btn" onclick="resetAll()">↺ Reiniciar sesión</button>
+          </div>
+        </div>
+
+      </div><!-- /screens -->
+
+      <div class="redir-modal-backdrop" id="redirNoticeModal" onclick="closeRedirectNotice(event)">
+        <div class="redir-modal" role="dialog" aria-modal="true" aria-labelledby="redirNoticeTitle" aria-describedby="redirNoticeText" onclick="event.stopPropagation()">
+          <h3 class="redir-modal-title" id="redirNoticeTitle">Pago internacional</h3>
+          <p class="redir-modal-msg" id="redirNoticeText">Mensaje advertencia</p>
+          <button class="redir-modal-btn" type="button" onclick="confirmRedirectNotice()">Entendido</button>
+        </div>
+      </div>
+
+      <!-- Home bar -->
+      <div class="home-bar"></div>
+    </div><!-- /phone-screen -->
+  </div><!-- /phone-frame -->
+</div><!-- /phone-wrap -->
+
+<!-- DATOS FLOATING CARD -->
+<div class="datos-float" id="datosFloat">
+  <div class="datos-float-tab" onclick="toggleDatosFloat()">
+    <span class="datos-float-tab-icon">🪪</span>
+    <span class="datos-float-tab-label">Datos de prueba</span>
+    <span class="datos-float-chevron">⌄</span>
+  </div>
+  <div class="datos-float-body">
+    <div class="datos-float-row">
+      <span class="datos-float-key">Nombre</span>
+      <span class="datos-float-val">Pablo Perez</span>
+    </div>
+    <div class="datos-float-row">
+      <span class="datos-float-key">Cédula</span>
+      <span class="datos-float-val mono">12345678</span>
+    </div>
+    <div class="datos-float-row">
+      <span class="datos-float-key">Celular</span>
+      <span class="datos-float-val mono">12345678</span>
+    </div>
+    <div class="datos-float-row">
+      <span class="datos-float-key">Correo</span>
+      <span class="datos-float-val">pablo@email.com</span>
+    </div>
+    <div class="datos-float-row">
+      <span class="datos-float-key">Ciudad</span>
+      <span class="datos-float-val">Cali, Valle del Cauca</span>
+    </div>
+  </div>
+</div>
+
+<!-- STEP DOTS -->
+<div class="step-dots" id="stepDots"></div>
+
+<!-- BOTTOM BAR -->
+<div class="btm-bar">
+  <div class="bb-info">
+    <div class="bb-name" id="bbName">Introducción</div>
+    <div class="bb-step" id="bbStep">Pantalla 1 de 10</div>
+  </div>
+  <div class="bb-right">
+    <button class="bb-btn" onclick="go(Math.max(0,cur-1))">‹ Atrás</button>
+    <button class="bb-fac" id="facToggleBtn" onclick="toggleFac()">👁 Facilitador</button>
+  </div>
+</div>
+
+<!-- FACILITATOR PANEL -->
+<div class="fac-panel" id="facPanel">
+  <div class="fac-hdr">
+    <span class="fac-title-txt">Modo Facilitador</span>
+    <button class="fac-x" onclick="toggleFac()">✕</button>
+  </div>
+  <div class="fac-body">
+
+    <!-- Timer -->
+    <div>
+      <div class="fac-s-lbl">Cronómetro de sesión</div>
+      <div class="fac-timer">
+        <div class="timer-dig" id="timerDig">00:00</div>
+        <div class="timer-btns">
+          <button class="t-btn go" id="timerBtn" onclick="toggleTimer()">▶ Iniciar</button>
+          <button class="t-btn" onclick="resetTimer()">↺ Reiniciar</button>
+        </div>
       </div>
     </div>
-    <div class="annotation">
-      <div class="ann-owner ann-ach">ACH Colombia · Confirmación estándar PSE</div>
-      <div class="ann-text">El usuario ve la confirmación final de su PILA pagada. PSE muestra el comprobante con el monto en COP y el equivalente en USD debitado de su cuenta extranjera. Desde aquí regresa a SOI donde la PILA queda registrada como pagada.</div>
+
+    <!-- Screen info -->
+    <div>
+      <div class="fac-s-lbl">Pantalla actual</div>
+      <div class="fac-scr-card">
+        <div class="fac-scr-name" id="facScrName">Introducción</div>
+        <div class="fac-scr-num" id="facScrNum">Pantalla 1 de 10</div>
+      </div>
     </div>
-  </div>
 
-</div>
+    <!-- Navigation -->
+    <div>
+      <div class="fac-s-lbl">Navegar</div>
+      <div class="fac-nav">
+        <button class="nav-b" onclick="go(Math.max(0,cur-1))">‹ Anterior</button>
+        <button class="nav-b rst" onclick="resetAll()">↺ Reiniciar</button>
+        <button class="nav-b" onclick="go(Math.min(9,cur+1))">Siguiente ›</button>
+      </div>
+    </div>
 
-<!-- Backend note -->
-<div style="margin-top:32px;padding:16px 20px;background:#fff;border-radius:12px;border:1px solid #d8d5d0;max-width:620px;">
-  <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aaa;margin-bottom:8px;">Backend · Invisible al usuario</div>
-  <div style="font-size:13px;color:#555;line-height:1.7;">
-    Entre las pantallas 4 y 5 ocurre la cadena de backend:
-    <strong style="color:#333;">Banco exterior → Pagaway → CoopCentral → ACH Colombia → Dispersión a PILA</strong>.
-    El usuario no ve nada de esto — solo experimenta una breve espera antes de llegar a la pantalla de confirmación.
-  </div>
-</div>
+    <!-- Ir a pantalla -->
+    <div>
+      <div class="fac-s-lbl">Ir directo a pantalla</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
+        <button class="nav-b" onclick="go(0)" style="font-size:10px;">Intro</button>
+        <button class="nav-b" onclick="go(1)" style="font-size:10px;">Comercio</button>
+        <button class="nav-b" onclick="go(2)" style="font-size:10px;">PSE</button>
+        <button class="nav-b" onclick="go(4)" style="font-size:10px;">Form 1</button>
+        <button class="nav-b" onclick="go(5)" style="font-size:10px;">Form 2</button>
+        <button class="nav-b" onclick="go(6)" style="font-size:10px;">OTP</button>
+        <button class="nav-b" onclick="go(7)" style="font-size:10px;">Cupo</button>
+        <button class="nav-b" onclick="go(8)" style="font-size:10px;">Confirm.</button>
+        <button class="nav-b" onclick="go(9)" style="font-size:10px;">Fin</button>
+      </div>
+    </div>
 
-<div style="margin-top:20px;font-size:11px;color:#aaa;padding-bottom:20px;">Brief · Crossborder / PILA Exterior · ACH Colombia · Mayo 2026</div>
+    <!-- Checklist -->
+    <div>
+      <div class="fac-s-lbl">Lista de observación</div>
+      <div class="checklist" id="checklist">
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Encontró "Crédito PSE" sin ayuda?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Leyó las opciones antes de seleccionar?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿El formulario generó fricción o dudas?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Completó el formulario sin ayuda?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Entendió el propósito del OTP?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Revisó los datos antes de "Acepto"?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Completó la transacción exitosamente?</div>
+        </div>
+        <div class="ck-item" onclick="toggleCheck(this)">
+          <div class="ck-box">✓</div>
+          <div class="ck-text">¿Expresó confusión o comentario espontáneo?</div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Preguntas cualitativas -->
+    <div>
+      <div class="fac-s-lbl">Preguntas cualitativas</div>
+
+      <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-bottom:5px;">Viabilidad percibida</div>
+      <ul style="font-size:12px;color:rgba(255,255,255,.6);margin:0 0 12px 16px;padding:0;line-height:1.7;">
+        <li>¿Usarías esta funcionalidad en la vida real?</li>
+        <li>¿En qué situaciones la utilizarías?</li>
+        <li>¿Qué alternativas considerarías antes?</li>
+      </ul>
+
+      <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-bottom:5px;">Nivel de confianza</div>
+      <ul style="font-size:12px;color:rgba(255,255,255,.6);margin:0 0 12px 16px;padding:0;line-height:1.7;">
+        <li>¿Qué tan seguro te sentiste durante el proceso?</li>
+        <li>¿Qué elementos generaron confianza?</li>
+        <li>¿Qué elementos generaron desconfianza?</li>
+      </ul>
+
+      <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-bottom:5px;">Tolerancia a fricción</div>
+      <ul style="font-size:12px;color:rgba(255,255,255,.6);margin:0 0 12px 16px;padding:0;line-height:1.7;">
+        <li>¿Qué casi te hizo abandonar el proceso?</li>
+        <li>¿Qué parte fue más tediosa?</li>
+        <li>¿El proceso te pareció largo o corto?</li>
+      </ul>
+
+      <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.75);margin-bottom:5px;">Oportunidades de optimización</div>
+      <ul style="font-size:12px;color:rgba(255,255,255,.6);margin:0 0 4px 16px;padding:0;line-height:1.7;">
+        <li>¿Qué cambiarías del flujo?</li>
+        <li>¿Qué información adicional necesitabas?</li>
+        <li>¿Qué sobró en el proceso?</li>
+      </ul>
+    </div>
+
+    <!-- Participant screen tracker -->
+    <div>
+      <div class="fac-s-lbl">Pantalla del participante (marcar manualmente)</div>
+      <div style="font-size:12px;font-weight:500;color:rgba(255,255,255,.55);margin-bottom:7px;" id="ptLabel">Introducción</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
+        <button class="nav-b pt-btn pt-active" onclick="setParticipantScreen(0)">Intro</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(1)">Comercio</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(2)">PSE</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(3)">Form 1</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(4)">Form 2</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(5)">OTP</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(6)">Cupo</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(7)">Confirm.</button>
+        <button class="nav-b pt-btn" onclick="setParticipantScreen(8)">Fin</button>
+      </div>
+    </div>
+
+    <!-- Hotspot toggle -->
+    <div>
+      <div class="fac-s-lbl">Asistencia visual</div>
+      <div class="fac-tog-row">
+        <span class="fac-tog-lbl">Destacar zonas tapeables</span>
+        <div class="tog-sw" id="togHs" onclick="toggleHotspot()">
+          <div class="tog-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+        <span class="fac-s-lbl" style="margin:0">Observaciones</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="save-ind" id="saveInd">Guardado ✓</span>
+          <button class="ts-btn" onclick="insertTimestamp()">⏱ + tiempo</button>
+        </div>
+      </div>
+      <textarea class="fac-notes" id="facNotes" placeholder="Usa ⏱ + tiempo para insertar el marcador del cronómetro antes de cada nota.&#10;&#10;Ej:&#10;[00:42] No encontró Crédito PSE a la primera&#10;[01:15] Preguntó si había intereses" rows="7" oninput="saveSession()"></textarea>
+      <div class="storage-notice" style="margin-top:6px;">
+        💾 Notas guardadas en este navegador — sobreviven si refrescas la página
+      </div>
+    </div>
+
+    <!-- Participant info -->
+    <div>
+      <div class="fac-s-lbl">Datos del participante</div>
+      <input class="sess-input" id="participantName" placeholder="Nombre o código del participante (ej: P01 · Ana)" oninput="saveSession()">
+    </div>
+
+    <!-- Export -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <button class="exp-btn" onclick="exportSession()">↓ Exportar sesión como .txt</button>
+      <button class="new-session-btn" onclick="newSession()">↺ Nueva sesión (borra notas y checklist)</button>
+    </div>
+
+  </div><!-- /fac-body -->
+</div><!-- /fac-panel -->
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ─ STATE ─ */
+let cur = 0;
+const TOTAL = 10;
+let timerSec = 0;
+let timerRunning = false;
+let timerInterval = null;
+let hotspotOn = false;
+let facOpen = false;
+let otpTimer = 115;
+let otpInterval = null;
+let participantCur = 0;
+let enelMethod = 'pse';
+let enelConsent = false;
+const STORAGE_KEY = 'pse_usability_session';
+
+const ALKOSTO_FLOW_SRC = 'envio-pago.html';
+
+const screenMeta = [
+  { name:'Introducción', sub:'Escenario de prueba', shortName:'Intro' },
+  { name:'Alkosto — Envío y Pago', sub:'Estado A/B de medios de pago', shortName:'Alkosto' },
+  { name:'PSE — Elige cómo pagar', sub:'Selección de método', shortName:'PSE' },
+  { name:'PSE — Redirigiéndote al aliado', sub:'Pantalla de transición', shortName:'Pre-load' },
+  { name:'Aliado — Datos personales', sub:'Formulario 1 de 2', shortName:'Form 1' },
+  { name:'Aliado — Datos de contacto', sub:'Formulario 2 de 2', shortName:'Form 2' },
+  { name:'Aliado — Código OTP', sub:'Verificación por SMS', shortName:'OTP' },
+  { name:'Aliado — Pago realizado', sub:'Revisión y aceptación', shortName:'Pago' },
+  { name:'PSE — Resumen de crédito', sub:'Confirmación PSE', shortName:'Resumen' },
+  { name:'Fin de la prueba', sub:'Flujo completado', shortName:'Fin' },
+];
+
+/* ─ NAVIGATION ─ */
+function go(n, options) {
+  options = options || {};
+  if (n === 2) n = 3;
+  if (n < 0 || n >= TOTAL) return;
+  var instant = !!options.instant;
+  const screens = document.querySelectorAll('.scr');
+  if (instant) {
+    screens.forEach(function (screen) {
+      screen.style.transition = 'none';
+    });
+  }
+  cur = n;
+  for (let i = 0; i < TOTAL; i++) {
+    const el = document.getElementById('s' + i);
+    if (!el) continue;
+    if (i === cur) { el.className = 'scr active'; el.scrollTop = 0; }
+    else if (i < cur) { el.className = 'scr past'; }
+    else { el.className = 'scr'; }
+  }
+  if (instant) {
+    requestAnimationFrame(function () {
+      screens.forEach(function (screen) {
+        screen.style.transition = '';
+      });
+    });
+  }
+  if (cur === 3) startPreloaderAnim(); else resetPreloaderAnim();
+  closeRedirectNotice();
+  updateDatosFloat();
+  if (cur === 6) startOtpTimer(); else stopOtpTimer();
+  if (cur === 8) {
+    const d = new Date();
+    const dt = d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'}) +
+      ' · ' + d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    const el = document.getElementById('pseSumDate');
+    if(el) el.textContent = dt;
+  }
+
+  updateUI();
+}
+
+
+
+/* ─ UI UPDATE ─ */
+function updateUI() {
+  const dotsEl = document.getElementById('stepDots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === cur ? ' active' : (i < cur ? ' done' : ''));
+    dotsEl.appendChild(d);
+  }
+  document.getElementById('bbName').textContent = screenMeta[cur].name;
+  document.getElementById('bbStep').textContent = `Pantalla ${cur + 1} de ${TOTAL}`;
+  document.getElementById('facScrName').textContent = screenMeta[cur].name;
+  document.getElementById('facScrNum').textContent = `Pantalla ${cur + 1} de ${TOTAL} · ${screenMeta[cur].sub}`;
+}
+
+/* ─ TIMER ─ */
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timerBtn').textContent = '▶ Continuar';
+    document.getElementById('timerBtn').classList.remove('go');
+    document.getElementById('timerDig').classList.remove('running');
+  } else {
+    timerInterval = setInterval(() => {
+      timerSec++;
+      document.getElementById('timerDig').textContent = fmt(timerSec);
+    }, 1000);
+    timerRunning = true;
+    document.getElementById('timerBtn').textContent = '⏸ Pausar';
+    document.getElementById('timerBtn').classList.add('go');
+    document.getElementById('timerDig').classList.add('running');
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false; timerSec = 0;
+  document.getElementById('timerDig').textContent = '00:00';
+  document.getElementById('timerDig').classList.remove('running');
+  document.getElementById('timerBtn').textContent = '▶ Iniciar';
+  document.getElementById('timerBtn').classList.remove('go');
+}
+function fmt(s) {
+  const m = Math.floor(s / 60), sec = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+/* ─ OTP ─ */
+function startOtpTimer() {
+  otpTimer = 115; updateOtpDisplay();
+  otpInterval = setInterval(() => { if (otpTimer > 0) { otpTimer--; updateOtpDisplay(); } else stopOtpTimer(); }, 1000);
+}
+function stopOtpTimer() { clearInterval(otpInterval); }
+function updateOtpDisplay() {
+  const el = document.getElementById('otpCountdown');
+  if (!el) return;
+  const m = Math.floor(otpTimer / 60), s = otpTimer % 60;
+  el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+}
+function initOtp() {
+  const boxes = document.querySelectorAll('.otp-b');
+  boxes.forEach((box, i) => {
+    box.addEventListener('input', () => {
+      box.classList.toggle('filled', box.value.length > 0);
+      if (box.value.length === 1 && i < boxes.length - 1) boxes[i + 1].focus();
+    });
+    box.addEventListener('keydown', e => { if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus(); });
+    box.addEventListener('focus', () => box.select());
+  });
+}
+
+/* ─ SHAKE ─ */
+function shakeOpt(id) {
+  const el = document.getElementById(id);
+  el.classList.add('shake');
+  setTimeout(() => el.classList.remove('shake'), 450);
+  toast('Esta ruta no está disponible en el prototipo');
+}
+
+/* ─ COMMERCE SCREEN ─ */
+function selectEnelMethod(method) {
+  enelMethod = method;
+  const pse = document.getElementById('enelMethodPse');
+  const bank = document.getElementById('enelMethodBank');
+  if (pse) pse.classList.toggle('selected', method === 'pse');
+  if (bank) bank.classList.toggle('selected', method === 'bank');
+  updateEnelPayBtn();
+}
+
+function toggleEnelConsent() {
+  enelConsent = !enelConsent;
+  const box = document.getElementById('enelConsentBox');
+  if (box) {
+    box.classList.toggle('checked', enelConsent);
+    box.textContent = enelConsent ? '✓' : '';
+  }
+  updateEnelPayBtn();
+}
+
+function updateEnelPayBtn() {
+  const btn = document.getElementById('enelPayBtn');
+  if (!btn) return;
+  const enabled = enelMethod === 'pse' && enelConsent;
+  btn.classList.toggle('enabled', enabled);
+}
+
+function submitEnelPayment() {
+  if (enelMethod !== 'pse') {
+    toast('Solo la ruta PSE está habilitada en este prototipo');
+    return;
+  }
+  if (!enelConsent) {
+    toast('Autoriza el tratamiento de datos para continuar');
+    return;
+  }
+  go(2);
+}
+
+function resetEnelScreen() {
+  enelMethod = 'pse';
+  enelConsent = false;
+  selectEnelMethod('pse');
+  const box = document.getElementById('enelConsentBox');
+  if (box) {
+    box.classList.remove('checked');
+    box.textContent = '';
+  }
+  updateEnelPayBtn();
+}
+
+function resetAlkostoScreen() {
+  const frame = document.getElementById('alkostoFlowFrame');
+  if (!frame) return;
+  frame.src = ALKOSTO_FLOW_SRC + '?v=' + Date.now();
+}
+
+function goToAllyForm() {
+  go(4);
+}
+
+function openRedirectNotice() {
+  var modal = document.getElementById('redirNoticeModal');
+  if (!modal) return;
+  modal.classList.add('open');
+}
+
+function closeRedirectNotice(event) {
+  if (event && event.target !== event.currentTarget) return;
+  var modal = document.getElementById('redirNoticeModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+}
+
+function confirmRedirectNotice() {
+  closeRedirectNotice();
+  go(3, { instant: true });
+}
+
+window.addEventListener('message', function (event) {
+  if (event && event.data && event.data.type === 'PSE_OPEN_FINANCE_NOTICE') {
+    openRedirectNotice();
+    return;
+  }
+  if (event && event.data && (event.data.type === 'ALKOSTO_GO_REDIRECT' || event.data.type === 'PSE_GO_REDIRECT')) {
+    go(3, { instant: true });
+  }
+});
+
+/* ─ PARTICIPANT SCREEN TRACKER ─ */
+function setParticipantScreen(n) {
+  participantCur = n;
+  document.querySelectorAll('.pt-btn').forEach((btn, i) => btn.classList.toggle('pt-active', i === n));
+  document.getElementById('ptLabel').textContent = screenMeta[n]?.name || '—';
+  saveSession();
+}
+
+/* ─ TIMESTAMP IN NOTES ─ */
+function insertTimestamp() {
+  const ta = document.getElementById('facNotes');
+  const ts = `[${fmt(timerSec)}] `;
+  const pos = ta.selectionStart;
+  const before = ta.value.substring(0, pos);
+  const after = ta.value.substring(pos);
+  const prefix = (before.length > 0 && !before.endsWith('\n')) ? '\n' : '';
+  ta.value = before + prefix + ts + after;
+  ta.selectionStart = ta.selectionEnd = pos + prefix.length + ts.length;
+  ta.focus();
+  saveSession();
+}
+
+/* ─ LOCALSTORAGE: SAVE / LOAD ─ */
+function saveSession() {
+  const data = {
+    notes: document.getElementById('facNotes').value,
+    participantName: document.getElementById('participantName').value,
+    participantScreen: participantCur,
+    checklist: Array.from(document.querySelectorAll('.ck-item')).map(i => i.classList.contains('checked')),
+    savedAt: new Date().toISOString(),
+  };
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    showSaveFlash();
+  } catch(e) { /* storage full or unavailable */ }
+}
+
+function loadSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d.notes) document.getElementById('facNotes').value = d.notes;
+    if (d.participantName) document.getElementById('participantName').value = d.participantName;
+    if (typeof d.participantScreen === 'number') setParticipantScreen(d.participantScreen);
+    if (d.checklist) {
+      const items = document.querySelectorAll('.ck-item');
+      d.checklist.forEach((checked, i) => { if (items[i] && checked) items[i].classList.add('checked'); });
+    }
+  } catch(e) {}
+}
+
+let saveFlashTimeout;
+function showSaveFlash() {
+  const el = document.getElementById('saveInd');
+  el.classList.add('visible');
+  clearTimeout(saveFlashTimeout);
+  saveFlashTimeout = setTimeout(() => el.classList.remove('visible'), 2000);
+}
+
+/* ─ EXPORT ─ */
+function exportSession() {
+  const name = document.getElementById('participantName').value.trim() || 'Sin nombre';
+  const notes = document.getElementById('facNotes').value.trim();
+  const duration = document.getElementById('timerDig').textContent;
+  const date = new Date().toLocaleString('es-CO', {
+    day:'2-digit', month:'long', year:'numeric',
+    hour:'2-digit', minute:'2-digit'
+  });
+  const ptScreen = screenMeta[participantCur]?.name || '—';
+
+  const checkItems = Array.from(document.querySelectorAll('.ck-item'));
+  const observed = checkItems.filter(i => i.classList.contains('checked')).map(i => '  [✓] ' + i.querySelector('.ck-text').textContent);
+  const notObserved = checkItems.filter(i => !i.classList.contains('checked')).map(i => '  [ ] ' + i.querySelector('.ck-text').textContent);
+  const checklistText = [...observed, ...notObserved].join('\n');
+  const score = `${observed.length} / ${checkItems.length} comportamientos observados`;
+
+  const lines = [
+    '══════════════════════════════════════════════',
+    '  REPORTE DE SESIÓN — PSE Crédito Prototipo',
+    '══════════════════════════════════════════════',
+    '',
+    `  Participante : ${name}`,
+    `  Fecha        : ${date}`,
+    `  Duración     : ${duration}`,
+    `  Última pant. : ${ptScreen}`,
+    `  Score        : ${score}`,
+    '',
+    '── LISTA DE OBSERVACIÓN ──────────────────────',
+    '',
+    checklistText,
+    '',
+    '── NOTAS Y OBSERVACIONES ─────────────────────',
+    '',
+    notes || '  (sin notas registradas)',
+    '',
+    '══════════════════════════════════════════════',
+    `  Exportado desde PSE Crédito Usability Prototype v0.1`,
+  ];
+
+  const blob = new Blob([lines.join('\n')], { type:'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const slug = name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+  a.href = url;
+  a.download = `sesion-pse-${slug || 'participante'}-${Date.now()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Sesión exportada · revisa tus Descargas');
+}
+
+/* ─ NEW SESSION ─ */
+function newSession() {
+  if (!confirm('¿Iniciar nueva sesión? Se borrarán las notas y el checklist actuales.')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('facNotes').value = '';
+  document.getElementById('participantName').value = '';
+  document.querySelectorAll('.ck-item').forEach(i => i.classList.remove('checked'));
+  setParticipantScreen(0);
+  resetTimer();
+  resetAll();
+  toast('Nueva sesión lista');
+}
+
+/* ─ RESET FLOW ─ */
+function resetAll() {
+  resetTimer();
+  stopOtpTimer();
+  resetEnelScreen();
+  resetAlkostoScreen();
+  document.querySelectorAll('.otp-b').forEach(b => { b.value = ''; b.classList.remove('filled'); });
+  go(0);
+}
+
+/* ─ FACILITATOR PANEL ─ */
+function toggleFac() {
+  facOpen = !facOpen;
+  document.getElementById('facPanel').classList.toggle('open', facOpen);
+  document.getElementById('facToggleBtn').classList.toggle('active', facOpen);
+}
+
+/* ─ CHECKLIST ─ */
+function toggleCheck(el) { el.classList.toggle('checked'); saveSession(); }
+
+/* ─ HOTSPOT ─ */
+function toggleHotspot() {
+  hotspotOn = !hotspotOn;
+  document.getElementById('togHs').classList.toggle('on', hotspotOn);
+  document.getElementById('phoneScreen').classList.toggle('hotspot-on', hotspotOn);
+}
+
+/* ─ TAP RIPPLE ─ */
+document.addEventListener('click', function(e) {
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+});
+
+/* ─ TOAST ─ */
+function toast(msg) {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => t.remove(), 3100);
+}
+
+/* ─ CLOCK ─ */
+function updateClock() {
+  const now = new Date(), h = now.getHours(), m = now.getMinutes();
+  document.getElementById('statusTime').textContent = (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+/* ─ KEYBOARD SHORTCUTS ─ */
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'Enter') go(Math.min(9, cur + 1));
+  if (e.key === 'ArrowLeft') go(Math.max(0, cur - 1));
+  if (e.key === 'f' || e.key === 'F') toggleFac();
+  if (e.key === 'r' || e.key === 'R') resetAll();
+});
+
+/* ─ INIT ─ */
+initOtp();
+resetEnelScreen();
+resetAlkostoScreen();
+loadSession();
+updateUI();
+
+/* ── CAPTCHA ── */
+function toggleCaptcha() {
+  var box = document.getElementById('rcCheckbox');
+  box.classList.toggle('checked');
+}
+
+/* ── PRE-LOADER ANIMATION (requestAnimationFrame) ── */
+var preloaderTimer = null;
+var preloaderRAF = null;
+var PRELOADER_DELAY = 5000; // ms
+
+function startPreloaderAnim() {
+  resetPreloaderAnim();
+  preloaderTimer = setTimeout(function() {
+    if (cur === 3) goToAllyForm();
+  }, PRELOADER_DELAY);
+}
+
+function resetPreloaderAnim() {
+  if (preloaderRAF) { cancelAnimationFrame(preloaderRAF); preloaderRAF = null; }
+  if (preloaderTimer) { clearTimeout(preloaderTimer); preloaderTimer = null; }
+}
+
+/* ── DATOS FLOATING CARD ── */
+var datosFloatCollapsed = false;
+
+function toggleDatosFloat() {
+  var card = document.getElementById('datosFloat');
+  if (!card) return;
+  datosFloatCollapsed = !datosFloatCollapsed;
+  card.classList.toggle('collapsed', datosFloatCollapsed);
+}
+
+function updateDatosFloat() {
+  var card = document.getElementById('datosFloat');
+  if (!card) return;
+  var show = false;
+  card.classList.toggle('visible', show);
+  // Reset collapsed state each time it appears
+  if (show) {
+    datosFloatCollapsed = false;
+    card.classList.remove('collapsed');
+  }
+}
+</script>
 </body>
 </html>
