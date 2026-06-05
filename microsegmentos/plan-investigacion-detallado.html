@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan de Investigación Detallado — Microsegmentos ACH Colombia 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../estilos.css">
+  <style>
+    .fase-card {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e8e8f0;
+      margin-bottom: 12px;
+    }
+    .fase-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .fase-header__left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .fase-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .fase-semanas {
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.85;
+      letter-spacing: 0.04em;
+    }
+    .fase-body {
+      padding: 20px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .fase-body--3col {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .fase-actividad {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .fase-actividad__titulo {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .fase-actividad__desc {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+    }
+    .fase-actividad__hito {
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .fh-blue { background: #5454e9; color: #fff; }
+    .fh-green { background: #4cb979; color: #fff; }
+    .fh-orange { background: #e9683b; color: #fff; }
+    .fh-purple { background: #865cf0; color: #fff; }
+    .hito-blue { color: #5454e9; }
+    .hito-green { color: #4cb979; }
+    .hito-orange { color: #e9683b; }
+    .hito-purple { color: #865cf0; }
+
+    .bloque-entrevista {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0;
+      border: 1px solid #e8e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .bloque-entrevista__tiempo {
+      background: #f4f4fb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 8px;
+      text-align: center;
+      border-right: 1px solid #e8e8f0;
+    }
+    .bloque-entrevista__min {
+      font-size: 22px;
+      font-weight: 800;
+      color: #5454e9;
+      line-height: 1;
+    }
+    .bloque-entrevista__label {
+      font-size: 10px;
+      color: #88898c;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .bloque-entrevista__objetivo {
+      font-size: 10px;
+      font-style: italic;
+      color: #865cf0;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+    .bloque-entrevista__contenido {
+      padding: 12px 14px;
+      background: #fff;
+    }
+    .bloque-entrevista__titulo {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #1a1a1a;
+    }
+    .bloque-entrevista__preguntas {
+      font-size: 12px;
+      color: #444;
+      line-height: 1.6;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .bloque-entrevista__preguntas li::before {
+      content: "→ ";
+      color: #5454e9;
+      font-weight: 700;
+    }
+    .bloque-entrevista__nota {
+      font-size: 11px;
+      color: #e9683b;
+      font-style: italic;
+      margin-top: 5px;
+      border-top: 1px dashed #f0d0c5;
+      padding-top: 5px;
+    }
+
+    .riesgo-row {
+      display: grid;
+      grid-template-columns: 16px 1fr 80px 80px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f6;
+      font-size: 12px;
+    }
+    .riesgo-row:last-child { border-bottom: none; }
+    .riesgo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .dot-red { background: #e9683b; }
+    .dot-yellow { background: #e4eb60; }
+    .prob-badge, .imp-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .prob-alta { background: #fde8e0; color: #c0440d; }
+    .prob-media { background: #fef9db; color: #8a7200; }
+    .prob-baja { background: #edfbf4; color: #1e6e3d; }
+    .imp-alto { background: #fde8e0; color: #c0440d; }
+    .imp-medio { background: #fef9db; color: #8a7200; }
+    .imp-bajo { background: #edfbf4; color: #1e6e3d; }
+
+    .criterio-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f6;
+      font-size: 13px;
+    }
+    .criterio-item:last-child { border-bottom: none; }
+    .criterio-num {
+      width: 24px;
+      height: 24px;
+      background: #5454e9;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .sintesis-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f6;
+      font-size: 12px;
+    }
+    .sintesis-step:last-child { border-bottom: none; }
+    .sintesis-step__num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e4eb60;
+      color: #1a1a1a;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .entregable-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 9px 0;
+      border-bottom: 1px solid #f0f0f6;
+      font-size: 12px;
+    }
+    .entregable-item:last-child { border-bottom: none; }
+    .entregable-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: #5454e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    body { padding-top: 66px; }
+    .top-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(26, 26, 26, .92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      padding: 10px 16px;
+    }
+    .top-menu__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+    .top-menu__link {
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .82);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 999px;
+      padding: 8px 14px;
+      transition: background-color .2s, color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .top-menu__link:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, .45);
+    }
+    .top-menu__link--active {
+      background: #e4eb60;
+      border-color: #e4eb60;
+      color: #1a1a1a;
+    }
+    @media (max-width: 900px) {
+      body { padding-top: 74px; }
+      .top-menu { padding: 10px 12px; }
+      .top-menu__inner { justify-content: flex-start; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+<nav class="top-menu" aria-label="Entregables de microsegmentos">
+  <div class="top-menu__inner">
+    <a class="top-menu__link" href="brief-microsegmentos.html">Brief</a>
+    <a class="top-menu__link" href="modelo-matriz-microsegmentos.html">Modelo</a>
+    <a class="top-menu__link" href="matriz-plantilla-campo.html">Plantilla</a>
+    <a class="top-menu__link top-menu__link--active" href="plan-investigacion-detallado.html">Plan</a>
+    <a class="top-menu__link" href="estimacion-horas-v1.html">Estimacion</a>
+  </div>
+</nav>
+<div class="reporte">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="report-header__top">
+      <div class="report-header__logo">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMjIuMTUgMjIwLjg0Ij4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMzAuMy4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMi4xLjMgQnVpbGQgMTgyKSAgLS0+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5zdDAgewogICAgICAgIGZpbGw6ICNmZmZmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJDYXBhXzEiPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNi4zOSwxNzIuMjdWMjUuMTdoMTkuMzV2MTQ3LjA5aC0xOS4zNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNjguNTEsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOUw4MS4xNSw1Mi42Mmw2LjcxLS43OXYxMjAuNDRoLTE5LjM1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMTQuMjIsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOWwtODQuMTEtMTE5LjY1LDYuNzEtLjc5djEyMC40NGgtMTkuMzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTM1OS45MywxNzIuMjdWMjUuMTdoMTkuMzV2MTI5LjMyaDY0LjU2djE3Ljc3aC04My45MVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDUxLjM0LDE3Mi4yN2w1Mi43Mi0xNDcuMDloMjIuOWw1Mi43MiwxNDcuMDloLTIwLjczbC0xMi4wNC0zNC41NWgtNjIuNzlsLTEyLjA0LDM0LjU1aC0yMC43M1pNNDkwLjI0LDExOS45NWg1MC41NGwtMjguMDQtODAuNzVoNS41M2wtMjguMDQsODAuNzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5OC4yNCwxNzIuMjdWMjUuMTdoNjEuOGM4LjgyLDAsMTYuNDIsMS41OCwyMi44LDQuNzQsNi4zOCwzLjE2LDExLjMyLDcuNiwxNC44MSwxMy4zMywzLjQ5LDUuNzMsNS4yMywxMi41NCw1LjIzLDIwLjQzLDAsNy4yNC0xLjg4LDEzLjc5LTUuNjMsMTkuNjUtMy43NSw1Ljg2LTkuMjUsMTAuNDMtMTYuNDksMTMuNzJsLS4yLTcuMzFjNi4zMiwyLjM3LDExLjU1LDUuNSwxNS43LDkuMzgsNC4xNSwzLjg4LDcuMjcsOC4zNiw5LjM4LDEzLjQzLDIuMSw1LjA3LDMuMTYsMTAuNDMsMy4xNiwxNi4wOSwwLDEzLjU2LTQuMzQsMjQuMjItMTMuMDMsMzEuOTktOC42OSw3Ljc3LTIwLjUzLDExLjY1LTM1LjU0LDExLjY1aC02MlpNNjE3LjU5LDg1LjU5aDQyLjA1YzcuMTEsMCwxMi44My0yLjA3LDE3LjE4LTYuMjIsNC4zNC00LjE1LDYuNTItOS40NCw2LjUyLTE1Ljg5cy0yLjE3LTExLjg1LTYuNTItMTUuNGMtNC4zNC0zLjU1LTEwLjA3LTUuMzMtMTcuMTgtNS4zM2gtNDIuMDV2NDIuODRaTTYxNy41OSwxNTQuNWg0My40NGM4LjU1LDAsMTUuNC0yLjMsMjAuNTMtNi45MSw1LjEzLTQuNjEsNy43LTEwLjg2LDcuNy0xOC43NnMtMi41Ny0xNC4xOC03LjctMTguODZjLTUuMTMtNC42Ny0xMS45OC03LjAxLTIwLjUzLTcuMDFoLTQzLjQ0djUxLjUzWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MzEuNiw5NC4zN2MtMy4wNywwLTUuOTEtLjU1LTguNDktMS42Ni0yLjU5LTEuMTEtNC44NS0yLjY4LTYuNzctNC43LTEuOTMtMi4wMi0zLjQyLTQuNC00LjQ3LTcuMTItMS4wNS0yLjcyLTEuNTgtNS43LTEuNTgtOC45M3MuNTMtNi4yNywxLjU4LTguOTljMS4wNS0yLjcyLDIuNTMtNS4xLDQuNDQtNy4xMiwxLjkxLTIuMDIsNC4xNi0zLjU5LDYuNzctNC43LDIuNjEtMS4xMSw1LjQ1LTEuNjYsOC41Mi0xLjY2czUuNjkuNTMsOC4wOSwxLjU4LDQuNDIsMi40MSw2LjA3LDQuMDljMS42NSwxLjY3LDIuODMsMy40NiwzLjUzLDUuMzdsLTUuMjUsMi4zOWMtMS4wMS0yLjQxLTIuNTktNC4zNy00LjczLTUuODctMi4xNC0xLjUtNC43MS0yLjI1LTcuNzEtMi4yNXMtNS43My43Mi04LjA5LDIuMTZjLTIuMzUsMS40NC00LjE5LDMuNDQtNS41Miw2LjAxLTEuMzIsMi41Ny0xLjk4LDUuNTctMS45OCw4Ljk5cy42Niw2LjM2LDEuOTgsOC45M2MxLjMyLDIuNTcsMy4xNiw0LjU3LDUuNTIsNi4wMSwyLjM1LDEuNDQsNS4wNSwyLjE2LDguMDksMi4xNnM1LjU3LS43NSw3LjcxLTIuMjVjMi4xNC0xLjUsMy43Mi0zLjQ1LDQuNzMtNS44N2w1LjI1LDIuMzljLS43LDEuOTEtMS44OCwzLjctMy41Myw1LjM3LTEuNjUsMS42Ny0zLjY4LDMuMDQtNi4wNyw0LjA5cy01LjA5LDEuNTgtOC4wOSwxLjU4WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NzAuMzEsOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04OTEuNjcsOTMuNjd2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODZzLS45OSwyLjctLjk5LDQuNDF2MTguNjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTkzOC4zMSw5NC4wMmMtMy4wOCwwLTUuNDQtLjg4LTcuMDktMi42My0xLjY1LTEuNzUtMi40OC00LjIyLTIuNDgtNy40MXYtMTYuNThoLTUuNzJ2LTUuMmgxLjE3YzEuNCwwLDIuNTEtLjQzLDMuMzMtMS4yOC44Mi0uODYsMS4yMy0xLjk5LDEuMjMtMy4zOXYtMi41N2g1LjQzdjcuMjRoNy4wNnY1LjJoLTcuMDZ2MTYuNGMwLDEuMDUuMTYsMS45Ny41LDIuNzQuMzMuNzguODgsMS4zOSwxLjY2LDEuODQuNzguNDUsMS44MS42NywzLjA5LjY3LjI3LDAsLjYxLS4wMiwxLjAyLS4wNnMuNzktLjA4LDEuMTQtLjEydjQuNzljLS41MS4xMi0xLjA3LjItMS42OS4yNi0uNjIuMDYtMS4xNS4wOS0xLjU4LjA5WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05NDguNjUsOTMuNjd2LTMxLjQ3aDUuMzF2NS43OGwtLjU4LS44MmMuNzQtMS43OSwxLjg3LTMuMTIsMy4zOS00czMuMzctMS4zMSw1LjU1LTEuMzFoMS45M3Y1LjE0aC0yLjc0Yy0yLjIyLDAtNC4wMS42OS01LjM3LDIuMDctMS4zNiwxLjM4LTIuMDQsMy4zNC0yLjA0LDUuODd2MTguNzRoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk4NC4wMiw5NC4zN2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk05ODQuMDIsODkuMTJjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OS0yLjE2LTIuOTgtMy43NC0zLjk3LTMuMzQtMS40OS01LjI4LTEuNDktMy43Ny41LTUuMzQsMS40OS0yLjgzLDIuMzItMy43NywzLjk3LTEuNCwzLjU1LTEuNCw1LjY5LjQ3LDQuMDEsMS40LDUuNzJjLjkzLDEuNzEsMi4xOSwzLjA2LDMuNzcsNC4wM3MzLjM2LDEuNDYsNS4zNCwxLjQ2WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMxLjY2LDk0LjM3Yy0yLjk2LDAtNS42Mi0uNzItNy45Ny0yLjE2LTIuMzYtMS40NC00LjIxLTMuNDEtNS41OC01LjktMS4zNi0yLjQ5LTIuMDQtNS4yNy0yLjA0LTguMzVzLjY4LTUuOTYsMi4wNC04LjQ0YzEuMzYtMi40NywzLjIyLTQuNDMsNS41OC01Ljg3LDIuMzUtMS40NCw1LjAxLTIuMTYsNy45Ny0yLjE2LDIuNjEsMCw0LjkyLjU1LDYuOTUsMS42NiwyLjAyLDEuMTEsMy42MiwyLjYsNC43OSw0LjQ3bC0uODgsMS4zNHYtMTkuNWg1LjQ5djQ0LjE5aC01LjMxdi02LjcxbC43LjkzYy0xLjA5LDIuMDYtMi42OCwzLjY2LTQuNzYsNC43OS0yLjA4LDEuMTMtNC40MSwxLjY5LTYuOTgsMS42OVpNMTAzMi4xMyw4OS4xMmMxLjk4LDAsMy43Ni0uNDksNS4zMS0xLjQ2czIuNzktMi4zMSwzLjcxLTRjLjkxLTEuNjksMS4zNy0zLjU5LDEuMzctNS42OXMtLjQ2LTQuMDYtMS4zNy01Ljc1Yy0uOTItMS42OS0yLjE1LTMuMDMtMy43MS00LTEuNTYtLjk3LTMuMzMtMS40Ni01LjMxLTEuNDZzLTMuNzEuNS01LjI4LDEuNDktMi44MSwyLjMyLTMuNzEsMy45N2MtLjksMS42NS0xLjM0LDMuNTctMS4zNCw1Ljc1cy40NSw0LDEuMzQsNS42OWMuODksMS42OSwyLjEyLDMuMDMsMy42OCw0czMuMzMsMS40Niw1LjMxLDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwNzAuODksOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MTEuNTgsMTYzLjczdi00My40OWg1LjcydjQzLjQ5aC01LjcyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMzUsMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMiwxLjAzLDEuNzksMS41NSwzLjgxLDEuNTUsNi4wN3YyMC4zN2gtNS40OXYtMTguNjJjMC0xLjc1LS4zMS0zLjIzLS45My00LjQ0LS42Mi0xLjIxLTEuNTEtMi4xNS0yLjY2LTIuODMtMS4xNS0uNjgtMi40Ni0xLjAyLTMuOTQtMS4wMnMtMi43OS4zNC0zLjk0LDEuMDJjLTEuMTUuNjgtMi4wNSwxLjYzLTIuNzEsMi44Ni0uNjYsMS4yMy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NjAuMiwxNjMuNzN2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODYtLjY2LDEuMjMtLjk5LDIuNy0uOTksNC40MXYxOC42MmgtNS40M1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNOTA5LjAxLDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MSwzLjM2LTQuNCw1LjgxLTUuODRjMi40NS0xLjQ0LDUuMjEtMi4xNiw4LjI5LTIuMTZzNS43OC43MSw4LjIzLDIuMTNjMi40NSwxLjQyLDQuMzksMy4zNiw1LjgxLDUuODEsMS40MiwyLjQ1LDIuMTMsNS4yNywyLjEzLDguNDZzLS43NCw2LjAyLTIuMjIsOC40OWMtMS40OCwyLjQ3LTMuNDMsNC40Mi01Ljg3LDUuODQtMi40MywxLjQyLTUuMTMsMi4xMy04LjA5LDIuMTNaTTkwOS4wMSwxNTkuMTdjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OWMtLjkyLTEuNjUtMi4xNi0yLjk4LTMuNzQtMy45N3MtMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk0MC40MiwxNjMuNzNsLTEyLjMyLTMxLjQ3aDYuMDdsOS44NywyNi42MmgtMi4xbDkuOTItMjYuNjJoNi4wN2wtMTIuMzgsMzEuNDdoLTUuMTRaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk3MC44MywxNjQuNDNjLTIuMDYsMC0zLjg4LS4zOC01LjQ2LTEuMTRzLTIuODEtMS44MS0zLjcxLTMuMTVjLS45LTEuMzQtMS4zNC0yLjg5LTEuMzQtNC42NHMuMzYtMy4xOCwxLjA4LTQuNTJjLjcyLTEuMzQsMS44NS0yLjQ4LDMuMzktMy40MiwxLjU0LS45MywzLjQ3LTEuNiw1LjgxLTEuOTlsMTEuNjgtMS45M3Y0LjU1bC0xMC40NSwxLjc1Yy0yLjAyLjM1LTMuNDkuOTktNC40MSwxLjkzLS45Mi45My0xLjM3LDIuMDgtMS4zNywzLjQ0LDAsMS4yOC41MiwyLjM1LDEuNTUsMy4yMXMyLjMzLDEuMjgsMy44OCwxLjI4YzEuOTgsMCwzLjcxLS40Miw1LjE3LTEuMjYsMS40Ni0uODQsMi42MS0xLjk3LDMuNDUtMy40Mi44NC0xLjQ0LDEuMjUtMy4wNCwxLjI1LTQuNzl2LThjMC0xLjcxLS42My0zLjEtMS45LTQuMTctMS4yNy0xLjA3LTIuOTMtMS42MS00Ljk5LTEuNjEtMS43OSwwLTMuMzguNDYtNC43NiwxLjM3LTEuMzguOTItMi40LDIuMTMtMy4wNiwzLjY1bC00LjczLTIuNDVjLjU4LTEuNDQsMS41Mi0yLjczLDIuOC0zLjg4LDEuMjgtMS4xNSwyLjc4LTIuMDUsNC40OS0yLjcxczMuNS0uOTksNS4zNy0uOTljMi40MSwwLDQuNTMuNDYsNi4zNiwxLjM3LDEuODMuOTIsMy4yNiwyLjE4LDQuMjksMy43OSwxLjAzLDEuNjIsMS41NSwzLjQ5LDEuNTUsNS42M3YyMS4zN2gtNS4zMXYtNS45NmwuOTkuMzVjLS42NiwxLjI1LTEuNTYsMi4zMy0yLjY5LDMuMjctMS4xMy45My0yLjQ1LDEuNjctMy45NywyLjIyLTEuNTIuNTQtMy4xNy44Mi00Ljk2LjgyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDA5Ljc3LDE2NC40M2MtMy4wOCwwLTUuODEtLjcyLTguMi0yLjE2cy00LjI3LTMuNDEtNS42My01LjljLTEuMzYtMi40OS0yLjA0LTUuMjktMi4wNC04LjQxcy42OC01Ljk1LDIuMDQtOC40MWMxLjM2LTIuNDUsMy4yNC00LjQsNS42My01Ljg0LDIuMzktMS40NCw1LjEzLTIuMTYsOC4yLTIuMTYsMi4wNiwwLDMuOTkuMzcsNS43OCwxLjExLDEuNzkuNzQsMy4zNywxLjczLDQuNzMsMi45OCwxLjM2LDEuMjUsMi4zNSwyLjcxLDIuOTgsNC4zOGwtNC44NSwyLjM0Yy0uNzQtMS42My0xLjg3LTIuOTctMy4zOC00LTEuNTItMS4wMy0zLjI3LTEuNTUtNS4yNS0xLjU1cy0zLjYzLjQ5LTUuMTcsMS40NmMtMS41NC45Ny0yLjc1LDIuMy0zLjY1LDMuOTctLjksMS42Ny0xLjM0LDMuNi0xLjM0LDUuNzhzLjQ1LDQsMS4zNCw1LjY5Yy44OSwxLjY5LDIuMTEsMy4wMywzLjY1LDRzMy4yNiwxLjQ2LDUuMTcsMS40NiwzLjc0LS41Miw1LjI1LTEuNTVjMS41Mi0xLjAzLDIuNjUtMi40LDMuMzgtNC4xMmw0Ljg1LDIuNDVjLS42MiwxLjYzLTEuNjIsMy4wOC0yLjk4LDQuMzUtMS4zNiwxLjI2LTIuOTQsMi4yNy00LjczLDMuMDEtMS43OS43NC0zLjcyLDEuMTEtNS43OCwxLjExWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMwLjM4LDEyNy4yNHYtNy4wMWg1LjQzdjcuMDFoLTUuNDNaTTEwMzAuMzgsMTYzLjczdi0zMS40N2g1LjQzdjMxLjQ3aC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDU5LjE2LDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk0xMDU5LjE2LDE1OS4xN2MxLjk1LDAsMy43MS0uNDksNS4yOC0xLjQ2czIuODItMi4zMiwzLjc0LTQuMDNjLjkxLTEuNzEsMS4zNy0zLjYyLDEuMzctNS43MnMtLjQ2LTQuMDQtMS4zNy01LjY5LTIuMTYtMi45OC0zLjc0LTMuOTctMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaTTEwNTYuNDEsMTI2LjM2bDQuNjEtOS4yMmg3LjM2bC02LjU0LDkuMjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwODIuMzksMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMnMxLjU1LDMuODEsMS41NSw2LjA3djIwLjM3aC01LjQ5di0xOC42MmMwLTEuNzUtLjMxLTMuMjMtLjkzLTQuNDQtLjYyLTEuMjEtMS41MS0yLjE1LTIuNjYtMi44M3MtMi40Ni0xLjAyLTMuOTQtMS4wMi0yLjc5LjM0LTMuOTQsMS4wMmMtMS4xNS42OC0yLjA1LDEuNjMtMi43MSwyLjg2cy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=" alt="INNLAB" style="height:30px; margin-right:16px">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NjAgMjg4Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjNTQ1NGU5OwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI4OCIvPgogIDxnPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3OS42LDcxLjFjMS43LDEuMiwzLjQsMi40LDUsMy42bC0xMy45LDE5LjJjLTEuNi0xLjMtMy4zLTIuNS01LTMuNmwxMy45LTE5LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTc5LjYsNzEuMWMxLjcsMS4yLDMuNCwyLjQsNSwzLjZsLTEzLjksMTkuMmMtMS42LTEuMy0zLjMtMi41LTUtMy42bDEzLjktMTkuMloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05Ni4xLDYzLjJsNy40LDIyLjZjNC43LTIuMiw5LjYtMy44LDE0LjgtNC44bC03LjQtMjIuNmMtNS4xLDEuMi0xMC4xLDIuOC0xNC44LDQuOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05Ni4xLDYzLjJsNy40LDIyLjZjNC43LTIuMiw5LjYtMy44LDE0LjgtNC44bC03LjQtMjIuNmMtNS4xLDEuMi0xMC4xLDIuOC0xNC44LDQuOFoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNDcuNyw4Mi4xYzEuOC41LDMuNiwxLjEsNS4zLDEuN2w3LjMtMjIuNWMtMS43LS42LTMuNS0xLjItNS4zLTEuN2wtNy4zLDIyLjVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTQ3LjcsODIuMWMxLjguNSwzLjYsMS4xLDUuMywxLjdsNy4zLTIyLjVjLTEuNy0uNi0zLjUtMS4yLTUuMy0xLjdsLTcuMywyMi41WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTc0LjgsMTEyLjJjMi4zLTQuMSw1LjEtNy45LDguMy0xMS40bC0xOS4yLTE0Yy0zLjEsMy42LTUuOCw3LjQtOC4zLDExLjRsMTkuMiwxNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik03NC44LDExMi4yYzIuMy00LjEsNS4xLTcuOSw4LjMtMTEuNGwtMTkuMi0xNGMtMy4xLDMuNi01LjgsNy40LTguMywxMS40bDE5LjIsMTRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNODcuMSw5Ni44YzMuNi0zLjMsNy43LTYuMywxMi04LjdsLTE0LTE5LjJjLTQuMiwyLjYtOC4zLDUuNS0xMiw4LjdsMTQsMTkuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Ny4xLDk2LjhjMy42LTMuMyw3LjctNi4zLDEyLTguN2wtMTQtMTkuMmMtNC4yLDIuNi04LjMsNS41LTEyLDguN2wxNCwxOS4yWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY2LjMsMTQ0YzAtMi4xLjEtNC4zLjMtNi40aC0yMy43Yy0uMiwyLjEtLjIsNC4yLS4yLDYuNHMwLDQuMy4yLDYuNGgyMy43Yy0uMi0yLjEtLjMtNC4yLS4zLTYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02Ni4zLDE0NGMwLTIuMS4xLTQuMy4zLTYuNGgtMjMuN2MtLjIsMi4xLS4yLDQuMi0uMiw2LjRzMCw0LjMuMiw2LjRoMjMuN2MtLjItMi4xLS4zLTQuMi0uMy02LjRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk0LjgsMTQ0YzAsMS4zLDAsMi43LS4xLDRoMjMuN2MwLTEuMywwLTIuNywwLTRzMC0yLjcsMC00aC0yMy43YzAsMS4zLjEsMi43LjEsNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTQuOCwxNDRjMCwxLjMsMCwyLjctLjEsNGgyMy43YzAtMS4zLDAtMi43LDAtNHMwLTIuNywwLTRoLTIzLjdjMCwxLjMuMSwyLjcuMSw0WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY3LjcsMTMwLjZjLjktNC40LDIuMy04LjcsNC4xLTEyLjdsLTIyLjYtNy4zYy0xLjcsNC4xLTMuMSw4LjMtNC4xLDEyLjdsMjIuNiw3LjNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNjcuNywxMzAuNmMuOS00LjQsMi4zLTguNyw0LjEtMTIuN2wtMjIuNi03LjNjLTEuNyw0LjEtMy4xLDguMy00LjEsMTIuN2wyMi42LDcuM1oiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODAuNCwxMDMuNmMxLjQsMS44LDIuOCwzLjYsNCw1LjZsMTkuMi0xMy45Yy0xLjMtMS45LTIuNi0zLjgtNC01LjZsLTE5LjIsMTMuOVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODAuNCwxMDMuNmMxLjQsMS44LDIuOCwzLjYsNCw1LjZsMTkuMi0xMy45Yy0xLjMtMS45LTIuNi0zLjgtNC01LjZsLTE5LjIsMTMuOVoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjIuMyw1Ni41djIzLjhzMCwwLDAsMGMxLjEtLjEsNC41LS41LDguMi0uNXM3LjEuNCw4LjIuNWMwLDAsMCwwLDAsMHYtMjMuOGMtMS4zLS4xLTQuNy0uNC04LjItLjRzLTYuOS4zLTguMi40WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTEyMi4zLDU2LjV2MjMuOHMwLDAsMCwwYzEuMS0uMSw0LjUtLjUsOC4yLS41czcuMS40LDguMi41YzAsMCwwLDAsMCwwdi0yMy44Yy0xLjMtLjEtNC43LS40LTguMi0uNHMtNi45LjMtOC4yLjRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTcyLjQsMTkyLjZjLTIuNCwyLTQuOSwzLjktNy41LDUuNmwxNCwxOS4yYzIuNi0xLjcsNS4xLTMuNiw3LjUtNS42bC0xNC0xOS4yWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3Mi40LDE5Mi42Yy0yLjQsMi00LjksMy45LTcuNSw1LjZsMTQsMTkuMmMyLjYtMS43LDUuMS0zLjYsNy41LTUuNmwtMTQtMTkuMloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik03MS42LDE2OS41Yy0xLjYtMy43LTIuOC03LjUtMy43LTExLjVsLTIyLjYsNy4zYzEsMy45LDIuMiw3LjgsMy43LDExLjVsMjIuNi03LjNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNzEuNiwxNjkuNWMtMS42LTMuNy0yLjgtNy41LTMuNy0xMS41bC0yMi42LDcuM2MxLDMuOSwyLjIsNy44LDMuNywxMS41bDIyLjYtNy4zWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE1NC44LDIwMy41Yy0yLjksMS4yLTUuOCwyLjEtOC45LDIuOWw3LjMsMjIuNmMzLS44LDYtMS44LDguOS0yLjlsLTcuMy0yMi42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE1NC44LDIwMy41Yy0yLjksMS4yLTUuOCwyLjEtOC45LDIuOWw3LjMsMjIuNmMzLS44LDYtMS44LDguOS0yLjlsLTcuMy0yMi42WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44LDE1OS44Yy0uNywyLjctMS42LDUuNC0yLjYsOGwyMi42LDcuM2MxLTIuNiwxLjktNS4zLDIuNi04bC0yMi41LTcuM1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTIuOCwxNTkuOGMtLjcsMi43LTEuNiw1LjQtMi42LDhsMjIuNiw3LjNjMS0yLjYsMS45LTUuMywyLjYtOGwtMjIuNS03LjNaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTg1LDE3OGMtMS42LDIuNS0zLjMsNC45LTUuMiw3LjJsMTkuMiwxMy45YzEuOS0yLjMsMy42LTQuNyw1LjItNy4ybC0xOS4yLTEzLjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTg1LDE3OGMtMS42LDIuNS0zLjMsNC45LTUuMiw3LjJsMTkuMiwxMy45YzEuOS0yLjMsMy42LTQuNyw1LjItNy4ybC0xOS4yLTEzLjlaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNODMuNCwyMTguMmwxMy45LTE5LjJjLTMuMS0xLjktNi4xLTQtOC44LTYuNGwtMTQsMTkuMmMyLjgsMi4zLDUuNyw0LjUsOC44LDYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04My40LDIxOC4ybDEzLjktMTkuMmMtMy4xLTEuOS02LjEtNC04LjgtNi40bC0xNCwxOS4yYzIuOCwyLjMsNS43LDQuNSw4LjgsNi40WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTgyLjIsMTg2LjJjLTIuNS0yLjktNC44LTYtNi44LTkuM2wtMTkuMiwxNGMyLDMuMiw0LjMsNi4zLDYuNyw5LjNsMTkuMi0xNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Mi4yLDE4Ni4yYy0yLjUtMi45LTQuOC02LTYuOC05LjNsLTE5LjIsMTRjMiwzLjIsNC4zLDYuMyw2LjcsOS4zbDE5LjItMTRaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTE1LjcsMjA2LjVjLTMuNC0uOC02LjctMS45LTkuOS0zLjJsLTcuMywyMi42YzMuMiwxLjMsNi41LDIuMyw5LjgsMy4ybDcuMy0yMi42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTExNS43LDIwNi41Yy0zLjQtLjgtNi43LTEuOS05LjktMy4ybC03LjMsMjIuNmMzLjIsMS4zLDYuNSwyLjMsOS44LDMuMmw3LjMtMjIuNloiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzUuNSwyMzEuN3YtMjMuN2MtMS42LjEtMy4zLjItNC45LjJzLTMuMywwLTQuOS0uMnYyMy43YzEuNiwwLDMuMy4xLDQuOS4xczMuMywwLDQuOS0uMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzUuNSwyMzEuN3YtMjMuN2MtMS42LjEtMy4zLjItNC45LjJzLTMuMywwLTQuOS0uMnYyMy43YzEuNiwwLDMuMy4xLDQuOS4xczMuMywwLDQuOS0uMVoiLz4KICAgICAgPC9nPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjAuMywxMDYuNWMtMS4yLjMtMi40LjctMy41LDEuMWwtNi42LTIwLjRjMS4yLS40LDIuMy0uOCwzLjUtMS4xbDYuNiwyMC40Wk0xMzAuNSw4My43Yy0xLjQsMC0yLjksMC00LjMuMnYyMS42YzEuNC0uMiwyLjgtLjIsNC4zLS4yLDEuNSwwLDIuOSwwLDQuMy4ydi0yMS42Yy0xLjQsMC0yLjgtLjItNC4zLS4yWk0xNTMuMSw4OGMtMi42LTEtNS4yLTEuOS03LjktMi42bC02LjcsMjAuNWMyLjguNiw1LjQsMS41LDcuOSwyLjZsNi43LTIwLjVaTTE2OS4yLDk3LjdjLTIuMS0xLjctNC4yLTMuMy02LjUtNC43bC0xMi43LDE3LjRjMi4zLDEuNCw0LjUsMi45LDYuNSw0LjdsMTIuNy0xNy40Wk05Ni43LDk0Yy0xLjEuNy0yLjEsMS41LTMuMiwyLjNsMTIuNiwxNy40YzEtLjgsMi4xLTEuNiwzLjItMi4zbC0xMi42LTE3LjRaTTE4MS41LDExMS44Yy0xLjQtMi4yLTIuOS00LjMtNC42LTYuM2wtMTcuNCwxMi43YzEuNywxLjksMy4zLDQuMSw0LjYsNi4zbDE3LjQtMTIuN1pNNzIuNSwxMjcuNWwyMC40LDYuNmMuNC0xLjQuOS0yLjksMS40LTQuMmwtMjAuNS02LjZjLS41LDEuNC0xLDIuOC0xLjQsNC4yWk0xNjkuMiwxNDcuNmgyMS41YzAtMS4yLjEtMi40LjEtMy42czAtMi40LS4xLTMuNmgtMjEuNWMuMSwxLjIuMiwyLjQuMiwzLjYsMCwxLjIsMCwyLjQtLjIsMy42Wk04MywxMDYuOGMtLjksMS4xLTEuNywyLjItMi41LDMuNGwxNy40LDEyLjZjLjgtMS4yLDEuNi0yLjMsMi41LTMuNGwtMTcuNC0xMi42Wk05MS44LDE0MS42aC0yMS41YzAsLjgsMCwxLjYsMCwyLjRzMCwxLjYsMCwyLjRoMjEuNWMwLS44LDAtMS42LDAtMi40czAtMS42LDAtMi40Wk05Mi45LDE5MS4xYzEuNCwxLjEsMi45LDIuMiw0LjQsMy4ybDEyLjYtMTcuNGMtMS42LTEtMy0yLjEtNC40LTMuMmwtMTIuNiwxNy40Wk0xMDkuMiwyMDAuNGMxLjguNywzLjYsMS4zLDUuNSwxLjhsNi43LTIwLjVjLTEuOS0uNS0zLjctMS4xLTUuNS0xLjhsLTYuNywyMC41Wk04MC4yLDE3Ny4zYzEsMS41LDIsMi45LDMuMSw0LjJsMTcuNC0xMi42Yy0xLjEtMS4zLTIuMS0yLjgtMy4xLTQuMmwtMTcuNCwxMi42Wk03Mi40LDE2MC4zYy40LDEuNiwxLDMuMiwxLjUsNC43bDIwLjUtNi42Yy0uNi0xLjUtMS4xLTMuMS0xLjUtNC43bC0yMC40LDYuNlpNMTMwLjUsMjA0LjNjMSwwLDIsMCwzLDB2LTIxLjVjLTEsMC0yLC4xLTMsLjFzLTIsMC0zLS4xdjIxLjVjMSwwLDIsMCwzLDBaTTE4OSwxMjljLS42LTIuNS0xLjQtNC45LTIuMy03LjJsLTIwLjUsNi43YzEsMi4zLDEuOCw0LjcsMi4zLDcuMmwyMC41LTYuN1pNMTQ2LjIsMjAyLjNjMi0uNSw0LTEuMiw2LTEuOWwtNi43LTIwLjVjLTEuOS44LTMuOSwxLjQtNiwxLjlsNi43LDIwLjVaTTE4Ni43LDE2NmMuOS0yLjIsMS42LTQuNCwyLjItNi43bC0yMC41LTYuN2MtLjUsMi4zLTEuMiw0LjYtMi4yLDYuN2wyMC41LDYuN1pNMTc3LjMsMTgyLjFjMS40LTEuNywyLjgtMy42LDQtNS41bC0xNy40LTEyLjdjLTEuMiwxLjktMi41LDMuOC00LDUuNWwxNy40LDEyLjdaTTE2My4zLDE5NC43YzEuOC0xLjIsMy42LTIuNSw1LjMtMy44bC0xMi43LTE3LjRjLTEuNiwxLjQtMy40LDIuNy01LjMsMy44bDEyLjYsMTcuNFoiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yNDguNywxMjhoMTIuMnY3MC43aC0xMi4ydi03MC43WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yNzUuMywxNjMuOGMwLTIxLjMsMTYuMS0zNy40LDM3LTM3LjRzMjMuNCw1LjMsMzAuMiwxNWwtOS43LDcuNGMtNS43LTcuNy0xMi44LTExLjMtMjAuNi0xMS4zLTEzLjUsMC0yNC4yLDEwLjctMjQuMiwyNS45czExLDI1LjksMjQuNCwyNS45LDE2LjQtNC4zLDIxLjktMTEuOGw5LjMsNi44Yy02LjgsMTAuMy0xOC4yLDE2LjEtMzEuMywxNi4xLTIxLjMsMC0zNi45LTE1LjUtMzYuOS0zNi42WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00MjIuNCwxNjYuMWgtNTljMSwxNC45LDEwLjksMjMuNCwyNS4xLDIzLjRzMTcuNC0zLjksMjMuNC0xMmw4LjgsNi43Yy02LjgsMTAuMi0xOC4yLDE2LjEtMzIuNCwxNi4xLTIyLjEsMC0zNy4zLTE0LjktMzcuMy0zNi41czE1LjktMzcuNiwzNy40LTM3LjYsMzQuNSwxMy44LDM0LjUsMzQuNS0uMSwzLjYtLjQsNS4zWk0zNjQuMSwxNTUuNWg0Ni4yYy0xLjgtMTIuMi05LjktMTguNy0yMi0xOC43cy0yMS40LDYuOC0yNC4yLDE4LjdaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTQzMi40LDE4OS4xbDcuOC05LjJjNi43LDYuMywxNS41LDkuNSwyMy43LDkuNXMxNS4yLTQuMywxNS4yLTEwLjItMy4xLTcuNS0xMi4xLTkuNmwtMTIuNC0yLjhjLTE0LjItMy4yLTIwLjItOS4zLTIwLjItMTguOXMxMC42LTIxLjYsMjcuMS0yMS42LDIyLDQsMjguNywxMS4zbC04LjIsOC41Yy01LjgtNS44LTEzLjEtOC44LTIxLjMtOC44cy0xNC4zLDMuOS0xNC4zLDkuNiwyLjYsNi44LDEyLjQsOWwxMi40LDIuOGMxNC4zLDMuMiwxOS45LDkuNywxOS45LDE5LjVzLTEwLjIsMjIuMS0yNy42LDIyLjEtMjMuOS00LjMtMzEtMTEuM1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNTA1LjEsMTI4aDEyLjJ2NzAuN2gtMTIuMnYtNzAuN1oiLz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjQ4LjcsMTAxLjF2LTEyLjNoMy43djEyYzAsMy43LDEuOCw1LjUsNC45LDUuNXM0LjktMS44LDQuOS01LjV2LTEyaDMuN3YxMi4zYzAsNS41LTMuMyw4LjYtOC42LDguNnMtOC42LTMuMS04LjYtOC42WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTI4NC43LDEwMC4zdjloLTMuNXYtOC4zYzAtMi42LTEuMi0zLjktMy4yLTMuOXMtMi42LjUtMy43LDEuOHYxMC40aC0zLjV2LTE1aDMuNXYxLjNjMS4yLTEsMi45LTEuNiw0LjYtMS42LDMuNSwwLDUuOCwyLjMsNS44LDYuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yODguOSw5MGMwLTEuMiwxLTIuMiwyLjMtMi4yczIuMiwxLDIuMiwyLjItMSwyLjMtMi4yLDIuMy0yLjMtMS0yLjMtMi4zWk0yODkuNCw5NC4zaDMuNXYxNWgtMy41di0xNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zMTIuMSw5NC4zbC02LjIsMTVoLTMuOGwtNi4yLTE1aDMuOWw0LjIsMTAuNyw0LjItMTAuN2gzLjlaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzI5LjIsMTAyLjdoLTExLjljLjMsMi42LDIsNCw0LjYsNHMzLjItLjYsNC40LTIuMWwyLjUsMS45Yy0xLjYsMi4xLTQsMy4zLTcsMy4zLTQuOSwwLTguMS0zLjItOC4xLTcuOHMzLjMtOCw4LTgsNy41LDIuOSw3LjUsNy40LDAsLjksMCwxLjNaTTMxNy41LDEwMGg4LjNjLS40LTIuMS0xLjgtMy4xLTMuOS0zLjFzLTMuOCwxLjEtNC4zLDMuMVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNDIuNSw5NC4xbC0uMiwzLjNjLS41LDAtMS0uMS0xLjQtLjEtMS43LDAtMy4yLjgtNC4xLDIuM3Y5LjhoLTMuNXYtMTVoMy41djEuNmMxLTEuMywyLjYtMiw0LjItMnMxLDAsMS42LjJaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzQ0LjksMTA3LjVsMS44LTIuNmMxLjYsMS4yLDMuMywxLjgsNSwxLjhzMi42LS43LDIuNi0xLjYtLjUtMS4yLTIuMS0xLjZsLTIuNi0uNmMtMy0uNy00LjMtMi00LjMtNC4xczIuMy00LjgsNi00LjgsNC43LjgsNi4yLDIuMmwtMS45LDIuNWMtMS40LTEuMS0yLjktMS43LTQuNS0xLjdzLTIuNC42LTIuNCwxLjUuNSwxLjEsMi4xLDEuNWwyLjYuNmMzLjEuNyw0LjMsMi4xLDQuMyw0LjJzLTIuMyw0LjktNi4yLDQuOS01LjEtLjktNi43LTIuMloiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0zNjEsOTBjMC0xLjIsMS0yLjIsMi4zLTIuMnMyLjIsMSwyLjIsMi4yLTEsMi4zLTIuMiwyLjMtMi4zLTEtMi4zLTIuM1pNMzYxLjUsOTQuM2gzLjV2MTVoLTMuNXYtMTVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzg0LjMsODcuNnYyMS43aC0zLjV2LTEuMWMtMS4xLDEtMi43LDEuNS00LjMsMS41LTQuMSwwLTcuNS0zLjMtNy41LTcuOXMzLjQtNy45LDcuNS03LjksMy4yLjUsNC4zLDEuNXYtNy44aDMuNVpNMzgwLjgsMTA0Ljd2LTUuOGMtMS0xLjItMi40LTEuNy0zLjgtMS43LTIuNSwwLTQuNCwxLjgtNC40LDQuNnMxLjksNC42LDQuNCw0LjYsMi44LS42LDMuOC0xLjhaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDAzLjUsOTQuM3YxNWgtMy41di0xLjFjLTEuMSwxLTIuNywxLjUtNC4zLDEuNS00LjEsMC03LjUtMy4zLTcuNS03LjlzMy40LTcuOSw3LjUtNy45LDMuMi41LDQuMywxLjV2LTEuMWgzLjVaTTQwMCwxMDQuN3YtNS44Yy0xLTEuMi0yLjQtMS43LTMuOC0xLjctMi41LDAtNC40LDEuOC00LjQsNC42czEuOSw0LjYsNC40LDQuNiwyLjgtLjYsMy44LTEuOFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik00MjIuOCw4Ny42djIxLjdoLTMuNXYtMS4xYy0xLjEsMS0yLjcsMS41LTQuMywxLjUtNC4xLDAtNy41LTMuMy03LjUtNy45czMuNC03LjksNy41LTcuOSwzLjIuNSw0LjMsMS41di03LjhoMy41Wk00MTkuMywxMDQuN3YtNS44Yy0xLTEuMi0yLjQtMS43LTMuOC0xLjctMi41LDAtNC40LDEuOC00LjQsNC42czEuOSw0LjYsNC40LDQuNiwyLjgtLjYsMy44LTEuOFoiLz4KICAgICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+" alt="Universidad Icesi" style="height:30px">
+      </div>
+      <div class="report-header__meta">
+        <span class="report-header__meta-label">Estado</span>
+        <span class="report-header__meta-value">Plan v1.0 · Junio 2026</span>
+      </div>
+    </div>
+    <div class="report-header__title-block">
+      <span class="report-header__eyebrow">Investigación cualitativa generativa · ACH Colombia · Horizonte 2027</span>
+      <h1 class="report-header__title">Plan de Investigación — Microsegmentos</h1>
+      <p class="report-header__subtitle">Jobs to Be Done + Four Forces · Diseñado para descubrir oportunidades no resueltas que alimenten el portafolio de producto 2027</p>
+    </div>
+    <div class="report-header__kpi-bar">
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">9</span>
+        <span class="report-header__kpi-label">Semanas totales</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">4</span>
+        <span class="report-header__kpi-label">Fases</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">24</span>
+        <span class="report-header__kpi-label">Entrevistas</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">6</span>
+        <span class="report-header__kpi-label">Microsegmentos</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">9</span>
+        <span class="report-header__kpi-label">Criterios de éxito</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reporte-body">
+
+    <!-- PREGUNTA + MARCO -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Propósito</span>
+        <h2 class="section-title__heading">Pregunta central y marco analítico</h2>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="cita" style="margin-bottom:16px">
+            <span class="cita__texto">¿Qué trabajos por hacer tienen los seis microsegmentos de ACH Colombia que ni el portafolio actual ni el mercado están resolviendo, y qué fuerzas determinarían su adopción de una solución mejor?</span>
+            <span class="cita__fuente">Investigación generativa · No valida soluciones — descubre oportunidades de diferenciación</span>
+          </div>
+          <div class="grid-2">
+            <div class="alerta alerta--info" style="margin:0">
+              <span class="alerta__titulo">Dentro del alcance</span>
+              <p class="alerta__texto">Variables JTBD y fuerzas de adopción (Capas 2 y 3 de la matriz) · Triangulación con datos internos (Capa 1) · 6 microsegmentos</p>
+            </div>
+            <div class="alerta alerta--advertencia" style="margin:0">
+              <span class="alerta__titulo">Fuera del alcance</span>
+              <p class="alerta__texto">Encuestas cuantitativas en esta etapa · Pruebas de usabilidad · Validación de prototipos · Benchmarking competitivo</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#88898c; margin-bottom:10px">Four Forces — Marco analítico</p>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <div style="display:grid; grid-template-columns:90px 1fr; gap:8px; align-items:center; font-size:12px">
+              <span style="background:#e8e8ff; color:#5454e9; padding:4px 10px; border-radius:20px; font-weight:700; text-align:center">① Empuje</span>
+              <span>¿Qué los saca de la solución actual? → Hacer visible el costo de quedarse</span>
+            </div>
+            <div style="display:grid; grid-template-columns:90px 1fr; gap:8px; align-items:center; font-size:12px">
+              <span style="background:#edfbf4; color:#1e6e3d; padding:4px 10px; border-radius:20px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap">② Atracción</span>
+              <span>¿Qué los atrae hacia algo mejor? → Comunicar el beneficio con precisión</span>
+            </div>
+            <div style="display:grid; grid-template-columns:90px 1fr; gap:8px; align-items:center; font-size:12px">
+              <span style="background:#fde8e0; color:#c0440d; padding:4px 10px; border-radius:20px; font-weight:700; text-align:center">③ Ansiedad</span>
+              <span>¿Qué miedo frena el cambio? → Garantías, prueba social, reversibilidad</span>
+            </div>
+            <div style="display:grid; grid-template-columns:90px 1fr; gap:8px; align-items:center; font-size:12px">
+              <span style="background:#f3eeff; color:#5e3dab; padding:4px 10px; border-radius:20px; font-weight:700; text-align:center">④ Inercia</span>
+              <span>¿Qué comodidad con lo actual paraliza? → Evento disparador o cambio invisible</span>
+            </div>
+          </div>
+          <div class="alerta alerta--info" style="margin-top:10px">
+            <p class="alerta__texto" style="margin:0"><strong>¿Por qué no encuestas?</strong> Las preguntas de Capa 2 y Capa 3 no están suficientemente formadas. Una encuesta en este punto mediría supuestos del equipo, no la realidad del usuario.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- MUESTRA -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 1</span>
+        <h2 class="section-title__heading">Muestra — 24 entrevistas en 6 microsegmentos</h2>
+        <p class="section-title__desc">Muestra cualitativa orientada a riqueza de insight, no a representatividad estadística. La saturación se evalúa por segmento durante el campo.</p>
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-datos tabla-datos--striped">
+          <thead>
+            <tr>
+              <th>Microsegmento</th>
+              <th>Perfil a reclutar</th>
+              <th>Excluir explícitamente</th>
+              <th>Acceso vía</th>
+              <th class="num">N</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>EF Vigiladas</strong><br><span class="text-sm text-muted">Bancos / SFC</span></td>
+              <td>Líder de producto digital, VP tecnología o gerente de canales · Que haya evaluado un producto de pagos en los últimos 18 meses</td>
+              <td>Perfiles de compliance como único contacto — sesgan hacia restricciones, no hacia necesidades</td>
+              <td>Área comercial ACH</td>
+              <td class="num"><strong>4</strong></td>
+            </tr>
+            <tr>
+              <td><strong>EF No Vigiladas</strong><br><span class="text-sm text-muted">Cooperativas / Fintech</span></td>
+              <td>Gerente general o director tecnológico · En proceso de cumplimiento Reglamento v6 o con intento de acceso a SOI Data</td>
+              <td>Entidades que ya completaron el proceso — no tienen la tensión activa del job</td>
+              <td>Área comercial ACH</td>
+              <td class="num"><strong>3</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Personas Naturales</strong><br><span class="text-sm text-muted">Asalariados (3) + Independientes (2)</span></td>
+              <td>Usuario activo de billetera digital · 24–45 años · Que gestione su seguridad social activamente</td>
+              <td>Usuarios sin billetera digital activa — no tienen el contexto del job</td>
+              <td>Reclutamiento externo</td>
+              <td class="num"><strong>5</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Corporativos</strong><br><span class="text-sm text-muted">Grandes empresas</span></td>
+              <td>CFO, gerente financiero o jefe de tesorería · Empresa con obligación SEP activa · Sectores variados</td>
+              <td>Contactos de TI como único perfil — el job está en finanzas, no en tecnología</td>
+              <td>Comercial ACH + reclutamiento</td>
+              <td class="num"><strong>4</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Mipymes</strong><br><span class="text-sm text-muted">Informal (3) + En formalización (2)</span></td>
+              <td>Dueño del negocio o contador que decide · Mínimo 12 meses de operación con cobro a clientes</td>
+              <td>Negocios sin actividad de cobro a clientes externos</td>
+              <td>Reclutamiento externo</td>
+              <td class="num"><strong>5</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Gobierno</strong><br><span class="text-sm text-muted">ICETEX / Registraduría / Entidades</span></td>
+              <td>Jefe de presupuesto o director financiero · Responsabilidad directa sobre dispersión de recursos a ciudadanos</td>
+              <td>Perfiles exclusivamente políticos o de comunicaciones</td>
+              <td>Gestión directa ACH</td>
+              <td class="num"><strong>3</strong></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="4"><strong>Total sesiones de campo</strong></td><td class="num"><strong>24</strong></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- FASES -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 2</span>
+        <h2 class="section-title__heading">Las cuatro fases del plan</h2>
+      </div>
+
+      <!-- FASE 0 -->
+      <div class="fase-card">
+        <div class="fase-header fh-blue">
+          <div class="fase-header__left">
+            <div class="fase-num">0</div>
+            <div>
+              <div>Preparación</div>
+              <div class="fase-semanas">Semanas 1–2 · Antes de campo</div>
+            </div>
+          </div>
+          <span style="font-size:11px; opacity:0.85">⚠ Hito crítico: confirmar alcance antes de avanzar</span>
+        </div>
+        <div class="fase-body fase-body--3col">
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">0.1 Alineación con Juliana</div>
+            <div class="fase-actividad__desc">Revisar matriz preexistente de Lorena · Confirmar 6 microsegmentos y orden de prioridad · Acordar formato de entregables finales · Definir participación de ACH en síntesis</div>
+            <div class="fase-actividad__hito hito-blue">→ Alcance confirmado</div>
+          </div>
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">0.2 Sesión con área comercial</div>
+            <div class="fase-actividad__desc">Mapear actores concretos por segmento · Identificar restricciones de acceso (NDA, relaciones en curso) · Obtener listado inicial para reclutamiento · Recoger conocimiento de campo sobre dolores por segmento</div>
+            <div class="fase-actividad__hito hito-blue">→ Listado de contactos</div>
+          </div>
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">0.3 Desk research + Instrumentos</div>
+            <div class="fase-actividad__desc">Revisar datos de inteligencia de negocio · Completar celdas ✅ de Capa 1 de la matriz · Documentar marco regulatorio por segmento · Construir guías de entrevista base y adaptadas por segmento · Protocolo de consentimiento y plantilla de notas</div>
+            <div class="fase-actividad__hito hito-blue">→ Guías listas para revisión</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 1 -->
+      <div class="fase-card">
+        <div class="fase-header fh-green">
+          <div class="fase-header__left">
+            <div class="fase-num">1</div>
+            <div>
+              <div>Alineación interna</div>
+              <div class="fase-semanas">Semana 2 · Paralelo a Fase 0</div>
+            </div>
+          </div>
+          <span style="font-size:11px; opacity:0.85">Extraer conocimiento no documentado dentro de ACH antes de ir a campo</span>
+        </div>
+        <div class="fase-body">
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Entrevistas internas cortas (45 min)</div>
+            <div class="fase-actividad__desc">2–3 personas del área comercial con contacto directo por segmento · 1 persona de inteligencia de negocio · 1 persona de gobierno de la información<br><br>
+            Preguntas clave: ¿Cuál es la queja más frecuente de este segmento? · ¿Qué workaround conoces que usan? · ¿Cuándo un cliente decide no adoptar algo, qué dice?</div>
+            <div class="fase-actividad__hito hito-green">→ Mapa de conocimiento interno por segmento</div>
+          </div>
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Uso del output</div>
+            <div class="fase-actividad__desc">El conocimiento interno se usa para afinar las guías de entrevista de campo y priorizar qué hipótesis 🟡 de la matriz llevar explícitamente a las sesiones con usuarios.<br><br>No reemplaza el trabajo de campo — lo hace más eficiente.</div>
+            <div class="fase-actividad__hito hito-green">→ Hipótesis priorizadas por segmento</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 2 -->
+      <div class="fase-card">
+        <div class="fase-header fh-orange">
+          <div class="fase-header__left">
+            <div class="fase-num">2</div>
+            <div>
+              <div>Trabajo de campo</div>
+              <div class="fase-semanas">Semanas 3–7 · Rolling por segmento</div>
+            </div>
+          </div>
+          <span style="font-size:11px; opacity:0.85">24 entrevistas · Síntesis rolling · Matriz actualizada continuamente</span>
+        </div>
+        <div class="fase-body fase-body--3col">
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Sem. 3–4: Primer bloque</div>
+            <div class="fase-actividad__desc">EF Vigiladas (4 entrevistas) · Personas Naturales (5 entrevistas) · Síntesis rolling al finalizar cada segmento · Actualizar celdas ⬜ de la matriz</div>
+            <div class="fase-actividad__hito hito-orange">→ 9 sesiones · 2 segmentos cerrados</div>
+          </div>
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Sem. 5–6: Segundo bloque</div>
+            <div class="fase-actividad__desc">Corporativos (4 entrevistas) · Mipymes (5 entrevistas) · Síntesis rolling al finalizar cada segmento · Ajustar guías si emergen hallazgos inesperados</div>
+            <div class="fase-actividad__hito hito-orange">→ 9 sesiones · 4 segmentos cerrados</div>
+          </div>
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Sem. 7: Tercer bloque</div>
+            <div class="fase-actividad__desc">EF No Vigiladas (3 entrevistas) · Gobierno (3 entrevistas) · Síntesis rolling al finalizar · Matriz completa en las 6 filas</div>
+            <div class="fase-actividad__hito hito-orange">→ 6 sesiones · 6 segmentos cerrados</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 3+4 -->
+      <div class="fase-card">
+        <div class="fase-header fh-purple">
+          <div class="fase-header__left">
+            <div class="fase-num">3–4</div>
+            <div>
+              <div>Síntesis y entrega</div>
+              <div class="fase-semanas">Semanas 8–9</div>
+            </div>
+          </div>
+          <span style="font-size:11px; opacity:0.85">Jobs transversales · Entregables finales · Sesión con ACH</span>
+        </div>
+        <div class="fase-body">
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Síntesis transversal (sem. 8)</div>
+            <div class="fase-actividad__desc">Sesión de 3h con equipo completo · Identificar jobs compartidos entre segmentos · Tensiones o contradicciones entre segmentos · Construir celdas 🟣 post-campo (señales, citas representativas, valor estratégico validado) · Priorizar gaps para portafolio 2027</div>
+            <div class="fase-actividad__hito hito-purple">→ Hallazgos transversales + priorización</div>
+          </div>
+          <div class="fase-actividad">
+            <div class="fase-actividad__titulo">Redacción y presentación (sem. 8–9)</div>
+            <div class="fase-actividad__desc">Informe ejecutivo 6–8 páginas · Fichas por microsegmento (una por segmento) · Repositorio de citas textuales clasificadas · Sesión de 90 min con Juliana y equipo de producto ACH para acordar próximos pasos del portafolio</div>
+            <div class="fase-actividad__hito hito-purple">→ Portafolio 2027 informado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- GUÍA DE ENTREVISTA -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 3</span>
+        <h2 class="section-title__heading">Estructura de la entrevista — 60 minutos</h2>
+        <p class="section-title__desc">Diseñada para revelar las Four Forces sin mencionarlas. El usuario no responde bien a "¿qué te frena?" — responde bien a sus historias concretas.</p>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="bloque-entrevista">
+            <div class="bloque-entrevista__tiempo">
+              <div class="bloque-entrevista__min">10</div>
+              <div class="bloque-entrevista__label">min</div>
+              <div class="bloque-entrevista__objetivo">Bloque 0</div>
+            </div>
+            <div class="bloque-entrevista__contenido">
+              <div class="bloque-entrevista__titulo">Contexto y rapport</div>
+              <ul class="bloque-entrevista__preguntas">
+                <li>Presentación del propósito (investigación, no venta)</li>
+                <li>Consentimiento de grabación</li>
+                <li>Calentamiento: cuéntame sobre tu rol y un día típico en [tema]</li>
+              </ul>
+            </div>
+          </div>
+          <div class="bloque-entrevista">
+            <div class="bloque-entrevista__tiempo">
+              <div class="bloque-entrevista__min">20</div>
+              <div class="bloque-entrevista__label">min</div>
+              <div class="bloque-entrevista__objetivo">Job + workaround</div>
+            </div>
+            <div class="bloque-entrevista__contenido">
+              <div class="bloque-entrevista__titulo">Job funcional y solución actual</div>
+              <ul class="bloque-entrevista__preguntas">
+                <li>¿Cuándo fue la última vez que resolviste [problema]? Desde el principio.</li>
+                <li>¿Qué intentaste primero? ¿Qué pasó antes de llegar ahí?</li>
+                <li>¿Cuál es la parte que más te cuesta? ¿Por qué?</li>
+                <li>¿Hay algo que nadie resuelve y quisieras que alguien resolviera?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="bloque-entrevista">
+            <div class="bloque-entrevista__tiempo">
+              <div class="bloque-entrevista__min">10</div>
+              <div class="bloque-entrevista__label">min</div>
+              <div class="bloque-entrevista__objetivo">Empuje (push)</div>
+            </div>
+            <div class="bloque-entrevista__contenido">
+              <div class="bloque-entrevista__titulo">Momento crítico</div>
+              <ul class="bloque-entrevista__preguntas">
+                <li>¿Ha habido una vez que esto te generó un problema real? ¿Qué pasó?</li>
+                <li>¿En qué momento pensaste "esto tiene que cambiar"?</li>
+                <li>¿Qué hiciste después de ese momento?</li>
+              </ul>
+              <div class="bloque-entrevista__nota">Si no recuerda un episodio concreto, eso también es un hallazgo — el dolor no es lo suficientemente agudo.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bloque-entrevista">
+            <div class="bloque-entrevista__tiempo">
+              <div class="bloque-entrevista__min">15</div>
+              <div class="bloque-entrevista__label">min</div>
+              <div class="bloque-entrevista__objetivo">Ansiedad · Inercia · Pull</div>
+            </div>
+            <div class="bloque-entrevista__contenido">
+              <div class="bloque-entrevista__titulo">Fuerzas de adopción</div>
+              <ul class="bloque-entrevista__preguntas">
+                <li>¿Has evaluado alguna vez cambiar cómo resuelves esto? ¿Qué pasó?</li>
+                <li>¿Qué necesitarías ver para confiar en algo nuevo antes de adoptarlo?</li>
+                <li>¿Qué es lo que más te costaría perder si cambiaras hoy?</li>
+                <li>¿Hay algo en cómo funciona esto que, aunque no es perfecto, al menos lo conoces?</li>
+                <li>Si alguien resolviera esto exactamente, ¿qué necesitarías para decir que sí sin dudarlo?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="bloque-entrevista">
+            <div class="bloque-entrevista__tiempo">
+              <div class="bloque-entrevista__min">5</div>
+              <div class="bloque-entrevista__label">min</div>
+              <div class="bloque-entrevista__objetivo">Decisor · Métrica</div>
+            </div>
+            <div class="bloque-entrevista__contenido">
+              <div class="bloque-entrevista__titulo">Decisor y métrica de éxito</div>
+              <ul class="bloque-entrevista__preguntas">
+                <li>¿Quién más en tu organización estaría involucrado en decidir esto?</li>
+                <li>¿Cómo sabrías que funcionó? ¿Qué cambiaría para ti?</li>
+              </ul>
+            </div>
+          </div>
+          <div style="background:#f4f4fb; border-radius:8px; padding:14px; margin-top:8px">
+            <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#88898c; margin-bottom:8px">Logística de campo</p>
+            <ul class="lista-icesi" style="font-size:12px">
+              <li>Presencial o videollamada con cámara activada</li>
+              <li>Máximo 3 entrevistas por día por investigador</li>
+              <li>Un investigador conduce · Otro toma notas en plantilla estructurada</li>
+              <li>Grabación con consentimiento · No transcripción automática en vivo</li>
+              <li>Incentivo: a definir con cliente por segmento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SÍNTESIS -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 4</span>
+        <h2 class="section-title__heading">Proceso de síntesis por segmento</h2>
+        <p class="section-title__desc">La síntesis no espera a terminar todo el campo — se hace de forma rolling para detectar saturación temprana y ajustar si es necesario.</p>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="sintesis-step">
+            <div class="sintesis-step__num">1</div>
+            <div><strong>Transcripción selectiva</strong> (mismo día, post-sesión) — Extraer fragmentos relevantes por celda de la matriz: citas de dolor, momento crítico, job latente, fuerzas. No transcribir la entrevista completa.</div>
+          </div>
+          <div class="sintesis-step">
+            <div class="sintesis-step__num">2</div>
+            <div><strong>Codificación por Four Forces</strong> (2–3 días post-campo del segmento) — Clasificar cada fragmento: Push · Pull · Ansiedad · Inercia · Job funcional · Job latente · Decisor · Métrica de éxito.</div>
+          </div>
+          <div class="sintesis-step">
+            <div class="sintesis-step__num">3</div>
+            <div><strong>Affinity mapping por segmento</strong> — Agrupar fragmentos por tema emergente. Identificar patrones y divergencias entre participantes del mismo segmento.</div>
+          </div>
+          <div class="sintesis-step">
+            <div class="sintesis-step__num">4</div>
+            <div><strong>Completar celdas de la matriz</strong> — Actualizar la plantilla con hallazgos reales, distinguiendo cita textual, síntesis del investigador e hipótesis que requieren más evidencia.</div>
+          </div>
+          <div class="sintesis-step">
+            <div class="sintesis-step__num">5</div>
+            <div><strong>Evaluación de saturación</strong> — ¿Las últimas 2 entrevistas aportaron información nueva? Si no → segmento saturado, detener campo. Si sí → considerar 1–2 entrevistas adicionales.</div>
+          </div>
+        </div>
+        <div>
+          <div style="background:#f4f4fb; border-radius:8px; padding:16px; margin-bottom:12px">
+            <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#88898c; margin-bottom:10px">Síntesis transversal — Semana 8</p>
+            <p style="font-size:12px; line-height:1.6">Sesión de 3 horas con el equipo completo para identificar jobs compartidos entre segmentos, tensiones o contradicciones, y construir las celdas 🟣 post-campo: señales de adopción/abandono, cita representativa y valor estratégico validado.</p>
+          </div>
+          <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#88898c; margin-bottom:10px">Entregables finales</p>
+          <div class="entregable-item">
+            <div class="entregable-icon">📊</div>
+            <div><strong>Matriz de Microsegmentos completa</strong> — Plantilla llenada con evidencia de campo, distinguiendo confirmado de pendiente. Formato MD + HTML.</div>
+          </div>
+          <div class="entregable-item">
+            <div class="entregable-icon">📄</div>
+            <div><strong>Informe ejecutivo</strong> — 6–8 páginas: jobs por segmento, hallazgos transversales, oportunidades no resueltas y recomendaciones de priorización.</div>
+          </div>
+          <div class="entregable-item">
+            <div class="entregable-icon">🃏</div>
+            <div><strong>Fichas por microsegmento</strong> — Una página por segmento: job central, cita representativa, Four Forces y valor estratégico.</div>
+          </div>
+          <div class="entregable-item">
+            <div class="entregable-icon">💬</div>
+            <div><strong>Repositorio de citas</strong> — Clasificadas por segmento y por fuerza. Para uso directo del equipo de producto.</div>
+          </div>
+          <div class="entregable-item">
+            <div class="entregable-icon">🤝</div>
+            <div><strong>Sesión de presentación</strong> — 90 min con Juliana y equipo ACH para acordar próximos pasos del portafolio 2027.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- RIESGOS -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 5</span>
+        <h2 class="section-title__heading">Riesgos y mitigaciones</h2>
+      </div>
+      <div class="tabla-wrapper" style="box-shadow:none;">
+        <div class="riesgo-row" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:#88898c; border-bottom:2px solid #e8e8f0">
+          <div></div><div>Riesgo</div><div>Prob.</div><div>Impacto</div><div>Mitigación</div>
+        </div>
+        <div class="riesgo-row">
+          <div class="riesgo-dot dot-red"></div>
+          <div><strong>Acceso limitado a EF Vigiladas y Gobierno</strong></div>
+          <div><span class="prob-badge prob-alta">Alta</span></div>
+          <div><span class="imp-badge imp-alto">Alto</span></div>
+          <div>Activar área comercial ACH desde semana 1 · No depender solo de reclutamiento externo</div>
+        </div>
+        <div class="riesgo-row">
+          <div class="riesgo-dot dot-red"></div>
+          <div><strong>Sesgo de deseabilidad — participantes dicen lo que creen que el investigador quiere</strong></div>
+          <div><span class="prob-badge prob-media">Media</span></div>
+          <div><span class="imp-badge imp-alto">Alto</span></div>
+          <div>Preguntar siempre por episodios concretos del pasado · Nunca por opiniones generales · Evitar preguntas que insinúen la respuesta correcta</div>
+        </div>
+        <div class="riesgo-row">
+          <div class="riesgo-dot dot-red"></div>
+          <div><strong>Matriz de Lorena sin revisar — puede duplicar o contradecir trabajo previo</strong></div>
+          <div><span class="prob-badge prob-media">Media</span></div>
+          <div><span class="imp-badge imp-medio">Medio</span></div>
+          <div>Resolución obligatoria en Fase 0 antes de diseñar cualquier instrumento</div>
+        </div>
+        <div class="riesgo-row">
+          <div class="riesgo-dot dot-yellow"></div>
+          <div><strong>Fecha límite de planeación 2027 no confirmada</strong></div>
+          <div><span class="prob-badge prob-media">Media</span></div>
+          <div><span class="imp-badge imp-alto">Alto</span></div>
+          <div>Confirmar en semana 1 · Ajustar cronograma si la ventana es menor a 9 semanas</div>
+        </div>
+        <div class="riesgo-row">
+          <div class="riesgo-dot dot-yellow"></div>
+          <div><strong>Saturación prematura en EF No Vigiladas por homogeneidad regulatoria</strong></div>
+          <div><span class="prob-badge prob-media">Media</span></div>
+          <div><span class="imp-badge imp-bajo">Bajo</span></div>
+          <div>Reclutar cooperativa regional y fintech urbana para maximizar variación dentro del segmento</div>
+        </div>
+        <div class="riesgo-row">
+          <div class="riesgo-dot dot-yellow"></div>
+          <div><strong>Restricciones de confidencialidad que limiten lo que el participante puede compartir</strong></div>
+          <div><span class="prob-badge prob-baja">Baja</span></div>
+          <div><span class="imp-badge imp-alto">Alto</span></div>
+          <div>Preguntar siempre por experiencias propias, nunca por datos de la organización · El investigador no solicita información reservada</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- CRITERIOS DE ÉXITO -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 6</span>
+        <h2 class="section-title__heading">9 criterios de éxito</h2>
+        <p class="section-title__desc">El plan se considera exitoso si al finalizar se pueden responder todas con evidencia de campo — no con supuestos.</p>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="criterio-item">
+            <div class="criterio-num">1</div>
+            <div>¿Cuál es el job funcional real de cada microsegmento, en sus propias palabras?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">2</div>
+            <div>¿Existe al menos un job latente por segmento que no estaba documentado internamente?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">3</div>
+            <div>¿Se identificó el momento crítico que activa la búsqueda de alternativas en cada segmento?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">4</div>
+            <div>¿Se distinguió la ansiedad de la inercia en al menos cuatro segmentos?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">5</div>
+            <div>¿Se identificó el decisor real —no el cargo— en todos los segmentos?</div>
+          </div>
+        </div>
+        <div>
+          <div class="criterio-item">
+            <div class="criterio-num">6</div>
+            <div>¿Hay al menos un job transversal a múltiples segmentos que el mercado tampoco está resolviendo?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">7</div>
+            <div>¿Se puede construir la cita representativa de cada segmento desde evidencia textual del participante?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">8</div>
+            <div>¿Las señales de adopción y abandono están definidas con base en comportamientos observables?</div>
+          </div>
+          <div class="criterio-item">
+            <div class="criterio-num">9</div>
+            <div>¿Juliana puede usar los hallazgos directamente para priorizar el portafolio sin necesidad de otra ronda de investigación?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMjIuMTUgMjIwLjg0Ij4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMzAuMy4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMi4xLjMgQnVpbGQgMTgyKSAgLS0+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5zdDAgewogICAgICAgIGZpbGw6ICNmZmZmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJDYXBhXzEiPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNi4zOSwxNzIuMjdWMjUuMTdoMTkuMzV2MTQ3LjA5aC0xOS4zNVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNjguNTEsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOUw4MS4xNSw1Mi42Mmw2LjcxLS43OXYxMjAuNDRoLTE5LjM1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMTQuMjIsMTcyLjI3VjI1LjE3aDE2LjE5bDg0LjUsMTE4Ljg2LTcuMzEuNzlWMjUuMTdoMTkuNTV2MTQ3LjA5aC0xNi4xOWwtODQuMTEtMTE5LjY1LDYuNzEtLjc5djEyMC40NGgtMTkuMzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTM1OS45MywxNzIuMjdWMjUuMTdoMTkuMzV2MTI5LjMyaDY0LjU2djE3Ljc3aC04My45MVoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDUxLjM0LDE3Mi4yN2w1Mi43Mi0xNDcuMDloMjIuOWw1Mi43MiwxNDcuMDloLTIwLjczbC0xMi4wNC0zNC41NWgtNjIuNzlsLTEyLjA0LDM0LjU1aC0yMC43M1pNNDkwLjI0LDExOS45NWg1MC41NGwtMjguMDQtODAuNzVoNS41M2wtMjguMDQsODAuNzVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5OC4yNCwxNzIuMjdWMjUuMTdoNjEuOGM4LjgyLDAsMTYuNDIsMS41OCwyMi44LDQuNzQsNi4zOCwzLjE2LDExLjMyLDcuNiwxNC44MSwxMy4zMywzLjQ5LDUuNzMsNS4yMywxMi41NCw1LjIzLDIwLjQzLDAsNy4yNC0xLjg4LDEzLjc5LTUuNjMsMTkuNjUtMy43NSw1Ljg2LTkuMjUsMTAuNDMtMTYuNDksMTMuNzJsLS4yLTcuMzFjNi4zMiwyLjM3LDExLjU1LDUuNSwxNS43LDkuMzgsNC4xNSwzLjg4LDcuMjcsOC4zNiw5LjM4LDEzLjQzLDIuMSw1LjA3LDMuMTYsMTAuNDMsMy4xNiwxNi4wOSwwLDEzLjU2LTQuMzQsMjQuMjItMTMuMDMsMzEuOTktOC42OSw3Ljc3LTIwLjUzLDExLjY1LTM1LjU0LDExLjY1aC02MlpNNjE3LjU5LDg1LjU5aDQyLjA1YzcuMTEsMCwxMi44My0yLjA3LDE3LjE4LTYuMjIsNC4zNC00LjE1LDYuNTItOS40NCw2LjUyLTE1Ljg5cy0yLjE3LTExLjg1LTYuNTItMTUuNGMtNC4zNC0zLjU1LTEwLjA3LTUuMzMtMTcuMTgtNS4zM2gtNDIuMDV2NDIuODRaTTYxNy41OSwxNTQuNWg0My40NGM4LjU1LDAsMTUuNC0yLjMsMjAuNTMtNi45MSw1LjEzLTQuNjEsNy43LTEwLjg2LDcuNy0xOC43NnMtMi41Ny0xNC4xOC03LjctMTguODZjLTUuMTMtNC42Ny0xMS45OC03LjAxLTIwLjUzLTcuMDFoLTQzLjQ0djUxLjUzWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MzEuNiw5NC4zN2MtMy4wNywwLTUuOTEtLjU1LTguNDktMS42Ni0yLjU5LTEuMTEtNC44NS0yLjY4LTYuNzctNC43LTEuOTMtMi4wMi0zLjQyLTQuNC00LjQ3LTcuMTItMS4wNS0yLjcyLTEuNTgtNS43LTEuNTgtOC45M3MuNTMtNi4yNywxLjU4LTguOTljMS4wNS0yLjcyLDIuNTMtNS4xLDQuNDQtNy4xMiwxLjkxLTIuMDIsNC4xNi0zLjU5LDYuNzctNC43LDIuNjEtMS4xMSw1LjQ1LTEuNjYsOC41Mi0xLjY2czUuNjkuNTMsOC4wOSwxLjU4LDQuNDIsMi40MSw2LjA3LDQuMDljMS42NSwxLjY3LDIuODMsMy40NiwzLjUzLDUuMzdsLTUuMjUsMi4zOWMtMS4wMS0yLjQxLTIuNTktNC4zNy00LjczLTUuODctMi4xNC0xLjUtNC43MS0yLjI1LTcuNzEtMi4yNXMtNS43My43Mi04LjA5LDIuMTZjLTIuMzUsMS40NC00LjE5LDMuNDQtNS41Miw2LjAxLTEuMzIsMi41Ny0xLjk4LDUuNTctMS45OCw4Ljk5cy42Niw2LjM2LDEuOTgsOC45M2MxLjMyLDIuNTcsMy4xNiw0LjU3LDUuNTIsNi4wMSwyLjM1LDEuNDQsNS4wNSwyLjE2LDguMDksMi4xNnM1LjU3LS43NSw3LjcxLTIuMjVjMi4xNC0xLjUsMy43Mi0zLjQ1LDQuNzMtNS44N2w1LjI1LDIuMzljLS43LDEuOTEtMS44OCwzLjctMy41Myw1LjM3LTEuNjUsMS42Ny0zLjY4LDMuMDQtNi4wNyw0LjA5cy01LjA5LDEuNTgtOC4wOSwxLjU4WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NzAuMzEsOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04OTEuNjcsOTMuNjd2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODZzLS45OSwyLjctLjk5LDQuNDF2MTguNjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTkzOC4zMSw5NC4wMmMtMy4wOCwwLTUuNDQtLjg4LTcuMDktMi42My0xLjY1LTEuNzUtMi40OC00LjIyLTIuNDgtNy40MXYtMTYuNThoLTUuNzJ2LTUuMmgxLjE3YzEuNCwwLDIuNTEtLjQzLDMuMzMtMS4yOC44Mi0uODYsMS4yMy0xLjk5LDEuMjMtMy4zOXYtMi41N2g1LjQzdjcuMjRoNy4wNnY1LjJoLTcuMDZ2MTYuNGMwLDEuMDUuMTYsMS45Ny41LDIuNzQuMzMuNzguODgsMS4zOSwxLjY2LDEuODQuNzguNDUsMS44MS42NywzLjA5LjY3LjI3LDAsLjYxLS4wMiwxLjAyLS4wNnMuNzktLjA4LDEuMTQtLjEydjQuNzljLS41MS4xMi0xLjA3LjItMS42OS4yNi0uNjIuMDYtMS4xNS4wOS0xLjU4LjA5WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik05NDguNjUsOTMuNjd2LTMxLjQ3aDUuMzF2NS43OGwtLjU4LS44MmMuNzQtMS43OSwxLjg3LTMuMTIsMy4zOS00czMuMzctMS4zMSw1LjU1LTEuMzFoMS45M3Y1LjE0aC0yLjc0Yy0yLjIyLDAtNC4wMS42OS01LjM3LDIuMDctMS4zNiwxLjM4LTIuMDQsMy4zNC0yLjA0LDUuODd2MTguNzRoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk4NC4wMiw5NC4zN2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk05ODQuMDIsODkuMTJjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OS0yLjE2LTIuOTgtMy43NC0zLjk3LTMuMzQtMS40OS01LjI4LTEuNDktMy43Ny41LTUuMzQsMS40OS0yLjgzLDIuMzItMy43NywzLjk3LTEuNCwzLjU1LTEuNCw1LjY5LjQ3LDQuMDEsMS40LDUuNzJjLjkzLDEuNzEsMi4xOSwzLjA2LDMuNzcsNC4wM3MzLjM2LDEuNDYsNS4zNCwxLjQ2WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMxLjY2LDk0LjM3Yy0yLjk2LDAtNS42Mi0uNzItNy45Ny0yLjE2LTIuMzYtMS40NC00LjIxLTMuNDEtNS41OC01LjktMS4zNi0yLjQ5LTIuMDQtNS4yNy0yLjA0LTguMzVzLjY4LTUuOTYsMi4wNC04LjQ0YzEuMzYtMi40NywzLjIyLTQuNDMsNS41OC01Ljg3LDIuMzUtMS40NCw1LjAxLTIuMTYsNy45Ny0yLjE2LDIuNjEsMCw0LjkyLjU1LDYuOTUsMS42NiwyLjAyLDEuMTEsMy42MiwyLjYsNC43OSw0LjQ3bC0uODgsMS4zNHYtMTkuNWg1LjQ5djQ0LjE5aC01LjMxdi02LjcxbC43LjkzYy0xLjA5LDIuMDYtMi42OCwzLjY2LTQuNzYsNC43OS0yLjA4LDEuMTMtNC40MSwxLjY5LTYuOTgsMS42OVpNMTAzMi4xMyw4OS4xMmMxLjk4LDAsMy43Ni0uNDksNS4zMS0xLjQ2czIuNzktMi4zMSwzLjcxLTRjLjkxLTEuNjksMS4zNy0zLjU5LDEuMzctNS42OXMtLjQ2LTQuMDYtMS4zNy01Ljc1Yy0uOTItMS42OS0yLjE1LTMuMDMtMy43MS00LTEuNTYtLjk3LTMuMzMtMS40Ni01LjMxLTEuNDZzLTMuNzEuNS01LjI4LDEuNDktMi44MSwyLjMyLTMuNzEsMy45N2MtLjksMS42NS0xLjM0LDMuNTctMS4zNCw1Ljc1cy40NSw0LDEuMzQsNS42OWMuODksMS42OSwyLjEyLDMuMDMsMy42OCw0czMuMzMsMS40Niw1LjMxLDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwNzAuODksOTQuMzdjLTMuMDQsMC01Ljc0LS43Mi04LjEyLTIuMTYtMi4zNy0xLjQ0LTQuMjQtMy40Mi01LjYtNS45My0xLjM2LTIuNTEtMi4wNC01LjMyLTIuMDQtOC40NHMuNjctNS45NiwyLjAxLTguNDFjMS4zNC0yLjQ1LDMuMTctNC4zOSw1LjQ5LTUuODEsMi4zMi0xLjQyLDQuOTEtMi4xMyw3Ljc5LTIuMTMsMi4zMywwLDQuNDEuNDIsNi4yMiwxLjI2LDEuODEuODQsMy4zNSwxLjk3LDQuNjEsMy4zOSwxLjI2LDEuNDIsMi4yNCwzLjA0LDIuOTIsNC44NS42OCwxLjgxLDEuMDIsMy42OSwxLjAyLDUuNjMsMCwuNDMtLjAzLjkxLS4wOSwxLjQzcy0uMTMsMS4wMi0uMjEsMS40OWgtMjUuOHYtNC42N2gyMi42NWwtMi41NywyLjFjLjM1LTIuMDIuMTYtMy44My0uNTgtNS40My0uNzQtMS41OS0xLjgzLTIuODYtMy4yNy0zLjc5LTEuNDQtLjkzLTMuMDgtMS40LTQuOS0xLjRzLTMuNS40Ny01LjAyLDEuNGMtMS41Mi45My0yLjcsMi4yNy0zLjUzLDQtLjg0LDEuNzMtMS4xOCwzLjc5LTEuMDIsNi4xNi0uMTYsMi4zLjIsNC4zMSwxLjA4LDYuMDQuODgsMS43MywyLjEyLDMuMDcsMy43NCw0LjAzLDEuNjEuOTUsMy4zOCwxLjQzLDUuMjgsMS40MywyLjEsMCwzLjg3LS40OSw1LjMxLTEuNDYsMS40NC0uOTcsMi42MS0yLjIyLDMuNS0zLjc0bDQuNTUsMi4zM2MtLjYyLDEuNDQtMS41OSwyLjc1LTIuODksMy45NC0xLjMsMS4xOS0yLjg0LDIuMTMtNC42MSwyLjgzLTEuNzcuNy0zLjc1LDEuMDUtNS45MiwxLjA1WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MTEuNTgsMTYzLjczdi00My40OWg1LjcydjQzLjQ5aC01LjcyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMzUsMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMiwxLjAzLDEuNzksMS41NSwzLjgxLDEuNTUsNi4wN3YyMC4zN2gtNS40OXYtMTguNjJjMC0xLjc1LS4zMS0zLjIzLS45My00LjQ0LS42Mi0xLjIxLTEuNTEtMi4xNS0yLjY2LTIuODMtMS4xNS0uNjgtMi40Ni0xLjAyLTMuOTQtMS4wMnMtMi43OS4zNC0zLjk0LDEuMDJjLTEuMTUuNjgtMi4wNSwxLjYzLTIuNzEsMi44Ni0uNjYsMS4yMy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04NjAuMiwxNjMuNzN2LTMxLjQ3aDUuMzF2Ni4xM2wtLjg4LS41M2MuNzgtMS45OSwyLjAzLTMuNTMsMy43Ny00LjY0LDEuNzMtMS4xMSwzLjc3LTEuNjYsNi4xLTEuNjZzNC4yNy41MSw2LjA0LDEuNTJjMS43NywxLjAxLDMuMTcsMi40MSw0LjIsNC4yczEuNTUsMy44MSwxLjU1LDYuMDd2MjAuMzdoLTUuNDl2LTE4LjYyYzAtMS43NS0uMzEtMy4yMy0uOTMtNC40NC0uNjItMS4yMS0xLjUxLTIuMTUtMi42Ni0yLjgzcy0yLjQ2LTEuMDItMy45NC0xLjAyLTIuNzkuMzQtMy45NCwxLjAyYy0xLjE1LjY4LTIuMDUsMS42My0yLjcxLDIuODYtLjY2LDEuMjMtLjk5LDIuNy0uOTksNC40MXYxOC42MmgtNS40M1oiLz4KICAgICAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNOTA5LjAxLDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MSwzLjM2LTQuNCw1LjgxLTUuODRjMi40NS0xLjQ0LDUuMjEtMi4xNiw4LjI5LTIuMTZzNS43OC43MSw4LjIzLDIuMTNjMi40NSwxLjQyLDQuMzksMy4zNiw1LjgxLDUuODEsMS40MiwyLjQ1LDIuMTMsNS4yNywyLjEzLDguNDZzLS43NCw2LjAyLTIuMjIsOC40OWMtMS40OCwyLjQ3LTMuNDMsNC40Mi01Ljg3LDUuODQtMi40MywxLjQyLTUuMTMsMi4xMy04LjA5LDIuMTNaTTkwOS4wMSwxNTkuMTdjMS45NSwwLDMuNzEtLjQ5LDUuMjgtMS40NnMyLjgyLTIuMzIsMy43NC00LjAzYy45MS0xLjcxLDEuMzctMy42MiwxLjM3LTUuNzJzLS40Ni00LjA0LTEuMzctNS42OWMtLjkyLTEuNjUtMi4xNi0yLjk4LTMuNzQtMy45N3MtMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk0MC40MiwxNjMuNzNsLTEyLjMyLTMxLjQ3aDYuMDdsOS44NywyNi42MmgtMi4xbDkuOTItMjYuNjJoNi4wN2wtMTIuMzgsMzEuNDdoLTUuMTRaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTk3MC44MywxNjQuNDNjLTIuMDYsMC0zLjg4LS4zOC01LjQ2LTEuMTRzLTIuODEtMS44MS0zLjcxLTMuMTVjLS45LTEuMzQtMS4zNC0yLjg5LTEuMzQtNC42NHMuMzYtMy4xOCwxLjA4LTQuNTJjLjcyLTEuMzQsMS44NS0yLjQ4LDMuMzktMy40MiwxLjU0LS45MywzLjQ3LTEuNiw1LjgxLTEuOTlsMTEuNjgtMS45M3Y0LjU1bC0xMC40NSwxLjc1Yy0yLjAyLjM1LTMuNDkuOTktNC40MSwxLjkzLS45Mi45My0xLjM3LDIuMDgtMS4zNywzLjQ0LDAsMS4yOC41MiwyLjM1LDEuNTUsMy4yMXMyLjMzLDEuMjgsMy44OCwxLjI4YzEuOTgsMCwzLjcxLS40Miw1LjE3LTEuMjYsMS40Ni0uODQsMi42MS0xLjk3LDMuNDUtMy40Mi44NC0xLjQ0LDEuMjUtMy4wNCwxLjI1LTQuNzl2LThjMC0xLjcxLS42My0zLjEtMS45LTQuMTctMS4yNy0xLjA3LTIuOTMtMS42MS00Ljk5LTEuNjEtMS43OSwwLTMuMzguNDYtNC43NiwxLjM3LTEuMzguOTItMi40LDIuMTMtMy4wNiwzLjY1bC00LjczLTIuNDVjLjU4LTEuNDQsMS41Mi0yLjczLDIuOC0zLjg4LDEuMjgtMS4xNSwyLjc4LTIuMDUsNC40OS0yLjcxczMuNS0uOTksNS4zNy0uOTljMi40MSwwLDQuNTMuNDYsNi4zNiwxLjM3LDEuODMuOTIsMy4yNiwyLjE4LDQuMjksMy43OSwxLjAzLDEuNjIsMS41NSwzLjQ5LDEuNTUsNS42M3YyMS4zN2gtNS4zMXYtNS45NmwuOTkuMzVjLS42NiwxLjI1LTEuNTYsMi4zMy0yLjY5LDMuMjctMS4xMy45My0yLjQ1LDEuNjctMy45NywyLjIyLTEuNTIuNTQtMy4xNy44Mi00Ljk2LjgyWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDA5Ljc3LDE2NC40M2MtMy4wOCwwLTUuODEtLjcyLTguMi0yLjE2cy00LjI3LTMuNDEtNS42My01LjljLTEuMzYtMi40OS0yLjA0LTUuMjktMi4wNC04LjQxcy42OC01Ljk1LDIuMDQtOC40MWMxLjM2LTIuNDUsMy4yNC00LjQsNS42My01Ljg0LDIuMzktMS40NCw1LjEzLTIuMTYsOC4yLTIuMTYsMi4wNiwwLDMuOTkuMzcsNS43OCwxLjExLDEuNzkuNzQsMy4zNywxLjczLDQuNzMsMi45OCwxLjM2LDEuMjUsMi4zNSwyLjcxLDIuOTgsNC4zOGwtNC44NSwyLjM0Yy0uNzQtMS42My0xLjg3LTIuOTctMy4zOC00LTEuNTItMS4wMy0zLjI3LTEuNTUtNS4yNS0xLjU1cy0zLjYzLjQ5LTUuMTcsMS40NmMtMS41NC45Ny0yLjc1LDIuMy0zLjY1LDMuOTctLjksMS42Ny0xLjM0LDMuNi0xLjM0LDUuNzhzLjQ1LDQsMS4zNCw1LjY5Yy44OSwxLjY5LDIuMTEsMy4wMywzLjY1LDRzMy4yNiwxLjQ2LDUuMTcsMS40NiwzLjc0LS41Miw1LjI1LTEuNTVjMS41Mi0xLjAzLDIuNjUtMi40LDMuMzgtNC4xMmw0Ljg1LDIuNDVjLS42MiwxLjYzLTEuNjIsMy4wOC0yLjk4LDQuMzUtMS4zNiwxLjI2LTIuOTQsMi4yNy00LjczLDMuMDEtMS43OS43NC0zLjcyLDEuMTEtNS43OCwxLjExWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDMwLjM4LDEyNy4yNHYtNy4wMWg1LjQzdjcuMDFoLTUuNDNaTTEwMzAuMzgsMTYzLjczdi0zMS40N2g1LjQzdjMxLjQ3aC01LjQzWiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDU5LjE2LDE2NC40M2MtMy4wNCwwLTUuNzgtLjcxLTguMjMtMi4xMy0yLjQ1LTEuNDItNC40LTMuMzgtNS44NC01Ljg3LTEuNDQtMi40OS0yLjE2LTUuMzEtMi4xNi04LjQ3cy43MS01Ljk1LDIuMTMtOC40MWMxLjQyLTIuNDUsMy4zNi00LjQsNS44MS01Ljg0LDIuNDUtMS40NCw1LjIxLTIuMTYsOC4yOS0yLjE2czUuNzguNzEsOC4yMywyLjEzYzIuNDUsMS40Miw0LjM5LDMuMzYsNS44MSw1LjgxLDEuNDIsMi40NSwyLjEzLDUuMjcsMi4xMyw4LjQ2cy0uNzQsNi4wMi0yLjIyLDguNDljLTEuNDgsMi40Ny0zLjQ0LDQuNDItNS44Nyw1Ljg0LTIuNDMsMS40Mi01LjEzLDIuMTMtOC4wOCwyLjEzWk0xMDU5LjE2LDE1OS4xN2MxLjk1LDAsMy43MS0uNDksNS4yOC0xLjQ2czIuODItMi4zMiwzLjc0LTQuMDNjLjkxLTEuNzEsMS4zNy0zLjYyLDEuMzctNS43MnMtLjQ2LTQuMDQtMS4zNy01LjY5LTIuMTYtMi45OC0zLjc0LTMuOTctMy4zNC0xLjQ5LTUuMjgtMS40OS0zLjc3LjUtNS4zNCwxLjQ5LTIuODMsMi4zMi0zLjc3LDMuOTctMS40LDMuNTUtMS40LDUuNjkuNDcsNC4wMSwxLjQsNS43MmMuOTMsMS43MSwyLjE5LDMuMDYsMy43Nyw0LjAzczMuMzYsMS40Niw1LjM0LDEuNDZaTTEwNTYuNDEsMTI2LjM2bDQuNjEtOS4yMmg3LjM2bC02LjU0LDkuMjJoLTUuNDNaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTEwODIuMzksMTYzLjczdi0zMS40N2g1LjMxdjYuMTNsLS44OC0uNTNjLjc4LTEuOTksMi4wMy0zLjUzLDMuNzctNC42NCwxLjczLTEuMTEsMy43Ny0xLjY2LDYuMS0xLjY2czQuMjcuNTEsNi4wNCwxLjUyYzEuNzcsMS4wMSwzLjE3LDIuNDEsNC4yLDQuMnMxLjU1LDMuODEsMS41NSw2LjA3djIwLjM3aC01LjQ5di0xOC42MmMwLTEuNzUtLjMxLTMuMjMtLjkzLTQuNDQtLjYyLTEuMjEtMS41MS0yLjE1LTIuNjYtMi44M3MtMi40Ni0xLjAyLTMuOTQtMS4wMi0yLjc5LjM0LTMuOTQsMS4wMmMtMS4xNS42OC0yLjA1LDEuNjMtMi43MSwyLjg2cy0uOTksMi43LS45OSw0LjQxdjE4LjYyaC01LjQzWiIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=" alt="INNLAB" style="height:24px">
+    <span class="report-footer__info">Plan de Investigación Microsegmentos · INNLAB / Universidad Icesi · ACH Colombia · Junio 2026 · v1.0</span>
+    <span class="report-footer__url">icesi.edu.co</span>
+  </div>
+
+</div>
+</body>
+</html>
