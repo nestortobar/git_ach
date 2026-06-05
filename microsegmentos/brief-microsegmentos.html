@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brief UX — Microsegmentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+<div class="reporte">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="report-header__top">
+      <div class="report-header__logo">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NjAgMjg4Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjNTQ1NGU5OwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI4OCIvPgogIDxnPgogICAgPGc+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3OS42LDcxLjFjMS43LDEuMiwzLjQsMi40LDUsMy42bC0xMy45LDE5LjJjLTEuNi0xLjMtMy4zLTIuNS01LTMuNmwxMy45LTE5LjJaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNOTYuMSw2My4ybDcuNCwyMi42YzQuNy0yLjIsOS42LTMuOCwxNC44LTQuOGwtNy40LTIyLjZjLTUuMSwxLjItMTAuMSwyLjgtMTQuOCw0LjhaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTQ3LjcsODIuMWMxLjguNSwzLjYsMS4xLDUuMywxLjdsNy4zLTIyLjVjLTEuNy0uNi0zLjUtMS4yLTUuMy0xLjdsLTcuMywyMi41WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTc0LjgsMTEyLjJjMi4zLTQuMSw1LjEtNy45LDguMy0xMS40bC0xOS4yLTE0Yy0zLjEsMy42LTUuOCw3LjQtOC4zLDExLjRsMTkuMiwxNFoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik04Ny4xLDk2LjhjMy42LTMuMyw3LjctNi4zLDEyLTguN2wtMTQtMTkuMmMtNC4yLDIuNi04LjMsNS41LTEyLDguN2wxNCwxOS4yWiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMi45LDExMy40bC0yMi41LDcuM2MuOSwyLjIsMS42LDQuNSwyLjIsNi45bDIyLjUtNy4zYy0uNy0yLjMtMS40LTQuNi0yLjItNi45WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY2LjMsMTQ0YzAtMi4xLjEtNC4zLjMtNi40aC0yMy43Yy0uMiwyLjEtLjIsNC4yLS4yLDYuNHMwLDQuMy4yLDYuNGgyMy43Yy0uMi0yLjEtLjMtNC4yLS4zLTYuNFoiLz4KICAgICAgPC9nPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xOTQuOCwxNDRjMCwxLjMsMCwyLjctLjEsNGgyMy43YzAtMS4zLDAtMi43LDAtNHMwLTIuNywwLTRoLTIzLjdjMCwxLjMuMSwyLjcuMSw0WiIvPgogICAgICA8L2c+CiAgICAgIDxnPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTY3LjcsMTMwLjZjLjktNC40LDIuMy04LjcsNC4xLTEyLjdsLTIyLjYtNy4zYy0xLjcsNC4xLTMuMSw4LjMtNC4xLDEyLjdsMjIuNiw3LjNaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgwLjQsMTAzLjZjMS40LDEuOCwyLjgsMy42LDQsNS42bDE5LjItMTMuOWMtMS4zLTEuOS0yLjYtMy44LTQtNS42bC0xOS4yLDEzLjlaIi8+CiAgICAgIDwvZz4KICAgICAgPGc+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTIyLjMsNTYuNXYyMy44czAsMCwwLDBjMS4xLS4xLDQuNS0uNSw4LjItLjVzNy4xLjQsOC4yLjVjMCwwLDAsMCwwLDB2LTIzLjhjLTEuMy0uMS00LjctLjQtOC4yLS40cy02LjkuMy04LjIuNFoiLz4KICAgICAgPC9nPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMjAuMywxMDYuNWMtMS4yLjMtMi40LjctMy41LDEuMWwtNi42LTIwLjRjMS4yLS40LDIuMy0uOCwzLjUtMS4xbDYuNiwyMC40Wk0xMzAuNSw4My43Yy0xLjQsMC0yLjksMC00LjMuMnYyMS42YzEuNC0uMiwyLjgtLjIsNC4zLS4yLDEuNSwwLDIuOSwwLDQuMy4ydi0yMS42Yy0xLjQsMC0yLjgtLjItNC4zLS4yWk0xNjkuMiw5Ny43Yy0yLjEtMS43LTQuMi0zLjMtNi41LTQuN2wtMTIuNywxNy40YzIuMywxLjQsNC41LDIuOSw2LjUsNC43bDEyLjctMTcuNFpNOTYuNyw5NGMtMS4xLjctMi4xLDEuNS0zLjIsMi4zbDEyLjYsMTcuNGMxLS44LDIuMS0xLjYsMy4yLTIuM2wtMTIuNi0xNy40Wk0xODEuNSwxMTEuOGMtMS40LTIuMi0yLjktNC4zLTQuNi02LjNsLTE3LjQsMTIuN2MxLjcsMS45LDMuMyw0LjEsNC42LDYuM2wxNy40LTEyLjdaTTcyLjUsMTI3LjVsMjAuNCw2LjZjLjQtMS40LjktMi45LDEuNC00LjJsLTIwLjUtNi42Yy0uNSwxLjQtMSwzLjMtMS40LDQuMlpNMTY5LjIsMTQ3LjZoMjEuNWMwLTEuMi4xLTIuNC4xLTMuNnMwLTIuNC0uMS0zLjZoLTIxLjVjLjEsMS4yLjIsMi40LjIsMy42LDAsMS4yLDAsMi40LS4yLDMuNlpNODMsMTA2LjhjLS45LDEuMS0xLjcsMi4yLTIuNSwzLjRsMTcuNCwxMi42Yy44LTEuMiwxLjYtMi4zLDIuNS0zLjRsLTE3LjQtMTIuNlpNOTEuOCwxNDEuNmgtMjEuNWMwLC44LDAsMS42LDAsMi40czAsMS42LDAsMi40aDIxLjVjMC0uOCwwLTEuNiwwLTIuNHMwLTEuNiwwLTIuNFpNOTIuOSwxOTEuMWMxLjQsMS4xLDIuOSwyLjIsNC40LDMuMmwxMi42LTE3LjRjLTEuNi0xLTMtMi4xLTQuNC0zLjJsLTEyLjYsMTcuNFpNMTA5LjIsMjAwLjRjMS44LjcsMy42LDEuMyw1LjUsMS44bDYuNy0yMC41Yy0xLjktLjUtMy43LTEuMS01LjUtMS44bC02LjcsMjAuNVpNODAuMiwxNzcuM2MxLDEuNSwyLDIuOSwzLjEsNC4ybDE3LjQtMTIuNmMtMS4xLTEuMy0yLjEtMi44LTMuMS00LjJsLTE3LjQsMTIuNlpNNzIuNCwxNjAuM2MuNCwxLjYsMSwzLjIsMS41LDQuN2wyMC41LTYuNmMtLjYtMS41LTEuMS0zLjEtMS41LTQuN2wtMjAuNCw2LjZaTTEzMC41LDIwNC4zYzEsMCwyLDAsMywwdi0yMS41Yy0xLDAtMiwuMS0zLC4xcy0yLDAtMy0uMXYyMS41YzEsMCwyLDAsMywwWk0xODksMTI5Yy0uNi0yLjUtMS40LTQuOS0yLjMtNy4ybC0yMC41LDYuN2MxLDIuMywxLjgsNC43LDIuMyw3LjJsMjAuNS02LjdaTTE0Ni4yLDIwMi4zYzItLjUsNC0xLjIsNi0xLjlsLTYuNy0yMC41Yy0xLjkuOC0zLjksMS40LTYsMS45bDYuNywyMC41Wk0xODYuNywxNjZjLjktMi4yLDEuNi00LjQsMi4yLTYuN2wtMjAuNS02LjdjLS41LDIuMy0xLjIsNC42LTIuMiw2LjdsMjAuNSw2LjdaTTE3Ny4zLDE4Mi4xYzEuNC0xLjcsMi44LTMuNiw0LTUuNWwtMTcuNC0xMi43Yy0xLjIsMS45LTIuNSwzLjgtNCw1LjVsMTcuNCwxMi43Wk0xNjMuMywxOTQuN2MxLjgtMS4yLDMuNi0yLjUsNS4zLTMuOGwtMTIuNy0xNy40Yy0xLjYsMS40LTMuNCwyLjctNS4zLDMuOGwxMi42LDE3LjRaIi8+CiAgICA8L2c+CiAgICA8Zz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjQ4LjcsMTI4aDEyLjJ2NzAuN2gtMTIuMnYtNzAuN1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjc1LjMsMTYzLjhjMC0yMS4zLDE2LjEtMzcuNCwzNy0zNy40czIzLjQsNS4zLDMwLjIsMTVsLTkuNyw3LjRjLTUuNy03LjctMTIuOC0xMS4zLTIwLjYtMTEuM2MtMTMuNSwwLTI0LjIsMTAuNy0yNC4yLDI1LjlzMTEsMjUuOSwyNC40LDI1LjksMTYuNC00LjMsMjEuOS0xMS44bDkuMyw2LjhjLTYuOCwxMC4zLTE4LjIsMTYuMS0zMS4zLDE2LjEtMjEuMywwLTM2LjktMTUuNS0zNi45LTM2LjZaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTQyMi40LDE2Ni4xaC01OWMxLDE0LjksMTAuOSwyMy40LDI1LjEsMjMuNHMxNy40LTMuOSwyMy40LTEybDguOCw2LjdjLTYuOCwxMC4yLTE4LjIsMTYuMS0zMi40LDE2LjEtMjIuMSwwLTM3LjMtMTQuOS0zNy4zLTM2LjVzMTUuOS0zNy42LDM3LjQtMzcuNiwzNC41LDEzLjgsMzQuNSwzNC41LS4xLDMuNi0uNCw1LjNaTTM2NC4xLDE1NS41aDQ2LjJjLTEuOC0xMi4yLTkuOS0xOC43LTIyLTE4LjdzLTIxLjQsNi44LTI0LjIsMTguN1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNDMyLjQsMTg5LjFsNy44LTkuMmM2LjcsNi4zLDE1LjUsOS41LDIzLjcsOS41czE1LjItNC4zLDE1LjItMTAuMi0zLjEtNy41LTEyLjEtOS42bC0xMi40LTIuOGMtMTQuMi0zLjItMjAuMi05LjMtMjAuMi0xOC45czEwLjYtMjEuNiwyNy4xLTIxLjYsMjIsNCwyOC43LDExLjNsLTguMiw4LjVjLTUuOC01LjgtMTMuMS04LjgtMjEuMy04LjhzLTE0LjMsMy45LTE0LjMsOS42LDIuNiw2LjgsMTIuNCw5bDEyLjQsMi44YzE0LjMsMy4yLDE5LjksOS43LDE5LjksMTkuNXMtMTAuMiwyMi4xLTI3LjYsMjIuMS0yMy45LTQuMy0zMS0xMS4zWiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik01MDUuMSwxMjhoMTIuMnY3MC43aC0xMi4ydi03MC43WiIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+" alt="Universidad Icesi" style="height:48px">
+      </div>
+      <div class="report-header__meta">
+        <span class="report-header__meta-label">Fecha de reunión</span>
+        <span class="report-header__meta-value">4 de junio de 2026</span>
+      </div>
+    </div>
+    <div class="report-header__title-block">
+      <span class="report-header__eyebrow">UX Research · INNLAB / Icesi</span>
+      <h1 class="report-header__title">Brief UX — Microsegmentos</h1>
+      <p class="report-header__subtitle">Síntesis de reunión con cliente · Plan de investigación cualitativa para roadmap de producto 2027</p>
+      <nav class="deliverable-nav" aria-label="Entregables de microsegmentos">
+        <a class="deliverable-nav__link deliverable-nav__link--active" href="brief-microsegmentos.html">Brief</a>
+        <a class="deliverable-nav__link" href="modelo-matriz-microsegmentos.html">Modelo</a>
+        <a class="deliverable-nav__link" href="matriz-plantilla-campo.html">Plantilla</a>
+      </nav>
+    </div>
+    <div class="report-header__kpi-bar">
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">4 min</span>
+        <span class="report-header__kpi-label">Duración reunión</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">4</span>
+        <span class="report-header__kpi-label">Microsegmentos</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">4</span>
+        <span class="report-header__kpi-label">Hipótesis iniciales</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">2027</span>
+        <span class="report-header__kpi-label">Horizonte roadmap</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="reporte-body">
+
+    <!-- SECCIÓN 1: CONTEXTO -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 1</span>
+        <h2 class="section-title__heading">Contexto del cliente y del negocio</h2>
+        <p class="section-title__desc">Participantes: Juliana Jaramillo Valencia (cliente), Nestor Armando Tobar Araujo y Jose Andres Moncada Quintero (Icesi / INNLAB)</p>
+      </div>
+      <p>Juliana representa un equipo interno en proceso de planeación estratégica de producto para 2027. Su organización maneja un portafolio amplio (~30 iniciativas) y el objetivo para el próximo ciclo es reducirlo a 15–20 iniciativas potentes y bien fundamentadas. Para lograrlo, necesita insumos de investigación que documenten con rigor los dolores, necesidades y <em>jobs to be done</em> de distintos segmentos de usuarios.</p>
+      <div class="grid-2" style="margin-top: 8px">
+        <div class="highlight-box highlight-box--yellow">
+          <span class="highlight-box__label">Momento organizacional</span>
+          <span class="highlight-box__texto">Planeación estratégica de portafolio 2027 — reducir de 30 a 15–20 iniciativas potentes</span>
+        </div>
+        <div class="highlight-box highlight-box--purple">
+          <span class="highlight-box__label">Área de gobierno implicada</span>
+          <span class="highlight-box__texto">Comercial (inteligencia de negocio) + Gobierno de la información como soporte cuantitativo</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SECCIÓN 2: PROBLEMA -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 2</span>
+        <h2 class="section-title__heading">Problema o reto central</h2>
+      </div>
+      <div class="grid-2">
+        <div class="kpi-card kpi-card--blue">
+          <span class="kpi-card__label">Problema de negocio</span>
+          <span class="kpi-card__value" style="font-size:1rem; font-weight:600; line-height:1.4">Falta de insumo investigativo sólido</span>
+          <span class="kpi-card__desc">El portafolio actual se prioriza por criterios internos, no por evidencia de necesidades reales de usuario y mercado.</span>
+        </div>
+        <div class="kpi-card kpi-card--orange">
+          <span class="kpi-card__label">Problema de usuario (inferido)</span>
+          <span class="kpi-card__value" style="font-size:1rem; font-weight:600; line-height:1.4">Necesidades no mapeadas ni resueltas</span>
+          <span class="kpi-card__desc">Los microsegmentos (EF, personas, empresas, gobierno) tienen dolores diferenciados que el portafolio no está capturando.</span>
+        </div>
+      </div>
+      <div class="cita" style="margin-top: 16px">
+        <span class="cita__texto">"Yo espero encontrar esos jobs que nosotros no estamos resolviendo y ojalá que el mercado no esté resolviendo, como para apuntarle a esas grandes oportunidades de diferenciación el próximo año."</span>
+        <span class="cita__fuente">Juliana Jaramillo Valencia — Reunión Microsegmentos, 4 jun 2026</span>
+      </div>
+      <div class="alerta alerta--info" style="margin-top: 12px">
+        <span class="alerta__titulo">Encargo generativo, no evaluativo</span>
+        <p class="alerta__texto">El cliente no viene con una solución propuesta a validar. Viene con un problema abierto y una necesidad de estructuración metodológica. No hay riesgo de solución prematura en esta etapa.</p>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SECCIÓN 3: ACTORES -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 3</span>
+        <h2 class="section-title__heading">Actores involucrados</h2>
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-datos tabla-datos--striped">
+          <thead>
+            <tr>
+              <th>Actor</th>
+              <th>Rol</th>
+              <th>Relación con el problema</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row--highlight">
+              <td>Juliana Jaramillo Valencia</td>
+              <td>Líder de producto / estrategia</td>
+              <td>Dueña del encargo; define la visión del insumo para roadmap 2027</td>
+              <td>Referencia a Lorena como contacto previo</td>
+            </tr>
+            <tr>
+              <td>Área comercial</td>
+              <td>Stakeholder interno</td>
+              <td>Contacto directo con los perfiles a investigar</td>
+              <td>Clave para reclutamiento inicial</td>
+            </tr>
+            <tr>
+              <td>Inteligencia de negocio</td>
+              <td>Stakeholder interno</td>
+              <td>Maneja datos de comportamiento y patrones cuantitativos</td>
+              <td>Soporte accesorio, no foco principal</td>
+            </tr>
+            <tr>
+              <td>Gobierno de la información</td>
+              <td>Stakeholder interno</td>
+              <td>Maneja cifras organizacionales</td>
+              <td>Útil para validar magnitudes</td>
+            </tr>
+            <tr>
+              <td>Entidades financieras (ej. Bancolombia)</td>
+              <td>Microsegmento a investigar</td>
+              <td>Potenciales usuarios del producto/servicio</td>
+              <td>Acceso mediado; roles: producto, analítica, tecnología</td>
+            </tr>
+            <tr>
+              <td>Personas asalariadas e independientes</td>
+              <td>Microsegmento a investigar</td>
+              <td>Usuarios finales del ecosistema de pagos</td>
+              <td>Perfil más accesible para reclutamiento</td>
+            </tr>
+            <tr>
+              <td>Empresas</td>
+              <td>Microsegmento a investigar</td>
+              <td>Clientes corporativos</td>
+              <td>Acceso vía área comercial</td>
+            </tr>
+            <tr>
+              <td>Gobierno</td>
+              <td>Microsegmento a investigar</td>
+              <td>Actor institucional</td>
+              <td>Más difícil de acceder; gestión directa</td>
+            </tr>
+            <tr>
+              <td>Lorena</td>
+              <td>Contacto previo</td>
+              <td>Definió versión anterior del alcance</td>
+              <td>No participó en la reunión; encargo no especificado</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SECCIÓN 4: HIPÓTESIS -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 4</span>
+        <h2 class="section-title__heading">Hipótesis iniciales</h2>
+        <p class="section-title__desc">Formuladas en formato JTBD. Todas requieren validación en campo.</p>
+      </div>
+      <ol class="lista-numerada">
+        <li><strong>Entidades financieras grandes:</strong> Creemos que los líderes de producto dentro de EF necesitan hablar de sus necesidades de integración con un perfil técnico-comercial porque sus decisiones de adopción involucran múltiples áreas con agendas distintas.</li>
+        <li><strong>Personas naturales:</strong> Creemos que usuarios asalariados e independientes necesitan resolver trabajos relacionados con control, predictibilidad y seguridad en sus pagos porque el ecosistema actual no ha documentado suficientemente sus fricciones más allá del momento transaccional.</li>
+        <li><strong>Empresas:</strong> Creemos que las empresas necesitan soluciones que integren pagos con procesos de tesorería o nómina porque sus jobs son principalmente de eficiencia operativa, no de experiencia de consumo.</li>
+        <li><strong>Gobierno:</strong> Creemos que los actores de gobierno necesitan un abordaje de investigación diferenciado (más institucional) porque sus decisiones no pasan por adopción individual sino por política pública y cumplimiento normativo.</li>
+      </ol>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SECCIÓN 5: PREGUNTAS SIN RESOLVER -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 5</span>
+        <h2 class="section-title__heading">Preguntas sin resolver</h2>
+      </div>
+      <div class="grid-3">
+        <div class="kpi-card kpi-card--solid-orange">
+          <span class="kpi-card__label">🔴 Críticas</span>
+          <span class="kpi-card__desc" style="margin-top:8px">
+            <ul class="lista-icesi" style="color:#fff">
+              <li>¿Cuál es el alcance exacto del encargo de Lorena?</li>
+              <li>¿Existe ya una matriz de microsegmentos o se parte de cero?</li>
+              <li>¿Cuál es la fecha límite real para alimentar el proceso 2027?</li>
+              <li>¿Quién en comercial es el punto de contacto para reclutamiento?</li>
+            </ul>
+          </span>
+        </div>
+        <div class="kpi-card kpi-card--solid-blue">
+          <span class="kpi-card__label">🟡 Importantes</span>
+          <span class="kpi-card__desc" style="margin-top:8px">
+            <ul class="lista-icesi" style="color:#fff">
+              <li>¿Cuántos microsegmentos están definidos y cuáles son?</li>
+              <li>¿Hay criterios de priorización entre microsegmentos?</li>
+              <li>¿Qué nivel de acceso existe a EF y gobierno?</li>
+              <li>¿Se esperan entregables intermedios o uno final?</li>
+            </ul>
+          </span>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <span class="kpi-card__label">🟢 Deseables</span>
+          <span class="kpi-card__desc" style="margin-top:8px">
+            <ul class="lista-icesi">
+              <li>¿Inteligencia de negocio tiene datos de comportamiento previos?</li>
+              <li>¿Hay investigaciones anteriores sobre alguno de estos segmentos?</li>
+            </ul>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SECCIÓN 6: PLAN DE INVESTIGACIÓN -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 6</span>
+        <h2 class="section-title__heading">Idea de plan de investigación</h2>
+        <p class="section-title__desc">El reto es exploratorio y generativo. Método principal: investigación cualitativa con desk research previo. No se recomiendan encuestas en esta etapa.</p>
+      </div>
+      <div class="tabla-wrapper">
+        <table class="tabla-datos">
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Objetivo</th>
+              <th>Perfil de participantes</th>
+              <th>Tiempo estimado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Desk research + datos internos</strong></td>
+              <td>Identificar patrones de comportamiento antes de ir a campo</td>
+              <td>Equipo de inteligencia de negocio + documentos existentes</td>
+              <td class="num">1–2 semanas</td>
+            </tr>
+            <tr>
+              <td><strong>Sesiones con área comercial</strong></td>
+              <td>Validar y enriquecer la matriz de microsegmentos con conocimiento de campo</td>
+              <td>Equipo comercial + inteligencia de negocio</td>
+              <td class="num">1 semana (paralelo)</td>
+            </tr>
+            <tr class="row--highlight">
+              <td><strong>Entrevistas en profundidad</strong></td>
+              <td>Descubrir jobs to be done, dolores y necesidades no resueltas desde la voz del usuario</td>
+              <td>3–5 participantes por microsegmento (EF: roles de producto, analítica; personas; empresas; gobierno)</td>
+              <td class="num">3–5 semanas</td>
+            </tr>
+            <tr>
+              <td><strong>Síntesis JTBD</strong></td>
+              <td>Organizar hallazgos en mapa de jobs por microsegmento para el roadmap</td>
+              <td>Equipo Icesi / INNLAB + Juliana</td>
+              <td class="num">1–2 semanas post-campo</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3"><strong>Tiempo total estimado</strong></td>
+              <td class="num"><strong>6–10 semanas</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="alerta alerta--advertencia" style="margin-top: 16px">
+        <span class="alerta__titulo">Método no recomendado en esta etapa</span>
+        <p class="alerta__texto">Encuestas cuantitativas: el problema es demasiado abierto y las preguntas aún no están lo suficientemente bien formadas como para cuantificar con rigor. Primero explorar cualitativamente.</p>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- SECCIÓN 7: PRÓXIMOS PASOS -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 7</span>
+        <h2 class="section-title__heading">Próximos pasos acordados</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline__item">
+          <div class="timeline__dot">
+            <span>1</span>
+          </div>
+          <div class="timeline__content">
+            <span class="timeline__fecha">Inmediato</span>
+            <span class="timeline__titulo">Armar un muñeco del plan de investigación</span>
+            <p class="timeline__desc">El equipo Icesi/INNLAB prepara una propuesta metodológica preliminar con abordaje, roles ideales y microsegmentos priorizados para revisión con Juliana.</p>
+          </div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot --green">
+            <span>2</span>
+          </div>
+          <div class="timeline__content">
+            <span class="timeline__fecha">Corto plazo</span>
+            <span class="timeline__titulo">Revisión con Juliana y alineación con áreas internas</span>
+            <p class="timeline__desc">Juliana revisa el muñeco e indica en dónde profundizar. Se convocan las áreas necesarias: comercial, inteligencia de negocio, gobierno de la información.</p>
+          </div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__dot --orange">
+            <span>3</span>
+          </div>
+          <div class="timeline__content">
+            <span class="timeline__fecha">Siguiente ciclo</span>
+            <span class="timeline__titulo">Inicio del trabajo de campo</span>
+            <p class="timeline__desc">Con el plan aprobado y actores mapeados, comenzar desk research y sesiones con el área comercial en paralelo al reclutamiento de participantes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NjAgMjg4Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjNTQ1NGU5OwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNTYwIiBoZWlnaHQ9IjI4OCIvPgogIDxnPgogICAgPGc+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTI0OC43LDEyOGgxMi4ydjcwLjdoLTEyLjJ2LTcwLjdaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTI3NS4zLDE2My44YzAtMjEuMywxNi4xLTM3LjQsMzctMzcuNHMyMy40LDUuMywzMC4yLDE1bC05LjcsNy40Yy01LjctNy43LTEyLjgtMTEuMy0yMC42LTExLjNjLTEzLjUsMC0yNC4yLDEwLjctMjQuMiwyNS45czExLDI1LjksMjQuNCwyNS45LDE2LjQtNC4zLDIxLjktMTEuOGw5LjMsNi44Yy02LjgsMTAuMy0xOC4yLDE2LjEtMzEuMywxNi4xLTIxLjMsMC0zNi45LTE1LjUtMzYuOS0zNi42WiIvPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik01MDUuMSwxMjhoMTIuMnY3MC43aC0xMi4ydi03MC43WiIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+" alt="Universidad Icesi" style="height:28px">
+    <span class="report-footer__info">Brief UX — Microsegmentos · INNLAB / Universidad Icesi · Junio 2026</span>
+    <span class="report-footer__url">icesi.edu.co</span>
+  </div>
+
+</div>
+</body>
+</html>
