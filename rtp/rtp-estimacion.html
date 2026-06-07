@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estimación de Horas — Investigación RtP · INNLAB × ACH Colombia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../estilos.css">
+  <style>
+    .rtp-doc-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 16px;
+      background: #f6f8ff;
+      border-bottom: 1px solid #dfe5ff;
+    }
+    .rtp-doc-nav__link {
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #38518a;
+      background: #ffffff;
+      border: 1px solid #d7def7;
+      border-radius: 999px;
+      padding: 6px 12px;
+      transition: border-color .2s ease, color .2s ease, background .2s ease;
+    }
+    .rtp-doc-nav__link:hover {
+      border-color: #7f95e6;
+      color: #2f47a6;
+      background: #eef3ff;
+    }
+    .rtp-doc-nav__link.is-active {
+      color: #ffffff;
+      background: #3f5fd7;
+      border-color: #3f5fd7;
+    }
+    .tr-fase td { background: var(--c-blue-tint); font-weight: 700; color: var(--c-blue); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 12px; }
+    .tr-total td { background: var(--c-blue); color: #fff; font-weight: 800; }
+    .tr-total td.num { color: var(--c-yellow); font-size: 15px; }
+    .barra-wrapper { background: #eef; border-radius: 6px; height: 10px; overflow: hidden; }
+    .barra-fill { height: 10px; border-radius: 6px; }
+    .barra-fill--blue   { background: var(--c-blue); }
+    .barra-fill--purple { background: var(--c-purple); }
+    .barra-fill--green  { background: var(--c-green); }
+    .barra-fill--orange { background: var(--c-orange); }
+    .barra-fill--gray   { background: var(--c-gray1); }
+  </style>
+</head>
+<body>
+<nav class="rtp-doc-nav" aria-label="Navegacion entre documentos RTP">
+  <a class="rtp-doc-nav__link" href="brief-rtp-ach.html">Brief</a>
+  <a class="rtp-doc-nav__link" href="rtp-sint-v2.html">Usuarios sinteticos</a>
+  <a class="rtp-doc-nav__link" href="rtp-instrumentos-v2.html">Instrumentos Research</a>
+  <a class="rtp-doc-nav__link is-active" href="rtp-estimacion.html">Estimacion</a>
+</nav>
+<div class="reporte">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="report-header__top">
+      <div class="report-header__logo">
+        <img src="../img/innlab_white.svg" alt="INNLAB" style="height:40px">
+      </div>
+      <div class="report-header__meta">
+        <span class="report-header__meta-label">Proyecto</span>
+        <span class="report-header__meta-value">RtP · ACH Colombia × INNLAB</span>
+      </div>
+    </div>
+    <div class="report-header__title-block">
+      <span class="report-header__eyebrow">Estimación de Esfuerzo · Números refinados · Mayo 2026</span>
+      <h1 class="report-header__title">Investigación UX — Botón RtP<br>Estimación de horas</h1>
+      <p class="report-header__subtitle">Desglose de esfuerzo por actividad, perfil (Senior / Junior) y fase. Versión refinada sobre el plan de investigación en cuatro fases. Base para propuesta formal al cliente.</p>
+    </div>
+    <div class="report-header__kpi-bar">
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">121</span>
+        <span class="report-header__kpi-label">Horas totales</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">44</span>
+        <span class="report-header__kpi-label">Horas Senior (36%)</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">77</span>
+        <span class="report-header__kpi-label">Horas Junior (64%)</span>
+      </div>
+      <div class="report-header__kpi-item">
+        <span class="report-header__kpi-value">~10</span>
+        <span class="report-header__kpi-label">Semanas de proyecto</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reporte-body reporte-body--wide">
+
+    <!-- S1 · SUPUESTOS -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 1</span>
+        <h2 class="section-title__heading">Supuestos base del cálculo</h2>
+        <p class="section-title__desc">Parámetros operativos que sustentan la estimación. Deben revisarse con el cliente antes de usar en una propuesta formal.</p>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p class="h4" style="margin:0 0 20px 0;">Parámetros de campo</p>
+          <div class="tabla-wrapper">
+            <table class="tabla-datos tabla-datos--striped">
+              <thead><tr><th>Parámetro</th><th>Valor asumido</th></tr></thead>
+              <tbody>
+                <tr><td>Perfiles sintéticos (Fase 0)</td><td>4 perfiles · 1h de análisis c/u · solo perfil Sr.</td></tr>
+                <tr><td>Entrevistas exploratorias (Fase 1)</td><td>Sesiones moderadas por Sr. · anotaciones Jr.</td></tr>
+                <tr><td>Sesiones de usability testing (Fase 2)</td><td>Moderación Sr. · construcción prototipo Jr.</td></tr>
+                <tr><td>Encuesta pagadores y comercios (Fase 3)</td><td>Diseño Sr. · coordinación de campo y análisis Jr.</td></tr>
+                <tr><td>Reuniones con ACH Colombia</td><td>Solo perfil Sr. — 4 reuniones de alineación</td></tr>
+                <tr><td>Modalidad</td><td>100% remota. Sin horas de desplazamiento.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="h4" style="margin:0 0 20px 0;">Perfiles del equipo</p>
+          <div class="tabla-wrapper">
+            <table class="tabla-datos tabla-datos--striped">
+              <thead><tr><th>Perfil</th><th>Actividades típicas</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge--blue">Senior</span></td>
+                  <td>Diseño metodológico · moderación · codificación temática · síntesis · triangulación · revisión de entregables · coordinación con cliente</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge--purple">Junior</span></td>
+                  <td>Anotaciones en sesiones · transcripción · construcción del prototipo · maquetación · coordinación de campo · análisis cuantitativo básico</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="h4" style="margin-top:20px">Qué está incluido / excluido</p>
+          <ul class="lista-hallazgos">
+            <li class="ok">Diseño de todos los instrumentos (screener, guías, encuestas)</li>
+            <li class="ok">Ejecución de campo completa por fase</li>
+            <li class="ok">Análisis, síntesis y triangulación de los 3 métodos</li>
+            <li class="ok">Entregables por fase: 6 documentos/reportes</li>
+            <li class="alerta">No incluye revisiones intermedias solicitadas por el cliente</li>
+            <li class="alerta">No incluye incentivos a participantes ni licencias de herramientas</li>
+            <li class="alerta">No incluye desplazamientos ni viáticos presenciales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- S2 · TABLA COMPLETA -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 2</span>
+        <h2 class="section-title__heading">Tabla de estimación — desglose por fase</h2>
+        <p class="section-title__desc">Cada fase se presenta en una tabla separada para que el avance y el cierre de cada bloque se lean con claridad.</p>
+      </div>
+
+      <div>
+        <p class="h4" style="margin:0 0 20px 0;">FASE 0 — Usuarios Sintéticos · 2 semanas</p>
+        <div class="tabla-wrapper">
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Detalle del cálculo</th>
+                <th class="num">Hs. Sr.</th>
+                <th class="num">Hs. Jr.</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Diseño y ejecución de perfiles sintéticos JTBD</td>
+                <td class="text-sm text-muted">4 perfiles × 0.5h · Sr.</td>
+                <td class="num">2</td><td class="num">—</td><td class="num">2</td>
+              </tr>
+              <tr>
+                <td>Análisis y mapa de supuestos del equipo</td>
+                <td class="text-sm text-muted">síntesis única · Sr.</td>
+                <td class="num">1</td><td class="num">—</td><td class="num">1</td>
+              </tr>
+              <tr>
+                <td>Guía de entrevista Fase 1 + documento de hipótesis <span class="badge badge--outline-blue">entregable</span></td>
+                <td class="text-sm text-muted">1 instrumento + 1 documento · Sr.</td>
+                <td class="num">1</td><td class="num">—</td><td class="num">1</td>
+              </tr>
+              <tr class="row--highlight">
+                <td colspan="2"><strong>Subtotal Fase 0</strong></td>
+                <td class="num"><strong>4</strong></td><td class="num"><strong>—</strong></td><td class="num"><strong>4</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <p class="h4" style="margin:0 0 20px 0;">FASE 1 — Exploración Cualitativa · 3 semanas</p>
+        <div class="tabla-wrapper">
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Detalle del cálculo</th>
+                <th class="num">Hs. Sr.</th>
+                <th class="num">Hs. Jr.</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Preparación (screener + guía de entrevista)</td>
+                <td class="text-sm text-muted">2 instrumentos · Sr. + ajuste Jr.</td>
+                <td class="num">2</td><td class="num">2</td><td class="num">4</td>
+              </tr>
+              <tr>
+                <td>Ejecución de entrevistas (moderación + anotaciones)</td>
+                <td class="text-sm text-muted">8 entrevistas × 1h Sr. + 2h Jr.</td>
+                <td class="num">8</td><td class="num">16</td><td class="num">24</td>
+              </tr>
+              <tr>
+                <td>Análisis y síntesis (codificación + affinity mapping)</td>
+                <td class="text-sm text-muted">doble codificación Sr.</td>
+                <td class="num">2</td><td class="num">1</td><td class="num">3</td>
+              </tr>
+              <tr>
+                <td>Entregables: brief de prototipo + reporte F1 <span class="badge badge--outline-blue">entregables</span></td>
+                <td class="text-sm text-muted">redacción Sr. · maquetación Jr.</td>
+                <td class="num">1</td><td class="num">1</td><td class="num">2</td>
+              </tr>
+              <tr class="row--highlight">
+                <td colspan="2"><strong>Subtotal Fase 1</strong></td>
+                <td class="num"><strong>13</strong></td><td class="num"><strong>20</strong></td><td class="num"><strong>33</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <p class="h4" style="margin:0 0 20px 0;">FASE 2 — Validación Evaluativa · 3 semanas</p>
+        <div class="tabla-wrapper">
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Detalle del cálculo</th>
+                <th class="num">Hs. Sr.</th>
+                <th class="num">Hs. Jr.</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Diseño y construcción del prototipo en Figma</td>
+                <td class="text-sm text-muted">revisión Sr. · construcción Jr.</td>
+                <td class="num">2</td><td class="num">8</td><td class="num">10</td>
+              </tr>
+              <tr>
+                <td>Preparación guía de moderación + sesión piloto</td>
+                <td class="text-sm text-muted">1 instrumento Sr. + piloto Sr. + Jr.</td>
+                <td class="num">1</td><td class="num">2</td><td class="num">3</td>
+              </tr>
+              <tr>
+                <td>Ejecución usability testing (moderación + anotaciones)</td>
+                <td class="text-sm text-muted">6 sesiones con prototipo × 1h Sr. + 2h Jr.</td>
+                <td class="num">6</td><td class="num">12</td><td class="num">18</td>
+              </tr>
+              <tr>
+                <td>Análisis (card sorting + severity list + métricas)</td>
+                <td class="text-sm text-muted">Sr. con apoyo Jr.</td>
+                <td class="num">2</td><td class="num">3</td><td class="num">5</td>
+              </tr>
+              <tr>
+                <td>Reporte de validación Fase 2 <span class="badge badge--outline-blue">entregable</span></td>
+                <td class="text-sm text-muted">redacción Sr. · maquetación Jr.</td>
+                <td class="num">1</td><td class="num">2</td><td class="num">3</td>
+              </tr>
+              <tr class="row--highlight">
+                <td colspan="2"><strong>Subtotal Fase 2</strong></td>
+                <td class="num"><strong>12</strong></td><td class="num"><strong>27</strong></td><td class="num"><strong>39</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <p class="h4" style="margin:0 0 20px 0;">FASE 3 — Escala y Comercios · 2 semanas</p>
+        <div class="tabla-wrapper">
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Detalle del cálculo</th>
+                <th class="num">Hs. Sr.</th>
+                <th class="num">Hs. Jr.</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Diseño encuesta pagadores + encuesta comercios</td>
+                <td class="text-sm text-muted">2 instrumentos Sr. + ajuste Jr.</td>
+                <td class="num">1</td><td class="num">2</td><td class="num">3</td>
+              </tr>
+              <tr>
+                <td>Pilot testing + coordinación de campo</td>
+                <td class="text-sm text-muted">validación Sr. · seguimiento Jr.</td>
+                <td class="num">1</td><td class="num">8</td><td class="num">9</td>
+              </tr>
+              <tr>
+                <td>Análisis cuantitativo — pagadores y comercios</td>
+                <td class="text-sm text-muted">Sr. + Jr.</td>
+                <td class="num">2</td><td class="num">10</td><td class="num">12</td>
+              </tr>
+              <tr>
+                <td>Triangulación final (3 métodos)</td>
+                <td class="text-sm text-muted">síntesis Sr. · apoyo Jr.</td>
+                <td class="num">2</td><td class="num">5</td><td class="num">7</td>
+              </tr>
+              <tr>
+                <td>Entregables: deck ejecutivo + reporte académico <span class="badge badge--outline-blue">entregables</span></td>
+                <td class="text-sm text-muted">redacción Sr. · maquetación Jr.</td>
+                <td class="num">1</td><td class="num">5</td><td class="num">6</td>
+              </tr>
+              <tr class="row--highlight">
+                <td colspan="2"><strong>Subtotal Fase 3</strong></td>
+                <td class="num"><strong>7</strong></td><td class="num"><strong>30</strong></td><td class="num"><strong>37</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <p class="h4" style="margin:0 0 20px 0;">COORDINACIÓN — Transversal · 10 semanas</p>
+        <div class="tabla-wrapper">
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Detalle del cálculo</th>
+                <th class="num">Hs. Sr.</th>
+                <th class="num">Hs. Jr.</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Reuniones de alineación con ACH Colombia</td>
+                <td class="text-sm text-muted">4 reuniones × 1h · Sr.</td>
+                <td class="num">4</td><td class="num">—</td><td class="num">4</td>
+              </tr>
+              <tr>
+                <td>Reuniones internas del equipo investigador</td>
+                <td class="text-sm text-muted">4 sesiones × 0.5h · Sr.</td>
+                <td class="num">2</td><td class="num">—</td><td class="num">2</td>
+              </tr>
+              <tr>
+                <td>Presentación final de resultados a ACH Colombia</td>
+                <td class="text-sm text-muted">1 sesión × 2h · Sr.</td>
+                <td class="num">2</td><td class="num">—</td><td class="num">2</td>
+              </tr>
+              <tr class="row--highlight">
+                <td colspan="2"><strong>Subtotal Coordinación</strong></td>
+                <td class="num"><strong>8</strong></td><td class="num"><strong>—</strong></td><td class="num"><strong>8</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- S3 · RESUMEN -->
+    <div class="section">
+      <div class="section-title">
+        <span class="section-title__label">Sección 3</span>
+        <h2 class="section-title__heading">Resumen ejecutivo</h2>
+        <p class="section-title__desc">Distribución del esfuerzo por perfil y por fase.</p>
+      </div>
+
+      <div class="grid-2-1">
+        <div>
+          <p class="h4" style="margin:0 0 20px 0;">Por perfil</p>
+          <div class="tabla-wrapper">
+            <table class="tabla-datos">
+              <thead><tr><th>Perfil</th><th class="num">Horas</th><th class="num">%</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge--blue">Senior</span></td>
+                  <td class="num"><strong>44</strong></td><td class="num">36%</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge--purple">Junior</span></td>
+                  <td class="num"><strong>77</strong></td><td class="num">64%</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr><td><strong>Total</strong></td><td class="num"><strong>121</strong></td><td class="num">100%</td></tr>
+              </tfoot>
+            </table>
+          </div>
+          <div style="margin-top:16px">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px">
+              <span class="text-sm text-bold" style="width:56px">Senior</span>
+              <div class="barra-wrapper" style="flex:1">
+                <div class="barra-fill barra-fill--blue" style="width:36%"></div>
+              </div>
+              <span class="text-sm text-bold text-blue" style="width:36px; text-align:right">44h</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px">
+              <span class="text-sm text-bold" style="width:56px">Junior</span>
+              <div class="barra-wrapper" style="flex:1">
+                <div class="barra-fill barra-fill--purple" style="width:64%"></div>
+              </div>
+              <span class="text-sm text-bold" style="width:36px; text-align:right; color:var(--c-purple)">77h</span>
+            </div>
+          </div>
+
+          <div class="alerta alerta--info" style="margin-top:20px">
+            <span class="alerta__titulo">Nota sobre la distribución Jr. &gt; Sr.</span>
+            <p class="alerta__texto">El peso mayor de horas Junior (64%) responde a la estructura de esta versión del plan: las Fases 1, 2 y 3 concentran ejecución, apoyo de campo, análisis y maquetación asignados principalmente al perfil Jr. Si el equipo es más pequeño o el perfil Jr. no está disponible a tiempo completo en la semana 8–10, redistribuir hacia Sr. y recalcular.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="h4" style="margin:0 0 20px 0;">Por fase</p>
+          <div class="tabla-wrapper">
+            <table class="tabla-datos">
+              <thead><tr><th>Fase</th><th class="num">Sr.</th><th class="num">Jr.</th><th class="num">Total</th><th class="num">%</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge--purple">F0</span> Sintéticos</td>
+                  <td class="num">4</td><td class="num">—</td><td class="num"><strong>4</strong></td><td class="num">3%</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge--blue">F1</span> Exploración</td>
+                  <td class="num">13</td><td class="num">20</td><td class="num"><strong>33</strong></td><td class="num">27%</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge--green">F2</span> Evaluación</td>
+                  <td class="num">12</td><td class="num">27</td><td class="num"><strong>39</strong></td><td class="num">32%</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge--orange">F3</span> Escala</td>
+                  <td class="num">7</td><td class="num">30</td><td class="num"><strong>37</strong></td><td class="num">31%</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge--gray">Coord.</span></td>
+                  <td class="num">8</td><td class="num">—</td><td class="num"><strong>8</strong></td><td class="num">7%</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr><td><strong>Total</strong></td><td class="num"><strong>44</strong></td><td class="num"><strong>77</strong></td><td class="num"><strong>121</strong></td><td class="num">100%</td></tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; align-items:center; gap:8px">
+              <span class="text-sm" style="width:120px"><span class="badge badge--purple">F0</span> Sintéticos</span>
+              <div class="barra-wrapper" style="flex:1"><div class="barra-fill barra-fill--gray" style="width:3%"></div></div>
+              <span class="text-sm text-muted text-bold" style="width:44px; text-align:right">4h · 3%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <span class="text-sm" style="width:120px"><span class="badge badge--blue">F1</span> Exploración</span>
+              <div class="barra-wrapper" style="flex:1"><div class="barra-fill barra-fill--blue" style="width:27%"></div></div>
+              <span class="text-sm text-blue text-bold" style="width:44px; text-align:right">33h · 27%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <span class="text-sm" style="width:120px"><span class="badge badge--green">F2</span> Evaluación</span>
+              <div class="barra-wrapper" style="flex:1"><div class="barra-fill barra-fill--green" style="width:32%"></div></div>
+              <span class="text-sm text-bold" style="width:44px; text-align:right; color:var(--c-green)">39h · 32%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <span class="text-sm" style="width:120px"><span class="badge badge--orange">F3</span> Escala</span>
+              <div class="barra-wrapper" style="flex:1"><div class="barra-fill barra-fill--orange" style="width:31%"></div></div>
+              <span class="text-sm text-bold" style="width:44px; text-align:right; color:var(--c-orange)">37h · 31%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <span class="text-sm" style="width:120px"><span class="badge badge--gray">Coord.</span></span>
+              <div class="barra-wrapper" style="flex:1"><div class="barra-fill barra-fill--gray" style="width:7%"></div></div>
+              <span class="text-sm text-muted text-bold" style="width:44px; text-align:right">8h · 7%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <p class="h4">Entregables incluidos</p>
+      <div class="grid-4">
+        <div class="kpi-card kpi-card--purple">
+          <span class="kpi-card__label">Fase 0</span>
+          <span class="kpi-card__value">1</span>
+          <span class="kpi-card__desc">Documento de hipótesis etiquetadas + guía de entrevista Fase 1</span>
+        </div>
+        <div class="kpi-card kpi-card--blue">
+          <span class="kpi-card__label">Fase 1</span>
+          <span class="kpi-card__value">2</span>
+          <span class="kpi-card__desc">Brief de diseño del prototipo + reporte de exploración cualitativa</span>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <span class="kpi-card__label">Fase 2</span>
+          <span class="kpi-card__value">1</span>
+          <span class="kpi-card__desc">Reporte de validación: severity list, Δ ansiedad, card sorting</span>
+        </div>
+        <div class="kpi-card kpi-card--orange">
+          <span class="kpi-card__label">Fase 3</span>
+          <span class="kpi-card__value">2</span>
+          <span class="kpi-card__desc">Deck ejecutivo ACH Colombia + reporte académico INNLAB</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider--thick">
+
+    <!-- S4 · NOTAS -->
+    <div class="section section--tinted">
+      <div class="section-title">
+        <span class="section-title__label">Sección 4</span>
+        <h2 class="section-title__heading">Notas de transparencia y riesgos</h2>
+        <p class="section-title__desc">Lo que el cliente debe saber antes de aprobar esta estimación.</p>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <p class="h4" style="margin:0 0 20px 0;">Actividades con mayor riesgo de subestimación</p>
+          <div class="tabla-wrapper">
+            <table class="tabla-datos tabla-datos--striped">
+              <thead><tr><th>Actividad</th><th>Riesgo</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Análisis y síntesis Fase 1 (codificación + affinity)</td>
+                  <td><span class="badge badge--orange">Medio-alto</span> — 3h es ajustado si hay alta variabilidad de temas. Puede crecer 2–4h Sr.</td>
+                </tr>
+                <tr>
+                  <td>Coordinación de campo Fase 3 (encuestas)</td>
+                  <td><span class="badge badge--orange">Medio</span> — 8h Jr. asume respuesta fluida. Si el panel de comercios no responde a tiempo, puede extenderse 4–6h Jr.</td>
+                </tr>
+                <tr>
+                  <td>Maquetación de entregables (todas las fases)</td>
+                  <td><span class="badge badge--orange">Medio</span> — rondas de revisión del cliente no están incluidas. Cada ronda adicional agrega ~2h Jr.</td>
+                </tr>
+                <tr>
+                  <td>Triangulación final Fase 3</td>
+                  <td><span class="badge badge--orange">Medio</span> — 7h asume convergencia entre métodos. Alta divergencia puede requerir 3–4h Sr. adicionales.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="h4" style="margin:0 0 20px 0;">Condiciones críticas</p>
+          <div class="alerta alerta--advertencia">
+            <span class="alerta__titulo">Condición de avance entre fases</span>
+            <p class="alerta__texto">Ninguna fase puede iniciar sin el entregable de síntesis de la fase anterior aprobado. Si ACH Colombia solicita saltar directamente a la Fase 2, el brief de diseño del prototipo no existirá — el prototipo se construirá con supuestos del equipo, no con evidencia real.</p>
+          </div>
+          <div class="alerta alerta--info" style="margin-top:12px">
+            <span class="alerta__titulo">Revisiones de entregables</span>
+            <p class="alerta__texto">La estimación cubre 1 versión final por entregable. Acordar máximo 1 ronda de revisión por entregable — estimar 2h Jr. adicionales por ronda si se requiere.</p>
+          </div>
+          <div class="alerta alerta--info" style="margin-top:12px">
+            <span class="alerta__titulo">Saturación en Fase 1</span>
+            <p class="alerta__texto">Si la saturación temática se alcanza antes del número máximo de sesiones previsto, el campo puede cerrarse antes — liberando horas de anotación y transcripción Jr.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="grid-3">
+        <div class="highlight-box highlight-box--yellow">
+          <span class="highlight-box__label">Próximo paso — presupuesto</span>
+          <span class="highlight-box__texto">Agregar tarifas diferenciadas por perfil (COP/hora Sr. y Jr.) sobre esta tabla para calcular el presupuesto total. Las columnas separadas Sr./Jr. fueron diseñadas para facilitar ese cálculo directamente.</span>
+        </div>
+        <div class="highlight-box">
+          <span class="highlight-box__label">Ejecución por fases opcionales</span>
+          <span class="highlight-box__texto">Cada fase puede contratarse de forma independiente. La Fase 1 (18h) tiene el mayor valor autónomo — puede ejecutarse sin Fases 2 y 3 si el presupuesto es limitado en una primera etapa.</span>
+        </div>
+        <div class="highlight-box highlight-box--green">
+          <span class="highlight-box__label">Gastos directos no incluidos</span>
+          <span class="highlight-box__texto">Incentivos a participantes ≈ $900.000 COP (18 personas × $50.000). Licencias Figma, herramienta de encuestas y plataforma de grabación remota. Deben sumarse al presupuesto de honorarios.</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fin reporte-body -->
+
+  <div class="report-footer">
+    <img src="../img/innlab_white.svg" alt="INNLAB" style="height:24px">
+    <span class="report-footer__info">Estimación de Horas · Investigación RtP · ACH Colombia × INNLAB · Mayo 2026 · Confidencial</span>
+    <span class="report-footer__url">icesi.edu.co</span>
+  </div>
+
+</div>
+</body>
+</html>
