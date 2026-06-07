@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUMAS Summary Legacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0d1117;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #fff;
+    }
+    .phone {
+      width: 375px;
+      height: 724px;
+      border-radius: 44px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .appv-hdr {
+      background: linear-gradient(160deg, #2D3748 0%, #4A5568 100%);
+      color: #fff;
+      text-align: center;
+      padding: 30px 22px 18px;
+    }
+    .check-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .check {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+    .appv-lbl { font-size: 11px; color: rgba(255, 255, 255, 0.55); margin-bottom: 3px; }
+    .appv-amt { font-size: 36px; font-weight: 700; letter-spacing: -1.5px; margin-bottom: 3px; }
+    .appv-sub { font-size: 12px; color: rgba(255, 255, 255, 0.55); }
+    .appv-body { padding: 18px 16px; }
+    .data-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+    .data-card-ttl {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 10px;
+    }
+    .d-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .d-row:last-child { border-bottom: none; }
+    .dk { font-size: 12px; font-weight: 600; color: #64748b; }
+    .dv { font-size: 12px; color: #111827; text-align: right; }
+    .cta {
+      margin-top: 14px;
+      width: 100%;
+      height: 44px;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, #2D3748, #4A5568);
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="appv-hdr">
+      <div class="check-wrap">
+        <div class="check">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="appv-lbl">Tu compra fue financiada por SUMAS</div>
+      <div class="appv-amt">$ 240.000</div>
+      <div class="appv-sub">Para tu compra</div>
+    </div>
+    <div class="appv-body">
+      <div class="data-card">
+        <div class="data-card-ttl">Resumen de la financiación</div>
+        <div class="d-row"><span class="dk">CUS</span><span class="dv" style="font-family:'DM Mono', monospace">74fdbf4</span></div>
+        <div class="d-row"><span class="dk">Destino</span><span class="dv">Comercio</span></div>
+        <div class="d-row"><span class="dk">Método</span><span class="dv">Crédito SUMAS · procesado vía PSE</span></div>
+        <div class="d-row"><span class="dk">Valor inicial</span><span class="dv">$240.000</span></div>
+        <div class="d-row"><span class="dk">Costo de transacción</span><span class="dv">$455</span></div>
+        <div class="d-row"><span class="dk">Canal</span><span class="dv">Financiado por SUMAS · PSE</span></div>
+      </div>
+      <button class="cta">Regresar al comercio</button>
+    </div>
+  </div>
+</body>
+</html>
