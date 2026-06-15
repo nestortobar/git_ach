@@ -940,6 +940,10 @@ a { color: var(--c-blue); }
   margin-top: 6px;
 }
 
+.lista-icesi li strong {
+  display: block;
+}
+
 .lista-numerada {
   list-style: none;
   counter-reset: lista;
