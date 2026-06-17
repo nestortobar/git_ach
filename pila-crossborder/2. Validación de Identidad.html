@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Integry - Identity Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e8eeff",
+                        "tertiary-container": "#c4c7ca",
+                        "secondary-fixed-dim": "#bbc7e0",
+                        "surface-variant": "#d9e3fb",
+                        "primary-fixed-dim": "#b8d162",
+                        "on-tertiary-container": "#505356",
+                        "on-secondary-fixed": "#0f1c2e",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c6c8b4",
+                        "inverse-surface": "#273143",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#576379",
+                        "surface-container-high": "#dfe8ff",
+                        "on-primary-fixed": "#171e00",
+                        "outline": "#767967",
+                        "surface-dim": "#d0daf2",
+                        "on-background": "#111c2d",
+                        "inverse-primary": "#b8d162",
+                        "background": "#f9f9ff",
+                        "inverse-on-surface": "#ecf0ff",
+                        "tertiary": "#5c5f61",
+                        "secondary-fixed": "#d7e3fc",
+                        "surface": "#f9f9ff",
+                        "surface-container-highest": "#d9e3fb",
+                        "primary-fixed": "#d4ee7b",
+                        "tertiary-fixed-dim": "#c4c7ca",
+                        "surface-tint": "#526600",
+                        "on-surface-variant": "#454839",
+                        "on-secondary-fixed-variant": "#3b475c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#e0e3e6",
+                        "secondary-container": "#d4e0f9",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f9f9ff",
+                        "on-primary-container": "#485900",
+                        "on-primary-fixed-variant": "#3d4c00",
+                        "on-primary": "#ffffff",
+                        "primary": "#526600",
+                        "primary-container": "#b8d162",
+                        "surface-container-low": "#f0f3ff",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#111c2d",
+                        "secondary": "#535f74",
+                        "on-tertiary-fixed-variant": "#44474a",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "2rem",
+                        "gutter": "1.5rem",
+                        "stack-md": "1rem",
+                        "container-max-width": "440px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "button-text": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "button-text": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .qr-shadow {
+            box-shadow: 0px 12px 16px -4px rgba(0,0,0,0.08);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-anim {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col items-center">
+<!-- Header: Minimalist white background, logo centered -->
+<header class="w-full top-0 sticky bg-surface py-4 px-gutter z-50 flex items-center justify-between border-b border-surface-variant/10">
+<div class="w-10"></div> <!-- Spacer for symmetry -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-headline-lg text-[20px] font-bold text-primary">Integry</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">language</span>
+</button>
+</header>
+<main class="w-full max-w-container-max-width px-gutter flex flex-col items-center py-stack-lg">
+<!-- Header Section -->
+<div class="text-center mb-stack-lg">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-fixed mb-stack-md float-anim">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">fingerprint</span>
+</div>
+<h1 class="font-headline-lg text-on-surface mb-stack-sm">Verification for Integry</h1>
+<p class="font-body-md text-on-surface-variant">Complete these steps to verify your identity</p>
+</div>
+<!-- Progress Container (Matching 'Resumen del Pago' style) -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-6 qr-shadow mb-stack-lg border border-surface-variant/30">
+<div class="space-y-6 relative">
+<!-- Vertical Line Decorator -->
+<div class="absolute left-6 top-8 bottom-8 w-[2px] bg-surface-variant">
+<div class="absolute top-0 left-0 w-full h-1/2 bg-primary-fixed-dim rounded-full"></div>
+</div>
+<!-- Step 1: Active -->
+<div class="flex items-center gap-6 relative z-10">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">badge</span>
+</div>
+<div>
+<p class="font-label-md text-primary uppercase tracking-wider mb-0.5">Step 1</p>
+<p class="font-headline-sm text-on-surface">ID Verification</p>
+</div>
+<div class="ml-auto">
+<span class="material-symbols-outlined text-primary-fixed-dim text-2xl">radio_button_checked</span>
+</div>
+</div>
+<!-- Step 2: Upcoming -->
+<div class="flex items-center gap-6 relative z-10 opacity-50">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">face</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface-variant uppercase tracking-wider mb-0.5">Step 2</p>
+<p class="font-headline-sm text-on-surface-variant">Face verification</p>
+</div>
+<div class="ml-auto">
+<span class="material-symbols-outlined text-outline text-2xl">radio_button_unchecked</span>
+</div>
+</div>
+</div>
+</div>
+<!-- QR Code Section -->
+<div class="w-full bg-surface-container-low rounded-lg p-8 qr-shadow flex flex-col items-center text-center">
+<div class="mb-stack-md">
+<h2 class="font-headline-sm text-on-surface mb-stack-sm">Scan QR code</h2>
+<p class="font-body-md text-on-surface-variant px-4">
+                    Scan the code to start the process and continue to another device
+                </p>
+</div>
+<!-- QR Container -->
+<div class="relative p-6 bg-white rounded-xl shadow-inner border border-surface-variant/20 mt-stack-md group">
+<img alt="Identity Verification QR Code" class="w-48 h-48 rounded-md transition-transform duration-500 group-hover:scale-105" data-alt="A high-contrast, professional QR code generated for a secure digital identity verification process." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ_hS7Qa4qXHWGbanenrQTwNx3DG97RYbPKpfhTtsJ7T15v3ZpTXX0fwrTOAzxU6htQ30dWTTyAFoWpI3OVBtV08GabdGQi4fCaunzus-zRBEFbGfjIzC-W_QMvuwSO2f_yvTsJwQDlS0KG7jkEYSn6IXcnG_dku6YDxd3E1jIJto9M9D2XtZGvCRQfRo9m6nC0_CdpcjJRaf6pG5nlfar_k4Wp3tB9PY8nbTc4kNenL2syji9kurUHDb7g0xyIG14M0yM_TCPzhM">
+<!-- Corners Decorator -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary rounded-tl-lg"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary rounded-tr-lg"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-primary rounded-bl-lg"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-primary rounded-br-lg"></div>
+<!-- Animated Scanner Line -->
+<div class="absolute left-6 right-6 top-6 h-1 bg-primary/30 rounded-full blur-sm" style="animation: scan 3s ease-in-out infinite;"></div>
+</div>
+<style>
+                @keyframes scan {
+                    0%, 100% { transform: translateY(0); opacity: 0; }
+                    10% { opacity: 1; }
+                    50% { transform: translateY(160px); opacity: 1; }
+                    90% { opacity: 1; }
+                    100% { transform: translateY(160px); opacity: 0; }
+                }
+            </style>
+<button class="mt-stack-lg w-full bg-primary text-on-primary font-button-text py-4 rounded-full uppercase transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-2 group text-[12px] mx-[5px]">
+                CONTINUE ON THIS DEVICE
+                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Help Section -->
+<div class="mt-stack-lg text-center flex flex-col items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+<span class="font-label-md">Need help with verification?</span>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg border border-surface-variant/20 flex items-center gap-3 max-w-[320px] shadow-sm">
+<span class="material-symbols-outlined text-primary">security</span>
+<p class="font-label-md text-on-surface-variant text-left leading-tight">
+                    Your data is encrypted and handled according to our secure privacy standards.
+                </p>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions for the list items
+        document.querySelectorAll('.flex.items-center.gap-6').forEach(item => {
+            item.addEventListener('mousedown', () => {
+                item.style.transform = 'scale(0.98)';
+            });
+            item.addEventListener('mouseup', () => {
+                item.style.transform = 'scale(1)';
+            });
+            item.style.transition = 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        });
+    </script>
+<script>
+(function() {
+  document.querySelectorAll('header button').forEach(function(btn) {
+    var icon = btn.querySelector('.material-symbols-outlined');
+    if (!icon) return;
+    var name = (icon.dataset.icon || icon.textContent).trim();
+    if (name === 'close') btn.style.visibility = 'hidden';
+    if (name === 'arrow_back') btn.addEventListener('click', function() {
+      window.parent.postMessage({ type: 'BACK' }, '*');
+    });
+  });
+})();
+</script>
+<script>
+document.querySelectorAll('button').forEach(function(btn) {
+  if (btn.textContent.includes('CONTINUE ON THIS DEVICE')) {
+    btn.addEventListener('click', function() {
+      window.parent.postMessage({ type: 'GO', screen: 4 }, '*');
+    });
+  }
+});
+</script>
+</body></html>

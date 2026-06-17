@@ -1,0 +1,296 @@
+<!DOCTYPE html><html class="light" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Checkout - Pago</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#526600",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#b8d162",
+                      "secondary-container": "#d4e0f9",
+                      "secondary": "#535f74",
+                      "surface": "#f9f9ff",
+                      "surface-bright": "#f9f9ff",
+                      "on-secondary-fixed-variant": "#3b475c",
+                      "on-tertiary-container": "#505356",
+                      "on-secondary-fixed": "#0f1c2e",
+                      "tertiary": "#5c5f61",
+                      "surface-variant": "#d9e3fb",
+                      "outline-variant": "#c6c8b4",
+                      "primary-container": "#b8d162",
+                      "on-surface": "#111c2d",
+                      "on-surface-variant": "#454839",
+                      "secondary-fixed": "#d7e3fc",
+                      "inverse-surface": "#273143",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#dfe8ff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#d0daf2",
+                      "primary-fixed": "#d4ee7b",
+                      "on-secondary-container": "#576379",
+                      "surface-container-low": "#f0f3ff",
+                      "secondary-fixed-dim": "#bbc7e0",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#c4c7ca",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed": "#e0e3e6",
+                      "inverse-on-surface": "#ecf0ff",
+                      "primary-fixed-dim": "#b8d162",
+                      "surface-container": "#e8eeff",
+                      "on-tertiary-fixed-variant": "#44474a",
+                      "surface-container-highest": "#d9e3fb",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#3d4c00",
+                      "on-primary-container": "#485900",
+                      "error": "#ba1a1a",
+                      "on-background": "#111c2d",
+                      "outline": "#767967",
+                      "on-tertiary-fixed": "#191c1e",
+                      "background": "#f9f9ff",
+                      "brand-olive": "#b8d162"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "0.5rem",
+                      "stack-lg": "2rem",
+                      "container-max-width": "440px",
+                      "stack-md": "1rem",
+                      "gutter": "1.5rem"
+              },
+              "fontFamily": {
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "button-text": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "button-text": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .currency-pill {
+            @apply flex flex-col items-center justify-center p-4 rounded-full border-2 transition-all duration-200 bg-white shadow-sm;
+        }
+        .currency-pill.active {
+            @apply border-on-surface/10 bg-white;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+        }
+        .currency-pill.inactive {
+            @apply border-transparent bg-white/50;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Header: Standard minimalist white header -->
+<header class="sticky top-0 z-50 bg-surface w-full border-b border-on-surface/5">
+<div class="flex justify-between items-center w-full px-gutter py-4 max-w-container-max-width mx-auto">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">arrow_back</span>
+</button>
+<h1 class="text-headline-sm font-bold text-on-surface">Pago</h1>
+<button class="p-2 -mr-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">close</span>
+</button>
+</div>
+</header>
+<main class="flex-grow w-full max-w-container-max-width mx-auto px-gutter pb-32">
+<!-- Currency Selection -->
+<section class="mt-stack-lg">
+<h2 class="text-body-md font-medium text-on-surface-variant mb-stack-md ml-1">Elige una divisa:</h2>
+<div class="grid grid-cols-2 gap-4">
+<!-- COP Pill - Active State -->
+<button class="flex flex-col items-center gap-1 p-5 bg-white border border-on-surface/10 rounded-[40px] shadow-sm transition-all" id="btn-COP" onclick="selectCurrency('COP')">
+<div class="flex items-center gap-2">
+<img alt="Colombia Flag" class="w-6 h-4 object-cover rounded-sm shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKzwXojuaaJo-NC8zUpM7nLLmr6EI0AJhJbTFykyX0taN_TolOhYtAYTn-oZ0Fsm8tJyWDyrNkJ_X5br7AOktRPy2OykLb9vjSZHSuFhr3rUKvnD21mDaL6whSIye4NtQDFSwFV_zmmG-BW0cuA3M_JSZ9cJZ6PiI322HO18NFEmv3uADzE1tfph553mF4WQ76rmUcSYVktYkg7YjzQBO3zSgXtCENtdCxmDQhP2pOjz2b1ddx0CLlY9bBQlqgcM38EEdQGuaqxFg">
+<span class="text-body-md font-bold text-on-surface">98.435,85</span>
+</div>
+<span class="text-[12px] font-bold text-on-surface">COP</span>
+</button>
+<!-- USD Pill - Inactive State -->
+<button class="flex flex-col items-center gap-1 p-5 bg-white/40 border border-transparent rounded-[40px] transition-all opacity-60" id="btn-USD" onclick="selectCurrency('USD')">
+<div class="flex items-center gap-2">
+<img alt="USA Flag" class="w-6 h-4 object-cover rounded-sm shadow-sm grayscale-[0.2]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeX6s9TmMWANW3lLG0nkja47P6fyY1K_HRnjXPX_IP7jCAkXxHHzX2oHjRBCenqqHBEfq5RA6594yhqcPCPysb5vTLNiFZav6pZ9nYFOP_bvgYZTANd7cXhcJ9LD_hohRriN6iNxfrcTfCz6sW8i-Q10gmNvK8ie5Y072XoaoCS22jM20zUHegnr8Bq2FUsFjU1U87nPHOD_pu3jSq9fLhZZEKWn1vvsVYeAje47pY2TQ8s2gv1j98obzLl-ZPY4ko8ELpWy7ozaE">
+<span class="text-body-md font-bold text-on-surface">26,71</span>
+</div>
+<span class="text-[12px] font-bold text-on-surface">US$</span>
+</button>
+</div>
+<p class="mt-4 text-[12px] text-on-surface-variant/70 text-center">Es posible que se aplique el tipo de cambio y las comisiones de tu banco</p>
+</section>
+<!-- Summary Section -->
+<section class="mt-stack-lg space-y-4 py-6 border-b border-on-surface/5">
+<div class="flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">Enel - Energía</span>
+<span class="text-body-md font-bold text-on-surface" id="main-amount">26,66 US$</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">Service Fee</span>
+<span class="text-body-md font-bold text-on-surface" id="fee-amount">0,05 US$</span>
+</div>
+</section>
+<!-- Contact Info Section -->
+<section class="mt-stack-lg">
+<h2 class="text-headline-sm font-bold text-on-surface mb-stack-md">Información de contacto</h2>
+<div class="space-y-stack-sm">
+<label class="text-label-md text-on-surface-variant block ml-1" for="email">Correo electrónico</label>
+<input class="w-full px-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" id="email" type="email" value="jhon.contreras@integry.co">
+</div>
+</section>
+<!-- Payment Method Section -->
+<section class="mt-stack-lg">
+<h2 class="text-headline-sm font-bold text-on-surface mb-stack-md">Método de pago</h2>
+<div class="bg-white rounded-[32px] shadow-sm border border-on-surface/5">
+<div class="p-6 flex flex-col gap-6">
+<!-- Option Selection Indicator -->
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface text-[24px]" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="account_balance">account_balance</span>
+<span class="text-body-md font-bold text-on-surface">Cuenta bancaria de EE. UU.</span>
+</div>
+<!-- Fields -->
+<div class="space-y-5">
+<div class="space-y-stack-sm">
+<label class="text-label-md text-on-surface-variant block ml-1">Nombre completo</label>
+<input class="w-full px-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" type="text" value="Jhon Contreras">
+</div>
+<div class="space-y-stack-sm">
+<label class="text-label-md text-on-surface-variant block ml-1">Busca tu banco</label>
+<div class="relative" id="bank-wrap">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" data-icon="search">search</span>
+<input id="bank-input" autocomplete="off" class="w-full pl-12 pr-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" placeholder="Nombre del banco" type="text">
+<div id="bank-dropdown" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,0.10);border:1px solid rgba(0,0,0,0.06);overflow:hidden;z-index:200;max-height:224px;overflow-y:auto;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom CTA Fixed Container -->
+<div class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-xl p-gutter pb-8 border-t border-on-surface/5 flex justify-center z-50">
+<button class="w-full max-w-container-max-width bg-brand-olive hover:brightness-105 font-button-text text-white uppercase py-5 rounded-[28px] flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-md">
+        SIGUIENTE
+        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+<script>
+    function selectCurrency(type) {
+        const copBtn = document.getElementById('btn-COP');
+        const usdBtn = document.getElementById('btn-USD');
+        const mainAmount = document.getElementById('main-amount');
+        const feeAmount = document.getElementById('fee-amount');
+
+        if (type === 'COP') {
+            copBtn.classList.add('border-on-surface/10', 'opacity-100', 'bg-white');
+            copBtn.classList.remove('border-transparent', 'opacity-60', 'bg-white/40');
+            
+            usdBtn.classList.add('border-transparent', 'opacity-60', 'bg-white/40');
+            usdBtn.classList.remove('border-on-surface/10', 'opacity-100', 'bg-white');
+            
+            mainAmount.innerText = "98.435,85 COP";
+            feeAmount.innerText = "0,15 COP";
+        } else {
+            usdBtn.classList.add('border-on-surface/10', 'opacity-100', 'bg-white');
+            usdBtn.classList.remove('border-transparent', 'opacity-60', 'bg-white/40');
+            
+            copBtn.classList.add('border-transparent', 'opacity-60', 'bg-white/40');
+            copBtn.classList.remove('border-on-surface/10', 'opacity-100', 'bg-white');
+            
+            mainAmount.innerText = "26,66 US$";
+            feeAmount.innerText = "0,05 US$";
+        }
+    }
+</script>
+<script>
+(function() {
+  document.querySelectorAll('header button').forEach(function(btn) {
+    var icon = btn.querySelector('.material-symbols-outlined');
+    if (!icon) return;
+    var name = (icon.dataset.icon || icon.textContent).trim();
+    if (name === 'close') btn.style.visibility = 'hidden';
+    if (name === 'arrow_back') btn.addEventListener('click', function() {
+      window.parent.postMessage({ type: 'BACK' }, '*');
+    });
+  });
+})();
+</script>
+<script>
+(function() {
+  var BANKS = [
+    'Ally Bank', 'Bank of America', 'BB&T', 'Capital One',
+    'Charles Schwab Bank', 'Citibank', 'Citizens Bank',
+    'Discover Bank', 'Fifth Third Bank', 'Goldman Sachs Bank',
+    'HSBC USA', 'JPMorgan Chase', 'KeyBank', 'Morgan Stanley',
+    'PNC Bank', 'Regions Bank', 'Truist Bank', 'TD Bank',
+    'U.S. Bank', 'Wells Fargo'
+  ];
+
+  var input    = document.getElementById('bank-input');
+  var dropdown = document.getElementById('bank-dropdown');
+  var wrap     = document.getElementById('bank-wrap');
+
+  function renderList(items) {
+    dropdown.innerHTML = '';
+    items.forEach(function(bank) {
+      var el = document.createElement('div');
+      el.textContent = bank;
+      el.style.cssText = 'padding:13px 18px;font-size:14px;font-family:inherit;color:#111c2d;cursor:pointer;transition:background .12s;';
+      el.addEventListener('mouseenter', function() { el.style.background = '#f0f3ff'; });
+      el.addEventListener('mouseleave', function() { el.style.background = ''; });
+      el.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        input.value = bank;
+        dropdown.style.display = 'none';
+      });
+      dropdown.appendChild(el);
+    });
+  }
+
+  function openWith(q) {
+    var list = q
+      ? BANKS.filter(function(b) { return b.toLowerCase().includes(q.toLowerCase()); })
+      : BANKS;
+    if (!list.length) { dropdown.style.display = 'none'; return; }
+    renderList(list);
+    dropdown.style.display = 'block';
+  }
+
+  input.addEventListener('focus', function() { openWith(this.value.trim()); });
+  input.addEventListener('input', function() { openWith(this.value.trim()); });
+
+  document.addEventListener('click', function(e) {
+    if (!wrap.contains(e.target)) dropdown.style.display = 'none';
+  });
+})();
+</script>
+<script>
+document.querySelector('.fixed button').addEventListener('click', function() {
+  window.parent.postMessage({ type: 'GO', screen: 7 }, '*');
+});
+</script>
+</body></html>

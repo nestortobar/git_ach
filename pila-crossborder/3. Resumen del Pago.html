@@ -1,0 +1,244 @@
+<!DOCTYPE html><html class="light" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Resumen del Pago - Enel</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e8eeff",
+                    "tertiary-fixed": "#e0e3e6",
+                    "on-secondary-fixed-variant": "#3b475c",
+                    "on-primary-fixed": "#171e00",
+                    "on-primary-container": "#485900",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#c4c7ca",
+                    "surface-tint": "#526600",
+                    "primary": "#526600",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b8d162",
+                    "on-secondary-container": "#576379",
+                    "surface-dim": "#d0daf2",
+                    "primary-fixed-dim": "#b8d162",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#5c5f61",
+                    "on-tertiary-container": "#505356",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f9f9ff",
+                    "inverse-surface": "#273143",
+                    "secondary-container": "#d4e0f9",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#0f1c2e",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#d9e3fb",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed": "#d4ee7b",
+                    "secondary-fixed": "#d7e3fc",
+                    "inverse-on-surface": "#ecf0ff",
+                    "on-tertiary-fixed": "#191c1e",
+                    "surface-container-highest": "#d9e3fb",
+                    "outline-variant": "#c6c8b4",
+                    "secondary": "#535f74",
+                    "on-surface": "#111c2d",
+                    "primary-container": "#b8d162",
+                    "on-surface-variant": "#454839",
+                    "background": "#f9f9ff",
+                    "secondary-fixed-dim": "#bbc7e0",
+                    "on-background": "#111c2d",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#3d4c00",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f0f3ff",
+                    "outline": "#767967",
+                    "surface-container-high": "#dfe8ff",
+                    "tertiary-fixed-dim": "#c4c7ca",
+                    "on-tertiary-fixed-variant": "#44474a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1.25rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "stack-lg": "2rem",
+                    "container-max-width": "440px"
+            },
+            "fontFamily": {
+                    "label-md": ["Plus Jakarta Sans"],
+                    "button-text": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "button-text": ["15px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9f9ff;
+            color: #111c2d;
+            margin: 0;
+            padding: 0;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custom-shadow {
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.05);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background flex justify-center min-h-screen">
+<!-- Mobile Wrapper -->
+<div class="w-full max-w-container-max-width bg-surface min-h-screen flex flex-col relative overflow-hidden">
+<!-- Gold Standard TopAppBar -->
+<header class="flex justify-between items-center px-gutter py-4 w-full bg-surface sticky top-0 z-50 border-b border-surface-container-low/50">
+<button class="text-on-surface-variant hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-bold text-headline-sm text-on-surface">Resumen del Pago</h1>
+<button class="text-on-surface-variant hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="px-gutter flex-grow flex flex-col items-center space-y-6 mt-6 no-scrollbar overflow-y-auto pb-8">
+<!-- Logo & Brand Header -->
+<div class="flex flex-col items-center text-center space-y-3">
+<div class="relative">
+<div class="w-20 h-20 rounded-2xl bg-[#00A7E1] flex items-center justify-center p-2 shadow-sm">
+<img alt="Enel Logo" class="w-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDIdHo9lDLTbeaogjUiPwHl-WTUinLMrc3DFaTM3oLn7VH9MPUF532BfUDA0ARpQ9ITJP-gynDcIKOdb_G84Y6QOh1JxdY5YbWBZa1oUKGE5VCMVOXUjFBnjbGVhhf2wN39FWiFWYMHDWh8toSlYmyP41W_OKxbqRmiLfQc4AT1ER6h1_4G_DBPT8PjaKF3NN5Wgbn4HAZ7fG45lMB5FAldFQAu5NajRskB6hZNfzvlS4pPIj07wirjT8cddHhMWreNZi0wmSgVDk">
+</div>
+<div class="absolute -bottom-1 -right-1 bg-[#86BC25] rounded-full p-1 border-2 border-white flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div>
+<h2 class="font-headline-lg text-primary leading-tight text-headline-lg">Resumen del Pago</h2>
+<p class="font-body-md text-on-surface-variant/70">Enel • Energía • Facturas</p>
+</div>
+</div>
+<!-- Reference Chip -->
+<div class="w-full bg-surface-container-low py-3 px-5 rounded-full flex justify-between items-center">
+<p class="font-label-md text-on-surface font-body-md">Referencia: <span class="font-bold">05277351</span></p>
+<div class="bg-[#e8f2d0] px-3 py-1 rounded-full">
+<span class="text-[#526600] font-bold text-[10px] uppercase tracking-widest">Validado</span>
+</div>
+</div>
+<!-- Standardized White Cards -->
+<div class="w-full bg-white custom-shadow rounded-lg p-6 flex items-center gap-4">
+<div class="bg-primary-fixed-dim/15 w-12 h-12 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-on-surface-variant/60 uppercase text-[10px] tracking-wider font-body-md">Monto Original</span>
+<span class="font-headline-lg text-on-surface">COP $100,000.00</span>
+</div>
+</div>
+<!-- Primary Summary Box (Deep Green) -->
+<div class="w-full bg-[#004236] text-white rounded-lg p-6 flex flex-col space-y-5 relative overflow-hidden">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-white/90">Resumen del Pago</h3>
+<div class="bg-[#005a4a] px-3 py-1 rounded-full border border-primary-container/20 whitespace-nowrap">
+<span class="text-[10px] font-bold text-primary-container">1 USD ≈ $3,750.80 COP</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-white/70">Monto Factura (USD)</span>
+<span class="font-label-md font-bold font-body-md">USD $26.66</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-primary-container">Tarifa Servicio</span>
+<span class="font-label-md font-bold text-primary-container font-body-md">USD $0.05</span>
+</div>
+<div class="w-full h-px bg-white/10 pt-1"></div>
+<div class="flex flex-col items-end pt-1">
+<span class="text-[36px] font-extrabold leading-none">$26.71</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="font-label-md text-white/50">Tú Pagas /</span>
+<span class="font-label-md font-bold text-primary-container uppercase text-[10px]">USD Total</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Standardized Option Container -->
+<div class="w-full px-1">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center pt-0.5">
+<input class="peer hidden" id="save-service" type="checkbox">
+<div class="w-6 h-6 border-2 border-outline rounded-md flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
+<span class="material-symbols-outlined text-white text-[16px] hidden peer-checked:block" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<span class="font-body-md text-on-surface-variant leading-tight">Guardar este servicio para futuros pagos</span>
+</label>
+</div>
+</main>
+<!-- Standardized Footer Actions -->
+<footer class="px-gutter pb-8 pt-4 flex flex-col items-center gap-4 bg-surface">
+<button class="w-full bg-[#b8d162] hover:bg-[#a9c252] font-button-text text-white uppercase py-4 rounded-full flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-md">
+                Continuar al Carrito
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="font-button-text text-on-surface/50 hover:text-primary transition-colors text-sm">
+                Cancelar
+</button>
+</footer>
+</div>
+<script>
+    // Smooth interactions
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('touchstart', () => btn.classList.add('opacity-80'), {passive: true});
+        btn.addEventListener('touchend', () => btn.classList.remove('opacity-80'), {passive: true});
+    });
+</script>
+<script>
+(function() {
+  document.querySelectorAll('header button').forEach(function(btn) {
+    var icon = btn.querySelector('.material-symbols-outlined');
+    if (!icon) return;
+    var name = (icon.dataset.icon || icon.textContent).trim();
+    if (name === 'close') btn.style.visibility = 'hidden';
+    if (name === 'arrow_back') btn.addEventListener('click', function() {
+      window.parent.postMessage({ type: 'BACK' }, '*');
+    });
+  });
+})();
+</script>
+<script>
+document.querySelector('footer button').addEventListener('click', function() {
+  window.parent.postMessage({ type: 'GO', screen: 5 }, '*');
+});
+</script>
+</body></html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frame Test — Modo Facilitador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --blue:#0050C7;
+  --green:#00A86B;
+  --env:#0d1117;--panel:#13192a;
+  --tp:#0D1117;--ts:#5A6478;--tt:#9DA8BC;
+  --brd:#E3E8F0;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--env);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px 20px 80px;
+  background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+
+/* ── MOCK PHONE (placeholder visual) ── */
+.mock-phone{
+  width:399px;height:752px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:52px;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.2);font-size:13px;
+}
+
+/* ── STEP DOTS ── */
+.step-dots{display:flex;gap:5px;margin-top:14px;align-items:center;justify-content:center;}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.13);
+  transition:all .3s ease;
+}
+.dot.active{width:22px;border-radius:4px;background:rgba(255,255,255,.55);}
+.dot.done{background:rgba(0,168,107,.45);}
+
+/* ── BOTTOM BAR ── */
+.btm-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(13,17,23,.93);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.05);
+  padding:10px 20px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:100;
+}
+.bb-info{display:flex;flex-direction:column;gap:2px;}
+.bb-name{font-size:11px;font-weight:500;color:rgba(255,255,255,.5);}
+.bb-step{font-size:10px;color:rgba(255,255,255,.22);}
+.bb-right{display:flex;gap:6px;align-items:center;}
+.bb-btn{
+  padding:6px 13px;border-radius:8px;font-size:11px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);background:transparent;
+  color:rgba(255,255,255,.4);transition:all .15s;
+}
+.bb-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);}
+.bb-fac{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:8px;font-size:11px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.5);transition:all .15s;
+}
+.bb-fac:hover{background:rgba(255,255,255,.09);color:rgba(255,255,255,.7);}
+.bb-fac.active{border-color:rgba(0,168,107,.35);background:rgba(0,168,107,.1);color:rgba(0,200,130,.8);}
+
+/* ── FACILITATOR PANEL ── */
+.fac-panel{
+  position:fixed;right:0;top:0;bottom:0;width:306px;
+  background:var(--panel);
+  border-left:1px solid rgba(255,255,255,.06);
+  transform:translateX(100%);
+  transition:transform .32s cubic-bezier(.4,0,.2,1);
+  z-index:150;display:flex;flex-direction:column;overflow:hidden;
+}
+.fac-panel.open{transform:translateX(0);}
+
+.fac-hdr{
+  padding:18px 18px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.fac-title-txt{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+.fac-x{
+  width:26px;height:26px;border-radius:7px;
+  background:rgba(255,255,255,.06);border:none;
+  color:rgba(255,255,255,.35);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-family:sans-serif;
+  transition:all .15s;
+}
+.fac-x:hover{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);}
+
+.fac-body{
+  flex:1;overflow-y:auto;padding:14px 16px 20px;
+  display:flex;flex-direction:column;gap:18px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
+}
+
+/* Timer */
+.fac-timer{background:rgba(0,0,0,.35);border-radius:12px;padding:14px;text-align:center;}
+.timer-dig{
+  font-size:38px;font-weight:400;font-family:'DM Mono',monospace;
+  color:#fff;letter-spacing:3px;margin-bottom:11px;
+  transition:color .3s;
+}
+.timer-dig.running{color:rgba(0,230,140,.85);}
+.timer-btns{display:flex;gap:5px;}
+.t-btn{
+  flex:1;padding:7px 6px;border-radius:8px;font-size:11px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.45);transition:all .15s;
+}
+.t-btn:hover{background:rgba(255,255,255,.09);color:rgba(255,255,255,.75);}
+.t-btn.go{background:rgba(0,168,107,.15);border-color:rgba(0,168,107,.3);color:rgba(0,200,130,.85);}
+
+/* Section label */
+.fac-s-lbl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:6px;}
+
+/* Nav */
+.fac-nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
+.nav-b{
+  padding:8px 5px;border-radius:8px;text-align:center;
+  font-size:11px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.45);transition:all .15s;
+}
+.nav-b:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.72);}
+.nav-b.rst{background:rgba(210,50,50,.1);border-color:rgba(210,50,50,.2);color:rgba(220,80,80,.75);}
+.nav-b.rst:hover{background:rgba(210,50,50,.16);color:rgba(220,80,80,1);}
+
+.save-ind{font-size:10px;color:rgba(0,200,130,0);transition:color .4s;pointer-events:none;}
+.save-ind.visible{color:rgba(0,200,130,.55);}
+
+.exp-btn{
+  width:100%;padding:11px;
+  background:rgba(0,80,199,.12);border:1px solid rgba(0,80,199,.22);border-radius:10px;
+  color:rgba(100,160,255,.75);font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .15s;
+}
+.exp-btn:hover{background:rgba(0,80,199,.2);color:rgba(130,180,255,.95);}
+
+.new-session-btn{
+  width:100%;padding:9px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;
+  color:rgba(255,255,255,.3);font-size:11px;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .15s;
+}
+.new-session-btn:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);}
+
+.sess-input{
+  width:100%;padding:9px 11px;
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);border-radius:9px;
+  font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,.6);
+  outline:none;transition:border-color .15s;
+}
+.sess-input:focus{border-color:rgba(255,255,255,.18);}
+.sess-input::placeholder{color:rgba(255,255,255,.2);}
+
+.ts-btn{
+  padding:5px 10px;border-radius:7px;font-size:10px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.35);transition:all .15s;white-space:nowrap;
+}
+.ts-btn:hover{background:rgba(255,255,255,.09);color:rgba(255,255,255,.65);}
+
+.storage-notice{
+  font-size:10px;color:rgba(0,200,130,.45);
+  background:rgba(0,168,107,.07);border:1px solid rgba(0,168,107,.12);
+  border-radius:7px;padding:7px 10px;line-height:1.5;
+}
+
+/* Notes */
+.fac-notes{
+  width:100%;min-height:90px;padding:10px 12px;
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;font-size:12px;font-family:'DM Sans',sans-serif;
+  color:rgba(255,255,255,.55);resize:none;outline:none;line-height:1.6;
+  transition:border-color .15s;
+}
+.fac-notes::placeholder{color:rgba(255,255,255,.18);}
+.fac-notes:focus{border-color:rgba(255,255,255,.14);}
+
+/* ── RIPPLE ── */
+.ripple{
+  position:fixed;pointer-events:none;
+  width:24px;height:24px;margin:-12px 0 0 -12px;
+  border-radius:50%;background:rgba(0,80,199,.35);
+  z-index:9999;animation:rpl .65s ease-out forwards;
+}
+@keyframes rpl{
+  from{transform:scale(.2);opacity:.9;}
+  to{transform:scale(4.5);opacity:0;}
+}
+
+/* ── TOAST ── */
+.toast-wrap{
+  position:fixed;bottom:78px;left:50%;transform:translateX(-50%);
+  z-index:9998;display:flex;flex-direction:column;gap:7px;align-items:center;pointer-events:none;
+}
+.toast{
+  background:rgba(18,22,36,.96);border:1px solid rgba(255,255,255,.1);
+  border-radius:11px;padding:9px 18px;font-size:12px;color:rgba(255,255,255,.72);
+  backdrop-filter:blur(12px);white-space:nowrap;
+  animation:tin .3s ease,tout .3s ease 2.7s forwards;
+}
+@keyframes tin{from{transform:translateY(8px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes tout{from{opacity:1;}to{opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- MOCK PHONE (placeholder) -->
+<div class="mock-phone">[ prototipo aquí ]</div>
+
+<!-- STEP DOTS -->
+<div class="step-dots" id="stepDots"></div>
+
+<!-- BOTTOM BAR -->
+<div class="btm-bar">
+  <div class="bb-info">
+    <div class="bb-name" id="bbName">Introducción</div>
+    <div class="bb-step" id="bbStep">Pantalla 1 de 10</div>
+  </div>
+  <div class="bb-right">
+    <button class="bb-btn" onclick="go(Math.max(0,cur-1))">‹ Atrás</button>
+    <button class="bb-fac" id="facToggleBtn" onclick="toggleFac()">👁 Facilitador</button>
+  </div>
+</div>
+
+<!-- FACILITATOR PANEL -->
+<div class="fac-panel" id="facPanel">
+  <div class="fac-hdr">
+    <span class="fac-title-txt">Modo Facilitador</span>
+    <button class="fac-x" onclick="toggleFac()">✕</button>
+  </div>
+  <div class="fac-body">
+
+    <!-- Timer -->
+    <div>
+      <div class="fac-s-lbl">Cronómetro de sesión</div>
+      <div class="fac-timer">
+        <div class="timer-dig" id="timerDig">00:00</div>
+        <div class="timer-btns">
+          <button class="t-btn go" id="timerBtn" onclick="toggleTimer()">▶ Iniciar</button>
+          <button class="t-btn" onclick="resetTimer()">↺ Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div>
+      <div class="fac-s-lbl">Navegar</div>
+      <div class="fac-nav">
+        <button class="nav-b" onclick="go(Math.max(0,cur-1))">‹ Anterior</button>
+        <button class="nav-b rst" onclick="resetAll()">↺ Reiniciar</button>
+        <button class="nav-b" onclick="go(Math.min(9,cur+1))">Siguiente ›</button>
+      </div>
+    </div>
+
+    <!-- Preguntas cualitativas -->
+    <div>
+      <div class="fac-s-lbl">Preguntas cualitativas</div>
+      <ul style="font-size:12px;color:rgba(255,255,255,.6);margin:0 0 4px 16px;padding:0;line-height:1.7;">
+        <li>Pregunta 1</li>
+      </ul>
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+        <span class="fac-s-lbl" style="margin:0">Observaciones</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="save-ind" id="saveInd">Guardado ✓</span>
+          <button class="ts-btn" onclick="insertTimestamp()">⏱ + tiempo</button>
+        </div>
+      </div>
+      <textarea class="fac-notes" id="facNotes" placeholder="Usa ⏱ + tiempo para insertar el marcador del cronómetro antes de cada nota.&#10;&#10;Ej:&#10;[00:42] El usuario dudó en este paso&#10;[01:15] Preguntó si había intereses" rows="7" oninput="saveSession()"></textarea>
+      <div class="storage-notice" style="margin-top:6px;">
+        💾 Notas guardadas en este navegador — sobreviven si refrescas la página
+      </div>
+    </div>
+
+    <!-- Participant info -->
+    <div>
+      <div class="fac-s-lbl">Datos del participante</div>
+      <input class="sess-input" id="participantName" placeholder="Nombre o código del participante (ej: P01 · Ana)" oninput="saveSession()">
+    </div>
+
+    <!-- Export -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <button class="exp-btn" onclick="exportSession()">↓ Exportar sesión como .txt</button>
+      <button class="new-session-btn" onclick="newSession()">↺ Nueva sesión (borra notas)</button>
+    </div>
+
+  </div><!-- /fac-body -->
+</div><!-- /fac-panel -->
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ─ STATE ─ */
+let cur = 0;
+const TOTAL = 10;
+let timerSec = 0;
+let timerRunning = false;
+let timerInterval = null;
+let facOpen = false;
+const STORAGE_KEY = 'facilitador_session';
+
+const screenMeta = [
+  { name:'Introducción',               sub:'Escenario de prueba'          },
+  { name:'Pantalla 2',                 sub:''                             },
+  { name:'Pantalla 3',                 sub:''                             },
+  { name:'Pantalla 4',                 sub:''                             },
+  { name:'Pantalla 5',                 sub:''                             },
+  { name:'Pantalla 6',                 sub:''                             },
+  { name:'Pantalla 7',                 sub:''                             },
+  { name:'Pantalla 8',                 sub:''                             },
+  { name:'Pantalla 9',                 sub:''                             },
+  { name:'Fin de la prueba',           sub:'Flujo completado'             },
+];
+
+/* ─ NAVIGATION (stub — conectar al prototipo real) ─ */
+function go(n) {
+  if (n < 0 || n >= TOTAL) return;
+  cur = n;
+  updateUI();
+}
+
+function resetAll() {
+  resetTimer();
+  go(0);
+}
+
+/* ─ UI UPDATE ─ */
+function updateUI() {
+  const dotsEl = document.getElementById('stepDots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === cur ? ' active' : (i < cur ? ' done' : ''));
+    dotsEl.appendChild(d);
+  }
+  document.getElementById('bbName').textContent = screenMeta[cur].name;
+  document.getElementById('bbStep').textContent = `Pantalla ${cur + 1} de ${TOTAL}`;
+}
+
+/* ─ TIMER ─ */
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timerBtn').textContent = '▶ Continuar';
+    document.getElementById('timerBtn').classList.remove('go');
+    document.getElementById('timerDig').classList.remove('running');
+  } else {
+    timerInterval = setInterval(() => {
+      timerSec++;
+      document.getElementById('timerDig').textContent = fmt(timerSec);
+    }, 1000);
+    timerRunning = true;
+    document.getElementById('timerBtn').textContent = '⏸ Pausar';
+    document.getElementById('timerBtn').classList.add('go');
+    document.getElementById('timerDig').classList.add('running');
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false; timerSec = 0;
+  document.getElementById('timerDig').textContent = '00:00';
+  document.getElementById('timerDig').classList.remove('running');
+  document.getElementById('timerBtn').textContent = '▶ Iniciar';
+  document.getElementById('timerBtn').classList.remove('go');
+}
+
+function fmt(s) {
+  const m = Math.floor(s / 60), sec = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+/* ─ FACILITATOR PANEL ─ */
+function toggleFac() {
+  facOpen = !facOpen;
+  document.getElementById('facPanel').classList.toggle('open', facOpen);
+  document.getElementById('facToggleBtn').classList.toggle('active', facOpen);
+}
+
+/* ─ TIMESTAMP IN NOTES ─ */
+function insertTimestamp() {
+  const ta = document.getElementById('facNotes');
+  const ts = `[${fmt(timerSec)}] `;
+  const pos = ta.selectionStart;
+  const before = ta.value.substring(0, pos);
+  const after = ta.value.substring(pos);
+  const prefix = (before.length > 0 && !before.endsWith('\n')) ? '\n' : '';
+  ta.value = before + prefix + ts + after;
+  ta.selectionStart = ta.selectionEnd = pos + prefix.length + ts.length;
+  ta.focus();
+  saveSession();
+}
+
+/* ─ LOCALSTORAGE: SAVE / LOAD ─ */
+function saveSession() {
+  const data = {
+    notes: document.getElementById('facNotes').value,
+    participantName: document.getElementById('participantName').value,
+    savedAt: new Date().toISOString(),
+  };
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    showSaveFlash();
+  } catch(e) {}
+}
+
+function loadSession() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d.notes) document.getElementById('facNotes').value = d.notes;
+    if (d.participantName) document.getElementById('participantName').value = d.participantName;
+  } catch(e) {}
+}
+
+let saveFlashTimeout;
+function showSaveFlash() {
+  const el = document.getElementById('saveInd');
+  el.classList.add('visible');
+  clearTimeout(saveFlashTimeout);
+  saveFlashTimeout = setTimeout(() => el.classList.remove('visible'), 2000);
+}
+
+/* ─ EXPORT ─ */
+function exportSession() {
+  const name = document.getElementById('participantName').value.trim() || 'Sin nombre';
+  const notes = document.getElementById('facNotes').value.trim();
+  const duration = document.getElementById('timerDig').textContent;
+  const date = new Date().toLocaleString('es-CO', {
+    day:'2-digit', month:'long', year:'numeric',
+    hour:'2-digit', minute:'2-digit'
+  });
+
+  const lines = [
+    '══════════════════════════════════════════════',
+    '  REPORTE DE SESIÓN',
+    '══════════════════════════════════════════════',
+    '',
+    `  Participante : ${name}`,
+    `  Fecha        : ${date}`,
+    `  Duración     : ${duration}`,
+    '',
+    '── NOTAS Y OBSERVACIONES ─────────────────────',
+    '',
+    notes || '  (sin notas registradas)',
+    '',
+    '══════════════════════════════════════════════',
+  ];
+
+  const blob = new Blob([lines.join('\n')], { type:'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const slug = name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+  a.href = url;
+  a.download = `sesion-${slug || 'participante'}-${Date.now()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Sesión exportada · revisa tus Descargas');
+}
+
+/* ─ NEW SESSION ─ */
+function newSession() {
+  if (!confirm('¿Iniciar nueva sesión? Se borrarán las notas actuales.')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  document.getElementById('facNotes').value = '';
+  document.getElementById('participantName').value = '';
+  resetTimer();
+  resetAll();
+  toast('Nueva sesión lista');
+}
+
+/* ─ TAP RIPPLE ─ */
+document.addEventListener('click', function(e) {
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+});
+
+/* ─ TOAST ─ */
+function toast(msg) {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => t.remove(), 3100);
+}
+
+/* ─ KEYBOARD SHORTCUTS ─ */
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'Enter') go(Math.min(TOTAL - 1, cur + 1));
+  if (e.key === 'ArrowLeft') go(Math.max(0, cur - 1));
+  if (e.key === 'f' || e.key === 'F') toggleFac();
+  if (e.key === 'r' || e.key === 'R') resetAll();
+});
+
+/* ─ INIT ─ */
+loadSession();
+updateUI();
+</script>
+</body>
+</html>

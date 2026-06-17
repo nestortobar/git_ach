@@ -1,0 +1,227 @@
+<!DOCTYPE html><html class="light" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Resumen del Pago - Enel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#171e00",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d4e0f9",
+                        "tertiary-fixed": "#e0e3e6",
+                        "tertiary-container": "#c4c7ca",
+                        "primary": "#526600",
+                        "outline-variant": "#c6c8b4",
+                        "surface-bright": "#f9f9ff",
+                        "outline": "#767967",
+                        "on-background": "#111c2d",
+                        "secondary-fixed-dim": "#bbc7e0",
+                        "on-primary-container": "#485900",
+                        "inverse-primary": "#b8d162",
+                        "secondary-fixed": "#d7e3fc",
+                        "background": "#f9f9ff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#d4ee7b",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#b8d162",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#ecf0ff",
+                        "on-secondary-fixed": "#0f1c2e",
+                        "tertiary-fixed-dim": "#c4c7ca",
+                        "on-surface": "#111c2d",
+                        "surface-variant": "#d9e3fb",
+                        "surface-container": "#e8eeff",
+                        "on-tertiary-container": "#505356",
+                        "surface": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#3b475c",
+                        "on-tertiary-fixed-variant": "#44474a",
+                        "on-primary-fixed-variant": "#3d4c00",
+                        "tertiary": "#5c5f61",
+                        "on-surface-variant": "#454839",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-tint": "#526600",
+                        "on-secondary-container": "#576379",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "surface-dim": "#d0daf2",
+                        "surface-container-highest": "#d9e3fb",
+                        "surface-container-high": "#dfe8ff",
+                        "secondary": "#535f74",
+                        "inverse-surface": "#273143",
+                        "primary-fixed-dim": "#b8d162",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max-width": "440px",
+                        "stack-lg": "2rem",
+                        "gutter": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1rem"
+                    },
+                    "fontFamily": {
+                        "button-text": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "button-text": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="flex items-start justify-center min-h-screen bg-surface">
+<main class="w-full max-w-[440px] min-h-screen bg-surface flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-gutter py-4 w-full sticky top-0 z-50 bg-surface">
+<button class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 text-on-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-bold text-headline-sm text-on-surface">Resumen del Pago</h1>
+<button class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 text-on-surface-variant">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<div class="p-gutter flex-1 space-y-stack-lg">
+<!-- Service Card -->
+<div class="flex items-center justify-between bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center">
+<span class="text-primary font-bold">E</span>
+</div>
+<span class="font-headline-sm text-on-surface">Enel - Energía</span>
+</div>
+<button class="text-on-surface-variant p-2 hover:bg-surface-container rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Amount Display Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/20 flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">Monto a pagar</span>
+<span class="font-headline-lg text-primary">$26.66</span>
+</div>
+<!-- Breakdown Summary -->
+<div class="space-y-stack-sm px-2">
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span class="font-body-md">Subtotal</span>
+<span class="font-body-md font-semibold text-on-surface">$26.66</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span class="font-body-md">Tarifa de Servicio</span>
+<span class="font-body-md font-semibold text-on-surface">$0.05</span>
+</div>
+<div class="pt-4 mt-2 border-t border-outline-variant/30">
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-on-surface">Total (USD)</span>
+<span class="font-headline-sm text-on-surface">$26.71</span>
+</div>
+<div class="flex justify-between mt-1">
+<span class="text-label-md font-label-md text-on-surface-variant opacity-70 uppercase tracking-wider">Total en COP</span>
+<span class="text-label-md font-label-md text-on-surface-variant opacity-70">~ 100,188 COP</span>
+</div>
+</div>
+</div>
+<!-- Payment Method Selection -->
+<div class="relative p-6 bg-surface-container-lowest rounded-xl border border-primary transition-all shadow-sm">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="credit_card">credit_card</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-widest">PROCESANDO CON</p>
+<p class="font-headline-sm text-on-surface">Stripe</p>
+</div>
+</div>
+<div class="absolute right-6 top-1/2 -translate-y-1/2">
+<div class="w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[16px] font-bold">check</span>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-stack-md">
+<button class="w-full font-button-text py-4 rounded-full uppercase flex items-center justify-center gap-2 transition-all active:scale-95 duration-150 shadow-lg text-white bg-[#f1c232]" id="pay-button">
+                    Pagar con Stripe
+                    <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Footer Compliance -->
+<footer class="text-center space-y-1 pt-stack-lg pb-10">
+<p class="text-label-md font-label-md text-on-surface-variant opacity-60">Pago seguro procesado por Stripe.</p>
+<p class="text-label-md font-label-md text-on-surface-variant opacity-60">Al pagar aceptas nuestros <a class="underline hover:text-primary" href="#">Términos de Servicio</a>.</p>
+</footer>
+</div>
+</main>
+<script>
+        const payBtn = document.getElementById('pay-button');
+        if (payBtn) {
+            payBtn.addEventListener('click', function() {
+                const originalContent = this.innerHTML;
+                this.disabled = true;
+                this.innerHTML = `
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Procesando...</span>
+                `;
+                setTimeout(() => {
+                    this.innerHTML = `<span>Pago Completado</span> <span class="material-symbols-outlined">check_circle</span>`;
+                    this.classList.replace('bg-[#f1c232]', 'bg-green-600');
+                }, 2000);
+            });
+        }
+    </script>
+<script>
+(function() {
+  document.querySelectorAll('header button').forEach(function(btn) {
+    var icon = btn.querySelector('.material-symbols-outlined');
+    if (!icon) return;
+    var name = (icon.dataset.icon || icon.textContent).trim();
+    if (name === 'close') btn.style.visibility = 'hidden';
+    if (name === 'arrow_back') btn.addEventListener('click', function() {
+      window.parent.postMessage({ type: 'BACK' }, '*');
+    });
+  });
+})();
+</script>
+<script>
+var payBtn2 = document.getElementById('pay-button');
+if (payBtn2) {
+  payBtn2.addEventListener('click', function() {
+    setTimeout(function() {
+      window.parent.postMessage({ type: 'GO', screen: 6 }, '*');
+    }, 2000);
+  });
+}
+</script>
+</body></html>
