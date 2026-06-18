@@ -352,18 +352,14 @@ body{
         </div>
 
         <div class="scr" id="s3">
-          <iframe src="2. Validación de Identidad.html" title="Validación de Identidad"></iframe>
-        </div>
-
-        <div class="scr" id="s4">
           <iframe src="3. Resumen del Pago.html" title="Resumen del Pago"></iframe>
         </div>
 
-        <div class="scr" id="s5">
+        <div class="scr" id="s4">
           <iframe src="4. Selección de pago.html" title="Selección de Pago"></iframe>
         </div>
 
-        <div class="scr" id="s6">
+        <div class="scr" id="s5">
           <iframe src="5. Método de Pago.html" title="Método de Pago"></iframe>
         </div>
 
@@ -465,7 +461,7 @@ body{
 <script>
 /* ─ STATE ─ */
 let cur = 0;
-const TOTAL = 7;
+const TOTAL = 6;
 let timerSec = 0;
 let timerRunning = false;
 let timerInterval = null;
@@ -476,7 +472,6 @@ const screenMeta = [
   { name: 'Envío de Pago',           sub: 'Método de pago'      },
   { name: 'Procesando',              sub: 'Transacción PSE'      },
   { name: 'Login',                   sub: 'Autenticación'        },
-  { name: 'Validación de Identidad', sub: 'Verificación KYC'     },
   { name: 'Resumen del Pago',        sub: 'Factura Enel'         },
   { name: 'Selección de Pago',       sub: 'Procesador'           },
   { name: 'Método de Pago',          sub: 'Datos bancarios'      },

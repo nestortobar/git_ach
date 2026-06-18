@@ -118,7 +118,7 @@
 <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center">
 <span class="text-primary font-bold">E</span>
 </div>
-<span class="font-headline-sm text-on-surface">Enel - Energía</span>
+<span class="font-headline-sm text-on-surface">Payment SOI - Mi PILA</span>
 </div>
 <button class="text-on-surface-variant p-2 hover:bg-surface-container rounded-full transition-colors active:scale-95 duration-150">
 <span class="material-symbols-outlined" data-icon="delete">delete</span>
@@ -127,13 +127,13 @@
 <!-- Amount Display Card -->
 <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/20 flex justify-between items-center">
 <span class="font-body-md text-on-surface-variant">Monto a pagar</span>
-<span class="font-headline-lg text-primary">$26.66</span>
+<span class="font-headline-lg text-primary">$151.08</span>
 </div>
 <!-- Breakdown Summary -->
 <div class="space-y-stack-sm px-2">
 <div class="flex justify-between font-body-md text-on-surface-variant">
 <span class="font-body-md">Subtotal</span>
-<span class="font-body-md font-semibold text-on-surface">$26.66</span>
+<span class="font-body-md font-semibold text-on-surface">$151.08</span>
 </div>
 <div class="flex justify-between font-body-md text-on-surface-variant">
 <span class="font-body-md">Tarifa de Servicio</span>
@@ -142,7 +142,7 @@
 <div class="pt-4 mt-2 border-t border-outline-variant/30">
 <div class="flex justify-between items-center">
 <span class="font-headline-sm text-on-surface">Total (USD)</span>
-<span class="font-headline-sm text-on-surface">$26.71</span>
+<span class="font-headline-sm text-on-surface">$151.08</span>
 </div>
 <div class="flex justify-between mt-1">
 <span class="text-label-md font-label-md text-on-surface-variant opacity-70 uppercase tracking-wider">Total en COP</span>
@@ -219,7 +219,7 @@ var payBtn2 = document.getElementById('pay-button');
 if (payBtn2) {
   payBtn2.addEventListener('click', function() {
     setTimeout(function() {
-      window.parent.postMessage({ type: 'GO', screen: 6 }, '*');
+      window.parent.postMessage({ type: 'GO', screen: 5 }, '*');
     }, 2000);
   });
 }

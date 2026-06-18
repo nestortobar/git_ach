@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Login Verification Modal</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Font: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style data-purpose="typography">
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+<style data-purpose="custom-styling">
+    .modal-shadow {
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+    /* Styling for the disabled button state matching the image's "not allowed" icon */
+    .btn-disabled {
+      background-color: #f3f4f6;
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body class="bg-gray-400 min-h-screen flex items-center justify-center p-4">
+<!-- BEGIN: VerificationModalContainer -->
+<div class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50" data-purpose="modal-overlay">
+<!-- BEGIN: MainModalCard -->
+<main class="bg-white w-full max-w-[420px] rounded-[32px] p-8 relative modal-shadow flex flex-col items-center text-center" data-purpose="verification-modal">
+<!-- Close Button -->
+<button aria-label="Cerrar" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors" type="button">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- BEGIN: HeaderSection -->
+<header class="mb-6 flex flex-col items-center">
+<!-- Lock Icon Container -->
+<div class="w-20 h-20 bg-[#f0f9f1] rounded-[24px] flex items-center justify-center mb-6" data-purpose="icon-wrapper">
+<svg fill="none" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 17V15M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17ZM7 10H17C18.1046 10 19 10.8954 19 12V19C19 20.1046 18.1046 21 17 21H7C5.89543 21 5 20.1046 5 19V12C5 10.8954 5.89543 10 7 10ZM7 10V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V10" stroke="#90c793" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h1 class="text-[28px] font-bold text-[#1f2937] mb-3">Iniciar sesión</h1>
+<p class="text-[15px] leading-relaxed text-gray-500 px-4">
+          Hemos enviado un código de 6 dígitos a tu correo electrónico <span class="font-semibold text-gray-700">p***@mail.com</span>
+</p>
+</header>
+<!-- END: HeaderSection -->
+<!-- BEGIN: OTPForm -->
+<form class="w-full" data-purpose="otp-entry-form">
+<!-- OTP Input Grid -->
+<div class="flex justify-between gap-2 mb-8" data-purpose="otp-inputs">
+<!-- First input is highlighted/focused as per image -->
+<input class="w-12 h-16 border-2 border-[#b5dbb7] bg-white rounded-xl text-center text-xl font-semibold focus:ring-0 focus:outline-none" maxlength="1" placeholder="|" type="text" value="">
+<input class="w-12 h-16 border border-gray-200 bg-white rounded-xl text-center text-xl font-semibold focus:border-[#b5dbb7] focus:ring-0 focus:outline-none" maxlength="1" type="text">
+<input class="w-12 h-16 border border-gray-200 bg-white rounded-xl text-center text-xl font-semibold focus:border-[#b5dbb7] focus:ring-0 focus:outline-none" maxlength="1" type="text">
+<input class="w-12 h-16 border border-gray-200 bg-white rounded-xl text-center text-xl font-semibold focus:border-[#b5dbb7] focus:ring-0 focus:outline-none" maxlength="1" type="text">
+<input class="w-12 h-16 border border-gray-200 bg-white rounded-xl text-center text-xl font-semibold focus:border-[#b5dbb7] focus:ring-0 focus:outline-none" maxlength="1" type="text">
+<input class="w-12 h-16 border border-gray-200 bg-white rounded-xl text-center text-xl font-semibold focus:border-[#b5dbb7] focus:ring-0 focus:outline-none" maxlength="1" type="text">
+</div>
+<!-- Resend Link -->
+<div class="mb-8">
+<p class="text-sm text-gray-500">
+            ¿No recibiste el código? 
+            <a class="text-[#0e6e4a] font-medium hover:underline" href="#">Reenviar</a>
+</p>
+</div>
+<!-- Submit Button (Disabled State) -->
+<button class="btn-disabled w-full py-5 rounded-full font-semibold flex items-center justify-center gap-2 relative transition-all" disabled="" type="button">
+<span class="">Iniciar sesión</span>
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<!-- Prohibited/Not-allowed Overlay Icon -->
+
+</button>
+</form>
+<!-- END: OTPForm -->
+</main>
+<!-- END: MainModalCard -->
+</div>
+<!-- END: VerificationModalContainer -->
+<script data-purpose="otp-navigation">
+    // Simple script to handle auto-focus for the verification code squares
+    const inputs = document.querySelectorAll('input[maxlength="1"]');
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+  </script>
+
+<script>
+  // Navigation integration with crossborder.html parent frame
+  document.querySelector('button[aria-label="Cerrar"]').addEventListener('click', function() {
+    window.parent.postMessage({ type: 'BACK' }, '*');
+  });
+
+  document.querySelector('button[type="button"]:not([aria-label])').addEventListener('click', function() {
+    if (!this.disabled) {
+      window.parent.postMessage({ type: 'GO', screen: 4 }, '*');
+    }
+  });
+
+  // Enable submit button when all 6 digits are filled
+  const inputs = document.querySelectorAll('input[maxlength="1"]');
+  const submitBtn = document.querySelector('button[type="button"]:not([aria-label])');
+  function checkComplete() {
+    const allFilled = Array.from(inputs).every(i => i.value.length === 1);
+    if (allFilled) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('btn-disabled');
+      submitBtn.classList.add('bg-[#0e6e4a]', 'text-white', 'cursor-pointer');
+    } else {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('btn-disabled');
+      submitBtn.classList.remove('bg-[#0e6e4a]', 'text-white', 'cursor-pointer');
+    }
+  }
+  inputs.forEach(input => input.addEventListener('input', checkComplete));
+</script>
+
+</body></html>

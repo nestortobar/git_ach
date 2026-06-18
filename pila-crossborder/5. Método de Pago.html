@@ -127,7 +127,7 @@
 <button class="flex flex-col items-center gap-1 p-5 bg-white border border-on-surface/10 rounded-[40px] shadow-sm transition-all" id="btn-COP" onclick="selectCurrency('COP')">
 <div class="flex items-center gap-2">
 <img alt="Colombia Flag" class="w-6 h-4 object-cover rounded-sm shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKzwXojuaaJo-NC8zUpM7nLLmr6EI0AJhJbTFykyX0taN_TolOhYtAYTn-oZ0Fsm8tJyWDyrNkJ_X5br7AOktRPy2OykLb9vjSZHSuFhr3rUKvnD21mDaL6whSIye4NtQDFSwFV_zmmG-BW0cuA3M_JSZ9cJZ6PiI322HO18NFEmv3uADzE1tfph553mF4WQ76rmUcSYVktYkg7YjzQBO3zSgXtCENtdCxmDQhP2pOjz2b1ddx0CLlY9bBQlqgcM38EEdQGuaqxFg">
-<span class="text-body-md font-bold text-on-surface">98.435,85</span>
+<span class="text-body-md font-bold text-on-surface">520.000</span>
 </div>
 <span class="text-[12px] font-bold text-on-surface">COP</span>
 </button>
@@ -135,7 +135,7 @@
 <button class="flex flex-col items-center gap-1 p-5 bg-white/40 border border-transparent rounded-[40px] transition-all opacity-60" id="btn-USD" onclick="selectCurrency('USD')">
 <div class="flex items-center gap-2">
 <img alt="USA Flag" class="w-6 h-4 object-cover rounded-sm shadow-sm grayscale-[0.2]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeX6s9TmMWANW3lLG0nkja47P6fyY1K_HRnjXPX_IP7jCAkXxHHzX2oHjRBCenqqHBEfq5RA6594yhqcPCPysb5vTLNiFZav6pZ9nYFOP_bvgYZTANd7cXhcJ9LD_hohRriN6iNxfrcTfCz6sW8i-Q10gmNvK8ie5Y072XoaoCS22jM20zUHegnr8Bq2FUsFjU1U87nPHOD_pu3jSq9fLhZZEKWn1vvsVYeAje47pY2TQ8s2gv1j98obzLl-ZPY4ko8ELpWy7ozaE">
-<span class="text-body-md font-bold text-on-surface">26,71</span>
+<span class="text-body-md font-bold text-on-surface">151.08</span>
 </div>
 <span class="text-[12px] font-bold text-on-surface">US$</span>
 </button>
@@ -145,8 +145,8 @@
 <!-- Summary Section -->
 <section class="mt-stack-lg space-y-4 py-6 border-b border-on-surface/5">
 <div class="flex justify-between items-center">
-<span class="text-body-md text-on-surface-variant">Enel - Energía</span>
-<span class="text-body-md font-bold text-on-surface" id="main-amount">26,66 US$</span>
+<span class="text-body-md text-on-surface-variant">Payment SOI - Mi PILA</span>
+<span class="text-body-md font-bold text-on-surface" id="main-amount">151.08 US$</span>
 </div>
 <div class="flex justify-between items-center">
 <span class="text-body-md text-on-surface-variant">Service Fee</span>
@@ -158,7 +158,7 @@
 <h2 class="text-headline-sm font-bold text-on-surface mb-stack-md">Información de contacto</h2>
 <div class="space-y-stack-sm">
 <label class="text-label-md text-on-surface-variant block ml-1" for="email">Correo electrónico</label>
-<input class="w-full px-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" id="email" type="email" value="jhon.contreras@integry.co">
+<input class="w-full px-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" id="email" type="email" value="pabloperez@correo.com">
 </div>
 </section>
 <!-- Payment Method Section -->
@@ -176,7 +176,7 @@
 <div class="space-y-5">
 <div class="space-y-stack-sm">
 <label class="text-label-md text-on-surface-variant block ml-1">Nombre completo</label>
-<input class="w-full px-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" type="text" value="Jhon Contreras">
+<input class="w-full px-5 py-4 bg-surface-container-low border-none rounded-3xl text-body-md focus:ring-2 focus:ring-brand-olive transition-all" type="text" value="Pablo Pérez">
 </div>
 <div class="space-y-stack-sm">
 <label class="text-label-md text-on-surface-variant block ml-1">Busca tu banco</label>
@@ -290,7 +290,7 @@
 </script>
 <script>
 document.querySelector('.fixed button').addEventListener('click', function() {
-  window.parent.postMessage({ type: 'GO', screen: 7 }, '*');
+  window.parent.postMessage({ type: 'GO', screen: 6 }, '*');
 });
 </script>
 </body></html>
