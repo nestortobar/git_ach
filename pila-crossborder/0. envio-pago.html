@@ -780,7 +780,12 @@
         redirDocNum.value = onlyDigits;
       }
 
-      const enabled = selectedMethod === 'pse-finance' && isFinanceFormComplete();
+      let enabled = false;
+      if (selectedMethod === 'pse-finance') {
+        enabled = isFinanceFormComplete();
+      } else if (selectedMethod === 'pse-bank' || selectedMethod === 'card' || selectedMethod === 'cash') {
+        enabled = true;
+      }
       continueBtn.disabled = !enabled;
     }
 
@@ -852,12 +857,12 @@
     }
 
     continueBtn.addEventListener('click', () => {
-      if (continueBtn.disabled || selectedMethod !== 'pse-finance') {
+      if (continueBtn.disabled) {
         return;
       }
 
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'PSE_OPEN_FINANCE_NOTICE' }, '*');
+        window.parent.postMessage({ type: 'GO', screen: 1 }, '*');
         return;
       }
 
@@ -865,18 +870,6 @@
     });
 
     updateRedirectContinue();
-  </script>
-  <script>
-  (function() {
-    var orig = document.getElementById('continueBtn');
-    if (!orig) return;
-    var clone = orig.cloneNode(true);
-    clone.disabled = false;
-    clone.addEventListener('click', function() {
-      window.parent.postMessage({ type: 'GO', screen: 1 }, '*');
-    });
-    orig.parentNode.replaceChild(clone, orig);
-  })();
   </script>
 </body>
 </html>

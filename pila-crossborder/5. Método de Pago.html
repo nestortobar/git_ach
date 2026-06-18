@@ -193,7 +193,7 @@
 </main>
 <!-- Bottom CTA Fixed Container -->
 <div class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-xl p-gutter pb-8 border-t border-on-surface/5 flex justify-center z-50">
-<button class="w-full max-w-container-max-width bg-brand-olive hover:brightness-105 font-button-text text-white uppercase py-5 rounded-[28px] flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-md">
+<button id="next-btn" disabled class="w-full max-w-container-max-width bg-brand-olive font-button-text text-white uppercase py-5 rounded-[28px] flex items-center justify-center gap-2 transition-all shadow-md opacity-40 cursor-not-allowed">
         SIGUIENTE
         <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>
@@ -253,6 +253,20 @@
   var input    = document.getElementById('bank-input');
   var dropdown = document.getElementById('bank-dropdown');
   var wrap     = document.getElementById('bank-wrap');
+  var nextBtn  = document.getElementById('next-btn');
+  var bankSelected = false;
+
+  function setNextEnabled(enabled) {
+    bankSelected = enabled;
+    nextBtn.disabled = !enabled;
+    if (enabled) {
+      nextBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+      nextBtn.classList.add('hover:brightness-105', 'active:scale-[0.98]');
+    } else {
+      nextBtn.classList.add('opacity-40', 'cursor-not-allowed');
+      nextBtn.classList.remove('hover:brightness-105', 'active:scale-[0.98]');
+    }
+  }
 
   function renderList(items) {
     dropdown.innerHTML = '';
@@ -266,6 +280,7 @@
         e.preventDefault();
         input.value = bank;
         dropdown.style.display = 'none';
+        setNextEnabled(true);
       });
       dropdown.appendChild(el);
     });
@@ -281,7 +296,10 @@
   }
 
   input.addEventListener('focus', function() { openWith(this.value.trim()); });
-  input.addEventListener('input', function() { openWith(this.value.trim()); });
+  input.addEventListener('input', function() {
+    setNextEnabled(false);
+    openWith(this.value.trim());
+  });
 
   document.addEventListener('click', function(e) {
     if (!wrap.contains(e.target)) dropdown.style.display = 'none';
@@ -289,7 +307,8 @@
 })();
 </script>
 <script>
-document.querySelector('.fixed button').addEventListener('click', function() {
+document.getElementById('next-btn').addEventListener('click', function() {
+  if (this.disabled) return;
   window.parent.postMessage({ type: 'GO', screen: 6 }, '*');
 });
 </script>
