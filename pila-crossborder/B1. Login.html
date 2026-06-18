@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Banka Login</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-fonts">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<style data-purpose="layout-styling">
+    /* Custom background handling for the blurred image effect */
+    .hero-bg {
+      background-image: linear-gradient(rgba(26, 35, 126, 0.4), rgba(26, 35, 126, 0.6)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqpofUu0sBQF2vizbIIMxhL8YH0hPSbTz_IERVblbfo4XZO95Jc1I-YNmiy1Q7ubnV_a4alvgTpIVDqad_1JXq5KgVkVDWbnyLNnA5AW2gJBjrNCAd1-wXmCQZg-q1m-P7dHMSa5ATmcMz35UR7ztYjPkTuK-8cIfwj8gJKO4VXMFzROe75liwKMNdZ7-GifQeLghoIkMuB7_GoG37gydiBSoso7jd-gHlb4P8n6gHonKW3UznngxYr5lqlzCsZsIfN6iwZVvvwiQ');
+      background-size: cover;
+      background-position: center top;
+      height: 55vh;
+    }
+    /* Specifically positioning the large Banka text */
+    .banka-logo-text {
+      font-size: 8rem;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      opacity: 0.9;
+    }
+    /* Rounded corner for the white card */
+    .login-card {
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      margin-top: -40px;
+    }
+  </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" data-snapdom="injected-import"></head>
+<body class="bg-slate-100 min-h-screen flex flex-col">
+<!-- BEGIN: Header -->
+<header class="bg-[#1a237e] text-white px-6 py-3 flex justify-between items-center z-10">
+<div class="text-sm font-semibold">9:41</div>
+<div class="flex items-center space-gap-1">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path></svg>
+<svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" fill-rule="evenodd"></path></svg>
+<div class="ml-1 border border-white/50 rounded-sm w-6 h-3 relative">
+<div class="bg-white absolute left-0 top-0 bottom-0 w-4"></div>
+</div>
+</div>
+</header>
+<!-- END: Header -->
+<!-- BEGIN: HeroSection -->
+<main class="flex-grow flex flex-col">
+<!-- Blurred Background Area -->
+<section class="hero-bg relative flex flex-col justify-end items-center overflow-hidden" data-purpose="hero-banner">
+<h1 class="banka-logo-text text-white font-extrabold mb-[-10px]">
+        Banka
+      </h1>
+</section>
+<!-- BEGIN: LoginCard -->
+<section class="login-card bg-white flex-grow px-8 pt-10 pb-8 shadow-2xl relative z-20" data-purpose="login-form-container">
+<form action="#" class="space-y-6" method="POST">
+<!-- User Field -->
+<div data-purpose="input-group">
+<label class="block text-[#1a237e] font-bold mb-2" for="usuario">Usuario</label>
+<input class="w-full border-0 border-b-2 border-gray-200 focus:border-[#1a237e] focus:ring-0 py-3 text-lg transition-colors" id="usuario" name="usuario" type="text" value="1234567890">
+</div>
+<!-- Password Field -->
+<div data-purpose="input-group">
+<label class="block text-[#1a237e] font-bold mb-2" for="contrasena">Contraseña</label>
+<div class="relative">
+<input class="w-full border-0 border-b-2 border-gray-200 focus:border-[#1a237e] focus:ring-0 py-3 text-lg pr-10 transition-colors" id="contrasena" name="contrasena" type="password" value="****************">
+<!-- Password Visibility Toggle -->
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-blue-500" type="button">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full bg-[#007bff] hover:bg-blue-600 text-white font-bold py-4 rounded-md text-lg transition-all shadow-md active:scale-[0.98]" type="submit">
+            Entrar
+          </button>
+</div>
+<!-- Forgot Password Link -->
+<div class="text-center mt-6">
+<a class="text-[#007bff] font-semibold hover:underline" href="#">
+            Olvidé mi contraseña
+          </a>
+</div>
+</form>
+</section>
+<!-- END: LoginCard -->
+</main>
+<!-- END: HeroSection -->
+<script>
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  window.parent.postMessage({ type: 'GO', screen: 7 }, '*');
+});
+</script>
+</body></html>

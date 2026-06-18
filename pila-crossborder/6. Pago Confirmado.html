@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pago Confirmado - Mi PILA</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fbff;
+      --primary: #004b91;
+      --primary-strong: #003469;
+      --primary-soft: #eaf2ff;
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --success-border: #86efac;
+      --text: #0b1c30;
+      --muted: #5d6675;
+      --border: #d9e3ef;
+      --shadow: 0 18px 40px rgba(6, 24, 44, 0.12);
+      --radius: 24px;
+      --max-width: 390px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(22, 163, 74, 0.08), transparent 32%),
+        linear-gradient(180deg, #edfff4 0%, var(--bg) 28%, #eef3f9 100%);
+    }
+
+    .screen {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px 14px 28px;
+    }
+
+    .phone {
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 12px 28px rgba(12, 34, 68, 0.08);
+      border: 1px solid rgba(217, 227, 239, 0.9);
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand .title { display: flex; flex-direction: column; line-height: 1.05; }
+    .brand .title strong { font-size: 0.94rem; letter-spacing: 0.02em; }
+    .brand .title span { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── SUCCESS HERO ── */
+    .hero {
+      padding: 28px 18px 22px;
+      background: linear-gradient(180deg, #ffffff, #f0fdf4);
+      border: 1px solid rgba(134, 239, 172, 0.5);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+
+    /* Checkmark animation */
+    .check-wrap {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 4px;
+    }
+
+    .check-pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--success-soft);
+      animation: pulse 2.2s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0%   { transform: scale(1);    opacity: .7; }
+      60%  { transform: scale(1.55); opacity: 0;  }
+      100% { transform: scale(1.55); opacity: 0;  }
+    }
+
+    .check-circle {
+      position: relative;
+      z-index: 1;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--success-soft);
+      border: 3px solid var(--success-border);
+      display: grid;
+      place-items: center;
+    }
+
+    .check-circle svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--success);
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 52;
+      stroke-dashoffset: 52;
+      animation: draw 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--success-soft);
+      border: 1px solid var(--success-border);
+      color: var(--success);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 1.55rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .hero .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    /* ── DETAILS CARD ── */
+    .details-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 28px rgba(6, 24, 44, 0.07);
+      overflow: hidden;
+    }
+
+    .details-header {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .details-body { padding: 4px 0; }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      gap: 12px;
+      border-bottom: 1px solid rgba(217, 227, 239, 0.6);
+    }
+
+    .detail-row:last-child { border-bottom: none; }
+
+    .detail-row .dk {
+      font-size: 0.84rem;
+      color: var(--muted);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .detail-row .dv {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: right;
+    }
+
+    .detail-row.highlight .dv {
+      font-size: 1.05rem;
+      color: var(--success);
+    }
+
+    /* ── SECURE NOTE ── */
+    .secure-note {
+      margin: 0 2px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .secure-note svg { width: 16px; height: 16px; color: var(--success); flex: 0 0 auto; }
+
+    /* ── FOOTER ── */
+    .sticky-footer { margin-top: auto; padding-top: 4px; }
+
+    .action-card {
+      background: var(--surface);
+      border-radius: 24px;
+      border: 1px solid rgba(217, 227, 239, 0.95);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .action-body { padding: 16px; display: grid; gap: 12px; }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .total-row .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .total-row .value {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--success);
+      letter-spacing: -0.03em;
+    }
+
+    .close-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 18px;
+      min-height: 52px;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(180deg, #16a34a, #15803d);
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      box-shadow: 0 14px 28px rgba(22, 163, 74, 0.28);
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s;
+    }
+
+    .close-btn:hover { opacity: 0.92; }
+    .close-btn svg { width: 18px; height: 18px; }
+
+    .brand-footer {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      text-align: center;
+      padding: 4px 8px 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .brand-footer strong { color: var(--text); font-size: 0.95rem; letter-spacing: 0.02em; }
+    .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .links a { color: var(--primary); text-decoration: none; font-weight: 700; }
+    .links a:hover { text-decoration: underline; }
+
+    @media (min-width: 420px) { .screen { padding-top: 18px; } }
+  </style>
+</head>
+<body>
+  <main class="screen">
+    <section class="phone">
+
+      <header class="topbar">
+        <div class="brand">
+          <div class="title">
+            <strong>Payment SOI - Mi PILA</strong>
+            <span>Confirmación de pago</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Success hero -->
+      <article class="hero">
+        <div class="check-wrap">
+          <div class="check-pulse"></div>
+          <div class="check-circle">
+            <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+          </div>
+        </div>
+        <div class="badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Pago realizado
+        </div>
+        <h1>¡Tu pago fue exitoso!</h1>
+        <p class="lead">El pago a <strong>Mi PILA</strong> se procesó correctamente. Recibirás la confirmación en tu correo.</p>
+      </article>
+
+      <!-- Transaction details -->
+      <div class="details-card">
+        <div class="details-header">Detalle de la transacción</div>
+        <div class="details-body">
+          <div class="detail-row">
+            <span class="dk">Comercio</span>
+            <span class="dv">Payment SOI - Mi PILA</span>
+          </div>
+          <div class="detail-row">
+            <span class="dk">Descripción</span>
+            <span class="dv">Pago app PSE</span>
+          </div>
+          <div class="detail-row">
+            <span class="dk">Período</span>
+            <span class="dv">Junio 2026</span>
+          </div>
+          <div class="detail-row">
+            <span class="dk">Entidad</span>
+            <span class="dv">Banka S.A.</span>
+          </div>
+          <div class="detail-row">
+            <span class="dk">ID Factura</span>
+            <span class="dv">052627</span>
+          </div>
+          <div class="detail-row">
+            <span class="dk">CUS</span>
+            <span class="dv">74fdb4f4</span>
+          </div>
+          <div class="detail-row">
+            <span class="dk">Fecha</span>
+            <span class="dv" id="txDate">—</span>
+          </div>
+          <div class="detail-row highlight">
+            <span class="dk">Total pagado</span>
+            <span class="dv">COP $520.000</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="secure-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V6l-8-3-8 3v6c0 6 8 10 8 10Z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        Transacción verificada y encriptada
+      </p>
+
+      <div class="sticky-footer">
+        <div class="action-card">
+          <div class="action-body">
+            <div class="total-row">
+              <div>
+                <div class="label">Total pagado</div>
+                <div class="value">$520.000 COP</div>
+              </div>
+              <div style="font-size:0.84rem;font-weight:600;color:var(--muted);">#ORD-99281</div>
+            </div>
+            <button class="close-btn" id="closeBtn" type="button">
+              Cerrar
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="brand-footer">
+          <strong>Payment SOI - Mi PILA</strong>
+          <div>© 2024 TODOS LOS DERECHOS RESERVADOS.</div>
+          <div class="links">
+            <a href="#">Términos y Condiciones</a>
+            <a href="#">Privacidad</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // Show current date
+    const now = new Date();
+    document.getElementById('txDate').textContent = now.toLocaleDateString('es-CO', {
+      day: '2-digit', month: 'long', year: 'numeric'
+    });
+
+    // Close → go back to screen 0
+  </script>
+</body>
+</html>

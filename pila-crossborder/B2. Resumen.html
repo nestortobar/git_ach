@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Resumen del Pago - Banka</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #333333;
+    }
+  </style>
+<style data-purpose="component-styling">
+    .details-border-bottom {
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .custom-radio:checked {
+      background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+      background-color: #0056cc;
+      border-color: #0056cc;
+    }
+  </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" data-snapdom="injected-import"></head>
+<body class="min-h-screen flex flex-col">
+<!-- BEGIN: MainHeader -->
+<header class="bg-[#1a237e] text-white px-4 py-3 flex items-center justify-between" data-purpose="app-header">
+<div class="flex items-center gap-2">
+<div class="bg-white rounded-sm p-0.5 flex items-center justify-center h-8 w-8">
+<!-- Simplified Banka Logo Representation -->
+<svg class="text-[#007bff] h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M4 4h10a4 4 0 010 8H4V4z M4 12h12a4 4 0 010 8H4v-8z"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight">Banka</span>
+</div>
+<!-- Status bar icons placeholder for mobile look -->
+<div class="flex gap-1 items-end h-4">
+<div class="w-1 h-2 bg-white/40 rounded-full"></div>
+<div class="w-1 h-3 bg-white/40 rounded-full"></div>
+<div class="w-1 h-4 bg-white rounded-full"></div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-grow px-6 py-8 flex flex-col max-w-md mx-auto w-full">
+<!-- Title Section -->
+<h1 class="text-[#007bff] text-2xl font-bold text-center mb-8" data-purpose="page-title">
+      Resumen del pago
+    </h1>
+<!-- BEGIN: PaymentDetails -->
+<section class="space-y-4 mb-8" data-purpose="transaction-details">
+<!-- Description -->
+<div class="flex justify-between items-end pb-2 details-border-bottom">
+<span class="font-bold text-[#333]">Descripción:</span>
+<span class="text-[#666]">Pago app PSE</span>
+</div>
+<!-- Merchant -->
+<div class="flex justify-between items-end pb-2 details-border-bottom">
+<span class="font-bold text-[#333]">Comercio:</span>
+<span class="text-[#666]">Payment SOI - Mi PILA</span>
+</div>
+<!-- Invoice ID -->
+<div class="flex justify-between items-end pb-2 details-border-bottom">
+<span class="font-bold text-[#333]">ID Factura:</span>
+<span class="text-[#666]">052627</span>
+</div>
+<!-- CUS -->
+<div class="flex justify-between items-end pb-2 details-border-bottom">
+<span class="font-bold text-[#333]">CUS:</span>
+<span class="text-[#666]">74fdb4f4</span>
+</div>
+<!-- Amount to Pay -->
+<div class="flex justify-between items-end pb-2 details-border-bottom">
+<span class="font-bold text-[#007bff] text-lg">Valor a pagar:</span>
+<span class="text-[#007bff] font-bold text-lg leading-none">$520.000</span>
+</div>
+</section>
+<!-- END: PaymentDetails -->
+<!-- BEGIN: AccountSelection -->
+<section class="mb-10" data-purpose="account-selection">
+<p class="text-[#555] mb-4 text-[15px] leading-snug">
+        Selecciona la cuenta con la que quieres hacer el pago.
+      </p>
+<form class="space-y-4">
+<!-- Savings Account Option -->
+<label class="flex items-center p-4 border-2 border-[#0056cc] rounded-xl cursor-pointer bg-white transition-all">
+<input checked="" class="custom-radio w-6 h-6 text-[#0056cc] border-2 border-[#0056cc] focus:ring-0 mr-4" name="payment_account" type="radio" value="savings">
+<span class="text-[#444] font-medium">Cuenta de Ahorros ****9867</span>
+</label>
+<!-- Current Account Option -->
+<label class="flex items-center p-4 border border-gray-400 rounded-xl cursor-pointer bg-white transition-all hover:border-[#0056cc]">
+<input class="custom-radio w-6 h-6 text-[#0056cc] border-2 border-gray-400 focus:ring-0 mr-4" name="payment_account" type="radio" value="current">
+<span class="text-[#444] font-medium">Cuenta Corriente ****0315</span>
+</label>
+</form>
+</section>
+<!-- END: AccountSelection -->
+<!-- BEGIN: ActionButtons -->
+<section class="mt-auto space-y-6 pb-4" data-purpose="action-buttons">
+<button class="w-full bg-[#007bff] text-white font-bold py-4 rounded-md text-lg active:bg-[#0056cc] transition-colors" id="btn-pay">
+        Pagar
+      </button>
+<div class="text-center">
+<a class="text-[#007bff] font-bold underline decoration-2 underline-offset-4" href="#" id="link-exit">
+          Salir del pago
+        </a>
+</div>
+</section>
+<!-- END: ActionButtons -->
+</main>
+<!-- END: MainContent -->
+<script>
+document.getElementById('btn-pay').addEventListener('click', function() {
+  window.parent.postMessage({ type: 'GO', screen: 8 }, '*');
+});
+document.getElementById('link-exit').addEventListener('click', function(e) {
+  e.preventDefault();
+  window.parent.postMessage({ type: 'GO', screen: 0 }, '*');
+});
+</script>
+</body></html>

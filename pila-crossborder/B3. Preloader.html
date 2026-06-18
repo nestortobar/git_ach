@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Procesando Pago</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- BEGIN: Custom Configurations -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#1A2B56',
+              blue: '#4A90E2',
+              light: '#F3F5FC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- END: Custom Configurations -->
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="loader-animation">
+    /* 
+      This animation handles the wave motion inside the circle.
+      It uses a rotating border-radius shape to simulate liquid movement.
+    */
+    @keyframes wave {
+      0% { transform: translate(-50%, -65%) rotate(0deg); }
+      100% { transform: translate(-50%, -65%) rotate(360deg); }
+    }
+
+    .wave-container {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      background-color: transparent;
+      border: 3px solid #1D4ED8; /* Using a blue similar to the image border */
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .liquid-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #1A2B56; /* Navy fill color */
+      z-index: 1;
+    }
+
+    /* The wave effect is created by a spinning light blue square with rounded corners sitting on top of the navy */
+    .wave-overlay {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background-color: #93C5FD; /* Light blue wave color */
+      left: 50%;
+      top: 0%;
+      transform: translate(-50%, -65%);
+      border-radius: 40%;
+      animation: wave 4s linear infinite;
+      z-index: 2;
+    }
+
+    /* Second overlay for a more complex wave look */
+    .wave-overlay-secondary {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      background-color: #F3F5FC; /* Same as background to mask the top */
+      left: 50%;
+      top: -10%;
+      transform: translate(-50%, -75%);
+      border-radius: 35%;
+      animation: wave 7s linear infinite;
+      z-index: 3;
+    }
+  </style>
+<style data-purpose="layout-tweaks">
+    /* Ensure the body takes up the full viewport for vertical centering on mobile */
+    body {
+      background-color: #F3F5FC;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="antialiased">
+<!-- BEGIN: MainContent -->
+<main class="flex flex-col items-center justify-center space-y-6" data-purpose="processing-screen">
+<!-- BEGIN: WaveLoader -->
+<!-- This container represents the circular graphic shown in the snapshot -->
+<div class="wave-container" data-purpose="loading-animation-container" id="loader-graphic">
+<div class="liquid-fill"></div>
+<div class="wave-overlay"></div>
+<div class="wave-overlay-secondary"></div>
+</div>
+<!-- END: WaveLoader -->
+<!-- BEGIN: LoadingText -->
+<!-- Styled to match the bold, navy font from the image -->
+<h1 class="text-brand-navy font-bold text-xl tracking-wide" data-purpose="status-message">
+      Procesando pago...
+    </h1>
+<!-- END: LoadingText -->
+</main>
+<!-- END: MainContent -->
+<script>
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.type === 'SCREEN_ACTIVE') {
+    setTimeout(function() {
+      window.parent.postMessage({ type: 'GO', screen: 9 }, '*');
+    }, 2500);
+  }
+});
+</script>
+</body></html>

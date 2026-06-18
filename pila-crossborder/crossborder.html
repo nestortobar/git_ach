@@ -363,6 +363,26 @@ body{
           <iframe src="5. Método de Pago.html" title="Método de Pago"></iframe>
         </div>
 
+        <div class="scr" id="s6">
+          <iframe src="B1. Login.html" title="Banka Login"></iframe>
+        </div>
+
+        <div class="scr" id="s7">
+          <iframe src="B2. Resumen.html" title="Resumen Banka"></iframe>
+        </div>
+
+        <div class="scr" id="s8">
+          <iframe src="B3. Preloader.html" title="Procesando Pago"></iframe>
+        </div>
+
+        <div class="scr" id="s9">
+          <iframe src="B4. Resumen.html" title="Pago Exitoso"></iframe>
+        </div>
+
+        <div class="scr" id="s10">
+          <iframe src="6. Pago Confirmado.html" title="Pago Confirmado"></iframe>
+        </div>
+
       </div>
 
       <!-- Home bar -->
@@ -461,7 +481,7 @@ body{
 <script>
 /* ─ STATE ─ */
 let cur = 0;
-const TOTAL = 6;
+const TOTAL = 11;
 let timerSec = 0;
 let timerRunning = false;
 let timerInterval = null;
@@ -475,6 +495,11 @@ const screenMeta = [
   { name: 'Resumen del Pago',        sub: 'Factura Enel'         },
   { name: 'Selección de Pago',       sub: 'Procesador'           },
   { name: 'Método de Pago',          sub: 'Datos bancarios'      },
+  { name: 'Banka · Login',           sub: 'Autenticación banco'  },
+  { name: 'Banka · Resumen',         sub: 'Confirmar pago'       },
+  { name: 'Procesando',              sub: 'Banka'                },
+  { name: 'Pago Exitoso',            sub: 'Banka'                },
+  { name: 'Pago Confirmado',         sub: 'Mi PILA'              },
 ];
 
 /* ─ NAVIGATION ─ */

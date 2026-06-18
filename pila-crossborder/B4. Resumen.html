@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Banka - Pago Exitoso</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="custom-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<style data-purpose="layout-styling">
+    /* Subtle background gradient to match the screenshot's soft depth */
+    .bg-main-gradient {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    }
+    /* Fixed header sizing to match mobile status bar height + branding */
+    .app-header {
+      height: 104px; /* Adjusting for simulated notch/status bar area */
+    }
+  </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" data-snapdom="injected-import"></head>
+<body class="bg-main-gradient min-h-screen flex flex-col text-[#333333]">
+<!-- BEGIN: MainHeader -->
+<header class="bg-[#1D2C6A] text-white pt-10 pb-4 px-6 flex items-center" data-purpose="app-branding-header">
+<div class="flex items-center gap-2">
+<!-- Simulated Banka Logo -->
+<div class="w-8 h-8 bg-white rounded-md flex items-center justify-center overflow-hidden">
+<span class="text-[#1D2C6A] font-black text-xl">B</span>
+</div>
+<h1 class="text-2xl font-semibold tracking-tight">Banka</h1>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: SuccessStatus -->
+<main class="flex-grow flex flex-col items-center pt-12 px-8">
+<!-- Success Icon Container -->
+<div class="mb-4" data-purpose="success-checkmark">
+<div class="w-16 h-16 rounded-full bg-[#E7F7EF] border-4 border-[#2EB67D] flex items-center justify-center">
+<svg class="h-10 w-10 text-[#2EB67D]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<h2 class="text-[#2EB67D] text-xl font-bold mb-10" data-purpose="status-message">Pago exitoso</h2>
+<!-- END: SuccessStatus -->
+<!-- BEGIN: TransactionDetails -->
+<section class="w-full max-w-sm space-y-4" data-purpose="transaction-details-list">
+<!-- Row: Descripción -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#444444]">Descripción:</span>
+<span class="text-[#666666]">Pago app PSE</span>
+</div>
+<!-- Row: Comercio -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#444444]">Comercio:</span>
+<span class="text-[#666666]">Payment SOI - Mi PILA</span>
+</div>
+<!-- Row: Entidad Financiera -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#444444]">Entidad Financiera:</span>
+<span class="text-[#666666]">Banka S.A.</span>
+</div>
+<!-- Row: Cuenta -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#444444]">Cuenta:</span>
+<span class="text-[#666666]">Ahorros ****9867</span>
+</div>
+<!-- Row: ID Factura -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#444444]">ID Factura:</span>
+<span class="text-[#666666]">052627</span>
+</div>
+<!-- Row: CUS -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#444444]">CUS:</span>
+<span class="text-[#666666]">74fdb4f4</span>
+</div>
+<!-- Row: Valor -->
+<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+<span class="font-bold text-[#2EB67D]">Valor:</span>
+<span class="font-bold text-[#2EB67D] text-lg">$520.000</span>
+</div>
+</section>
+<!-- END: TransactionDetails -->
+<!-- BEGIN: ActionButtons -->
+<section class="w-full max-w-sm mt-12 space-y-6" data-purpose="actions">
+<!-- Return to Merchant Button -->
+<button class="w-full py-4 border-2 border-[#3B82F6] text-[#3B82F6] font-bold rounded-md hover:bg-blue-50 transition-colors" data-purpose="return-button">
+        Regresar al comercio
+      </button>
+<!-- Download Receipt Link -->
+<div class="text-center">
+<a class="text-[#3B82F6] font-medium underline decoration-1 underline-offset-4" data-purpose="receipt-link" href="#">
+          Descargar comprobante
+        </a>
+</div>
+</section>
+<!-- END: ActionButtons -->
+</main>
+<!-- Mobile status bar simulation element (Optional for visual fidelity) -->
+<div class="fixed top-2 left-0 right-0 px-6 flex justify-between items-center pointer-events-none z-50">
+<span class="text-xs font-semibold text-white">9:41</span>
+<div class="flex gap-1">
+<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11h2v5H2v-5zm4-3h2v8H6V8zm4-3h2v11h-2V5zm4-3h2v14h-2V2z"></path></svg>
+<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M12 5c-3.86 0-7.31 1.54-9.83 4.04l1.41 1.42c2.16-2.16 5.12-3.46 8.42-3.46s6.26 1.3 8.42 3.46l1.41-1.42C19.31 6.54 15.86 5 12 5z"></path></svg>
+<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M3 5h14v10H3V5zm1 1v8h12V6H4z"></path></svg>
+</div>
+</div>
+<script>
+document.querySelector('[data-purpose="return-button"]').addEventListener('click', function() {
+  window.parent.postMessage({ type: 'GO', screen: 10 }, '*');
+});
+</script>
+</body></html>
