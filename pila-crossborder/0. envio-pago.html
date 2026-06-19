@@ -50,54 +50,97 @@
     }
 
     .topbar {
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(12, 34, 68, 0.08);
+    }
+
+    .soi-banner {
+      background: linear-gradient(100deg, #5a9e00 0%, #7ab800 40%, #8dcc00 70%, #6ab500 100%);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.84);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 12px 28px rgba(12, 34, 68, 0.08);
-      border: 1px solid rgba(217, 227, 239, 0.9);
+      padding: 14px 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 72px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
+    .soi-banner::before {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      width: 160px;
+      height: 130%;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
     }
 
-    .brand .title {
+    .soi-logo {
       display: flex;
       flex-direction: column;
-      line-height: 1.05;
+      align-items: flex-start;
+      color: white;
+      z-index: 1;
     }
 
-    .brand .title strong {
-      font-size: 0.94rem;
-      letter-spacing: 0.02em;
+    .soi-logo .ach-text {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-left: 30px;
     }
 
-    .brand .title span {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-top: 2px;
+    .soi-logo .soi-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .menu {
-      width: 42px;
-      height: 42px;
-      border: 0;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(180deg, #ffffff, #eef5ff);
-      color: var(--primary);
-      box-shadow: inset 0 0 0 1px rgba(0, 75, 145, 0.10);
+    .soi-logo .soi-icon {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
     }
 
-    .menu svg { width: 20px; height: 20px; }
+    .soi-logo .soi-text {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-style: italic;
+    }
+
+    .soi-people {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 110%;
+      width: auto;
+      object-fit: contain;
+      object-position: bottom right;
+    }
+
+    .soi-deco {
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .soi-people-placeholder {
+      width: 120px;
+      height: 68px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 6px;
+    }
 
     .hero {
       padding: 18px 18px 16px;
@@ -137,12 +180,51 @@
 
     .amount-card {
       margin-top: 16px;
-      padding: 14px 16px;
+      padding: 4px 16px;
       border-radius: 18px;
-      background: linear-gradient(180deg, #f8fbff, #eef5ff);
-      border: 1px solid rgba(0, 75, 145, 0.10);
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+    }
+
+    .planilla-row {
       display: grid;
-      gap: 6px;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(0, 75, 145, 0.07);
+    }
+
+    .planilla-row:last-child {
+      border-bottom: none;
+    }
+
+    .planilla-label {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    .planilla-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .planilla-total {
+      padding-top: 11px;
+      padding-bottom: 11px;
+      border-top: 1px solid rgba(0, 75, 145, 0.14);
+      margin-top: 2px;
+    }
+
+    .planilla-value--total {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary-strong);
     }
 
     .amount-card .label {
@@ -574,55 +656,127 @@
   <main class="screen">
     <section class="phone" aria-label="Checkout - Métodos de Pago Mobile">
       <header class="topbar">
-        <div class="brand">
-          <div class="title">
-            <strong>Payment SOI - Mi PILA</strong>
-            <span>Checkout móvil</span>
+        <div class="soi-banner" aria-label="ACH SOI - Mi PILA">
+          <div class="soi-logo">
+            <span class="ach-text">ach</span>
+            <div class="soi-wordmark">
+              <svg class="soi-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="6" cy="6" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="14" cy="6" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="22" cy="6" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="6" cy="14" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="14" cy="14" r="2.2" fill="white"/>
+                <circle cx="22" cy="14" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="6" cy="22" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="14" cy="22" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="22" cy="22" r="2.2" fill="white" opacity="0.9"/>
+                <path d="M6 14 L14 14 L22 14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M14 6 L14 14 L14 22" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="soi-text">SOI</span>
+            </div>
+          </div>
+          <div class="soi-deco">
+            <svg class="soi-people-placeholder" viewBox="0 0 120 68" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <ellipse cx="60" cy="90" rx="55" ry="55" fill="rgba(255,255,255,0.06)"/>
+              <circle cx="48" cy="26" r="10" fill="rgba(255,255,255,0.25)"/>
+              <path d="M30 68 C30 50 42 44 48 44 C54 44 66 50 66 68" fill="rgba(255,255,255,0.25)"/>
+              <circle cx="78" cy="22" r="10" fill="rgba(255,255,255,0.18)"/>
+              <path d="M60 68 C60 50 72 44 78 44 C84 44 96 50 96 68" fill="rgba(255,255,255,0.18)"/>
+              <rect x="55" y="32" width="20" height="14" rx="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+            </svg>
           </div>
         </div>
-        <button class="menu" type="button" aria-label="Abrir menú">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M4 7h16" />
-            <path d="M4 12h16" />
-            <path d="M4 17h16" />
-          </svg>
-        </button>
       </header>
 
       <article class="hero">
-        <div class="eyebrow">Payment SOI - Mi PILA</div>
-        <h1>Selecciona tu método de pago</h1>
-        <p class="lead">Elige la opción que mejor se adapte a tus necesidades.</p>
+        <div class="eyebrow">Pago PSE</div>
+        <h1>Información de la planilla</h1>
 
-        <div class="amount-card" aria-label="Resumen de pago">
-          <div class="label">Total a pagar</div>
-          <div class="amount-row">
-            <div class="amount">$520.000</div>
-            <div class="reference">COP · Período junio 2026</div>
+        <div class="amount-card" aria-label="Información de la planilla" style="display:grid;gap:0;">
+          <div class="planilla-row">
+            <span class="planilla-label">Número de la Planilla</span>
+            <span class="planilla-value">4922153621</span>
           </div>
-          <div class="label" style="margin-top:8px;">Total a pagar</div>
-          <div class="amount-row">
-            <div class="reference">Salud (12,5%)</div>
-            <div class="reference">$260.000</div>
+          <div class="planilla-row">
+            <span class="planilla-label">Período Liquidación Otros Subsistemas</span>
+            <span class="planilla-value">2024-07</span>
           </div>
-          <div class="amount-row">
-            <div class="reference">Pensión (16%)</div>
-            <div class="reference">$200.000</div>
+          <div class="planilla-row">
+            <span class="planilla-label">Período Liquidación de Salud</span>
+            <span class="planilla-value">2024-07</span>
           </div>
-          <div class="amount-row">
-            <div class="reference">ARL (0,5%)</div>
-            <div class="reference">$60.000</div>
+          <div class="planilla-row">
+            <span class="planilla-label">Días de Mora</span>
+            <span class="planilla-value">0</span>
           </div>
-          <div class="amount-row" style="padding-top:8px;border-top:1px solid rgba(0, 75, 145, 0.12);margin-top:2px;">
-            <div class="reference" style="font-weight:700;color:#1f2f43;">Total</div>
-            <div class="reference" style="font-weight:700;color:var(--primary-strong);">$520.000</div>
+          <div class="planilla-row">
+            <span class="planilla-label">Valor Mora</span>
+            <span class="planilla-value">0</span>
+          </div>
+          <div class="planilla-row planilla-total">
+            <span class="planilla-label">Valor a Pagar</span>
+            <span class="planilla-value planilla-value--total">$ 520.000</span>
           </div>
         </div>
       </article>
 
-      <section aria-label="Métodos disponibles">
-        <h2 class="section-title">Opciones disponibles</h2>
+      <section aria-label="Información de pago">
+        <h2 class="section-title">Información de pago</h2>
         <div class="options" role="list">
+          <!-- Colapsable 1: Pago desde mi cuenta -->
+          <div class="option option--collapsible" data-method="pse-cuenta" role="listitem" aria-pressed="false">
+            <button class="option-toggle" id="pseCuentaToggle" type="button" aria-expanded="false" aria-controls="pseCuentaPanel">
+              <div class="check" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
+                </svg>
+              </div>
+              <div class="option-icon option-icon--pse" aria-hidden="true">
+                <img src="../pse_credito/img/logo_pse.png" alt="" />
+              </div>
+              <div class="option-copy">
+                <strong>Desde mi cuenta</strong>
+              </div>
+              <div class="option-expand" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </div>
+            </button>
+            <div class="option-collapse" id="pseCuentaPanel">
+              <div class="f-g">
+                <label class="f-lbl" for="tipAportante">Tipo de aportante ante entidades financieras</label>
+                <select class="f-inp f-sel" id="tipAportante" onchange="updateRedirectContinue()">
+                  <option value="">Seleccione</option>
+                  <option value="natural">Natural</option>
+                  <option value="juridica">Jurídica</option>
+                </select>
+              </div>
+              <div class="f-g">
+                <label class="f-lbl" for="entidadFinanciera">Entidad Financiera</label>
+                <select class="f-inp f-sel" id="entidadFinanciera" onchange="updateRedirectContinue()">
+                  <option value="">Seleccione</option>
+                  <option value="bancolombia">Bancolombia</option>
+                  <option value="davivienda">Davivienda</option>
+                  <option value="bogota">Banco de Bogotá</option>
+                  <option value="occidente">Banco de Occidente</option>
+                  <option value="bbva">BBVA Colombia</option>
+                  <option value="popular">Banco Popular</option>
+                  <option value="avvillas">Banco AV Villas</option>
+                  <option value="colpatria">Banco Colpatria</option>
+                  <option value="itau">Itaú Colombia</option>
+                  <option value="scotiabank">Scotiabank Colpatria</option>
+                  <option value="gnbsudameris">Banco GNB Sudameris</option>
+                  <option value="caja_social">Banco Caja Social</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Colapsable 2: Pago internacional -->
+          <div style="position:relative;">
+            <span style="position:absolute;top:-9px;right:14px;z-index:2;font-size:0.65rem;font-weight:800;text-transform:uppercase;border-radius:999px;padding:3px 9px;color:#fff;background:var(--accent);letter-spacing:0.04em;box-shadow:0 2px 6px rgba(255,138,0,0.45);">Nuevo</span>
           <div class="option option--collapsible" data-method="pse" role="listitem" aria-pressed="false">
             <button class="option-toggle" id="pseToggle" type="button" aria-expanded="false" aria-controls="pseChoicesPanel">
               <div class="check" aria-hidden="true">
@@ -634,8 +788,7 @@
                 <img src="../pse_credito/img/logo_pse.png" alt="" />
               </div>
               <div class="option-copy">
-                <strong>PSE</strong>
-                <span>Débito en cuenta o financiación</span>
+                <strong>Con cuenta Internacional</strong>
               </div>
               <div class="option-expand" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -644,67 +797,18 @@
               </div>
             </button>
             <div class="option-collapse" id="pseChoicesPanel">
-              <button class="redir-choice-btn" id="redirBankBtn" type="button">Desde mi cuenta</button>
-              <button class="redir-choice-btn finance" id="redirFinanceBtn" type="button">Pago internacional <span class="tag-new">Nuevo</span></button>
-              <div class="redir-form" id="redirFinanceForm">
-                <div class="f-g">
-                  <label class="f-lbl">Tipo de documento</label>
-                  <select class="f-inp f-sel" id="redirDocType" onchange="updateRedirectContinue()">
-                    <option value="">Seleccionar tipo</option>
-                    <option>C.C.</option>
-                    <option>Tarjeta de Identidad</option>
-                  </select>
-                </div>
-                <div class="f-g">
-                  <label class="f-lbl">Documento de identidad</label>
-                  <input class="f-inp" id="redirDocNum" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Escribe tu documento de identidad" oninput="updateRedirectContinue()" />
-                </div>
-                <div class="f-g">
-                  <label class="f-lbl">Correo electrónico</label>
-                  <input class="f-inp" id="redirEmail" type="email" placeholder="correo@email.com" oninput="updateRedirectContinue()" />
-                </div>
+              <div class="f-g">
+                <label class="f-lbl" for="tipAportante2">Tipo de aportante ante entidades financieras</label>
+                <select class="f-inp f-sel" id="tipAportante2" onchange="updateRedirectContinue()">
+                  <option value="">Seleccione</option>
+                  <option value="natural">Natural</option>
+                  <option value="juridica">Jurídica</option>
+                </select>
               </div>
             </div>
           </div>
+          </div><!-- /wrapper Nuevo -->
 
-          <button class="option" type="button" data-method="card" role="listitem" aria-pressed="false">
-            <div class="check" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor">
-                <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
-              </svg>
-            </div>
-            <div class="option-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="5" width="18" height="14" rx="3" />
-                <path d="M3 10h18" />
-                <path d="M7 15h3" />
-              </svg>
-            </div>
-            <div class="option-copy">
-              <strong>Tarjeta Crédito o Débito</strong>
-              <span>Tarjeta Crédito o Débito con CVV</span>
-            </div>
-          </button>
-
-          <button class="option" type="button" data-method="cash" role="listitem" aria-pressed="false">
-            <div class="check" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor">
-                <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
-              </svg>
-            </div>
-            <div class="option-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 8h16v8H4z" />
-                <path d="M8 8V6h8v2" />
-                <path d="M8 16v2h8v-2" />
-                <path d="M7 12h10" />
-              </svg>
-            </div>
-            <div class="option-copy">
-              <strong>Pago en Efectivo</strong>
-              <span>Puntos de recaudo autorizados</span>
-            </div>
-          </button>
         </div>
       </section>
 
@@ -722,9 +826,9 @@
             <div class="total-row">
               <div>
                 <div class="label">Total a pagar</div>
-                <div class="value">$520.000</div>
+                <div class="value">$ 520.000</div>
               </div>
-              <div class="reference">#ORD-99281</div>
+              <div class="reference">Planilla #4922153621</div>
             </div>
             <button class="continue" type="button" id="continueBtn" disabled>
               Continuar
@@ -749,7 +853,8 @@
 
   <script>
     const options = Array.from(document.querySelectorAll('.option'));
-    const simpleOptions = Array.from(document.querySelectorAll('.option[data-method="card"], .option[data-method="cash"]'));
+    const pseCuentaOption = document.querySelector('.option[data-method="pse-cuenta"]');
+    const pseCuentaToggle = document.getElementById('pseCuentaToggle');
     const pseOption = document.querySelector('.option[data-method="pse"]');
     const pseToggle = document.getElementById('pseToggle');
     const redirBankBtn = document.getElementById('redirBankBtn');
@@ -758,42 +863,43 @@
     const redirDocType = document.getElementById('redirDocType');
     const redirDocNum = document.getElementById('redirDocNum');
     const redirEmail = document.getElementById('redirEmail');
+    const tipAportante = document.getElementById('tipAportante');
+    const entidadFinanciera = document.getElementById('entidadFinanciera');
+    const tipAportante2 = document.getElementById('tipAportante2');
+    const entidadFinanciera2 = document.getElementById('entidadFinanciera2');
     const continueBtn = document.getElementById('continueBtn');
     let selectedMethod = null;
 
     function isFinanceFormComplete() {
-      if (!redirDocType || !redirDocNum || !redirEmail) {
-        return false;
-      }
+      if (!redirDocType || !redirDocNum || !redirEmail) return false;
       const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
       const emailValue = (redirEmail.value || '').trim();
       return !!redirDocType.value && onlyDigits.length > 0 && emailValue.length > 0;
     }
 
-    function updateRedirectContinue() {
-      if (!continueBtn || !redirDocNum) {
-        return;
-      }
+    function isCuentaFormComplete() {
+      return !!(tipAportante && tipAportante.value && entidadFinanciera && entidadFinanciera.value);
+    }
 
-      const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
-      if (redirDocNum.value !== onlyDigits) {
-        redirDocNum.value = onlyDigits;
+    function updateRedirectContinue() {
+      if (!continueBtn) return;
+
+      if (redirDocNum) {
+        const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
+        if (redirDocNum.value !== onlyDigits) redirDocNum.value = onlyDigits;
       }
 
       let enabled = false;
-      if (selectedMethod === 'pse-finance') {
-        enabled = isFinanceFormComplete();
-      } else if (selectedMethod === 'pse-bank' || selectedMethod === 'card' || selectedMethod === 'cash') {
-        enabled = true;
+      if (selectedMethod === 'pse-cuenta') {
+        enabled = isCuentaFormComplete();
+      } else if (selectedMethod === 'pse') {
+        enabled = !!(tipAportante2 && tipAportante2.value);
       }
       continueBtn.disabled = !enabled;
     }
 
     function setPseChoice(choice) {
-      if (!redirBankBtn || !redirFinanceBtn || !pseOption || !redirFinanceForm) {
-        return;
-      }
-
+      if (!redirBankBtn || !redirFinanceBtn || !pseOption || !redirFinanceForm) return;
       redirBankBtn.classList.toggle('selected', choice === 'bank');
       redirFinanceBtn.classList.toggle('selected', choice === 'finance');
       redirFinanceForm.classList.toggle('open', choice === 'finance');
@@ -801,50 +907,47 @@
       updateRedirectContinue();
     }
 
-    function setPseOpen(open) {
-      if (!pseOption || !pseToggle) {
-        return;
-      }
-
-      pseOption.classList.toggle('is-open', open);
-      pseToggle.setAttribute('aria-expanded', String(open));
+    function setCollapsibleOpen(optionEl, toggleEl, open) {
+      if (!optionEl || !toggleEl) return;
+      optionEl.classList.toggle('is-open', open);
+      toggleEl.setAttribute('aria-expanded', String(open));
     }
 
     function setSelected(method) {
       selectedMethod = method;
       options.forEach((option) => {
         const optionMethod = option.dataset.method;
-        const active = optionMethod === method || (optionMethod === 'pse' && method && method.startsWith('pse-'));
+        const active = optionMethod === method
+          || (optionMethod === 'pse' && method && method.startsWith('pse-') && method !== 'pse-cuenta')
+          || (optionMethod === 'pse-cuenta' && method === 'pse-cuenta');
         option.classList.toggle('is-active', active);
         option.setAttribute('aria-pressed', String(active));
       });
 
-      if (!method || !method.startsWith('pse-')) {
-        if (redirBankBtn) {
-          redirBankBtn.classList.remove('selected');
-        }
-        if (redirFinanceBtn) {
-          redirFinanceBtn.classList.remove('selected');
-        }
-        if (redirFinanceForm) {
-          redirFinanceForm.classList.remove('open');
-        }
+      if (!method || !method.startsWith('pse-') || method === 'pse-cuenta') {
+        if (redirBankBtn) redirBankBtn.classList.remove('selected');
+        if (redirFinanceBtn) redirFinanceBtn.classList.remove('selected');
+        if (redirFinanceForm) redirFinanceForm.classList.remove('open');
       }
 
       updateRedirectContinue();
     }
 
-    simpleOptions.forEach((option) => {
-      option.addEventListener('click', () => {
-        setPseOpen(false);
-        setSelected(option.dataset.method);
+    if (pseCuentaToggle) {
+      pseCuentaToggle.addEventListener('click', () => {
+        const open = !pseCuentaOption.classList.contains('is-open');
+        setCollapsibleOpen(pseCuentaOption, pseCuentaToggle, open);
+        if (open) setCollapsibleOpen(pseOption, pseToggle, false);
+        setSelected(open ? 'pse-cuenta' : null);
       });
-    });
+    }
 
     if (pseToggle) {
       pseToggle.addEventListener('click', () => {
         const open = !pseOption.classList.contains('is-open');
-        setPseOpen(open);
+        setCollapsibleOpen(pseOption, pseToggle, open);
+        if (open) setCollapsibleOpen(pseCuentaOption, pseCuentaToggle, false);
+        setSelected(open ? 'pse' : null);
       });
     }
 

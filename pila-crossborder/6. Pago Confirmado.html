@@ -50,23 +50,89 @@
       gap: 14px;
     }
 
-    /* ── TOPBAR ── */
+    /* ── TOPBAR / SOI BANNER ── */
     .topbar {
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(12, 34, 68, 0.08);
+    }
+
+    .soi-banner {
+      background: linear-gradient(100deg, #5a9e00 0%, #7ab800 40%, #8dcc00 70%, #6ab500 100%);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.84);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 12px 28px rgba(12, 34, 68, 0.08);
-      border: 1px solid rgba(217, 227, 239, 0.9);
+      padding: 14px 18px;
+      position: relative;
+      overflow: hidden;
+      min-height: 72px;
     }
 
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand .title { display: flex; flex-direction: column; line-height: 1.05; }
-    .brand .title strong { font-size: 0.94rem; letter-spacing: 0.02em; }
-    .brand .title span { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+    .soi-banner::before {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: -20px;
+      width: 160px;
+      height: 130%;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .soi-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      color: white;
+      z-index: 1;
+    }
+
+    .soi-logo .ach-text {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-left: 30px;
+    }
+
+    .soi-logo .soi-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .soi-logo .soi-icon {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+    }
+
+    .soi-logo .soi-text {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-style: italic;
+    }
+
+    .soi-deco {
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .soi-people-placeholder {
+      width: 120px;
+      height: 68px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 6px;
+    }
 
     /* ── SUCCESS HERO ── */
     .hero {
@@ -309,10 +375,35 @@
     <section class="phone">
 
       <header class="topbar">
-        <div class="brand">
-          <div class="title">
-            <strong>Payment SOI - Mi PILA</strong>
-            <span>Confirmación de pago</span>
+        <div class="soi-banner" aria-label="ACH SOI - Mi PILA">
+          <div class="soi-logo">
+            <span class="ach-text">ach</span>
+            <div class="soi-wordmark">
+              <svg class="soi-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="6" cy="6" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="14" cy="6" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="22" cy="6" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="6" cy="14" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="14" cy="14" r="2.2" fill="white"/>
+                <circle cx="22" cy="14" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="6" cy="22" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="14" cy="22" r="2.2" fill="white" opacity="0.9"/>
+                <circle cx="22" cy="22" r="2.2" fill="white" opacity="0.9"/>
+                <path d="M6 14 L14 14 L22 14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M14 6 L14 14 L14 22" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="soi-text">SOI</span>
+            </div>
+          </div>
+          <div class="soi-deco">
+            <svg class="soi-people-placeholder" viewBox="0 0 120 68" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <ellipse cx="60" cy="90" rx="55" ry="55" fill="rgba(255,255,255,0.06)"/>
+              <circle cx="48" cy="26" r="10" fill="rgba(255,255,255,0.25)"/>
+              <path d="M30 68 C30 50 42 44 48 44 C54 44 66 50 66 68" fill="rgba(255,255,255,0.25)"/>
+              <circle cx="78" cy="22" r="10" fill="rgba(255,255,255,0.18)"/>
+              <path d="M60 68 C60 50 72 44 78 44 C84 44 96 50 96 68" fill="rgba(255,255,255,0.18)"/>
+              <rect x="55" y="32" width="20" height="14" rx="2" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+            </svg>
           </div>
         </div>
       </header>
