@@ -141,6 +141,36 @@
     .footer__logos .sep { width: 1px; height: 18px; background: rgba(255,255,255,0.2); }
     .footer__info { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.4); text-align: right; }
 
+    /* ─── ARCHIVE COLLAPSIBLE ─── */
+    .archive { margin-top: 40px; border: 1px solid #e8e9ef; border-radius: 14px; overflow: hidden; }
+    .archive__summary {
+      list-style: none; cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px;
+      background: var(--c-gray0);
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--c-gray1);
+      user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .archive__summary::-webkit-details-marker { display: none; }
+    .archive[open] .archive__summary { border-bottom-color: #e8e9ef; }
+    .archive__summary:hover { background: #eeeef5; }
+    .archive__chevron {
+      width: 18px; height: 18px; flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-gray1); transition: transform 0.2s;
+    }
+    .archive[open] .archive__chevron { transform: rotate(90deg); }
+    .archive__label { flex: 1; }
+    .archive__count {
+      font-size: 11px; font-weight: 600; color: var(--c-gray1);
+      background: var(--c-white); border: 1px solid var(--c-gray2);
+      border-radius: 100px; padding: 2px 10px;
+    }
+    .archive__content { padding: 24px 20px; display: flex; flex-direction: column; gap: 32px; }
+
     @media (max-width: 680px) {
       .header { padding: 36px 24px 32px; }
       .body   { padding: 32px 24px; }
@@ -192,51 +222,15 @@
     </div>
   </div>
 
-  <!-- PILA CROSSBORDER -->
+  <!-- PILA CROSSBORDER — Prueba de Usabilidad -->
   <div class="group">
     <div class="group__header">
       <div class="group__icon group__icon--azul">🌐</div>
       <span class="group__name">PILA Crossborder</span>
-      <span class="group__count">5 archivos</span>
+      <span class="group__count">Activo</span>
       <div class="group__divider"></div>
     </div>
     <div class="files">
-      <a class="file-card" href="pila-crossborder/index.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">PILA Crossborder — Flujo principal</div>
-          <div class="file-card__path">pila-crossborder/index.html</div>
-        </div>
-        <span class="file-card__tag tag--azul">Index</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pila-crossborder/envio-pago.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">PILA Crossborder — Envío a pago</div>
-          <div class="file-card__path">pila-crossborder/envio-pago.html</div>
-        </div>
-        <span class="file-card__tag tag--azul">Pantalla</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pila-crossborder/detalle-pse-resumen.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">PILA Crossborder — Detalle PSE resumen</div>
-          <div class="file-card__path">pila-crossborder/detalle-pse-resumen.html</div>
-        </div>
-        <span class="file-card__tag tag--azul">Pantalla</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pila-crossborder/flujo.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">PILA Crossborder — Flujo base (respaldo)</div>
-          <div class="file-card__path">pila-crossborder/flujo.html</div>
-        </div>
-        <span class="file-card__tag tag--azul">Respaldo</span>
-        <span class="file-card__arrow">→</span>
-      </a>
       <a class="file-card" href="pila-crossborder/crossborder.html" target="_blank">
         <div class="file-card__dot file-card__dot--azul"></div>
         <div class="file-card__info">
@@ -249,368 +243,428 @@
     </div>
   </div>
 
-  <!-- PSE CRÉDITO -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--naranja">💳</div>
-      <span class="group__name">PSE Crédito</span>
-      <span class="group__count">11 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="pse_credito/" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Flujo principal PSE Crédito</div>
-          <div class="file-card__path">pse_credito/index.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Index</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/alkosto/" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Respaldo Alkosto (flujo anterior)</div>
-          <div class="file-card__path">pse_credito/alkosto/index.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Respaldo</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/envio-pago.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Alkosto — Envío a pago</div>
-          <div class="file-card__path">pse_credito/envio-pago.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Pantalla</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/detalle-pse-resumen.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Alkosto — Detalle PSE resumen</div>
-          <div class="file-card__path">pse_credito/detalle-pse-resumen.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Pantalla</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/pantallas-fuera-flujo/aliado-formulario.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Fuera de flujo — Alkosto aliado formulario</div>
-          <div class="file-card__path">pse_credito/pantallas-fuera-flujo/aliado-formulario.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Soporte</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/pantallas-fuera-flujo/enel-paga-factura-respaldo.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Fuera de flujo — Enel paga factura respaldo</div>
-          <div class="file-card__path">pse_credito/pantallas-fuera-flujo/enel-paga-factura-respaldo.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Soporte</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/pantallas-fuera-flujo/pse-redirect-reference.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Fuera de flujo — Redirect reference</div>
-          <div class="file-card__path">pse_credito/pantallas-fuera-flujo/pse-redirect-reference.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Referencia</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/pantallas-fuera-flujo/pse-summary-reference.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Fuera de flujo — Summary reference</div>
-          <div class="file-card__path">pse_credito/pantallas-fuera-flujo/pse-summary-reference.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Referencia</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/research/Diagrama_afinidad_%20PSE_Credito_BNPL.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Research — Diagrama de Afinidad</div>
-          <div class="file-card__path">pse_credito/research/Diagrama_afinidad_ PSE_Credito_BNPL.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Research</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/research/User_personas_pse_credito_bnpl.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Research — User Personas</div>
-          <div class="file-card__path">pse_credito/research/User_personas_pse_credito_bnpl.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Research</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="pse_credito/pantallas-fuera-flujo/sumas-summary-legacy.html" target="_blank">
-        <div class="file-card__dot file-card__dot--naranja"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Fuera de flujo — SUMAS Summary Legacy</div>
-          <div class="file-card__path">pse_credito/pantallas-fuera-flujo/sumas-summary-legacy.html</div>
-        </div>
-        <span class="file-card__tag tag--naranja">Legacy</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+  <!-- ARCHIVO COLAPSABLE -->
+  <details class="archive">
+    <summary class="archive__summary">
+      <svg class="archive__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="archive__label">Archivo</span>
+      <span class="archive__count">34 archivos · 7 módulos</span>
+    </summary>
+    <div class="archive__content">
 
-  <!-- SOI -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--morado">📊</div>
-      <span class="group__name">SOI</span>
-      <span class="group__count">2 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="soi/benchmarking_HCM_parte1_landing.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Benchmarking HCM Colombia 2026 — Parte 1</div>
-          <div class="file-card__path">soi/benchmarking_HCM_parte1_landing.html</div>
+      <!-- PILA CROSSBORDER (resto) -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--azul">🌐</div>
+          <span class="group__name">PILA Crossborder</span>
+          <span class="group__count">4 archivos</span>
+          <div class="group__divider"></div>
         </div>
-        <span class="file-card__tag tag--morado">Reporte</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="soi/benchmarking_HCM_parte2_landing.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Benchmarking HCM Colombia 2026 — Parte 2</div>
-          <div class="file-card__path">soi/benchmarking_HCM_parte2_landing.html</div>
+        <div class="files">
+          <a class="file-card" href="pila-crossborder/index.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">PILA Crossborder — Flujo principal</div>
+              <div class="file-card__path">pila-crossborder/index.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Index</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pila-crossborder/envio-pago.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">PILA Crossborder — Envío a pago</div>
+              <div class="file-card__path">pila-crossborder/envio-pago.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Pantalla</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pila-crossborder/detalle-pse-resumen.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">PILA Crossborder — Detalle PSE resumen</div>
+              <div class="file-card__path">pila-crossborder/detalle-pse-resumen.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Pantalla</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pila-crossborder/flujo.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">PILA Crossborder — Flujo base (respaldo)</div>
+              <div class="file-card__path">pila-crossborder/flujo.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Respaldo</span>
+            <span class="file-card__arrow">→</span>
+          </a>
         </div>
-        <span class="file-card__tag tag--morado">Reporte</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+      </div>
 
-  <!-- REPORTES -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--morado">📋</div>
-      <span class="group__name">Reportes</span>
-      <span class="group__count">2 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="reportes/soi_entrev_arlex.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">SOI — Entrevista Arlex</div>
-          <div class="file-card__path">reportes/soi_entrev_arlex.html</div>
+      <!-- PSE CRÉDITO -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--naranja">💳</div>
+          <span class="group__name">PSE Crédito</span>
+          <span class="group__count">11 archivos</span>
+          <div class="group__divider"></div>
         </div>
-        <span class="file-card__tag tag--morado">Reporte</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="reportes/soi_entrev_giovanni_mendoza.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">SOI — Entrevista Giovanni Mendoza</div>
-          <div class="file-card__path">reportes/soi_entrev_giovanni_mendoza.html</div>
+        <div class="files">
+          <a class="file-card" href="pse_credito/" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Flujo principal PSE Crédito</div>
+              <div class="file-card__path">pse_credito/index.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Index</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/alkosto/" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Respaldo Alkosto (flujo anterior)</div>
+              <div class="file-card__path">pse_credito/alkosto/index.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Respaldo</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/envio-pago.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Alkosto — Envío a pago</div>
+              <div class="file-card__path">pse_credito/envio-pago.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Pantalla</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/detalle-pse-resumen.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Alkosto — Detalle PSE resumen</div>
+              <div class="file-card__path">pse_credito/detalle-pse-resumen.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Pantalla</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/pantallas-fuera-flujo/aliado-formulario.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Fuera de flujo — Alkosto aliado formulario</div>
+              <div class="file-card__path">pse_credito/pantallas-fuera-flujo/aliado-formulario.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Soporte</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/pantallas-fuera-flujo/enel-paga-factura-respaldo.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Fuera de flujo — Enel paga factura respaldo</div>
+              <div class="file-card__path">pse_credito/pantallas-fuera-flujo/enel-paga-factura-respaldo.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Soporte</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/pantallas-fuera-flujo/pse-redirect-reference.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Fuera de flujo — Redirect reference</div>
+              <div class="file-card__path">pse_credito/pantallas-fuera-flujo/pse-redirect-reference.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Referencia</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/pantallas-fuera-flujo/pse-summary-reference.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Fuera de flujo — Summary reference</div>
+              <div class="file-card__path">pse_credito/pantallas-fuera-flujo/pse-summary-reference.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Referencia</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/research/Diagrama_afinidad_%20PSE_Credito_BNPL.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Research — Diagrama de Afinidad</div>
+              <div class="file-card__path">pse_credito/research/Diagrama_afinidad_ PSE_Credito_BNPL.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Research</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/research/User_personas_pse_credito_bnpl.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Research — User Personas</div>
+              <div class="file-card__path">pse_credito/research/User_personas_pse_credito_bnpl.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Research</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="pse_credito/pantallas-fuera-flujo/sumas-summary-legacy.html" target="_blank">
+            <div class="file-card__dot file-card__dot--naranja"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Fuera de flujo — SUMAS Summary Legacy</div>
+              <div class="file-card__path">pse_credito/pantallas-fuera-flujo/sumas-summary-legacy.html</div>
+            </div>
+            <span class="file-card__tag tag--naranja">Legacy</span>
+            <span class="file-card__arrow">→</span>
+          </a>
         </div>
-        <span class="file-card__tag tag--morado">Reporte</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+      </div>
 
-  <!-- CANDIDATOS UX -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--azul">🧪</div>
-      <span class="group__name">Candidatos UX</span>
-      <span class="group__count">2 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="candidatos_ux/insumos-prueba.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Insumos — Prueba UX</div>
-          <div class="file-card__path">candidatos_ux/insumos-prueba.html</div>
+      <!-- SOI -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--morado">📊</div>
+          <span class="group__name">SOI</span>
+          <span class="group__count">2 archivos</span>
+          <div class="group__divider"></div>
         </div>
-        <span class="file-card__tag tag--azul">Insumos</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="candidatos_ux/prueba-candidato.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Prueba Práctica — Diseñador UX</div>
-          <div class="file-card__path">candidatos_ux/prueba-candidato.html</div>
+        <div class="files">
+          <a class="file-card" href="soi/benchmarking_HCM_parte1_landing.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Benchmarking HCM Colombia 2026 — Parte 1</div>
+              <div class="file-card__path">soi/benchmarking_HCM_parte1_landing.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Reporte</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="soi/benchmarking_HCM_parte2_landing.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Benchmarking HCM Colombia 2026 — Parte 2</div>
+              <div class="file-card__path">soi/benchmarking_HCM_parte2_landing.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Reporte</span>
+            <span class="file-card__arrow">→</span>
+          </a>
         </div>
-        <span class="file-card__tag tag--azul">Evaluación</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+      </div>
 
-  <!-- RTP -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--verde">⚡</div>
-      <span class="group__name">RTP</span>
-      <span class="group__count">7 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="rtp/brief-rtp-ach.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Brief</div>
-          <div class="file-card__path">rtp/brief-rtp-ach.html</div>
+      <!-- REPORTES -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--morado">📋</div>
+          <span class="group__name">Reportes</span>
+          <span class="group__count">2 archivos</span>
+          <div class="group__divider"></div>
         </div>
-        <span class="file-card__tag tag--verde">Brief</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="rtp/rtp-sint-v2.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Síntesis v2 (Tres puntas)</div>
-          <div class="file-card__path">rtp/rtp-sint-v2.html</div>
+        <div class="files">
+          <a class="file-card" href="reportes/soi_entrev_arlex.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">SOI — Entrevista Arlex</div>
+              <div class="file-card__path">reportes/soi_entrev_arlex.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Reporte</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="reportes/soi_entrev_giovanni_mendoza.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">SOI — Entrevista Giovanni Mendoza</div>
+              <div class="file-card__path">reportes/soi_entrev_giovanni_mendoza.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Reporte</span>
+            <span class="file-card__arrow">→</span>
+          </a>
         </div>
-        <span class="file-card__tag tag--verde">Síntesis</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="rtp/rtp-instrumentos-research.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Instrumentos de Research</div>
-          <div class="file-card__path">rtp/rtp-instrumentos-research.html</div>
-        </div>
-        <span class="file-card__tag tag--verde">Instrumentos</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="rtp/rtp-instrumentos-v2.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Instrumentos v2</div>
-          <div class="file-card__path">rtp/rtp-instrumentos-v2.html</div>
-        </div>
-        <span class="file-card__tag tag--verde">Instrumentos</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="rtp/old/rtp-plan-investigacion.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Plan de Investigación (legacy)</div>
-          <div class="file-card__path">rtp/old/rtp-plan-investigacion.html</div>
-        </div>
-        <span class="file-card__tag tag--verde">Legacy</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="rtp/old/rtp-reporte-sint_claudia.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Reporte sintético Claudia (legacy)</div>
-          <div class="file-card__path">rtp/old/rtp-reporte-sint_claudia.html</div>
-        </div>
-        <span class="file-card__tag tag--verde">Legacy</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="rtp/rtp-estimacion.html" target="_blank">
-        <div class="file-card__dot file-card__dot--verde"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">RTP — Estimación de Horas</div>
-          <div class="file-card__path">rtp/rtp-estimacion.html</div>
-        </div>
-        <span class="file-card__tag tag--verde">Estimación</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+      </div>
 
-  <!-- MICROSEGMENTOS -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--morado">🧩</div>
-      <span class="group__name">Microsegmentos</span>
-      <span class="group__count">5 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="microsegmentos/estimacion-horas-v1.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Microsegmentos - Estimacion de horas</div>
-          <div class="file-card__path">microsegmentos/estimacion-horas-v1.html</div>
+      <!-- CANDIDATOS UX -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--azul">🧪</div>
+          <span class="group__name">Candidatos UX</span>
+          <span class="group__count">2 archivos</span>
+          <div class="group__divider"></div>
         </div>
-        <span class="file-card__tag tag--morado">Estimacion</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="microsegmentos/plan-investigacion-detallado.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Microsegmentos — Plan de investigación detallado</div>
-          <div class="file-card__path">microsegmentos/plan-investigacion-detallado.html</div>
+        <div class="files">
+          <a class="file-card" href="candidatos_ux/insumos-prueba.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Insumos — Prueba UX</div>
+              <div class="file-card__path">candidatos_ux/insumos-prueba.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Insumos</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="candidatos_ux/prueba-candidato.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Prueba Práctica — Diseñador UX</div>
+              <div class="file-card__path">candidatos_ux/prueba-candidato.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Evaluación</span>
+            <span class="file-card__arrow">→</span>
+          </a>
         </div>
-        <span class="file-card__tag tag--morado">Plan</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="microsegmentos/brief-microsegmentos.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Microsegmentos — Brief</div>
-          <div class="file-card__path">microsegmentos/brief-microsegmentos.html</div>
-        </div>
-        <span class="file-card__tag tag--morado">Brief</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="microsegmentos/modelo-matriz-microsegmentos.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Microsegmentos — Modelo</div>
-          <div class="file-card__path">microsegmentos/modelo-matriz-microsegmentos.html</div>
-        </div>
-        <span class="file-card__tag tag--morado">Modelo</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="microsegmentos/matriz-plantilla-campo.html" target="_blank">
-        <div class="file-card__dot file-card__dot--morado"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Microsegmentos — Plantilla de campo</div>
-          <div class="file-card__path">microsegmentos/matriz-plantilla-campo.html</div>
-        </div>
-        <span class="file-card__tag tag--morado">Plantilla</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+      </div>
 
-  <!-- ECOSISTEMA FORMACIÓN -->
-  <div class="group">
-    <div class="group__header">
-      <div class="group__icon group__icon--azul">🎓</div>
-      <span class="group__name">Ecosistema Formación</span>
-      <span class="group__count">2 archivos</span>
-      <div class="group__divider"></div>
-    </div>
-    <div class="files">
-      <a class="file-card" href="ecosistema-formacion/brief-ux-SOI-ACH.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Brief UX — Iniciativa SOI / Campus Virtual ACH</div>
-          <div class="file-card__path">ecosistema-formacion/brief-ux-SOI-ACH.html</div>
+      <!-- RTP -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--verde">⚡</div>
+          <span class="group__name">RTP</span>
+          <span class="group__count">7 archivos</span>
+          <div class="group__divider"></div>
         </div>
-        <span class="file-card__tag tag--azul">Brief</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-      <a class="file-card" href="ecosistema-formacion/vision-ecosistema-SOI.html" target="_blank">
-        <div class="file-card__dot file-card__dot--azul"></div>
-        <div class="file-card__info">
-          <div class="file-card__name">Visión de Solución — Ecosistema SOI / ACH Colombia</div>
-          <div class="file-card__path">ecosistema-formacion/vision-ecosistema-SOI.html</div>
+        <div class="files">
+          <a class="file-card" href="rtp/brief-rtp-ach.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Brief</div>
+              <div class="file-card__path">rtp/brief-rtp-ach.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Brief</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="rtp/rtp-sint-v2.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Síntesis v2 (Tres puntas)</div>
+              <div class="file-card__path">rtp/rtp-sint-v2.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Síntesis</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="rtp/rtp-instrumentos-research.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Instrumentos de Research</div>
+              <div class="file-card__path">rtp/rtp-instrumentos-research.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Instrumentos</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="rtp/rtp-instrumentos-v2.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Instrumentos v2</div>
+              <div class="file-card__path">rtp/rtp-instrumentos-v2.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Instrumentos</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="rtp/old/rtp-plan-investigacion.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Plan de Investigación (legacy)</div>
+              <div class="file-card__path">rtp/old/rtp-plan-investigacion.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Legacy</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="rtp/old/rtp-reporte-sint_claudia.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Reporte sintético Claudia (legacy)</div>
+              <div class="file-card__path">rtp/old/rtp-reporte-sint_claudia.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Legacy</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="rtp/rtp-estimacion.html" target="_blank">
+            <div class="file-card__dot file-card__dot--verde"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">RTP — Estimación de Horas</div>
+              <div class="file-card__path">rtp/rtp-estimacion.html</div>
+            </div>
+            <span class="file-card__tag tag--verde">Estimación</span>
+            <span class="file-card__arrow">→</span>
+          </a>
         </div>
-        <span class="file-card__tag tag--azul">Visión</span>
-        <span class="file-card__arrow">→</span>
-      </a>
-    </div>
-  </div>
+      </div>
+
+      <!-- MICROSEGMENTOS -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--morado">🧩</div>
+          <span class="group__name">Microsegmentos</span>
+          <span class="group__count">5 archivos</span>
+          <div class="group__divider"></div>
+        </div>
+        <div class="files">
+          <a class="file-card" href="microsegmentos/estimacion-horas-v1.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Microsegmentos - Estimacion de horas</div>
+              <div class="file-card__path">microsegmentos/estimacion-horas-v1.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Estimacion</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="microsegmentos/plan-investigacion-detallado.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Microsegmentos — Plan de investigación detallado</div>
+              <div class="file-card__path">microsegmentos/plan-investigacion-detallado.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Plan</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="microsegmentos/brief-microsegmentos.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Microsegmentos — Brief</div>
+              <div class="file-card__path">microsegmentos/brief-microsegmentos.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Brief</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="microsegmentos/modelo-matriz-microsegmentos.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Microsegmentos — Modelo</div>
+              <div class="file-card__path">microsegmentos/modelo-matriz-microsegmentos.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Modelo</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="microsegmentos/matriz-plantilla-campo.html" target="_blank">
+            <div class="file-card__dot file-card__dot--morado"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Microsegmentos — Plantilla de campo</div>
+              <div class="file-card__path">microsegmentos/matriz-plantilla-campo.html</div>
+            </div>
+            <span class="file-card__tag tag--morado">Plantilla</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ECOSISTEMA FORMACIÓN -->
+      <div class="group" style="margin-bottom:0">
+        <div class="group__header">
+          <div class="group__icon group__icon--azul">🎓</div>
+          <span class="group__name">Ecosistema Formación</span>
+          <span class="group__count">2 archivos</span>
+          <div class="group__divider"></div>
+        </div>
+        <div class="files">
+          <a class="file-card" href="ecosistema-formacion/brief-ux-SOI-ACH.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Brief UX — Iniciativa SOI / Campus Virtual ACH</div>
+              <div class="file-card__path">ecosistema-formacion/brief-ux-SOI-ACH.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Brief</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+          <a class="file-card" href="ecosistema-formacion/vision-ecosistema-SOI.html" target="_blank">
+            <div class="file-card__dot file-card__dot--azul"></div>
+            <div class="file-card__info">
+              <div class="file-card__name">Visión de Solución — Ecosistema SOI / ACH Colombia</div>
+              <div class="file-card__path">ecosistema-formacion/vision-ecosistema-SOI.html</div>
+            </div>
+            <span class="file-card__tag tag--azul">Visión</span>
+            <span class="file-card__arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /archive__content -->
+  </details>
 
 </div>
 
