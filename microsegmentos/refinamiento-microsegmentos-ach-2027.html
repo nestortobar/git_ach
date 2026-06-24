@@ -8,6 +8,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../estilos.css">
+  <style>
+    .tabla-draft { opacity: 0.32; filter: grayscale(1); pointer-events: none; }
+    .tabla-definitiva td, .tabla-definitiva th { vertical-align: top; }
+  </style>
 </head>
 <body>
 <div class="reporte">
@@ -114,7 +118,7 @@
         <p class="section-title__desc">Organizados por comportamiento de adopción, no por estructura comercial</p>
       </div>
 
-      <div class="tabla-wrapper">
+      <div class="tabla-wrapper tabla-draft">
         <table class="tabla-datos tabla-datos--striped">
           <thead>
             <tr>
@@ -177,9 +181,79 @@
         </table>
       </div>
 
-      <div class="alerta alerta--advertencia">
-        <span class="alerta__titulo">Nota para validar con el cliente</span>
-        <p class="alerta__texto">El microsegmento 7 — entidad territorial autónoma — es el que tiene menor evidencia de diferenciación de job frente a Tesoro único en este momento. Lo incluimos para no perder el matiz administrativo que probablemente importe en campo, pero conviene confirmarlo con Juliana antes de comprometerlo en los instrumentos: puede terminar fusionándose con el microsegmento 6 o sosteniéndose como microsegmento propio según lo que aparezca en las primeras entrevistas exploratorias.</p>
+      <div style="margin-top: 36px;">
+        <h2 class="section-title__heading">Microsegmentos definitivos — propuesta refinada (8 microsegmentos)</h2><br>
+        <div class="tabla-wrapper tabla-definitiva">
+          <table class="tabla-datos tabla-datos--striped">
+            <thead>
+              <tr>
+                <th class="num">#</th>
+                <th>Categoría ACH</th>
+                <th>Microsegmento</th>
+                <th>Criterio de agrupación</th>
+                <th>Justificación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num">1</td>
+                <td>Entidades financieras</td>
+                <td><strong>EF de alta complejidad</strong> — bancos sistémicos vigilados de gran tamaño</td>
+                <td>Peso del comité de decisión y dependencia de sistemas legados</td>
+                <td>Estas entidades requieren aprobación de comités de riesgo, áreas legales y mesas técnicas antes de cualquier integración. El job no está definido por el tamaño en sí, sino por la cantidad de instancias que deben aprobar un cambio y por cuánto su infraestructura tecnológica heredada limita la velocidad de adopción. La ansiedad central es operativa: no romper algo que ya funciona a gran escala.</td>
+              </tr>
+              <tr>
+                <td class="num">2</td>
+                <td>Entidades financieras</td>
+                <td><strong>EF de baja fricción</strong> — entidades vigiladas de tamaño pequeño o mediano, con estructura organizacional reducida</td>
+                <td>Velocidad de decisión interna, determinada por el tamaño de la estructura organizacional, no por el estatus regulatorio</td>
+                <td>A diferencia del grupo anterior, estas entidades tienen decisor único o un grupo reducido de personas que concentran tecnología, operaciones y negocio. El cumplimiento regulatorio aplica igual que a las grandes, pero al tener estructuras más chicas, el proceso de decisión y adopción fluye con menor fricción. Se excluyen explícitamente las entidades de naturaleza fintech o de modelo de participación nuevo, que se tratan en el microsegmento 3 por tener una lógica de vinculación distinta.</td>
+              </tr>
+              <tr>
+                <td class="num">3</td>
+                <td>Entidades financieras / Empresas <em>(rol híbrido)</em></td>
+                <td><strong>Nuevos participantes del ecosistema</strong> — fintech, pasarelas de pago y entidades que operan simultáneamente como participante del sistema y como empresa habilitadora de cobro</td>
+                <td>Naturaleza híbrida del rol: un mismo actor puede vincularse bajo el régimen de "entidad" para unos servicios y bajo el régimen de "empresa" para otros</td>
+                <td>Este grupo no encaja en la lógica tradicional de "entidad financiera" ni de "empresa", porque su relación comercial cambia según el servicio que estén usando. Tienen particularidades normativas y de flexibilidad operativa distintas tanto de las entidades tradicionales como de las empresas convencionales, y representan una proporción creciente de las solicitudes de vinculación al sistema. Tratarlos como microsegmento aparte permite construir una oferta de valor que reconozca ese doble rol, en lugar de forzarlos dentro de una categoría que no refleja cómo operan.</td>
+              </tr>
+              <tr>
+                <td class="num">4</td>
+                <td>Empresas</td>
+                <td><strong>Cobro recurrente</strong> — empresas cuyo modelo de negocio depende de cobros periódicos y predecibles (ej. transporte, telecomunicaciones, servicios públicos, peajes)</td>
+                <td>Homogeneidad del patrón transaccional, no el sector económico</td>
+                <td>El sector al que pertenece la empresa no predice el job si el patrón de cobro es equivalente: lo que define la necesidad es que el cobro deba ejecutarse de forma automática y recurrente, sobre una base de clientes estable. La ansiedad central de este grupo es que el cobro automático falle, generando pérdida de ingreso o reproceso operativo.</td>
+              </tr>
+              <tr>
+                <td class="num">5</td>
+                <td>Empresas</td>
+                <td><strong>Cobro transaccional</strong> — empresas cuyo modelo de negocio depende de transacciones puntuales y no recurrentes (ej. comercio electrónico, retail, corresponsalías)</td>
+                <td>Homogeneidad del patrón transaccional, distinto al del grupo anterior</td>
+                <td>Aunque también son "empresas" en el esquema comercial de ACH, su ansiedad central es distinta: no temen que falle un cobro recurrente, sino el fraude y el contracargo en transacciones individuales. Esta diferencia de ansiedad justifica separarlo del microsegmento de cobro recurrente, aunque ambos sean "empresas" en sentido amplio.</td>
+              </tr>
+              <tr>
+                <td class="num">6</td>
+                <td>Personas naturales</td>
+                <td><strong>Personas naturales</strong> — asalariados e independientes, tratados como un mismo microsegmento</td>
+                <td>Uso de producto, no situación laboral</td>
+                <td>Se evaluó dividir este grupo por tipo de vínculo laboral, pero se determinó que la mayoría de los productos (transferencias, pagos, consulta de información) se usan de forma idéntica independientemente de si la persona es asalariada o independiente. La única diferencia relevante aparece en productos específicos de cobro (por ejemplo, uso de QR o recepción de pagos por independientes que prestan servicios), que no alcanza a justificar la apertura de un microsegmento separado en esta etapa.</td>
+              </tr>
+              <tr>
+                <td class="num">7</td>
+                <td>Gobierno</td>
+                <td><strong>Gobierno — tesoro centralizado</strong> — entidades que dependen de una única bolsa de presupuesto nacional (ej. ministerios, entidad rectora de hacienda pública)</td>
+                <td>Origen y control del flujo de caja</td>
+                <td>Estas entidades no manejan tesorería propia: dependen de la asignación y aprobación de un presupuesto público centralizado, lo que implica un ciclo de decisión largo, de naturaleza política y sujeto a procesos presupuestales formales. El decisor real no está dentro de la entidad misma, sino en la instancia que controla la bolsa central.</td>
+              </tr>
+              <tr>
+                <td class="num">8</td>
+                <td>Gobierno</td>
+                <td><strong>Gobierno — tesoro independiente</strong> — entidades territoriales (ej. alcaldías, gobernaciones) y entidades de servicio público con tesorería propia (ej. universidades públicas, hospitales públicos, entidades de servicio masivo al ciudadano)</td>
+                <td>Origen y control del flujo de caja, distinto al del grupo anterior</td>
+                <td>A diferencia del microsegmento anterior, estas entidades administran su propia tesorería de forma independiente del presupuesto nacional centralizado. Inicialmente se consideró separar a las entidades territoriales de las entidades de servicio masivo al ciudadano, pero se determinó que la variable que más predice el job — el manejo autónomo del flujo de caja — es compartida por ambas, por lo que se mantienen unidas en un mismo microsegmento.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -190,7 +264,7 @@
         <span class="section-title__label">Sección 6</span>
         <h2 class="section-title__heading">Resultado neto</h2>
       </div>
-      <p>Pasamos de una microsegmentación que multiplicaría las celdas de investigación (potencialmente 40+ combinaciones siguiendo el esquema literal de ACH) a una propuesta de <strong>8 microsegmentos</strong> organizados por comportamiento de adopción, no por estructura comercial. Esto mantiene el ejercicio viable dentro del alcance de research generativo y evita diluir el trabajo de campo en categorías que no aportan diferenciación real.</p>
+      <p>Ninguno de estos microsegmentos se definió por tamaño de organización, sector económico o estructura administrativa per se. El criterio común en los ocho es identificar quién decide, qué tan rápido fluye esa decisión, y qué patrón de comportamiento transaccional o de adopción comparte el grupo — variables que predicen el job to be done y la ansiedad de adopción mejor que las categorías comerciales con las que ACH organiza internamente a sus clientes.</p>
     </div>
 
   </div>
