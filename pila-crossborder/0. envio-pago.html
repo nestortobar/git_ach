@@ -740,12 +740,7 @@
               <option value="internacional">Pago cuenta internacional</option>
             </select>
           </div>
-          <div class="f-g">
-            <label class="f-lbl" for="entidadFinanciera"><span style="color:var(--primary)">*</span> Entidad Financiera:</label>
-            <select class="f-inp f-sel" id="entidadFinanciera" onchange="updateContinue()">
-              <option value="">Seleccione</option>
-            </select>
-          </div>
+
         </div>
       </section>
 
@@ -803,25 +798,14 @@
 
     const tipAportante = document.getElementById('tipAportante');
     const modalidadPago = document.getElementById('modalidadPago');
-    const entidadFinanciera = document.getElementById('entidadFinanciera');
     const continueBtn = document.getElementById('continueBtn');
 
     function onModalidadChange() {
-      const val = modalidadPago.value;
-      entidadFinanciera.innerHTML = '<option value="">Seleccione</option>';
-      if (val && banks[val]) {
-        banks[val].forEach(name => {
-          const opt = document.createElement('option');
-          opt.value = name.toLowerCase().replace(/[\s.]+/g, '_');
-          opt.textContent = name;
-          entidadFinanciera.appendChild(opt);
-        });
-      }
       updateContinue();
     }
 
     function updateContinue() {
-      continueBtn.disabled = !(tipAportante.value && modalidadPago.value && entidadFinanciera.value);
+      continueBtn.disabled = !(tipAportante.value && modalidadPago.value);
     }
 
     continueBtn.addEventListener('click', () => {
