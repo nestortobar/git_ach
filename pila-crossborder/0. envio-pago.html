@@ -723,92 +723,29 @@
 
       <section aria-label="Información de pago">
         <h2 class="section-title">Información de pago</h2>
-        <div class="options" role="list">
-          <!-- Colapsable 1: Pago desde mi cuenta -->
-          <div class="option option--collapsible" data-method="pse-cuenta" role="listitem" aria-pressed="false">
-            <button class="option-toggle" id="pseCuentaToggle" type="button" aria-expanded="false" aria-controls="pseCuentaPanel">
-              <div class="check" aria-hidden="true">
-                <svg viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
-                </svg>
-              </div>
-              <div class="option-icon option-icon--pse" aria-hidden="true">
-                <img src="../pse_credito/img/logo_pse.png" alt="" />
-              </div>
-              <div class="option-copy">
-                <strong>Desde mi cuenta</strong>
-              </div>
-              <div class="option-expand" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </div>
-            </button>
-            <div class="option-collapse" id="pseCuentaPanel">
-              <div class="f-g">
-                <label class="f-lbl" for="tipAportante">Tipo de aportante ante entidades financieras</label>
-                <select class="f-inp f-sel" id="tipAportante" onchange="updateRedirectContinue()">
-                  <option value="">Seleccione</option>
-                  <option value="natural">Natural</option>
-                  <option value="juridica">Jurídica</option>
-                </select>
-              </div>
-              <div class="f-g">
-                <label class="f-lbl" for="entidadFinanciera">Entidad Financiera</label>
-                <select class="f-inp f-sel" id="entidadFinanciera" onchange="updateRedirectContinue()">
-                  <option value="">Seleccione</option>
-                  <option value="bancolombia">Bancolombia</option>
-                  <option value="davivienda">Davivienda</option>
-                  <option value="bogota">Banco de Bogotá</option>
-                  <option value="occidente">Banco de Occidente</option>
-                  <option value="bbva">BBVA Colombia</option>
-                  <option value="popular">Banco Popular</option>
-                  <option value="avvillas">Banco AV Villas</option>
-                  <option value="colpatria">Banco Colpatria</option>
-                  <option value="itau">Itaú Colombia</option>
-                  <option value="scotiabank">Scotiabank Colpatria</option>
-                  <option value="gnbsudameris">Banco GNB Sudameris</option>
-                  <option value="caja_social">Banco Caja Social</option>
-                </select>
-              </div>
-            </div>
+        <div class="option" style="display:block; cursor:default; padding:16px 16px 8px;">
+          <div class="f-g">
+            <label class="f-lbl" for="tipAportante"><span style="color:var(--primary)">*</span> Tipo de Aportante ante Entidades Financieras:</label>
+            <select class="f-inp f-sel" id="tipAportante" onchange="updateContinue()">
+              <option value="">Seleccione</option>
+              <option value="juridica">Jurídica</option>
+              <option value="natural">Natural</option>
+            </select>
           </div>
-
-          <!-- Colapsable 2: Pago internacional -->
-          <div style="position:relative;">
-            <span style="position:absolute;top:-9px;right:14px;z-index:2;font-size:0.65rem;font-weight:800;text-transform:uppercase;border-radius:999px;padding:3px 9px;color:#fff;background:var(--accent);letter-spacing:0.04em;box-shadow:0 2px 6px rgba(255,138,0,0.45);">Nuevo</span>
-          <div class="option option--collapsible" data-method="pse" role="listitem" aria-pressed="false">
-            <button class="option-toggle" id="pseToggle" type="button" aria-expanded="false" aria-controls="pseChoicesPanel">
-              <div class="check" aria-hidden="true">
-                <svg viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-7.2 7.2a1 1 0 0 1-1.414 0l-3.8-3.8a1 1 0 1 1 1.414-1.414l3.093 3.093 6.493-6.493a1 1 0 0 1 1.414 0Z" />
-                </svg>
-              </div>
-              <div class="option-icon option-icon--pse" aria-hidden="true">
-                <img src="../pse_credito/img/logo_pse.png" alt="" />
-              </div>
-              <div class="option-copy">
-                <strong>Con cuenta Internacional</strong>
-              </div>
-              <div class="option-expand" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </div>
-            </button>
-            <div class="option-collapse" id="pseChoicesPanel">
-              <div class="f-g">
-                <label class="f-lbl" for="tipAportante2">Tipo de aportante ante entidades financieras</label>
-                <select class="f-inp f-sel" id="tipAportante2" onchange="updateRedirectContinue()">
-                  <option value="">Seleccione</option>
-                  <option value="natural">Natural</option>
-                  <option value="juridica">Jurídica</option>
-                </select>
-              </div>
-            </div>
+          <div class="f-g">
+            <label class="f-lbl" for="modalidadPago"><span style="color:var(--primary)">*</span> Modalidad de pago:</label>
+            <select class="f-inp f-sel" id="modalidadPago" onchange="onModalidadChange()">
+              <option value="">Seleccione</option>
+              <option value="nacional">Pago desde cuenta nacional</option>
+              <option value="internacional">Pago cuenta internacional</option>
+            </select>
           </div>
-          </div><!-- /wrapper Nuevo -->
-
+          <div class="f-g">
+            <label class="f-lbl" for="entidadFinanciera"><span style="color:var(--primary)">*</span> Entidad Financiera:</label>
+            <select class="f-inp f-sel" id="entidadFinanciera" onchange="updateContinue()">
+              <option value="">Seleccione</option>
+            </select>
+          </div>
         </div>
       </section>
 
@@ -852,127 +789,51 @@
   </main>
 
   <script>
-    const options = Array.from(document.querySelectorAll('.option'));
-    const pseCuentaOption = document.querySelector('.option[data-method="pse-cuenta"]');
-    const pseCuentaToggle = document.getElementById('pseCuentaToggle');
-    const pseOption = document.querySelector('.option[data-method="pse"]');
-    const pseToggle = document.getElementById('pseToggle');
-    const redirBankBtn = document.getElementById('redirBankBtn');
-    const redirFinanceBtn = document.getElementById('redirFinanceBtn');
-    const redirFinanceForm = document.getElementById('redirFinanceForm');
-    const redirDocType = document.getElementById('redirDocType');
-    const redirDocNum = document.getElementById('redirDocNum');
-    const redirEmail = document.getElementById('redirEmail');
+    const banks = {
+      nacional: [
+        'BANCO AGRARIO', 'BANCO AV VILLAS', 'BANCO BBVA COLOMBIA', 'BANCO BANCOLOMBIA',
+        'BANCO CAJA SOCIAL', 'BANCO COLPATRIA', 'BANCO DAVIVIENDA', 'BANCO DE BOGOTÁ',
+        'BANCO DE OCCIDENTE', 'BANCO GNB SUDAMERIS', 'BANCO PICHINCHA', 'BANCO POPULAR'
+      ],
+      internacional: [
+        'BANK OF AMERICA', 'BNP PARIBAS', 'CAPITAL ONE', 'CITIGROUP', 'HSBC',
+        'JPMORGAN CHASE', 'PNC BANK', 'SANTANDER', 'TRUIST FINANCIAL', 'U.S. BANK', 'WELLS FARGO'
+      ]
+    };
+
     const tipAportante = document.getElementById('tipAportante');
+    const modalidadPago = document.getElementById('modalidadPago');
     const entidadFinanciera = document.getElementById('entidadFinanciera');
-    const tipAportante2 = document.getElementById('tipAportante2');
-    const entidadFinanciera2 = document.getElementById('entidadFinanciera2');
     const continueBtn = document.getElementById('continueBtn');
-    let selectedMethod = null;
 
-    function isFinanceFormComplete() {
-      if (!redirDocType || !redirDocNum || !redirEmail) return false;
-      const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
-      const emailValue = (redirEmail.value || '').trim();
-      return !!redirDocType.value && onlyDigits.length > 0 && emailValue.length > 0;
-    }
-
-    function isCuentaFormComplete() {
-      return !!(tipAportante && tipAportante.value && entidadFinanciera && entidadFinanciera.value);
-    }
-
-    function updateRedirectContinue() {
-      if (!continueBtn) return;
-
-      if (redirDocNum) {
-        const onlyDigits = (redirDocNum.value || '').replace(/\D/g, '');
-        if (redirDocNum.value !== onlyDigits) redirDocNum.value = onlyDigits;
+    function onModalidadChange() {
+      const val = modalidadPago.value;
+      entidadFinanciera.innerHTML = '<option value="">Seleccione</option>';
+      if (val && banks[val]) {
+        banks[val].forEach(name => {
+          const opt = document.createElement('option');
+          opt.value = name.toLowerCase().replace(/[\s.]+/g, '_');
+          opt.textContent = name;
+          entidadFinanciera.appendChild(opt);
+        });
       }
-
-      let enabled = false;
-      if (selectedMethod === 'pse-cuenta') {
-        enabled = isCuentaFormComplete();
-      } else if (selectedMethod === 'pse') {
-        enabled = !!(tipAportante2 && tipAportante2.value);
-      }
-      continueBtn.disabled = !enabled;
+      updateContinue();
     }
 
-    function setPseChoice(choice) {
-      if (!redirBankBtn || !redirFinanceBtn || !pseOption || !redirFinanceForm) return;
-      redirBankBtn.classList.toggle('selected', choice === 'bank');
-      redirFinanceBtn.classList.toggle('selected', choice === 'finance');
-      redirFinanceForm.classList.toggle('open', choice === 'finance');
-      setSelected('pse-' + choice);
-      updateRedirectContinue();
-    }
-
-    function setCollapsibleOpen(optionEl, toggleEl, open) {
-      if (!optionEl || !toggleEl) return;
-      optionEl.classList.toggle('is-open', open);
-      toggleEl.setAttribute('aria-expanded', String(open));
-    }
-
-    function setSelected(method) {
-      selectedMethod = method;
-      options.forEach((option) => {
-        const optionMethod = option.dataset.method;
-        const active = optionMethod === method
-          || (optionMethod === 'pse' && method && method.startsWith('pse-') && method !== 'pse-cuenta')
-          || (optionMethod === 'pse-cuenta' && method === 'pse-cuenta');
-        option.classList.toggle('is-active', active);
-        option.setAttribute('aria-pressed', String(active));
-      });
-
-      if (!method || !method.startsWith('pse-') || method === 'pse-cuenta') {
-        if (redirBankBtn) redirBankBtn.classList.remove('selected');
-        if (redirFinanceBtn) redirFinanceBtn.classList.remove('selected');
-        if (redirFinanceForm) redirFinanceForm.classList.remove('open');
-      }
-
-      updateRedirectContinue();
-    }
-
-    if (pseCuentaToggle) {
-      pseCuentaToggle.addEventListener('click', () => {
-        const open = !pseCuentaOption.classList.contains('is-open');
-        setCollapsibleOpen(pseCuentaOption, pseCuentaToggle, open);
-        if (open) setCollapsibleOpen(pseOption, pseToggle, false);
-        setSelected(open ? 'pse-cuenta' : null);
-      });
-    }
-
-    if (pseToggle) {
-      pseToggle.addEventListener('click', () => {
-        const open = !pseOption.classList.contains('is-open');
-        setCollapsibleOpen(pseOption, pseToggle, open);
-        if (open) setCollapsibleOpen(pseCuentaOption, pseCuentaToggle, false);
-        setSelected(open ? 'pse' : null);
-      });
-    }
-
-    if (redirBankBtn) {
-      redirBankBtn.addEventListener('click', () => setPseChoice('bank'));
-    }
-
-    if (redirFinanceBtn) {
-      redirFinanceBtn.addEventListener('click', () => setPseChoice('finance'));
+    function updateContinue() {
+      continueBtn.disabled = !(tipAportante.value && modalidadPago.value && entidadFinanciera.value);
     }
 
     continueBtn.addEventListener('click', () => {
-      if (continueBtn.disabled) {
-        return;
-      }
-
+      if (continueBtn.disabled) return;
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({ type: 'GO', screen: 1 }, '*');
         return;
       }
-
       window.location.href = 'detalle-pse-resumen.html';
     });
 
-    updateRedirectContinue();
+    updateContinue();
   </script>
 </body>
 </html>
