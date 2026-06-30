@@ -953,7 +953,7 @@ a { color: var(--c-blue); }
   padding-left: 0;
 }
 
-.lista-numerada li {
+.lista-numerada > li {
   position: relative;
   padding: 14px 16px 14px 56px;
   background: var(--c-gray0);
@@ -963,7 +963,7 @@ a { color: var(--c-blue); }
   counter-increment: lista;
 }
 
-.lista-numerada li::before {
+.lista-numerada > li::before {
   content: counter(lista);
   position: absolute;
   top: 14px;
